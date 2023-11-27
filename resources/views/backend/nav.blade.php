@@ -24,7 +24,7 @@
                 <span class="lan-3">Dashboard </span>
             </a>
             <ul class="sidebar-submenu">
-                <li><a class="" href="{{ route('dashboard') }}">Patient Register</a></li>
+                <li><a class="" href="{{ route('dashboard') }}">Dashboard</a></li>
             </ul>
         </li>
         <li class="sidebar-main-title">
