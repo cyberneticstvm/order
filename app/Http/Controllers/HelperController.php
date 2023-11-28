@@ -10,6 +10,13 @@ use Illuminate\Http\Request;
 
 class HelperController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:pending-transfer-list|payment-transfer-edit', ['only' => ['pendingTransfer', 'pendingTransferUpdate']]);
+        $this->middleware('permission:pending-transfer-list', ['only' => ['pendingTransfer']]);
+        $this->middleware('permission:pending-transfer-edit', ['only' => ['pendingTransferEdit', 'pendingTransferUpdate']]);
+    }
+
     public function pendingTransfer()
     {
         $transfers = Transfer::where('to_branch_id', branch()->id)->where('transfer_status', 0)->latest()->get();

@@ -32,6 +32,7 @@
                 <h6 class="">Operations</h6>
             </div>
         </li>
+        @if(auth()->user()->can('user-list') || auth()->user()->can('user-create') || auth()->user()->can('user-edit') || auth()->user()->can('user-delete') || auth()->user()->can('role-list') || auth()->user()->can('role-create') || auth()->user()->can('role-edit') || auth()->user()->can('role-delete'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -42,11 +43,14 @@
                 </svg>
                 <span>User & Roles</span>
             </a>
-            <ul class="sidebar-submenu">
-                <li><a href="{{ route('users') }}">User Register</a></li>
-                <li><a href="{{ route('roles') }}">Roles & Permissions</a></li>
-            </ul>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('user-list', route('users'), 'User Register')
+                ->linkIfCan('role-list', route('roles'), 'Roles & Permissions');
+            }}
         </li>
+        @endif
+        @if(auth()->user()->can('branch-list') || auth()->user()->can('branch-create') || auth()->user()->can('branch-edit') || auth()->user()->can('branch-delete'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -57,15 +61,18 @@
                 </svg>
                 <span>Branch Management</span>
             </a>
-            <ul class="sidebar-submenu">
-                <li><a href="{{ route('branches') }}">Branch Register</a></li>
-            </ul>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('branch-list', route('branches'), 'Branch Register');
+            }}
         </li>
+        @endif
         <li class="sidebar-main-title">
             <div>
                 <h6>Order</h6>
             </div>
         </li>
+        @if(auth()->user()->can('store-order-list') || auth()->user()->can('store-order-create') || auth()->user()->can('store-order-edit') || auth()->user()->can('store-order-delete'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -76,10 +83,13 @@
                 </svg>
                 <span>Store</span>
             </a>
-            <ul class="sidebar-submenu">
-                <li><a href="{{ route('store.order') }}">Order Register</a></li>
-            </ul>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('store-order-list', route('store.order'), 'Order Register');
+            }}
         </li>
+        @endif
+        @if(auth()->user()->can('pharmacy-order-list') || auth()->user()->can('pharmacy-order-create') || auth()->user()->can('pharmacy-order-edit') || auth()->user()->can('pharmacy-order-delete'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -90,10 +100,13 @@
                 </svg>
                 <span>Pharmacy</span>
             </a>
-            <ul class="sidebar-submenu">
-                <li><a href="{{ route('pharmacy.order') }}">Pharmacy Order Register</a></li>
-            </ul>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('pharmacy-order-list', route('pharmacy.order'), 'Pharmacy Order Register');
+            }}
         </li>
+        @endif
+        @if(auth()->user()->can('pending-transfer-list') || auth()->user()->can('pending-transfer-edit'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -104,10 +117,13 @@
                 </svg>
                 <span>Transfer</span>
             </a>
-            <ul class="sidebar-submenu">
-                <li><a href="{{ route('pending.transfer') }}">Pending Transfer Register</a></li>
-            </ul>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('pending-transfer-list', route('pending.transfer'), 'Pending Transfer Register');
+            }}
         </li>
+        @endif
+        @if(auth()->user()->can('payment-list') || auth()->user()->can('payment-create') || auth()->user()->can('payment-edit') || auth()->user()->can('payment-delete'))
         <li class="sidebar-main-title">
             <div>
                 <h6>Payments</h6>
@@ -123,10 +139,12 @@
                 </svg>
                 <span>Payments</span>
             </a>
-            <ul class="sidebar-submenu">
-                <li><a href="{{ route('patient.payments') }}">Payment Register</a></li>
-            </ul>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('payment-list', route('patient.payments'), 'Payment Register');
+            }}
         </li>
+        @endif
         <li class="sidebar-main-title">
             <div>
                 <h6>Inventory</h6>

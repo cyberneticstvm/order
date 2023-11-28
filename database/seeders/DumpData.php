@@ -41,6 +41,7 @@ class DumpData extends Seeder
             'lens-transfer-list', 'lens-transfer-create', 'lens-transfer-edit', 'lens-transfer-delete',
             'frame-transfer-list', 'frame-transfer-create', 'frame-transfer-edit', 'frame-transfer-delete',
             'payment-list', 'payment-create', 'payment-edit', 'payment-delete',
+            'pending-transfer-list', 'pending-transfer-edit',
         ];
 
         foreach ($permissions as $permission) {
