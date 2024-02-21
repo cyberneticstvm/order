@@ -123,7 +123,7 @@
                                                     <th width="6%">AXIS</th>
                                                     <th width="6%">ADD</th>
                                                     <th width="6%">DIA</th>
-                                                    <th>THICK</th>
+                                                    <th>INT.ADD</th>
                                                     <th width="6%">IPD</th>
                                                     <th width="30%">Product</th>
                                                     <th width="5%">Qty</th>
@@ -147,12 +147,7 @@
                                                     <td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" value="{{ $spectacle?->re_dist_add ?? '' }}" maxlength="6" /></td>
                                                     <td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" maxlength="6" /></td>
                                                     <td>
-                                                        <select class="border-0" name="thickness[]">
-                                                            <option value="not-applicable">Not applicable</option>
-                                                            <option value="thin">Thin</option>
-                                                            <option value="maximum-thin">Maximum Thin</option>
-                                                            <option value="normal-thick">Normal Thick</option>
-                                                        </select>
+                                                        <input type="text" name='int_add[]' class="w-100 border-0 text-center" placeholder="0.00" maxlength="6" />
                                                     </td>
                                                     <td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" maxlength="6" /></td>
                                                     <td>
@@ -177,12 +172,7 @@
                                                     <td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" value="{{ $spectacle?->le_dist_add ?? '' }}" maxlength="6" /></td>
                                                     <td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" maxlength="6" /></td>
                                                     <td>
-                                                        <select class="border-0" name="thickness[]">
-                                                            <option value="not-applicable">Not applicable</option>
-                                                            <option value="thin">Thin</option>
-                                                            <option value="maximum-thin">Maximum Thin</option>
-                                                            <option value="normal-thick">Normal Thick</option>
-                                                        </select>
+                                                        <input type="text" name='int_add[]' class="w-100 border-0 text-center" placeholder="0.00" maxlength="6" />
                                                     </td>
                                                     <td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" maxlength="6" /></td>
                                                     <td>
@@ -207,7 +197,7 @@
                                                             <input type="hidden" name="add[]" />
                                                             <input type="hidden" name="dia[]" />
                                                             <input type="hidden" name="ipd[]" />
-                                                            <input type="hidden" name="thickness[]" />
+                                                            <input type="hidden" name="int_add[]" />
                                                         </div>
                                                     </td>
                                                     <td>

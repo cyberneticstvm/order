@@ -158,12 +158,7 @@
                                                     <td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" value="{{ $item->add ?? '' }}" maxlength="6" /></td>
                                                     <td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" value="{{ $item->dia ?? '' }}" maxlength="6" /></td>
                                                     <td>
-                                                        <select class="border-0" name="thickness[]">
-                                                            <option value="not-applicable" {{ ($item->thickness == 'not-applicable') ? 'selected' : '' }}>Not applicable</option>
-                                                            <option value="thin" {{ ($item->thickness == 'thin') ? 'selected' : '' }}>Thin</option>
-                                                            <option value="maximum-thin" {{ ($item->thickness == 'maximum-thin') ? 'selected' : '' }}>Maximum Thin</option>
-                                                            <option value="normal-thick" {{ ($item->thickness == 'normal-thick') ? 'selected' : '' }}>Normal Thick</option>
-                                                        </select>
+                                                        <input type="text" name='int_add[]' class="w-100 border-0 text-center" value="{{ $item->int_add ?? '' }}" placeholder="0.00" maxlength="6" />
                                                     </td>
                                                     <td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" value="{{ $item->ipd ?? '' }}" maxlength="6" /></td>
                                                     @endif
@@ -176,7 +171,7 @@
                                                             <input type="hidden" name="add[]" />
                                                             <input type="hidden" name="dia[]" />
                                                             <input type="hidden" name="ipd[]" />
-                                                            <input type="hidden" name="thickness[]" />
+                                                            <input type="hidden" name="int_add[]" />
                                                         </div>
                                                     </td>
                                                     @endif

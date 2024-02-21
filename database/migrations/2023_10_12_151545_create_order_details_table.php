@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('add', 7)->nullable();
             $table->string('dia', 7)->nullable();
             $table->string('ipd', 7)->nullable();
+            $table->string('int_add', 7)->nullable();
             $table->enum('thickness', ['thin', 'maximum-thin', 'normal-thick', 'not-applicable'])->nullable();
             $table->decimal('unit_price', 8, 2)->default(0);
             $table->decimal('total', 9, 2)->default(0);
