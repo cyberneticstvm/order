@@ -55,7 +55,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label req">Place</label>
+                                    <label class="form-label req">Address</label>
                                     {{ html()->text($name = 'place', $value = $patient?->address ?? old('place'))->class('form-control')->placeholder('Place')->required() }}
                                     @error('place')
                                     <small class="text-danger">{{ $errors->first('place') }}</small>
@@ -141,10 +141,10 @@
                                                             <option value="re">RE</option>
                                                         </select>
                                                     </td>
-                                                    <td><input type="text" name='sph[]' class="w-100 border-0 text-center" placeholder="SPH" value="{{ $spectacle?->re_sph ?? '' }}" maxlength="6" /></td>
-                                                    <td><input type="text" name='cyl[]' class="w-100 border-0 text-center" placeholder="CYL" value="{{ $spectacle?->re_cyl ?? '' }}" maxlength="6" /></td>
-                                                    <td><input type="number" name='axis[]' class="w-100 border-0 text-center" placeholder="AXIS" value="{{ $spectacle?->re_axis ?? '' }}" step="any" max="360" /></td>
-                                                    <td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" value="{{ $spectacle?->re_add ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="text" name='sph[]' class="w-100 border-0 text-center" placeholder="SPH" value="{{ $spectacle?->re_dist_sph ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="text" name='cyl[]' class="w-100 border-0 text-center" placeholder="CYL" value="{{ $spectacle?->re_dist_cyl ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="number" name='axis[]' class="w-100 border-0 text-center" placeholder="AXIS" value="{{ $spectacle?->re_dist_axis ?? '' }}" step="any" max="360" /></td>
+                                                    <td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" value="{{ $spectacle?->re_dist_add ?? '' }}" maxlength="6" /></td>
                                                     <td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" maxlength="6" /></td>
                                                     <td>
                                                         <select class="border-0" name="thickness[]">

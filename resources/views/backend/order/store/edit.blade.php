@@ -54,7 +54,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label req">Place</label>
+                                    <label class="form-label req">Address</label>
                                     {{ html()->text($name = 'place', $value = $order->place)->class('form-control')->placeholder('Place')->required() }}
                                     @error('place')
                                     <small class="text-danger">{{ $errors->first('place') }}</small>
