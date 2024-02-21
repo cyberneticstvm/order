@@ -147,7 +147,7 @@
                                                     <td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" value="{{ $spectacle?->re_dist_add ?? '' }}" maxlength="6" /></td>
                                                     <td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" maxlength="6" /></td>
                                                     <td>
-                                                        <input type="text" name='int_add[]' class="w-100 border-0 text-center" placeholder="0.00" maxlength="6" />
+                                                        <input type="text" name='int_add[]' class="w-100 border-0 text-center" placeholder="0.00" value="{{ $spectacle?->re_int_add ?? '' }}" maxlength="6" />
                                                     </td>
                                                     <td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" maxlength="6" /></td>
                                                     <td>
@@ -172,7 +172,7 @@
                                                     <td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" value="{{ $spectacle?->le_dist_add ?? '' }}" maxlength="6" /></td>
                                                     <td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" maxlength="6" /></td>
                                                     <td>
-                                                        <input type="text" name='int_add[]' class="w-100 border-0 text-center" placeholder="0.00" maxlength="6" />
+                                                        <input type="text" name='int_add[]' class="w-100 border-0 text-center" value="{{ $spectacle?->le_int_add ?? '' }}" placeholder="0.00" maxlength="6" />
                                                     </td>
                                                     <td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" maxlength="6" /></td>
                                                     <td>
