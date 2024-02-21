@@ -32,7 +32,7 @@
                         <div class="card-wrapper">
                             <form class="row g-3" method="post" action="{{ route('store.order.save') }}" name="orderForm">
                                 @csrf
-                                <input type="hidden" name="consultation_id" value="{{ $consultation?->id ?? 0 }}" />
+                                <input type="hidden" name="consultation_id" value="{{ $mrecord?->id ?? 0 }}" />
                                 <div class="col-md-2">
                                     <label class="form-label req">Order Date</label>
                                     {{ html()->date($name = 'order_date', $value = date('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}
@@ -42,28 +42,28 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Customer Name</label>
-                                    {{ html()->text($name = 'name', $value = $consultation?->patient?->name ?? old('name'))->class('form-control')->placeholder('Customer Name')->required() }}
+                                    {{ html()->text($name = 'name', $value = $patient?->name ?? old('name'))->class('form-control')->placeholder('Customer Name')->required() }}
                                     @error('name')
                                     <small class="text-danger">{{ $errors->first('name') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Age</label>
-                                    {{ html()->number($name = 'age', $value = $consultation?->patient?->age ?? old('age'))->class('form-control')->placeholder('0')->required() }}
+                                    {{ html()->number($name = 'age', $value = $patient?->age ?? old('age'))->class('form-control')->placeholder('0')->required() }}
                                     @error('age')
                                     <small class="text-danger">{{ $errors->first('age') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Place</label>
-                                    {{ html()->text($name = 'place', $value = $consultation?->patient?->place ?? old('place'))->class('form-control')->placeholder('Place')->required() }}
+                                    {{ html()->text($name = 'place', $value = $patient?->place ?? old('place'))->class('form-control')->placeholder('Place')->required() }}
                                     @error('place')
                                     <small class="text-danger">{{ $errors->first('place') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Mobile</label>
-                                    {{ html()->text($name = 'mobile', $value = $consultation?->patient?->mobile ?? old('mobile'))->class('form-control')->maxlength('10')->placeholder('Mobile')->required() }}
+                                    {{ html()->text($name = 'mobile', $value = $patient?->mobile ?? old('mobile'))->class('form-control')->maxlength('10')->placeholder('Mobile')->required() }}
                                     @error('mobile')
                                     <small class="text-danger">{{ $errors->first('mobile') }}</small>
                                     @enderror
@@ -141,10 +141,10 @@
                                                             <option value="re">RE</option>
                                                         </select>
                                                     </td>
-                                                    <td><input type="text" name='sph[]' class="w-100 border-0 text-center" placeholder="SPH" value="{{ $mrecord?->vision?->re_sph ?? '' }}" maxlength="6" /></td>
-                                                    <td><input type="text" name='cyl[]' class="w-100 border-0 text-center" placeholder="CYL" value="{{ $mrecord?->vision?->re_cyl ?? '' }}" maxlength="6" /></td>
-                                                    <td><input type="number" name='axis[]' class="w-100 border-0 text-center" placeholder="AXIS" value="{{ $mrecord?->vision?->re_axis ?? '' }}" step="any" max="360" /></td>
-                                                    <td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" value="{{ $mrecord?->vision?->re_add ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="text" name='sph[]' class="w-100 border-0 text-center" placeholder="SPH" value="{{ $spectacle?->re_sph ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="text" name='cyl[]' class="w-100 border-0 text-center" placeholder="CYL" value="{{ $spectacle?->re_cyl ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="number" name='axis[]' class="w-100 border-0 text-center" placeholder="AXIS" value="{{ $spectacle?->re_axis ?? '' }}" step="any" max="360" /></td>
+                                                    <td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" value="{{ $spectacle?->re_add ?? '' }}" maxlength="6" /></td>
                                                     <td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" maxlength="6" /></td>
                                                     <td>
                                                         <select class="border-0" name="thickness[]">
@@ -171,10 +171,10 @@
                                                             <option value="le">LE</option>
                                                         </select>
                                                     </td>
-                                                    <td><input type="text" name='sph[]' class="w-100 border-0 text-center" placeholder="SPH" value="{{ $mrecord?->vision?->le_sph ?? '' }}" maxlength="6" /></td>
-                                                    <td><input type="text" name='cyl[]' class="w-100 border-0 text-center" placeholder="CYL" value="{{ $mrecord?->vision?->le_cyl ?? '' }}" maxlength="6" /></td>
-                                                    <td><input type="number" name='axis[]' class="w-100 border-0 text-center" placeholder="AXIS" value="{{ $mrecord?->vision?->le_axis ?? '' }}" step="any" max="360" /></td>
-                                                    <td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" value="{{ $mrecord?->vision?->le_add ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="text" name='sph[]' class="w-100 border-0 text-center" placeholder="SPH" value="{{ $spectacle?->le_sph ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="text" name='cyl[]' class="w-100 border-0 text-center" placeholder="CYL" value="{{ $spectacle?->le_cyl ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="number" name='axis[]' class="w-100 border-0 text-center" placeholder="AXIS" value="{{ $spectacle?->le_axis ?? '' }}" step="any" max="360" /></td>
+                                                    <td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" value="{{ $spectacle?->le_add ?? '' }}" maxlength="6" /></td>
                                                     <td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" maxlength="6" /></td>
                                                     <td>
                                                         <select class="border-0" name="thickness[]">

@@ -56,9 +56,11 @@ class StoreOrderController extends Controller
         $products = $this->products;
         $pmodes = $this->pmodes;
         $padvisers = $this->padvisers;
-        $consultation = Consultation::with('patient')->find(decrypt($id));
-        $mrecord = MedicalRecord::with('vision')->where('consultation_id', $consultation?->id)->first();
-        return view('backend.order.store.create', compact('products', 'consultation', 'pmodes', 'padvisers', 'mrecord'));
+        /*$consultation = Consultation::with('patient')->find(decrypt($id));*/
+        $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', decrypt($id))->first();
+        $spectacle = DB::connection('mysql1')->table('spectacles')->where('medical_record_id', decrypt($id))->first();
+        $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id)->first();
+        return view('backend.order.store.create', compact('products', 'patient', 'pmodes', 'padvisers', 'mrecord', 'spectacle'));
     }
 
     public function fetch(Request $request)
@@ -66,8 +68,10 @@ class StoreOrderController extends Controller
         $this->validate($request, [
             'medical_record_number' => 'required',
         ]);
-        $consultation = Consultation::with('patient')->findOrFail($request->medical_record_number);
-        return view('backend.order.store.proceed', compact('consultation'));
+        /*$consultation = Consultation::with('patient')->findOrFail($request->medical_record_number);*/
+        $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', $request->medical_record_number)->firstOrFail();
+        $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id)->first();
+        return view('backend.order.store.proceed', compact('mrecord', 'patient'));
     }
 
     /**
