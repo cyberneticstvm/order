@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Customer Name</label>
-                                    {{ html()->text($name = 'name', $value = $patient?->name ?? old('name'))->class('form-control')->placeholder('Customer Name')->required() }}
+                                    {{ html()->text($name = 'name', $value = $patient?->patient_name ?? old('name'))->class('form-control')->placeholder('Customer Name')->required() }}
                                     @error('name')
                                     <small class="text-danger">{{ $errors->first('name') }}</small>
                                     @enderror
@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Place</label>
-                                    {{ html()->text($name = 'place', $value = $patient?->place ?? old('place'))->class('form-control')->placeholder('Place')->required() }}
+                                    {{ html()->text($name = 'place', $value = $patient?->address ?? old('place'))->class('form-control')->placeholder('Place')->required() }}
                                     @error('place')
                                     <small class="text-danger">{{ $errors->first('place') }}</small>
                                     @enderror

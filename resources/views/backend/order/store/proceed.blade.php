@@ -32,15 +32,15 @@
                         <div class="card-wrapper row g-4">
                             <div class="col-md-4">
                                 <label class="form-label">Patient Name</label>
-                                {{ html()->text($name = 'pname', $value = $patient->name)->class('form-control')->attribute('disabled') }}
+                                {{ html()->text($name = 'pname', $value = $patient->patient_name)->class('form-control')->attribute('disabled') }}
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Patient ID</label>
                                 {{ html()->text($name = 'pid', $value = $patient->patient_id)->class('form-control')->attribute('disabled') }}
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">Place</label>
-                                {{ html()->text($name = 'place', $value = $patient->place)->class('form-control')->attribute('disabled') }}
+                                <label class="form-label">Address</label>
+                                {{ html()->text($name = 'place', $value = $patient->address)->class('form-control')->attribute('disabled') }}
                             </div>
                             <div class="col-12 text-center">
                                 <a class="btn btn-success" type="submit" href="{{ route('store.order.create', encrypt($mrecord->id)) }}">Proceed</a>
