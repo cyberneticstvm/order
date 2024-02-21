@@ -69,9 +69,13 @@ class StoreOrderController extends Controller
             'medical_record_number' => 'required',
         ]);
         /*$consultation = Consultation::with('patient')->findOrFail($request->medical_record_number);*/
-        $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', $request->medical_record_number)->firstOrFail();
-        $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id)->first();
-        return view('backend.order.store.proceed', compact('mrecord', 'patient'));
+        $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', $request->medical_record_number)->first();
+        if ($mrecord) :
+            $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id)->first();
+            return view('backend.order.store.proceed', compact('mrecord', 'patient'));
+        else :
+            return redirect()->back()->with('error', 'No records found')->withInput($request->all());
+        endif;
     }
 
     /**
