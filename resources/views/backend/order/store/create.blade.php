@@ -171,10 +171,10 @@
                                                             <option value="le">LE</option>
                                                         </select>
                                                     </td>
-                                                    <td><input type="text" name='sph[]' class="w-100 border-0 text-center" placeholder="SPH" value="{{ $spectacle?->le_sph ?? '' }}" maxlength="6" /></td>
-                                                    <td><input type="text" name='cyl[]' class="w-100 border-0 text-center" placeholder="CYL" value="{{ $spectacle?->le_cyl ?? '' }}" maxlength="6" /></td>
-                                                    <td><input type="number" name='axis[]' class="w-100 border-0 text-center" placeholder="AXIS" value="{{ $spectacle?->le_axis ?? '' }}" step="any" max="360" /></td>
-                                                    <td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" value="{{ $spectacle?->le_add ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="text" name='sph[]' class="w-100 border-0 text-center" placeholder="SPH" value="{{ $spectacle?->le_dist_sph ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="text" name='cyl[]' class="w-100 border-0 text-center" placeholder="CYL" value="{{ $spectacle?->le_dist_cyl ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="number" name='axis[]' class="w-100 border-0 text-center" placeholder="AXIS" value="{{ $spectacle?->le_dist_axis ?? '' }}" step="any" max="360" /></td>
+                                                    <td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" value="{{ $spectacle?->le_dist_add ?? '' }}" maxlength="6" /></td>
                                                     <td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" maxlength="6" /></td>
                                                     <td>
                                                         <select class="border-0" name="thickness[]">
