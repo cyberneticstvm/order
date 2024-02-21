@@ -142,7 +142,7 @@ class StoreOrderController extends Controller
                         'add' => $request->add[$key],
                         'dia' => $request->dia[$key],
                         'ipd' => $request->ipd[$key],
-                        'thickness' => $request->thickness[$key],
+                        'int_add' => $request->int_add[$key],
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
@@ -247,7 +247,7 @@ class StoreOrderController extends Controller
                         'add' => $request->add[$key],
                         'dia' => $request->dia[$key],
                         'ipd' => $request->ipd[$key],
-                        'thickness' => $request->thickness[$key],
+                        'int_add' => $request->int_add[$key],
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
