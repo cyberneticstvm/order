@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Category</label>
-                                    {{ html()->select('category', array('all' => 'All', 'store' => 'Store', 'pharmacy' => 'Pharmacy'), ($inputs[3]) ?? old('category'))->class('form-control select2')->placeholder('Select')->required() }}
+                                    {{ html()->select('category', array('all' => 'All', 'store' => 'Store'), ($inputs[3]) ?? old('category'))->class('form-control select2')->placeholder('Select')->required() }}
                                     @error('category')
                                     <small class="text-danger">{{ $errors->first('category') }}</small>
                                     @enderror
@@ -111,7 +111,7 @@
                                 <tfoot>
                                     <tr>
                                         <th colspan="7" class="text-end">Total</th>
-                                        <th class="text-end">{{ number_format($sales->sum('invoice_total'), 2) }}</th>
+                                        <th class="text-end">{{ ($sales) ? number_format($sales->sum('invoice_total'), 2) : '0.00' }}</th>
                                     </tr>
                                 </tfoot>
                             </table>

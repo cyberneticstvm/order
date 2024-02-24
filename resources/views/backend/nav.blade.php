@@ -89,7 +89,7 @@
             }}
         </li>
         @endif
-        @if(auth()->user()->can('pharmacy-order-list') || auth()->user()->can('pharmacy-order-create') || auth()->user()->can('pharmacy-order-edit') || auth()->user()->can('pharmacy-order-delete'))
+        <!--@if(auth()->user()->can('pharmacy-order-list') || auth()->user()->can('pharmacy-order-create') || auth()->user()->can('pharmacy-order-edit') || auth()->user()->can('pharmacy-order-delete'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -105,7 +105,7 @@
                 ->linkIfCan('pharmacy-order-list', route('pharmacy.order'), 'Pharmacy Order Register');
             }}
         </li>
-        @endif
+        @endif-->
         @if(auth()->user()->can('pending-transfer-list') || auth()->user()->can('pending-transfer-edit'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
@@ -231,8 +231,8 @@
             </a>
             <ul class="sidebar-submenu">
                 <li><a href="{{ route('report.daybook') }}">Daybook</a></li>
-                <li><a href="{{ route('report.consultation') }}">Consultation</a></li>
-                <li><a href="{{ route('report.lab') }}">Lab</a></li>
+                <!--<li><a href="{{ route('report.consultation') }}">Consultation</a></li>
+                <li><a href="{{ route('report.lab') }}">Lab</a></li>-->
                 <li><a href="{{ route('report.sales') }}">Sales</a></li>
             </ul>
         </li>
