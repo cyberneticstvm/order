@@ -38,4 +38,9 @@ class Order extends Model
     {
         return $this->hasOne(Payment::class, 'order_id', 'id');
     }
+
+    public function adviser()
+    {
+        return $this->belongsTo(User::class, 'product_adviser', 'id');
+    }
 }

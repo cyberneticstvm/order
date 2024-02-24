@@ -119,6 +119,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/product/lens', 'exportProductLens')->name('pdf.product.lens');
         Route::get('/product/frame', 'exportProductFrame')->name('pdf.product.frame');
         Route::get('/payment/receipt/{id}', 'exportPaymentReceipt')->name('pdf.payment.receipt');
+        Route::get('/order/invoice/{id}', 'exportOrderInvoice')->name('store.order.invoice');
         Route::get('/product/transfer/{id}', 'exportProductTransfer')->name('pdf.product.transfer');
     });
 

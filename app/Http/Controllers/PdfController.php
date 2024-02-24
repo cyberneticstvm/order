@@ -111,4 +111,11 @@ class PdfController extends Controller
         $pdf = PDF::loadView('/backend/pdf/product-transfer', compact('transfer'));
         return $pdf->stream($transfer->transfer_number . '.pdf');
     }
+
+    public function exportOrderInvoice($id)
+    {
+        $order = Order::findOrFail(decrypt($id));
+        $pdf = PDF::loadView('/backend/pdf/store-order-invoice', compact('order'));
+        return $pdf->stream($order->invoice_number . '.pdf');
+    }
 }
