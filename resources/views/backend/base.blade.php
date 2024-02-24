@@ -66,7 +66,7 @@
       <div class="header-wrapper row m-0">
         <div class="header-logo-wrapper col-auto p-0">
           <div class="logo-wrapper">
-            <a href="{{ route('dashboard') }}"><img class="img-fluid" src="{{ asset('/backend/assets/images/logo/devi-logo-devi.png') }}" alt=""></a>
+            <a href="{{ route('dashboard') }}"><img class="img-fluid" src="{{ asset('/backend/assets/images/logo/devi-logo.png') }}" alt=""></a>
           </div>
           <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i></div>
         </div>
@@ -94,11 +94,11 @@
       <!-- Page Sidebar Start-->
       <div class="sidebar-wrapper" sidebar-layout="stroke-svg">
         <div>
-          <div class="logo-wrapper"><a href="{{ route('dashboard') }}"><img class="img-fluid for-light" src="{{ asset('/backend/assets/images/logo/devi-logo-devi.png') }}" alt=""><img class="img-fluid for-dark" src="{{ asset('/backend/assets/images/logo/devi-logo-devi.png') }}" alt=""></a>
+          <div class="logo-wrapper"><a href="{{ route('dashboard') }}"><img class="img-fluid for-light" src="{{ asset('/backend/assets/images/logo/devi-logo.png') }}" alt="" style="width: 50%;"><img class="img-fluid for-dark" src="{{ asset('/backend/assets/images/logo/devi-logo.png') }}" alt="" style="width: 50%;"></a>
             <div class="back-btn"><i class="fa fa-angle-left"></i></div>
             <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
           </div>
-          <div class="logo-icon-wrapper"><a href="{{ route('dashboard') }}"><img class="img-fluid" src="{{ asset('/backend/assets/images/logo/devi-logo.png') }}" alt=""></a></div>
+          <div class="logo-icon-wrapper"><a href="{{ route('dashboard') }}">DEVI</a></div>
           <nav class="sidebar-main">
             <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
             @include("backend.nav")

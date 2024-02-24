@@ -1,6 +1,6 @@
 <div id="sidebar-menu">
     <ul class="sidebar-links" id="simple-bar">
-        <li class="back-btn"><a href="{{ route('dashboard') }}"><img class="img-fluid" src="{{ asset('/backend/assets/images/logo/devi-logo.png') }}" alt=""></a>
+        <li class="back-btn"><a href="{{ route('dashboard') }}"><img class="img-fluid" src="{{ asset('/backend/assets/images/logo/devi-logo.png') }}" alt="" style="width: 25%;"></a>
             <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
         </li>
         <li class="pin-title sidebar-main-title">

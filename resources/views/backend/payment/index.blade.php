@@ -70,6 +70,7 @@
                                         <th>Mode</th>
                                         <th>Type</th>
                                         <th>Amount</th>
+                                        <th>Receipt</th>
                                         <th>Status</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
@@ -85,6 +86,7 @@
                                         <td>{{ $payment->paymentmode->name }}</td>
                                         <td>{{ $payment->payment_type }}</td>
                                         <td>{{ $payment->amount }}</td>
+                                        <td class="text-center"><a href="{{ route('pdf.payment.receipt', encrypt($payment->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                         <td>{!! $payment->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('patient.payment.edit', encrypt($payment->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center"><a href="{{ route('patient.payment.delete', encrypt($payment->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>

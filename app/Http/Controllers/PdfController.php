@@ -9,6 +9,7 @@ use App\Models\Consultation;
 use App\Models\MedicalRecord;
 use App\Models\Order;
 use App\Models\Patient;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Transfer;
 use Carbon\Carbon;
@@ -97,11 +98,11 @@ class PdfController extends Controller
         return $pdf->stream('frame-products.pdf');
     }
 
-    public function exportOrderReceipt($id)
+    public function exportPaymentReceipt($id)
     {
-        $order = Order::with('details', 'branch', 'consultation')->findOrFail(decrypt($id));
-        $pdf = PDF::loadView('/backend/pdf/order-receipt', compact('order'));
-        return $pdf->stream($order->id . '.pdf');
+        $payment = Payment::findOrFail(decrypt($id));
+        $pdf = PDF::loadView('/backend/pdf/payment-receipt', compact('payment'));
+        return $pdf->stream($payment->id . '.pdf');
     }
 
     public function exportProductTransfer($id)
