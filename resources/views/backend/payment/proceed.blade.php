@@ -30,20 +30,24 @@
                     </div>
                     <div class="card-body">
                         <div class="card-wrapper row g-4">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <label class="form-label">Invoice Number</label>
+                                {{ html()->text($name = 'ino', $value = $order->invoice_number)->class('form-control')->attribute('disabled') }}
+                            </div>
+                            <div class="col-md-3">
                                 <label class="form-label">Patient Name</label>
-                                {{ html()->text($name = 'pname', $value = $consultation->patient->name)->class('form-control')->attribute('disabled') }}
+                                {{ html()->text($name = 'pname', $value = $order->name)->class('form-control')->attribute('disabled') }}
                             </div>
-                            <div class="col-md-4">
-                                <label class="form-label">Patient ID</label>
-                                {{ html()->text($name = 'pid', $value = $consultation->patient->patient_id)->class('form-control')->attribute('disabled') }}
+                            <div class="col-md-3">
+                                <label class="form-label">Mobile</label>
+                                {{ html()->text($name = 'mobile', $value = $order->mobile)->class('form-control')->attribute('disabled') }}
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="form-label">Place</label>
-                                {{ html()->text($name = 'place', $value = $consultation->patient->place)->class('form-control')->attribute('disabled') }}
+                                {{ html()->text($name = 'place', $value = $order->place)->class('form-control')->attribute('disabled') }}
                             </div>
                             <div class="col-12 text-center">
-                                <a class="btn btn-success" type="submit" href="{{ route('patient.payment.create', encrypt($consultation->id)) }}">Proceed</a>
+                                <a class="btn btn-success" type="submit" href="{{ route('patient.payment.create', encrypt($order->id)) }}">Proceed</a>
                                 <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                             </div>
                         </div>

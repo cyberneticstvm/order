@@ -78,8 +78,9 @@ function productcode($category)
 function invoicenumber($category)
 {
     $bcode = branch()->code;
-    $cat = substr(strtoupper($category), 0, 2);
-    return DB::table('orders')->selectRaw("CONCAT_WS('-', 'INV', '$cat', IFNULL(MAX(CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(invoice_number, '-', -2), '-', 1) AS INTEGER))+1, 1), '$bcode') AS ino")->where('branch_id', branch()->id)->first();
+    //$cat = substr(strtoupper($category), 0, 2);
+    //return DB::table('orders')->selectRaw("CONCAT_WS('-', 'INV', '$cat', IFNULL(MAX(CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(invoice_number, '-', -2), '-', 1) AS INTEGER))+1, 1), '$bcode') AS ino")->where('branch_id', branch()->id)->first();
+    return DB::table('orders')->selectRaw("CONCAT_WS('/', 'INV', '$bcode', LPAD(IFNULL(MAX(id)+1, 1), 7, '0')) AS ino")->first();
 }
 
 function purchaseId($category)

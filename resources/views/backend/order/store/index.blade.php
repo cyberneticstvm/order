@@ -94,7 +94,7 @@
                                         <td>{{ $item->invoice_number }}</td>
                                         <td>{{ $item->branch?->name }}</td>
                                         <td>{{ $item->name }}</td>
-                                        <td>{{ $item->consultation?->mrn }}</td>
+                                        <td>{{ $item->consultation_id }}</td>
                                         <td class="text-end">{{ number_format($item->invoice_total, 2) }}</td>
                                         <td class="text-center"><a href="{{ route('pdf.order.receipt', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                         <td class="text-center"><a href="#" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>

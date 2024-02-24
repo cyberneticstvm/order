@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Consultation;
+use App\Models\Order;
 use App\Models\Patient;
 use App\Models\Payment;
 use App\Models\PaymentMode;
@@ -47,19 +48,18 @@ class PaymentController extends Controller
     public function fetch(Request $request)
     {
         $this->validate($request, [
-            'medical_record_number' => 'required',
+            'invoice_number' => 'required',
         ]);
-        $consultation = Consultation::with('patient')->findOrFail($request->medical_record_number);
-        return view('backend.payment.proceed', compact('consultation'));
+        $order = Order::findOrFail($request->invoice_number);
+        return view('backend.payment.proceed', compact('order'));
     }
 
     public function create($id)
     {
         $pmodes = $this->pmodes;
-        $consultation = Consultation::find(decrypt($id));
-        $patient = Patient::with('consultation')->find($consultation?->patient_id);
-        $payments = Payment::where('patient_id', $patient?->id)->orderByDesc('created_at')->get();
-        return view('backend.payment.create', compact('pmodes', 'patient', 'payments', 'consultation'));
+        $order = Order::find(decrypt($id));
+        $payments = Payment::where('order_id', decrypt($id))->orderByDesc('created_at')->get();
+        return view('backend.payment.create', compact('pmodes', 'order', 'payments'));
     }
 
     /**
@@ -74,7 +74,8 @@ class PaymentController extends Controller
         ]);
         Payment::create([
             'consultation_id' => $request->consultation_id,
-            'patient_id' => $request->patient_id,
+            'patient_id' => 0,
+            'order_id' => $request->order_id,
             'payment_type' => $request->payment_type,
             'payment_mode' => $request->payment_mode,
             'amount' => $request->amount,

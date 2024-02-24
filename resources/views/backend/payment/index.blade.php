@@ -29,13 +29,13 @@
                             <form class="row g-3" method="post" action="{{ route('patient.payment.fetch') }}">
                                 @csrf
                                 <div class="col-md-4">
-                                    <label class="form-label req">Medical Record Number</label>&nbsp;&nbsp;<a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title="<strong>Number Parts Only.</strong>"><i class="fa fa-info txt-info"></i></a>
+                                    <label class="form-label req">Invoice Number</label>&nbsp;&nbsp;<a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title="<strong>Number Parts Only.</strong>"><i class="fa fa-info txt-info"></i></a>
                                     <div class="input-group">
-                                        {{ html()->number($name = 'medical_record_number', $value = old('medical_record_number'))->class('form-control')->placeholder('Medical Record Number') }}
+                                        {{ html()->number($name = 'invoice_number', $value = old('invoice_number'))->class('form-control')->placeholder('Invoice Number') }}
                                         <button class="btn btn-outline-warning btn-submit" id="button-addon2" type="submit">Fetch</button>
                                     </div>
-                                    @error('medical_record_number')
-                                    <small class="text-danger">{{ $errors->first('medical_record_number') }}</small>
+                                    @error('invoice_number')
+                                    <small class="text-danger">{{ $errors->first('invoice_number') }}</small>
                                     @enderror
                                 </div>
                             </form>
@@ -64,8 +64,8 @@
                                 <thead>
                                     <tr>
                                         <th>SL No</th>
+                                        <th>Invoice Number</th>
                                         <th>Patient Name</th>
-                                        <th>Patient ID</th>
                                         <th>Medical Record No.</th>
                                         <th>Mode</th>
                                         <th>Type</th>
@@ -79,9 +79,9 @@
                                     @forelse($payments as $key => $payment)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $payment?->patient?->name }}</td>
-                                        <td>{{ $payment?->patient?->patient_id }}</td>
-                                        <td>{{ $payment?->consultation?->mrn }}</td>
+                                        <td>{{ $payment?->order?->invoice_number }}</td>
+                                        <td>{{ $payment?->order?->name }}</td>
+                                        <td>{{ $payment?->order?->consultation_id }}</td>
                                         <td>{{ $payment->paymentmode->name }}</td>
                                         <td>{{ $payment->payment_type }}</td>
                                         <td>{{ $payment->amount }}</td>
