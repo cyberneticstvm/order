@@ -158,13 +158,13 @@
                 <span>Product</span>
             </a>
             <ul class="sidebar-submenu">
-                <li><a class="submenu-title" href="javascript:void(0)">Pharmacy<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+                <!--<li><a class="submenu-title" href="javascript:void(0)">Pharmacy<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                     <ul class="nav-sub-childmenu submenu-content">
                         <li><a href="{{ route('product.pharmacy') }}">Pharmacy List</a></li>
                         <li><a href="{{ route('pharmacy.purchase') }}">Pharmacy Purchase</a></li>
                         <li><a href="{{ route('pharmacy.transfer') }}">Pharmacy Transfer</a></li>
                     </ul>
-                </li>
+                </li>-->
                 <li><a class="submenu-title" href="javascript:void(0)">Frame<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                     <ul class="nav-sub-childmenu submenu-content">
                         <li><a href="{{ route('product.frame') }}">Frame List</a></li>
