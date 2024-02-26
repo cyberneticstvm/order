@@ -59,7 +59,7 @@ class StoreOrderController extends Controller
         /*$consultation = Consultation::with('patient')->find(decrypt($id));*/
         $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', decrypt($id))->first();
         $spectacle = DB::connection('mysql1')->table('spectacles')->where('medical_record_id', decrypt($id))->first();
-        $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id)->first();
+        $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();
         return view('backend.order.store.create', compact('products', 'patient', 'pmodes', 'padvisers', 'mrecord', 'spectacle'));
     }
 
