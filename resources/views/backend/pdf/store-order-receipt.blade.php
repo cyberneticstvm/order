@@ -81,4 +81,8 @@
         <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($order->invoice_number , 'C39', 1, 30, array(110, 38, 14))}}" alt="barcode" />
     </div>-->
 </div>
+<hr style="border: 1px dotted;">
+<div class="row">
+
+</div>
 @endsection

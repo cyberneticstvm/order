@@ -56,6 +56,7 @@ $(function () {
             }
         });
     });
+
     $(document).on("click", ".dltRow", function () {
         $(this).parent().parent().remove();
         calculateTotal();
@@ -72,6 +73,12 @@ $(function () {
             success: function (res) {
                 dis.parent().parent().find(".qty").val('1');
                 dis.parent().parent().find(".price, .total").val(parseFloat(res.selling_price).toFixed(2));
+                if (dis.hasClass('pdctFirst')) {
+                    $('.pdctSecond').val(dis.val());
+                    $(".pdctSecond").select2();
+                    dis.parent().parent().next().find(".qty").val('1');
+                    dis.parent().parent().next().find(".price, .total").val(parseFloat(res.selling_price).toFixed(2));
+                }
                 calculateTotal()
             }
         });
@@ -207,7 +214,6 @@ $(function () {
             }
         });
     });
-
 });
 
 function addMedicineRowForOrder(category, attribute) {

@@ -124,7 +124,7 @@
                                                     <th width="6%">DIA</th>
                                                     <th>THICK</th>
                                                     <th width="6%">IPD</th>
-                                                    <th width="30%">Product</th>
+                                                    <th width="50%">Product</th>
                                                     <th width="5%">Qty</th>
                                                     <th>Price</th>
                                                     <th width="10%">Total</th>
