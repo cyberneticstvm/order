@@ -92,6 +92,9 @@
     <div class="row">
       <div class="col text-center">
         <img src="./backend/assets/images/logo/devi-logo.png" width='30%' />
+        @if($qrcode)
+        <div style="float: right;"><img src="data:image/png;base64, {!! $qrcode !!}"></div>
+        @endif
       </div>
     </div>
     @yield("pdfcontent")

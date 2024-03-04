@@ -2,7 +2,6 @@
 @section("pdfcontent")
 <div class="row">
     <div class="text-center">
-        <h3>{{ title() }}</h3>
         {{ $order->branch->name }}, {{ $order->branch->address }}, {{ $order->branch->phone }}
     </div>
 </div>
@@ -63,7 +62,7 @@
             </tr>
             <tr>
                 <td colspan="4" class="text-right"><b>Discount</b></td>
-                <td class="text-right"><b>{{ $order->discount }}</b></td>
+                <td class="text-right"><b>{{ $order->discount ?? '0.00' }}</b></td>
             </tr>
             <tr>
                 <td colspan="4" class="text-right"><b>Advance</b></td>
@@ -76,13 +75,8 @@
         </tbody>
     </table>
     <center>
-        <p class="txt"> Welcome to Devi Opticians Family. Thank you for your order. For any enquiry about your order please contact us on 93 88 611 622</p>
+        <p class="txt">Heartly welcome to Devi Opticians Family. Thank you for your order. For any enquiry about your order please contact us on 93 88 611 622</p>
     </center>
-    <div class="row">
-        <div class="col text-end">
-            <img src="data:image/png;base64, {!! $qrcode !!}">
-        </div>
-    </div>
     <!--<div class="text-center mt-30">
         <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($order->invoice_number , 'C39', 1, 30, array(110, 38, 14))}}" alt="barcode" />
     </div>-->
