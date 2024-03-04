@@ -15,8 +15,8 @@ use App\Models\Transfer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use PDF;
-use QrCode;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PdfController extends Controller
 {
@@ -116,6 +116,14 @@ class PdfController extends Controller
     {
         $order = Order::findOrFail(decrypt($id));
         $pdf = PDF::loadView('/backend/pdf/store-order-invoice', compact('order'));
+        return $pdf->stream($order->invoice_number . '.pdf');
+    }
+
+    public function exportOrderReceipt($id)
+    {
+        $order = Order::findOrFail(decrypt($id));
+        $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('upi://pay?pa=9995050149@okbizaxis&pn=' . $order->name . '&tn=' . $order->id . '&am=' . $order->balance . '&cu=INR'));
+        $pdf = PDF::loadView('/backend/pdf/store-order-receipt', compact('order', 'qrcode'));
         return $pdf->stream($order->invoice_number . '.pdf');
     }
 }

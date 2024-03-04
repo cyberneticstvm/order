@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Mobile</label>
-                                    {{ html()->text($name = 'mobile', $value = $patient?->mobile ?? old('mobile'))->class('form-control')->maxlength('10')->placeholder('Mobile')->required() }}
+                                    {{ html()->text($name = 'mobile', $value = $patient?->mobile_number ?? old('mobile'))->class('form-control')->maxlength('10')->placeholder('Mobile')->required() }}
                                     @error('mobile')
                                     <small class="text-danger">{{ $errors->first('mobile') }}</small>
                                     @enderror

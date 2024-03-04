@@ -5,8 +5,8 @@
   <title>Devi Eye hospitals</title>
   <style>
     body {
-      font-family: 'Roboto', sans-serif;
-      font-size: 13px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
       font-weight: normal;
     }
 

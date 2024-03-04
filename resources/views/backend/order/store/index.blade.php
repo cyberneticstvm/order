@@ -75,12 +75,12 @@
                                 <thead>
                                     <tr>
                                         <th>SL No</th>
-                                        <th>Invoice Number</th>
+                                        <th>Order Number</th>
                                         <th>Branch</th>
                                         <th>Customer Name</th>
                                         <th>MRN</th>
-                                        <th>Invoice Total</th>
-                                        <th>Invoice</th>
+                                        <th>Order Total</th>
+                                        <th>Receipt</th>
                                         <th>Status</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
@@ -90,12 +90,12 @@
                                     @forelse($orders as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $item->invoice_number }}</td>
+                                        <td>{{ $item->id }}</td>
                                         <td>{{ $item->branch?->name }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->consultation_id }}</td>
                                         <td class="text-end">{{ number_format($item->invoice_total, 2) }}</td>
-                                        <td class="text-center"><a href="{{ route('store.order.invoice', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
+                                        <td class="text-center"><a href="{{ route('store.order.receipt', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                         <td>{!! $item->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('store.order.edit', encrypt($item->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center"><a href="{{ route('store.order.delete', encrypt($item->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
