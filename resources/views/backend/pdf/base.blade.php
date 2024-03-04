@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
-      font-size: 10px;
+      font-size: 12px;
       font-weight: normal;
     }
 
