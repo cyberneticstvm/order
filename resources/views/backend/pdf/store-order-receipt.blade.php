@@ -165,4 +165,9 @@
         </table>
     </div>
 </div>
+<div class="row mt-30">
+    <div class="col">
+        <p>Order Note / Comments: {{ $order->order_note }}</p>
+    </div>
+</div>
 @endsection
