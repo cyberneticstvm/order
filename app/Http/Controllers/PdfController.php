@@ -124,6 +124,6 @@ class PdfController extends Controller
         $order = Order::findOrFail(decrypt($id));
         $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('upi://pay?pa=9995050149@okbizaxis&pn=' . $order->name . '&tn=' . $order->id . '&am=' . $order->balance . '&cu=INR'));
         $pdf = PDF::loadView('/backend/pdf/store-order-receipt', compact('order', 'qrcode'));
-        return $pdf->stream($order->invoice_number . '.pdf');
+        return $pdf->stream('ORDER-' . $order->id . '.pdf');
     }
 }
