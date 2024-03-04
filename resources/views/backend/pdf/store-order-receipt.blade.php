@@ -84,7 +84,7 @@
 <hr style="border: 1px dotted;">
 <div class="row mt-30">
     <div class="col">
-        <table class="table" width="50%" cellpadding="0" cellspacing="0">
+        <table class="table" width="75%" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
                     <td widtd="20%" class="no-border">Customer Name</td>
@@ -110,7 +110,7 @@
 </div>
 <div class="row mt-30">
     <div class="col">
-        <table class="bordered" width="50%" cellspacing="0" cellpadding="0">
+        <table class="bordered" width="75%" cellspacing="0" cellpadding="0">
             <thead>
                 <tr>
                     <th class="no-border">SL No</th>
@@ -136,7 +136,7 @@
 </div>
 <div class="row mt-30">
     <div class="col">
-        <table class="no-border" cellpadding="0" cellspacing="0" width="100%">
+        <table class="no-border" cellpadding="0" cellspacing="0" width="75%">
             <thead>
                 <tr>
                     <th class="no-border"></th>
