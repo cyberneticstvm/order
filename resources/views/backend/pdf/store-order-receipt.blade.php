@@ -21,7 +21,7 @@
                     <td widtd="20%">Product Adviser</td>
                     <td widtd="25%">{{ $order->adviser->name }}</td>
                     <td widtd="10%">Order Number</td>
-                    <td widtd="45%">{{ $order->id }}</td>
+                    <td widtd="45%">{{ $order->branch->code }}/{{ $order->id }}</td>
                 </tr>
                 <tr>
                     <td widtd="20%">MRN</td>
