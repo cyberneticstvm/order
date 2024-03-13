@@ -185,6 +185,7 @@
                         <li><a href="{{ route('product.frame') }}">Frame List</a></li>
                         <li><a href="{{ route('frame.purchase') }}">Frame Purchase</a></li>
                         <li><a href="{{ route('frame.transfer') }}">Frame Transfer</a></li>
+                        <li><a href="{{ route('import.frame.purchase') }}">Import</a></li>
                     </ul>
                 </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Lens<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>

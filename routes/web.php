@@ -107,6 +107,12 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/product/lens', 'exportProductLens')->name('export.product.lens');
         Route::get('/product/frame', 'exportProductFrame')->name('export.product.frame');
     });
+
+    Route::prefix('/backend/import')->controller(ImportExportController::class)->group(function () {
+        Route::get('/frame/purchase', 'importFramePurchase')->name('import.frame.purchase');
+        Route::post('/frame/purchase', 'importFramePurchaseUpdate')->name('import.frame.purchase.update');
+    });
+
     Route::prefix('/backend/pdf')->controller(PdfController::class)->group(function () {
         Route::get('/opt/{id}', 'opt')->name('pdf.opt');
         Route::get('/prescription/{id}', 'prescription')->name('pdf.prescription');

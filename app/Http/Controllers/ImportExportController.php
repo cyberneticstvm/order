@@ -7,7 +7,10 @@ use App\Exports\CampPatientExport;
 use App\Exports\ProductFrameExport;
 use App\Exports\ProductLensExport;
 use App\Exports\ProductPharmacyExport;
+use App\Imports\ProductPurchaseImport;
+use App\Models\Purchase;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -41,5 +44,32 @@ class ImportExportController extends Controller
     public function exportProductFrame(Request $request)
     {
         return Excel::download(new ProductFrameExport($request), 'frame_products.xlsx');
+    }
+
+    public function importFramePurchase()
+    {
+        return view('backend.purchase.frame.import');
+    }
+
+    public function importFramePurchaseUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'required',
+        ]);
+        try {
+            $purchase = Purchase::create([
+                'category' => 'frame',
+                'purchase_number' => purchaseId('frame')->pid,
+                'order_date' => Carbon::today(),
+                'delivery_date' => Carbon::today(),
+                'supplier_id' => 1,
+                'created_by' => $request->user()->id,
+                'updated_by' => $request->user()->id,
+            ]);
+            Excel::import(new ProductPurchaseImport($purchase), $request->file('file')->store('temp'));
+        } catch (Exception $e) {
+            return back()->with("error", $e->getMessage());
+        }
+        return back()->with("success", "Success");
     }
 }

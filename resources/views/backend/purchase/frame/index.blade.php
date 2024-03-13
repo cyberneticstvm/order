@@ -13,7 +13,7 @@
                                 <svg class="stroke-icon">
                                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg></a></li>
-                        <li class="breadcrumb-item">Pharmacy</li>
+                        <li class="breadcrumb-item">Frame</li>
                         <li class="breadcrumb-item active">Purchase Register</li>
                     </ol>
                 </div>
