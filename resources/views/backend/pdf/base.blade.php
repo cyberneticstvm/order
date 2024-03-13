@@ -84,6 +84,10 @@
     .text-danger {
       color: red;
     }
+
+    .txt {
+      font-size: 10px !important;
+    }
   </style>
 </head>
 

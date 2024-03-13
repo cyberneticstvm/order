@@ -11,69 +11,80 @@
         <table class="table" width="100%" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
-                    <td widtd="20%">Customer Name</td>
-                    <td widtd="25%">{{ $order->name }}</td>
-                    <td widtd="10%">Address</td>
-                    <td widtd="45%">{{ $order->place }}</td>
+                    <td widtd="20%" class="border-0">Customer Name</td>
+                    <td widtd="25%" class="border-0">{{ $order->name }}</td>
+                    <td widtd="10%" class="border-0">Address</td>
+                    <td widtd="45%" class="border-0">{{ $order->place }}</td>
                 </tr>
                 <tr>
-                    <td widtd="20%">Product Adviser</td>
-                    <td widtd="25%">{{ $order->adviser->name }}</td>
-                    <td widtd="10%">Order Number</td>
-                    <td widtd="45%">{{ $order->branch->code }}/{{ $order->id }}</td>
+                    <td widtd="20%" class="border-0">Product Adviser</td>
+                    <td widtd="25%" class="border-0">{{ $order->adviser->name }}</td>
+                    <td widtd="10%" class="border-0">Order Number</td>
+                    <td widtd="45%" class="border-0">{{ $order->branch->code }}/{{ $order->id }}</td>
                 </tr>
                 <tr>
-                    <td widtd="20%">MRN</td>
-                    <td widtd="25%">{{ $order->consultation_id }}</td>
-                    <td widtd="10%">Order Date</td>
-                    <td widtd="45%">{{ $order->created_at->format('d, M Y') }}</td>
+                    <td widtd="20%" class="border-0">MRN</td>
+                    <td widtd="25%" class="border-0">{{ $order->consultation_id }}</td>
+                    <td widtd="10%" class="border-0">Order Date</td>
+                    <td widtd="45%" class="border-0">{{ $order->created_at->format('d, M Y') }}</td>
                 </tr>
             </thead>
         </table>
     </div>
+    <hr style="border: 1px solid; color:red;">
     <center>
-        <p>Product Details</p>
+        <h3>Product Details</h3>
     </center>
-    <table class="bordered" width="100%" cellspacing="0" cellpadding="0">
+    <table class="border-0" width="100%" cellspacing="0" cellpadding="0">
         <thead>
             <tr>
-                <th>SL No</th>
-                <th>Product</th>
-                <th>Qty</th>
-                <th>Price</th>
-                <th>Total</th>
+                <th class="border-0">SL No</th>
+                <th class="border-0">Product</th>
+                <th class="border-0">Qty</th>
+                <th class="border-0">Price</th>
+                <th class="border-0">Total</th>
+            </tr>
+            <tr>
+                <td class="border-0" colspan="5">
+                    <hr style="border: 1px solid; color:red;">
+                </td>
             </tr>
         </thead>
         <tbody>
             @php $slno = 1; @endphp
             @forelse($order->details as $key => $value)
             <tr>
-                <td>{{ $slno++ }}</td>
-                <td>{{ $value->product->name }}</td>
-                <td class="text-right">{{ $value->qty }}</td>
-                <td class="text-right">{{ $value->unit_price }}</td>
-                <td class="text-right">{{ $value->total }}</td>
+                <td class="border-0">{{ $slno++ }}</td>
+                <td class="border-0">{{ $value->product->name }} ({{ strtoupper($value->eye) }})</td>
+                <td class="text-right border-0">{{ $value->qty }}</td>
+                <td class="text-right border-0">{{ $value->unit_price }}</td>
+                <td class="text-right border-0">{{ $value->total }}</td>
             </tr>
             @empty
             @endforelse
             <tr>
-                <td colspan="4" class="text-right"><b>Total</b></td>
-                <td class="text-right"><b>{{ $order->invoice_total }}</b></td>
+                <td colspan="4" class="text-right border-0"><b>Total</b></td>
+                <td class="text-right border-0"><b>{{ $order->invoice_total }}</b></td>
             </tr>
             <tr>
-                <td colspan="4" class="text-right"><b>Discount</b></td>
-                <td class="text-right"><b>{{ $order->discount ?? '0.00' }}</b></td>
+                <td colspan="4" class="text-right border-0"><b>Discount</b></td>
+                <td class="text-right border-0"><b>{{ $order->discount ?? '0.00' }}</b></td>
             </tr>
             <tr>
-                <td colspan="4" class="text-right"><b>Advance</b></td>
-                <td class="text-right"><b>{{ $order->advance }}</b></td>
+                <td colspan="4" class="text-right border-0"><b>Advance</b></td>
+                <td class="text-right border-0"><b>{{ $order->advance }}</b></td>
             </tr>
             <tr>
-                <td colspan="4" class="text-right"><b>Balance</b></td>
-                <td class="text-right"><b>{{ $order->balance }}</b></td>
+                <td colspan="4" class="text-right border-0"><b>Balance</b></td>
+                <td class="text-right border-0"><b>{{ $order->balance }}</b></td>
             </tr>
         </tbody>
     </table>
+    <div class="row mt-30">
+        <div class="col">
+            <p>Order Note / Comments: {{ $order->order_note }}</p>
+        </div>
+    </div>
     <center>
         <p class="txt">Heartly welcome to Devi Opticians Family. Thank you for your order. For any enquiry about your order please contact us on 93 88 611 622</p>
     </center>
@@ -81,7 +92,7 @@
         <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($order->invoice_number , 'C39', 1, 30, array(110, 38, 14))}}" alt="barcode" />
     </div>-->
 </div>
-<hr style="border: 1px dotted;">
+<hr style="border: 1px dotted; color:blue;">
 <div class="row mt-30">
     <div class="col">
         <table class="table" width="75%" cellpadding="0" cellspacing="0">
@@ -124,7 +135,7 @@
                 @forelse($order->details as $key => $value)
                 <tr>
                     <td class="no-border">{{ $slno++ }}</td>
-                    <td class="no-border">{{ $value->eye }}</td>
+                    <td class="no-border">{{ strtoupper($value->eye) }}</td>
                     <td class="no-border">{{ $value->product->name }}</td>
                     <td class="text-right no-border">{{ $value->qty }}</td>
                 </tr>
