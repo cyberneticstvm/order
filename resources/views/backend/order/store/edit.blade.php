@@ -170,7 +170,7 @@
                                                     <td>
                                                         <input type="text" name='int_add[]' class="w-100 border-0 text-center" value="{{ $item->int_add ?? '' }}" placeholder="0.00" maxlength="6" />
                                                     </td>
-                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" value="{{ $item->ipd ?? '' }}" maxlength="6" /></td>
+                                                    <td width="15%"><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" value="{{ $item->ipd ?? '' }}" maxlength="6" /></td>
                                                     @endif
                                                     @if(in_array($item->eye, ['frame', 'service']))
                                                     <td colspan="7">
