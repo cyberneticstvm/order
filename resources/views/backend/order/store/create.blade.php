@@ -125,7 +125,7 @@
                                                     <th width="6%">DIA</th>
                                                     <th>INT.ADD</th>
                                                     <th width="6%">IPD</th>
-                                                    <th width="50%">Product</th>
+                                                    <th width="40%">Product</th>
                                                     <th width="5%">Qty</th>
                                                     <th width="10%">Price</th>
                                                     <th width="15%">Total</th>
