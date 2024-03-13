@@ -38,6 +38,9 @@
                                     <small class="text-danger">{{ $errors->first('file') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-12">
+                                    <a href="{{ asset('/backend/assets/docs/Purchases.xlsx') }}">Download Format</a>
+                                </div>
                             </form>
                         </div>
                     </div>

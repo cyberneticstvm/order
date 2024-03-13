@@ -200,6 +200,11 @@
                         <li><a href="{{ route('product.service') }}">Service List</a></li>
                     </ul>
                 </li>
+                <li><a class="submenu-title" href="javascript:void(0)">Import Purchases<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+                    <ul class="nav-sub-childmenu submenu-content">
+                        <li><a href="{{ route('import.frame.purchase') }}">Import</a></li>
+                    </ul>
+                </li>
             </ul>
         </li>
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>

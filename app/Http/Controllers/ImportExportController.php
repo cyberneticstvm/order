@@ -48,7 +48,7 @@ class ImportExportController extends Controller
 
     public function importFramePurchase()
     {
-        return view('backend.purchase.frame.import');
+        return view('backend.purchase.import');
     }
 
     public function importFramePurchaseUpdate(Request $request)
