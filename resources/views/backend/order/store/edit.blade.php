@@ -126,8 +126,8 @@
                                                     <th width="6%">IPD</th>
                                                     <th width="40%">Product</th>
                                                     <th width="5%">Qty</th>
-                                                    <th width="5%">Price</th>
-                                                    <th width="15%">Total</th>
+                                                    <th>Price</th>
+                                                    <th width="10%">Total</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="powerbox">
