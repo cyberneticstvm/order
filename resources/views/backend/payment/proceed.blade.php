@@ -31,8 +31,8 @@
                     <div class="card-body">
                         <div class="card-wrapper row g-4">
                             <div class="col-md-3">
-                                <label class="form-label">Invoice Number</label>
-                                {{ html()->text($name = 'ino', $value = $order->invoice_number)->class('form-control')->attribute('disabled') }}
+                                <label class="form-label">Order Number</label>
+                                {{ html()->text($name = 'ino', $value = $order->branch->code.'/'.$order->id)->class('form-control')->attribute('disabled') }}
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">Patient Name</label>

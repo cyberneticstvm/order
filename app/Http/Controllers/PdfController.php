@@ -101,7 +101,8 @@ class PdfController extends Controller
     public function exportPaymentReceipt($id)
     {
         $payment = Payment::findOrFail(decrypt($id));
-        $pdf = PDF::loadView('/backend/pdf/payment-receipt', compact('payment'));
+        $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
+        $pdf = PDF::loadView('/backend/pdf/payment-receipt', compact('payment', 'qrcode'));
         return $pdf->stream($payment->id . '.pdf');
     }
 

@@ -48,9 +48,9 @@ class PaymentController extends Controller
     public function fetch(Request $request)
     {
         $this->validate($request, [
-            'invoice_number' => 'required',
+            'order_number' => 'required',
         ]);
-        $order = Order::findOrFail($request->invoice_number);
+        $order = Order::findOrFail($request->order_number);
         return view('backend.payment.proceed', compact('order'));
     }
 

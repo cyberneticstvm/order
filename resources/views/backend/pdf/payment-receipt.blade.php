@@ -20,8 +20,8 @@
                 <tr>
                     <td widtd="20%">Payment ID</td>
                     <td widtd="25%">{{ $payment->id }}</td>
-                    <td widtd="10%">Invoice Number</td>
-                    <td widtd="45%">{{ $payment->order->invoice_number }}</td>
+                    <td widtd="10%">Order Number</td>
+                    <td widtd="45%">{{ $payment->order->branch->code.'/'.$payment->order->id }}</td>
                 </tr>
                 <tr>
                     <td widtd="20%">Customer Mobile</td>
