@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Payment;
 use App\Models\PaymentMode;
+use App\Models\Power;
 use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
@@ -60,7 +61,8 @@ class StoreOrderController extends Controller
         $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', decrypt($id))->first();
         $spectacle = DB::connection('mysql1')->table('spectacles')->where('medical_record_id', decrypt($id))->first();
         $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();
-        return view('backend.order.store.create', compact('products', 'patient', 'pmodes', 'padvisers', 'mrecord', 'spectacle'));
+        $powers = Power::all();
+        return view('backend.order.store.create', compact('products', 'patient', 'pmodes', 'padvisers', 'mrecord', 'spectacle', 'powers'));
     }
 
     public function fetch(Request $request)
@@ -136,10 +138,10 @@ class StoreOrderController extends Controller
                         'tax_percentage' => $product->tax_percentage,
                         'tax_amount' => $product->taxamount($request->total[$key]),
                         'eye' => $request->eye[$key],
-                        'sph' => $request->sph[$key],
-                        'cyl' => $request->cyl[$key],
-                        'axis' => $request->axis[$key],
-                        'add' => $request->add[$key],
+                        'sph' => $request->sph[$key] ?? NULL,
+                        'cyl' => $request->cyl[$key] ?? NULL,
+                        'axis' => $request->axis[$key] ?? NULL,
+                        'add' => $request->add[$key] ?? NULL,
                         'dia' => $request->dia[$key],
                         'ipd' => $request->ipd[$key],
                         'int_add' => $request->int_add[$key],
@@ -186,7 +188,8 @@ class StoreOrderController extends Controller
         $pmodes = $this->pmodes;
         $padvisers = $this->padvisers;
         $order = Order::with('details')->findOrFail(decrypt($id));
-        return view('backend.order.store.edit', compact('products', 'pmodes', 'padvisers', 'order'));
+        $powers = Power::all();
+        return view('backend.order.store.edit', compact('products', 'pmodes', 'padvisers', 'order', 'powers'));
     }
 
     /**
@@ -241,10 +244,10 @@ class StoreOrderController extends Controller
                         'tax_percentage' => $product->tax_percentage,
                         'tax_amount' => $product->taxamount($request->total[$key]),
                         'eye' => $request->eye[$key],
-                        'sph' => $request->sph[$key],
-                        'cyl' => $request->cyl[$key],
-                        'axis' => $request->axis[$key],
-                        'add' => $request->add[$key],
+                        'sph' => $request->sph[$key] ?? NULL,
+                        'cyl' => $request->cyl[$key] ?? NULL,
+                        'axis' => $request->axis[$key] ?? NULL,
+                        'add' => $request->add[$key] ?? NULL,
                         'dia' => $request->dia[$key],
                         'ipd' => $request->ipd[$key],
                         'int_add' => $request->int_add[$key],

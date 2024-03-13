@@ -152,10 +152,20 @@
                                                         </select>
                                                     </td>
                                                     @if(in_array($item->eye, ['re', 'le', 'both']))
-                                                    <td><input type="text" name='sph[]' class="w-100 border-0 text-center" placeholder="SPH" value="{{ $item->sph ?? '' }}" maxlength="6" /></td>
-                                                    <td><input type="text" name='cyl[]' class="w-100 border-0 text-center" placeholder="CYL" value="{{ $item->cyl ?? '' }}" maxlength="6" /></td>
-                                                    <td><input type="number" name='axis[]' class="w-100 border-0 text-center" placeholder="AXIS" value="{{ $item->axis ?? '' }}" step="any" max="360" /></td>
-                                                    <td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" value="{{ $item->add ?? '' }}" maxlength="6" /></td>
+
+                                                    <td>
+                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $item->sph ?? '')->class('border-0 select2')->attribute('id', 'sph_'.$key) }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $item->cyl ?? '')->class('border-0 select2')->attribute('id', 'cyl_'.$key) }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $item->axis ?? '')->class('border-0 select2')->attribute('id', 'axis_'.$key) }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $item->add ?? '')->class('border-0 select2')->attribute('id', 'add_'.$key) }}
+                                                    </td>
+
                                                     <td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" value="{{ $item->dia ?? '' }}" maxlength="6" /></td>
                                                     <td>
                                                         <input type="text" name='int_add[]' class="w-100 border-0 text-center" value="{{ $item->int_add ?? '' }}" placeholder="0.00" maxlength="6" />

@@ -88,14 +88,14 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Case Type</label>
-                                    {{ html()->select('case_type', casetypes(), old('case_type'))->class('form-control select2')->placeholder('Select')->required() }}
+                                    {{ html()->select('case_type', casetypes(), 'rexine')->class('form-control select2')->placeholder('Select')->required() }}
                                     @error('case_type')
                                     <small class="text-danger">{{ $errors->first('case_type') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Order Status</label>
-                                    {{ html()->select('order_status', orderStatuses(), old('order_status'))->class('form-control select2')->placeholder('Select')->required() }}
+                                    {{ html()->select('order_status', orderStatuses(), 'booked')->class('form-control select2')->placeholder('Select')->required() }}
                                     @error('order_status')
                                     <small class="text-danger">{{ $errors->first('order_status') }}</small>
                                     @enderror
@@ -141,10 +141,18 @@
                                                             <option value="re">RE</option>
                                                         </select>
                                                     </td>
-                                                    <td><input type="text" name='sph[]' class="w-100 border-0 text-center" placeholder="SPH" value="{{ $spectacle?->re_dist_sph ?? '' }}" maxlength="6" /></td>
-                                                    <td><input type="text" name='cyl[]' class="w-100 border-0 text-center" placeholder="CYL" value="{{ $spectacle?->re_dist_cyl ?? '' }}" maxlength="6" /></td>
-                                                    <td><input type="number" name='axis[]' class="w-100 border-0 text-center" placeholder="AXIS" value="{{ $spectacle?->re_dist_axis ?? '' }}" step="any" max="360" /></td>
-                                                    <td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" value="{{ $spectacle?->re_dist_add ?? '' }}" maxlength="6" /></td>
+                                                    <td>
+                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->re_dist_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->re_dist_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->re_dist_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->re_dist_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2') }}
+                                                    </td>
                                                     <td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" maxlength="6" /></td>
                                                     <td>
                                                         <input type="text" name='int_add[]' class="w-100 border-0 text-center" placeholder="0.00" value="{{ $spectacle?->re_int_add ?? '' }}" maxlength="6" />
@@ -166,10 +174,18 @@
                                                             <option value="le">LE</option>
                                                         </select>
                                                     </td>
-                                                    <td><input type="text" name='sph[]' class="w-100 border-0 text-center" placeholder="SPH" value="{{ $spectacle?->le_dist_sph ?? '' }}" maxlength="6" /></td>
-                                                    <td><input type="text" name='cyl[]' class="w-100 border-0 text-center" placeholder="CYL" value="{{ $spectacle?->le_dist_cyl ?? '' }}" maxlength="6" /></td>
-                                                    <td><input type="number" name='axis[]' class="w-100 border-0 text-center" placeholder="AXIS" value="{{ $spectacle?->le_dist_axis ?? '' }}" step="any" max="360" /></td>
-                                                    <td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" value="{{ $spectacle?->le_dist_add ?? '' }}" maxlength="6" /></td>
+                                                    <td>
+                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->le_dist_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'sph1') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->le_dist_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'cyl1') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->le_dist_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'axis1') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->le_dist_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'add1') }}
+                                                    </td>
                                                     <td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" maxlength="6" /></td>
                                                     <td>
                                                         <input type="text" name='int_add[]' class="w-100 border-0 text-center" value="{{ $spectacle?->le_int_add ?? '' }}" placeholder="0.00" maxlength="6" />
