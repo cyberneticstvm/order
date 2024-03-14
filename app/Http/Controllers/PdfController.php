@@ -117,7 +117,7 @@ class PdfController extends Controller
 
     public function invoices()
     {
-        $invoices = Order::latest()->get();
+        $invoices = Order::where('branch_id', Session::get('branch'))->latest()->get();
         return view('backend.order.invoices', compact('invoices'));
     }
 
