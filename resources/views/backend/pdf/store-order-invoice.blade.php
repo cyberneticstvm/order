@@ -15,8 +15,6 @@
             <tr>
                 <td class="no-border">Bill / Invoice No: </td>
                 <td class="no-border">{{ $order->invoice_number }}</td>
-            </tr>
-            <tr>
                 <td class="no-border">Bill / Invoice Date:</td>
                 <td class="no-border"> {{ $order->payments?->first()?->created_at?->format('d, M Y') }}</td>
             </tr>
