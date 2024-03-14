@@ -366,6 +366,7 @@ function addStoreOrderRow(category) {
 
                         var sphdata = $.map(power.sph, function (obj) {
                             obj.text = obj.value || obj.value;
+                            obj.selected = (obj.default) ?? '';
                             return obj;
                         });
                         $('.selSph').last().select2({
@@ -375,6 +376,7 @@ function addStoreOrderRow(category) {
 
                         var cyldata = $.map(power.cyl, function (obj) {
                             obj.text = obj.value || obj.value;
+                            obj.selected = (obj.default) ?? '';
                             return obj;
                         });
                         $('.selCyl').last().select2({
@@ -384,6 +386,7 @@ function addStoreOrderRow(category) {
 
                         var axisdata = $.map(power.axis, function (obj) {
                             obj.text = obj.value || obj.value;
+                            obj.selected = (obj.default) ?? '';
                             return obj;
                         });
                         $('.selAxis').last().select2({
@@ -393,6 +396,7 @@ function addStoreOrderRow(category) {
 
                         var adddata = $.map(power.add, function (obj) {
                             obj.text = obj.value || obj.value;
+                            obj.selected = (obj.default) ?? '';
                             return obj;
                         });
                         $('.selAdd').last().select2({
@@ -402,6 +406,7 @@ function addStoreOrderRow(category) {
 
                         var intaddata = $.map(power.intad, function (obj) {
                             obj.text = obj.value || obj.value;
+                            obj.selected = (obj.default) ?? '';
                             return obj;
                         });
                         $('.selIntAdd').last().select2({
