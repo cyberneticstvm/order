@@ -45,7 +45,7 @@ class StoreOrderController extends Controller
     }
     public function index()
     {
-        $orders = $this->orders;
+        $orders = Order::where('category', 'store')->where('branch_id', Session::get('branch'))->whereDate('created_at', Carbon::today())->withTrashed()->latest()->get();
         return view('backend.order.store.index', compact('orders'));
     }
 
