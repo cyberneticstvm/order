@@ -80,9 +80,10 @@ $(function () {
                     dis.parent().parent().next().find(".price, .total").val(parseFloat(res.selling_price).toFixed(2));
                 }
                 if (res.code == 'F1108' || res.code == 'L1109') {
-                    $(".price, .total").removeAttr('readonly');
+                    dis.parent().parent().find(".price, .total").removeAttr('readonly');
+                    dis.parent().parent().next().find(".price, .total").removeAttr('readonly');
                 } else {
-                    $(".price, .total").attr('readonly', 'true');
+                    dis.parent().parent().find(".price, .total").attr('readonly', 'true');
                 }
                 calculateTotal()
             }
