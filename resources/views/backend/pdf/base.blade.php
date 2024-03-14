@@ -10,16 +10,6 @@
       font-weight: normal;
     }
 
-    footer {
-      position: fixed;
-      bottom: -60px;
-      left: 0px;
-      right: 0px;
-      height: 50px;
-      color: #000;
-      text-align: center;
-    }
-
     .text-center {
       text-align: center;
     }
@@ -65,6 +55,10 @@
       margin-top: 50px;
     }
 
+    .pt-50 {
+      padding-top: 50px;
+    }
+
     .mt-100 {
       margin-top: 100%;
     }
@@ -88,6 +82,21 @@
     .txt {
       font-size: 10px !important;
     }
+
+    .b-0 {
+      border-bottom: none !important;
+      border-top: none !important;
+    }
+
+    footer {
+      position: fixed;
+      bottom: -30px;
+      left: 0px;
+      right: 0px;
+      height: 50px;
+      text-align: center;
+      line-height: 35px;
+    }
   </style>
 </head>
 
@@ -95,7 +104,7 @@
   <div class="container">
     <div class="row">
       <div class="col text-center">
-        <img src="./backend/assets/images/logo/devi-logo.png" width='30%' />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="./backend/assets/images/logo/devi-logo.png" width='30%' />
         @if($qrcode)
         <div style="float: right;"><img src="data:image/png;base64, {!! $qrcode !!}"></div>
         @endif

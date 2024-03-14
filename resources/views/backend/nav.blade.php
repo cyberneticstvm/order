@@ -72,7 +72,7 @@
                 <h6>Order</h6>
             </div>
         </li>
-        @if(auth()->user()->can('store-order-list') || auth()->user()->can('store-order-create') || auth()->user()->can('store-order-edit') || auth()->user()->can('store-order-delete'))
+        @if(auth()->user()->can('store-order-list') || auth()->user()->can('store-order-create') || auth()->user()->can('store-order-edit') || auth()->user()->can('store-order-delete') || auth()->user()->can('invoice-register'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -85,7 +85,8 @@
             </a>
             {{
                 Menu::new()->addClass('sidebar-submenu')
-                ->linkIfCan('store-order-list', route('store.order'), 'Order Register');
+                ->linkIfCan('store-order-list', route('store.order'), 'Order Register')
+                ->linkIfCan('invoice-register', route('invoice.register'), 'Invoice Register');
             }}
         </li>
         @endif
@@ -185,7 +186,6 @@
                         <li><a href="{{ route('product.frame') }}">Frame List</a></li>
                         <li><a href="{{ route('frame.purchase') }}">Frame Purchase</a></li>
                         <li><a href="{{ route('frame.transfer') }}">Frame Transfer</a></li>
-                        <li><a href="{{ route('import.frame.purchase') }}">Import</a></li>
                     </ul>
                 </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Lens<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>

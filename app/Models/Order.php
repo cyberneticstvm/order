@@ -34,9 +34,9 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class, 'order_id', 'id');
     }
 
-    public function payment()
+    public function payments()
     {
-        return $this->hasOne(Payment::class, 'order_id', 'id');
+        return $this->hasMany(Payment::class, 'order_id', 'id');
     }
 
     public function adviser()

@@ -26,6 +26,11 @@ function settings()
     return Setting::findOrFail(1);
 }
 
+function hsn()
+{
+    return array('lens' => '9001', 'frame' => '9003', 're' => '9001', 'le' => '9001');
+}
+
 function title()
 {
     return settings()->company_name;

@@ -158,7 +158,7 @@ class StoreOrderController extends Controller
                         'payment_type' => 'advance',
                         'amount' => $request->advance,
                         'payment_mode' => $request->payment_mode,
-                        'notes' => 'Advance received against invoice number ' . $order->invoice_number,
+                        'notes' => 'Advance received against order number ' . $order->branch->code . '/' . $order->id,
                         'branch_id' => branch()->id,
                         'created_by' => $request->user()->id,
                         'updated_by' => $request->user()->id,
