@@ -79,6 +79,11 @@ $(function () {
                     dis.parent().parent().next().find(".qty").val('1');
                     dis.parent().parent().next().find(".price, .total").val(parseFloat(res.selling_price).toFixed(2));
                 }
+                if (res.code == 'F1108' || res.code == 'L1109') {
+                    $(".price, .total").removeAttr('readonly');
+                } else {
+                    $(".price, .total").attr('readonly', 'true');
+                }
                 calculateTotal()
             }
         });
