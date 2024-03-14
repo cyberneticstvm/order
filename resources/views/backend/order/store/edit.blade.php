@@ -168,7 +168,7 @@
 
                                                     <td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" value="{{ $item->dia ?? '' }}" maxlength="6" /></td>
                                                     <td>
-                                                        {{ html()->select('int_add[]', $powers?->where('name', 'intad')->pluck('value', 'value'), $item->int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'add_'.$key) }}
+                                                        {{ html()->select('int_add[]', $powers?->where('name', 'intad')->pluck('value', 'value'), $item->int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'int_add_'.$key) }}
                                                         <input type="text" name='int_add[]' class="w-100 border-0 text-center" value="{{ $item->int_add ?? '' }}" placeholder="0.00" maxlength="6" />
                                                     </td>
                                                     <td width="15%"><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" value="{{ $item->ipd ?? '' }}" maxlength="6" /></td>
