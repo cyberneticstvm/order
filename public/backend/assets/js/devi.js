@@ -114,7 +114,7 @@ $(function () {
         });
     });
 
-    $(document).on("keyup", ".qty, .discount, .advance", function () {
+    $(document).on("keyup", ".qty, .discount, .advance, .price, .total", function () {
         calculateTotal();
     });
 
