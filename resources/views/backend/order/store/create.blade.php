@@ -157,7 +157,7 @@
                                                     <td>
                                                         {{ html()->select('int_add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->re_int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2') }}
                                                     </td>
-                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" maxlength="6" /></td>
+                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" value="{{ $spectacle?->ipd ?? '' }}" maxlength="6" /></td>
                                                     <td>
                                                         {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctFirst')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens1')->placeholder('Select')->required() }}
                                                     </td>
