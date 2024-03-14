@@ -90,6 +90,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/daybook/details', 'getDaybookDetailed')->name('ajax.daybook.detailed');
 
         Route::get('/payment/details/{consultation}', 'getPaymentDetailsByConsultation')->name('ajax.payment.by.consultation');
+
+        Route::get('/power', 'powers')->name('ajax.power.get');
     });
 
     Route::prefix('/backend')->controller(HelperController::class)->group(function () {

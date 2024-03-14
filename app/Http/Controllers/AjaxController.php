@@ -6,6 +6,7 @@ use App\Models\Consultation;
 use App\Models\Order;
 use App\Models\PatientProcedure;
 use App\Models\Payment;
+use App\Models\Power;
 use App\Models\Product;
 use App\Models\ProductSubcategory;
 use App\Models\PurchaseDetail;
@@ -58,6 +59,22 @@ class AjaxController extends Controller
     {
         $types = ProductSubcategory::where('category', $category)->where('attribute', $attribute)->orderBy('name')->get();
         return response()->json($types);
+    }
+
+    public function powers()
+    {
+        $sph = Power::where('name', 'sph')->get();
+        $cyl = Power::where('name', 'cyl')->get();
+        $axis = Power::where('name', 'axis')->get();
+        $add = Power::where('name', 'add')->get();
+        $intad = Power::where('name', 'intad')->get();
+        return response()->json([
+            'sph' => $sph,
+            'cyl' => $cyl,
+            'axis' => $axis,
+            'add' => $add,
+            'intad' => $intad
+        ]);
     }
 
     public function getPaymentDetailsByConsultation($cid)

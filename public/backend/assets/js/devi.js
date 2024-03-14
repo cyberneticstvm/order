@@ -347,14 +347,79 @@ function addStoreOrderRow(category) {
         dataType: 'json',
         success: function (res) {
             if (category === 'lens') {
-                $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="border-0" name="eye[]"><option value="re">RE</option><option value="le">LE</option><option value="both">Both</option></select></td><td><input type="text" name='sph[]' class="w-100 border-0 text-center" placeholder="SPH" maxlength="6" /></td><td><input type="text" name='cyl[]' class="w-100 border-0 text-center" placeholder="CYL" maxlength="6" /></td><td><input type="number" name='axis[]' class="w-100 border-0 text-center" placeholder="AXIS" step="any" max="360" /></td><td><input type="text" name='add[]' class="w-100 border-0 text-center" placeholder="ADD" maxlength="6" /></td><td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" maxlength="6" /></td><td><input type="text" name='int_add[]' class="w-100 border-0 text-center" placeholder="0.00" maxlength="6" /></td><td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" maxlength="6" /></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="lens" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
+                $.ajax({
+                    type: 'GET',
+                    url: '/ajax/power/',
+                    dataType: 'json',
+                    success: function (power) {
+                        $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="border-0" name="eye[]"><option value="re">RE</option><option value="le">LE</option><option value="both">Both</option></select></td><td><select name='sph[]' class="border-0 select2 selSph"></select></td><td><select name='cyl[]' class="border-0 select2 selCyl"></select></td><td><select name='axis[]' class="border-0 select2 selAxis"></select></td><td><select name='add[]' class="border-0 select2 selAdd"></select></td><td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" maxlength="6" /></td><td><select name='int_add[]' class="border-0 select2 selIntAdd"></select></td><td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" maxlength="6" /></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="lens" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
+
+                        var xdata = $.map(res, function (obj) {
+                            obj.text = obj.name || obj.id;
+                            return obj;
+                        });
+                        //$('.selPdct').last().select2().empty();                      
+                        $('.selPdct').last().select2({
+                            placeholder: 'Select',
+                            data: xdata
+                        });
+
+                        var sphdata = $.map(power.sph, function (obj) {
+                            obj.text = obj.value || obj.value;
+                            return obj;
+                        });
+                        $('.selSph').last().select2({
+                            placeholder: 'Select',
+                            data: sphdata
+                        });
+
+                        var cyldata = $.map(power.cyl, function (obj) {
+                            obj.text = obj.value || obj.value;
+                            return obj;
+                        });
+                        $('.selCyl').last().select2({
+                            placeholder: 'Select',
+                            data: cyldata
+                        });
+
+                        var axisdata = $.map(power.axis, function (obj) {
+                            obj.text = obj.value || obj.value;
+                            return obj;
+                        });
+                        $('.selAxis').last().select2({
+                            placeholder: 'Select',
+                            data: axisdata
+                        });
+
+                        var adddata = $.map(power.add, function (obj) {
+                            obj.text = obj.value || obj.value;
+                            return obj;
+                        });
+                        $('.selAdd').last().select2({
+                            placeholder: 'Select',
+                            data: adddata
+                        });
+
+                        var intaddata = $.map(power.intad, function (obj) {
+                            obj.text = obj.value || obj.value;
+                            return obj;
+                        });
+                        $('.selIntAdd').last().select2({
+                            placeholder: 'Select',
+                            data: intaddata
+                        });
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                });
             }
             if (category === 'frame') {
-                $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td colspan="8"><select class="border-0" name="eye[]"><option value="frame">Frame</option></select><div class="d-none"><input type="hidden" name="sph[]" /><input type="hidden" name="cyl[]" /><input type="hidden" name="axis[]" /><input type="hidden" name="add[]" /><input type="hidden" name="dia[]" /><input type="hidden" name="ipd[]" /><input type="hidden" name="thickness[]" /></div></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="frame" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
+                $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td colspan="8"><select class="border-0" name="eye[]"><option value="frame">Frame</option></select><div class="d-none"><input type="hidden" name="sph[]" /><input type="hidden" name="cyl[]" /><input type="hidden" name="axis[]" /><input type="hidden" name="add[]" /><input type="hidden" name="dia[]" /><input type="hidden" name="ipd[]" /><input type="hidden" name="int_add[]" /></div></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="frame" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
             }
             if (category === 'service') {
                 $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td colspan="8"><select class="border-0" name="eye[]"><option value="service">Service</option></select><div class="d-none"><input type="hidden" name="sph[]" /><input type="hidden" name="cyl[]" /><input type="hidden" name="axis[]" /><input type="hidden" name="add[]" />
-                <input type="hidden" name="dia[]" /><input type="hidden" name="ipd[]" /><input type="hidden" name="thickness[]" /></div></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="service" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
+                <input type="hidden" name="dia[]" /><input type="hidden" name="ipd[]" /><input type="hidden" name="int_add[]" /></div></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="service" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
             }
             var xdata = $.map(res, function (obj) {
                 obj.text = obj.name || obj.id;
