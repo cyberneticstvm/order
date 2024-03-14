@@ -13,10 +13,10 @@
         <h4 class="text-center"><u>GST INVOICE</u></h4>
         <table width=100%>
             <tr>
-                <td class="no-border">Bill / Invoice No: </td>
-                <td class="no-border">{{ $order->invoice_number }}</td>
-                <td class="no-border">Bill / Invoice Date:</td>
-                <td class="no-border"> {{ $order->payments?->first()?->created_at?->format('d, M Y') }}</td>
+                <td class="no-border" width="15%">Bill / Invoice No: </td>
+                <td class="no-border" width="35%">{{ $order->invoice_number }}</td>
+                <td class="no-border" width="15%">Bill / Invoice Date:</td>
+                <td class="no-border" width="35%"> {{ $order->payments?->first()?->created_at?->format('d, M Y') }}</td>
             </tr>
         </table>
     </div>
