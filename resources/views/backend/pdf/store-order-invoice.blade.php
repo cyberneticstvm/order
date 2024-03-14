@@ -11,7 +11,7 @@
 <div class="row">
     <div class="col">
         <h4 class="text-center"><u>GST INVOICE</u></h4>
-        <table width=40%>
+        <table width=100%>
             <tr>
                 <td class="no-border">Bill / Invoice No: </td>
                 <td class="no-border">{{ $order->invoice_number }}</td>
