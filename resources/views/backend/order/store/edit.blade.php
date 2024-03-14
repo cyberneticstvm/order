@@ -154,20 +154,21 @@
                                                     @if(in_array($item->eye, ['re', 'le', 'both']))
 
                                                     <td>
-                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $item->sph ?? '')->class('border-0 select2')->attribute('id', 'sph_'.$key) }}
+                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $item->sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'sph_'.$key) }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $item->cyl ?? '')->class('border-0 select2')->attribute('id', 'cyl_'.$key) }}
+                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $item->cyl ??  $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'cyl_'.$key) }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $item->axis ?? '')->class('border-0 select2')->attribute('id', 'axis_'.$key) }}
+                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $item->axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'axis_'.$key) }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $item->add ?? '')->class('border-0 select2')->attribute('id', 'add_'.$key) }}
+                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $item->add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'add_'.$key) }}
                                                     </td>
 
                                                     <td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" value="{{ $item->dia ?? '' }}" maxlength="6" /></td>
                                                     <td>
+                                                        {{ html()->select('int_add[]', $powers?->where('name', 'intad')->pluck('value', 'value'), $item->int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'add_'.$key) }}
                                                         <input type="text" name='int_add[]' class="w-100 border-0 text-center" value="{{ $item->int_add ?? '' }}" placeholder="0.00" maxlength="6" />
                                                     </td>
                                                     <td width="15%"><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" value="{{ $item->ipd ?? '' }}" maxlength="6" /></td>
