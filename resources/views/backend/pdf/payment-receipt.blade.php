@@ -55,7 +55,7 @@
             <tbody>
                 <tr>
                     <td class="no-border">1</td>
-                    <td class="no-border">Payment received againt order number {{ $payment->order->branch->code.'/'.$payment->order->id }}</td>
+                    <td class="no-border">Payment received against order number {{ $payment->order->branch->code.'/'.$payment->order->id }}</td>
                     <td class="no-border">{{ $payment->paymentmode->name }}</td>
                     <td class="no-border text-end">{{ $payment->amount }}</td>
                 </tr>
