@@ -43,6 +43,10 @@
       text-align: left;
     }
 
+    .pd-1 {
+      padding: 3px !important;
+    }
+
     .mt-10 {
       margin-top: 10px;
     }

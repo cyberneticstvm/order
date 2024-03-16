@@ -80,7 +80,7 @@
                                         <th>Customer Name</th>
                                         <th>MRN</th>
                                         <th>Order Total</th>
-                                        <th>Receipt</th>
+                                        <th>Print</th>
                                         <th>Status</th>
                                         <th>Edit</th>
                                         <th>Delete</th>

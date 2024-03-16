@@ -7,34 +7,33 @@
 </div>
 <div class="row">
     <div class="col">
-        <h4 class="text-center">RECEIPT</h4>
+        <h4 class="text-center">ORDER DETAILS</h4>
         <table class="table" width="100%" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
-                    <td widtd="20%" class="border-0">Customer Name</td>
-                    <td widtd="25%" class="border-0">{{ $order->name }}</td>
-                    <td widtd="10%" class="border-0">Address</td>
-                    <td widtd="45%" class="border-0">{{ $order->place }}</td>
+                    <td width="20%" class="border-0">Customer Name</td>
+                    <td width="25%" class="border-0 fw-bold">{{ $order->name }}</td>
+                    <td width="10%" class="border-0">Address</td>
+                    <td width="45%" class="border-0 fw-bold" colspan="3">{{ $order->place }}</td>
                 </tr>
                 <tr>
-                    <td widtd="20%" class="border-0">Product Adviser</td>
-                    <td widtd="25%" class="border-0">{{ $order->adviser->name }}</td>
-                    <td widtd="10%" class="border-0">Order Number</td>
-                    <td widtd="45%" class="border-0">{{ $order->branch->code }}/{{ $order->id }}</td>
+                    <td width="20%" class="border-0">Product Adviser</td>
+                    <td width="25%" class="border-0 fw-bold">{{ $order->adviser->name }}</td>
+                    <td width="15%" class="border-0">Order Number</td>
+                    <td width="40%" class="border-0 fw-bold" colspan="3">{{ $order->branch->code }}/{{ $order->id }}</td>
                 </tr>
                 <tr>
-                    <td widtd="20%" class="border-0">MRN</td>
-                    <td widtd="25%" class="border-0">{{ $order->consultation_id }}</td>
-                    <td widtd="10%" class="border-0">Order Date</td>
-                    <td widtd="45%" class="border-0">{{ $order->created_at->format('d, M Y') }}</td>
+                    <td width="20%" class="border-0">MRN</td>
+                    <td width="20%" class="border-0 fw-bold">{{ $order->consultation_id }}</td>
+                    <td width="10%" class="border-0">Order Date</td>
+                    <td width="15%" class="border-0 fw-bold">{{ $order->created_at->format('d, M Y') }}</td>
+                    <td class="border-0" width="10%">Exp.Del.Date</td>
+                    <td class="border-0 fw-bold" width="25%">{{ $order->expected_delivery_date->format('d, M Y') }}</td>
                 </tr>
             </thead>
         </table>
     </div>
     <hr style="border: 1px solid; color:red;">
-    <center>
-        <h3>Product Details</h3>
-    </center>
     <table class="border-0" width="100%" cellspacing="0" cellpadding="0">
         <thead>
             <tr>
@@ -54,11 +53,11 @@
             @php $slno = 1; @endphp
             @forelse($order->details as $key => $value)
             <tr>
-                <td class="border-0">{{ $slno++ }}</td>
-                <td class="border-0">{{ $value->product->name }} ({{ strtoupper($value->eye) }})</td>
-                <td class="text-right border-0">{{ $value->qty }}</td>
-                <td class="text-right border-0">{{ $value->unit_price }}</td>
-                <td class="text-right border-0">{{ $value->total }}</td>
+                <td class="border-0 pd-1">{{ $slno++ }}</td>
+                <td class="border-0 pd-1">{{ $value->product->name }} ({{ strtoupper($value->eye) }})</td>
+                <td class="text-right border-0 pd-1">{{ $value->qty }}</td>
+                <td class="text-right border-0 pd-1">{{ $value->unit_price }}</td>
+                <td class="text-right border-0 pd-1">{{ $value->total }}</td>
             </tr>
             @empty
             @endforelse
@@ -98,28 +97,28 @@
         <table class="table" width="75%" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
-                    <td widtd="20%" class="no-border">Customer Name</td>
-                    <td widtd="25%" class="no-border">{{ $order->name }}</td>
-                    <td widtd="10%" class="no-border">Address</td>
-                    <td widtd="45%" class="no-border">{{ $order->place }}</td>
+                    <td width="20%" class="no-border">C.Name</td>
+                    <td width="25%" class="no-border">{{ $order->name }}</td>
+                    <td width="10%" class="no-border">E.D.Date</td>
+                    <td width="45%" class="no-border">{{ $order->expected_delivery_date->format('d, M Y') }}</td>
                 </tr>
                 <tr>
-                    <td widtd="20%" class="no-border">Product Adviser</td>
-                    <td widtd="25%" class="no-border">{{ $order->adviser->name }}</td>
-                    <td widtd="10%" class="no-border">Order Number</td>
-                    <td widtd="45%" class="no-border">{{ $order->branch->code }}/{{ $order->id }}</td>
+                    <td width="20%" class="no-border">P.Adviser</td>
+                    <td width="25%" class="no-border">{{ $order->adviser->name }}</td>
+                    <td width="10%" class="no-border">Ord.Number</td>
+                    <td width="45%" class="no-border">{{ $order->branch->code }}/{{ $order->id }}</td>
                 </tr>
                 <tr>
-                    <td widtd="20%" class="no-border">MRN</td>
-                    <td widtd="25%" class="no-border">{{ $order->consultation_id }}</td>
-                    <td widtd="10%" class="no-border">Order Date</td>
-                    <td widtd="45%" class="no-border">{{ $order->created_at->format('d, M Y') }}</td>
+                    <td width="20%" class="no-border">MRN</td>
+                    <td width="25%" class="no-border">{{ $order->consultation_id }}</td>
+                    <td width="10%" class="no-border">Order Date</td>
+                    <td width="45%" class="no-border">{{ $order->created_at->format('d, M Y') }}</td>
                 </tr>
             </thead>
         </table>
     </div>
 </div>
-<div class="row mt-30">
+<div class="row mt-10">
     <div class="col">
         <table class="bordered" width="75%" cellspacing="0" cellpadding="0">
             <thead>
@@ -145,7 +144,7 @@
         </table>
     </div>
 </div>
-<div class="row mt-30">
+<div class="row mt-10">
     <div class="col">
         <table class="no-border" cellpadding="0" cellspacing="0" width="75%">
             <thead>
@@ -176,9 +175,12 @@
         </table>
     </div>
 </div>
-<div class="row mt-30">
+<div class="row mt-10">
     <div class="col">
         <p>Order Note / Comments: {{ $order->order_note }}</p>
+    </div>
+    <div class="col">
+        <p>Invoice Note: {{ $order->order_note }}</p>
     </div>
 </div>
 @endsection

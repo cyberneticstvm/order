@@ -29,7 +29,7 @@ class AjaxController extends Controller
 
     public function getProductsByCategory($category)
     {
-        $products = Product::where('category', $category)->orderBy('name')->get();
+        $products = Product::where('category', $category)->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
         return response()->json($products);
     }
 
@@ -63,11 +63,11 @@ class AjaxController extends Controller
 
     public function powers()
     {
-        $sph = Power::where('name', 'sph')->get();
-        $cyl = Power::where('name', 'cyl')->get();
-        $axis = Power::where('name', 'axis')->get();
-        $add = Power::where('name', 'add')->get();
-        $intad = Power::where('name', 'intad')->get();
+        $sph = Power::where('name', 'sph')->selectRaw("value as id, value as name")->get();
+        $cyl = Power::where('name', 'cyl')->selectRaw("value as id, value as name")->get();
+        $axis = Power::where('name', 'axis')->selectRaw("value as id, value as name")->get();
+        $add = Power::where('name', 'add')->selectRaw("value as id, value as name")->get();
+        $intad = Power::where('name', 'intad')->selectRaw("value as id, value as name")->get();
         return response()->json([
             'sph' => $sph,
             'cyl' => $cyl,

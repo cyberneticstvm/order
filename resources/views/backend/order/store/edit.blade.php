@@ -40,6 +40,10 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
+                                    <label class="form-label">MRN</label>
+                                    {{ html()->text($name = 'mrn', $value = $order->consultation_id)->class('form-control')->placeholder('MRN') }}
+                                </div>
+                                <div class="col-md-3">
                                     <label class="form-label req">Customer Name</label>
                                     {{ html()->text($name = 'name', $value = $order->name)->class('form-control')->placeholder('Customer Name')->required() }}
                                     @error('name')
@@ -48,7 +52,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Age</label>
-                                    {{ html()->number($name = 'age', $value = $order->age)->class('form-control')->placeholder('0')->required() }}
+                                    {{ html()->number($name = 'age', $value = $order->age)->class('form-control')->placeholder('0') }}
                                     @error('age')
                                     <small class="text-danger">{{ $errors->first('age') }}</small>
                                     @enderror

@@ -41,6 +41,10 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
+                                    <label class="form-label">MRN</label>
+                                    {{ html()->text($name = 'mrn', $value = $mrecord?->id ?? 0)->class('form-control')->placeholder('MRN') }}
+                                </div>
+                                <div class="col-md-3">
                                     <label class="form-label req">Customer Name</label>
                                     {{ html()->text($name = 'name', $value = $patient?->patient_name ?? old('name'))->class('form-control')->placeholder('Customer Name')->required() }}
                                     @error('name')
@@ -49,7 +53,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Age</label>
-                                    {{ html()->number($name = 'age', $value = $patient?->age ?? old('age'))->class('form-control')->placeholder('0')->required() }}
+                                    {{ html()->number($name = 'age', $value = $patient?->age ?? old('age'))->class('form-control')->placeholder('0') }}
                                     @error('age')
                                     <small class="text-danger">{{ $errors->first('age') }}</small>
                                     @enderror
@@ -157,7 +161,7 @@
                                                     <td>
                                                         {{ html()->select('int_add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->re_int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2') }}
                                                     </td>
-                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" value="{{ $spectacle?->ipd ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" value="{{ $spectacle?->rpd ?? '' }}" maxlength="6" /></td>
                                                     <td>
                                                         {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctFirst')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens1')->placeholder('Select')->required() }}
                                                     </td>
@@ -190,7 +194,7 @@
                                                     <td>
                                                         {{ html()->select('int_add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->le_int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'intadd1') }}
                                                     </td>
-                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" value="{{ $spectacle?->ipd ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="text" name='lpd[]' class="w-100 border-0 text-center" placeholder="IPD" value="{{ $spectacle?->ipd ?? '' }}" maxlength="6" /></td>
                                                     <td>
                                                         {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctSecond')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens2')->placeholder('Select')->required() }}
                                                     </td>

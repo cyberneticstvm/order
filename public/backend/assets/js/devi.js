@@ -352,7 +352,7 @@ function addStoreOrderRow(category) {
                     url: '/ajax/power/',
                     dataType: 'json',
                     success: function (power) {
-                        $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="border-0" name="eye[]"><option value="re">RE</option><option value="le">LE</option><option value="both">Both</option></select></td><td><select name='sph[]' class="border-0 select2 selSph"></select></td><td><select name='cyl[]' class="border-0 select2 selCyl"></select></td><td><select name='axis[]' class="border-0 select2 selAxis"></select></td><td><select name='add[]' class="border-0 select2 selAdd"></select></td><td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" maxlength="6" /></td><td><select name='int_add[]' class="border-0 select2 selIntAdd"></select></td><td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" maxlength="6" /></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="lens" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
+                        $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="border-0" name="eye[]"><option value="re">RE</option><option value="le">LE</option></select></td><td><select name='sph[]' class="border-0 select2 selSph"></select></td><td><select name='cyl[]' class="border-0 select2 selCyl"></select></td><td><select name='axis[]' class="border-0 select2 selAxis"></select></td><td><select name='add[]' class="border-0 select2 selAdd"></select></td><td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" maxlength="6" /></td><td><select name='int_add[]' class="border-0 select2 selIntAdd"></select></td><td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" maxlength="6" /></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="lens" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
 
                         var xdata = $.map(res, function (obj) {
                             obj.text = obj.name || obj.id;
@@ -365,7 +365,7 @@ function addStoreOrderRow(category) {
                         });
 
                         var sphdata = $.map(power.sph, function (obj) {
-                            obj.text = obj.value || obj.value;
+                            obj.text = obj.name || obj.id;
                             obj.selected = (obj.default) ?? '';
                             return obj;
                         });
@@ -375,7 +375,7 @@ function addStoreOrderRow(category) {
                         });
 
                         var cyldata = $.map(power.cyl, function (obj) {
-                            obj.text = obj.value || obj.value;
+                            obj.text = obj.name || obj.id;
                             obj.selected = (obj.default) ?? '';
                             return obj;
                         });
@@ -385,7 +385,7 @@ function addStoreOrderRow(category) {
                         });
 
                         var axisdata = $.map(power.axis, function (obj) {
-                            obj.text = obj.value || obj.value;
+                            obj.text = obj.name || obj.id;
                             obj.selected = (obj.default) ?? '';
                             return obj;
                         });
@@ -395,7 +395,7 @@ function addStoreOrderRow(category) {
                         });
 
                         var adddata = $.map(power.add, function (obj) {
-                            obj.text = obj.value || obj.value;
+                            obj.text = obj.name || obj.id;
                             obj.selected = (obj.default) ?? '';
                             return obj;
                         });
@@ -405,7 +405,7 @@ function addStoreOrderRow(category) {
                         });
 
                         var intaddata = $.map(power.intad, function (obj) {
-                            obj.text = obj.value || obj.value;
+                            obj.text = obj.name || obj.id;
                             obj.selected = (obj.default) ?? '';
                             return obj;
                         });
