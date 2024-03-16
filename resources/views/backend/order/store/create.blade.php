@@ -40,7 +40,7 @@
                                     <small class="text-danger">{{ $errors->first('order_date') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label class="form-label">MRN</label>
                                     {{ html()->text($name = 'mrn', $value = $mrecord?->id ?? 0)->class('form-control')->placeholder('MRN') }}
                                 </div>
@@ -52,7 +52,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="form-label req">Age</label>
+                                    <label class="form-label">Age</label>
                                     {{ html()->number($name = 'age', $value = $patient?->age ?? old('age'))->class('form-control')->placeholder('0') }}
                                     @error('age')
                                     <small class="text-danger">{{ $errors->first('age') }}</small>
@@ -86,9 +86,17 @@
                                     <small class="text-danger">{{ $errors->first('expected_delivery_date') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-3">
                                     <label class="form-label">Order Note</label>
                                     {{ html()->text($name = 'order_note', $value = old('order_note'))->class('form-control')->placeholder('Order Note') }}
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Lab Note</label>
+                                    {{ html()->text($name = 'lab_note', $value = old('lab_note'))->class('form-control')->placeholder('Lab Note') }}
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Invoice Note</label>
+                                    {{ html()->text($name = 'invoice_note', $value = old('invoice_note'))->class('form-control')->placeholder('Invoice Note') }}
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Case Type</label>
@@ -103,6 +111,25 @@
                                     @error('order_status')
                                     <small class="text-danger">{{ $errors->first('order_status') }}</small>
                                     @enderror
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label req">Order Type</label>
+                                    {{ html()->select('type', array('btob' => 'B2B', 'btoc' => 'B2C'), 'btoc')->class('form-control select2')->placeholder('Select')->required() }}
+                                    @error('type')
+                                    <small class="text-danger">{{ $errors->first('type') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">State</label>
+                                    {{ html()->select('state', $states->pluck('name', 'id'), $states->where('default', 'true')->first()->id)->class('form-control select2')->placeholder('Select')->required() }}
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">GSTIN</label>
+                                    {{ html()->text($name = 'gstin', $value = old('gstin'))->class('form-control')->placeholder('GSTIN') }}
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Company Name</label>
+                                    {{ html()->text($name = 'company_name', $value = old('company_name'))->class('form-control')->placeholder('Company Name') }}
                                 </div>
                                 <div class="row g-4 table-responsive">
                                     <div class="col text-end">

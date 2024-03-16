@@ -12,22 +12,22 @@
         <table class="table" width="100%" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
-                    <td widtd="20%">Customer Name</td>
-                    <td widtd="25%">{{ $payment->order->name }}</td>
-                    <td widtd="10%">Address</td>
-                    <td widtd="45%">{{ $payment->order->place }}</td>
+                    <td width="20%" class="no-border">Customer Name</td>
+                    <td width="30%" class="no-border fw-bold">{{ $payment->order->name }}</td>
+                    <td width="20%" class="no-border">Address</td>
+                    <td width="30%" class="no-border fw-bold">{{ $payment->order->place }}</td>
                 </tr>
                 <tr>
-                    <td widtd="20%">Payment ID</td>
-                    <td widtd="25%">{{ $payment->id }}</td>
-                    <td widtd="10%">Order Number</td>
-                    <td widtd="45%">{{ $payment->order->branch->code.'/'.$payment->order->id }}</td>
+                    <td width="20%" class="no-border">Payment ID</td>
+                    <td width="30%" class="no-border fw-bold">{{ $payment->id }}</td>
+                    <td width="20%" class="no-border">Order Number</td>
+                    <td width="30%" class="no-border fw-bold">{{ $payment->order->branch->code.'/'.$payment->order->id }}</td>
                 </tr>
                 <tr>
-                    <td widtd="20%">Customer Mobile</td>
-                    <td widtd="25%">{{ $payment->order->mobile }}</td>
-                    <td widtd="10%">Payment Date</td>
-                    <td widtd="45%">{{ $payment->created_at->format('d, M Y') }}</td>
+                    <td width="20%" class="no-border">Customer Mobile</td>
+                    <td width="30%" class="no-border fw-bold">{{ $payment->order->mobile }}</td>
+                    <td width="20%" class="no-border">Payment Date</td>
+                    <td width="30%" class="no-border fw-bold">{{ $payment->created_at->format('d, M Y') }}</td>
                 </tr>
             </thead>
         </table>
@@ -35,27 +35,44 @@
     <div class="col mt-50">
         <table class="table" width="100%" cellpadding="0" cellspacing="0">
             <thead class="">
+                <tr>
+                    <th colspan="4" class="no-border">
+                        <hr style="border: 1px solid; color:red;">
+                    </th>
+                </tr>
                 <tr class="">
-                    <td class="">SL No</td>
-                    <td class="">Particulars</td>
-                    <td class="">Amount</td>
+                    <td class="no-border">SL No</td>
+                    <td class="no-border">Particulars</td>
+                    <td class="no-border">Payment Mode</td>
+                    <td class="no-border">Amount</td>
+                </tr>
+                <tr>
+                    <th colspan="4" class="no-border">
+                        <hr style="border: 1px solid; color:red;">
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="">1</td>
-                    <td class="">{{ $payment->notes }} ({{ $payment->paymentmode->name }})</td>
-                    <td class="text-end">{{ $payment->amount }}</td>
+                    <td class="no-border">1</td>
+                    <td class="no-border">Payment received againt order number {{ $payment->order->branch->code.'/'.$payment->order->id }}</td>
+                    <td class="no-border">{{ $payment->paymentmode->name }}</td>
+                    <td class="no-border text-end">{{ $payment->amount }}</td>
                 </tr>
                 <tr>
-                    <td class="text-end" colspan="2"><strong>Total</strong></td>
-                    <td class="text-end"><strong>{{ $payment->amount }}</strong></td>
+                    <td class="text-end no-border" colspan="3"><strong>Total</strong></td>
+                    <td class="text-end no-border"><strong>{{ $payment->amount }}</strong></td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <!--<div class="text-center mt-30">
-        <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($payment->order->invoice_number , 'C39', 1, 30, array(110, 38, 14))}}" alt="barcode" />
-    </div>-->
+    <div class="col text-end mt-50">
+        <p>For DEVI OPTICIANS</p>
+        <br />
+        <p>Authorised Signatory</p>
+    </div>
+    <footer>
+        <p>Thank You and Visit Again..</p>
+    </footer>
 </div>
 @endsection

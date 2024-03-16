@@ -25,12 +25,21 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="row mb-3">
-                            <div class="col">
+                        <div class="row mb-5">
+                            <div class="col-2">
                                 <h5 class="text-secondary">Patient Name: {{ $order->name ?? '' }}</h5>
                             </div>
-                            <div class="col text-end">
-                                <h5 class="text-secondary">Invoice Number: {{ $order->invoice_number ?? '' }}</h5>
+                            <div class="col-2">
+                                <h5 class="text-secondary">Order Number: {{ $order->branch->code }}/{{ $order->id }}</h5>
+                            </div>
+                            <div class="col-2">
+                                <h5 class="text-warning">Total Amount: {{ $order->invoice_total }}</h5>
+                            </div>
+                            <div class="col-2">
+                                <h5 class="text-success">Paid Amount: {{ $order->payments->sum('amount') }}</h5>
+                            </div>
+                            <div class="col-2">
+                                <h5 class="text-danger">Balance: {{ number_format($order->invoice_total - $order->payments->sum('amount'), 2)  }}</h5>
                             </div>
                         </div>
                         <h4>Create Patient Payment</h4>

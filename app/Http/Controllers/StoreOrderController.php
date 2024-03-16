@@ -10,6 +10,7 @@ use App\Models\Payment;
 use App\Models\PaymentMode;
 use App\Models\Power;
 use App\Models\Product;
+use App\Models\State;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
@@ -57,12 +58,13 @@ class StoreOrderController extends Controller
         $products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['lens', 'frame', 'service'])->orderBy('name')->get();
         $pmodes = $this->pmodes;
         $padvisers = $this->padvisers;
+        $states = State::all();
         /*$consultation = Consultation::with('patient')->find(decrypt($id));*/
         $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', decrypt($id))->first();
         $spectacle = DB::connection('mysql1')->table('spectacles')->where('medical_record_id', decrypt($id))->first();
         $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();
         $powers = Power::all();
-        return view('backend.order.store.create', compact('products', 'patient', 'pmodes', 'padvisers', 'mrecord', 'spectacle', 'powers'));
+        return view('backend.order.store.create', compact('products', 'patient', 'pmodes', 'padvisers', 'mrecord', 'spectacle', 'powers', 'states'));
     }
 
     public function fetch(Request $request)
@@ -123,6 +125,12 @@ class StoreOrderController extends Controller
                     'product_adviser' => $request->product_adviser,
                     'expected_delivery_date' => $request->expected_delivery_date,
                     'order_note' => $request->order_note,
+                    'lab_note' => $request->lab_note,
+                    'invoice_note' => $request->invoice_note,
+                    'gstin' => $request->gstin,
+                    'company_name' => $request->company_name,
+                    'type' => $request->type,
+                    'state' => $request->state,
                     'created_by' => $request->user()->id,
                     'updated_by' => $request->user()->id,
                 ]);
@@ -189,7 +197,8 @@ class StoreOrderController extends Controller
         $padvisers = $this->padvisers;
         $order = Order::with('details')->findOrFail(decrypt($id));
         $powers = Power::all();
-        return view('backend.order.store.edit', compact('products', 'pmodes', 'padvisers', 'order', 'powers'));
+        $states = State::all();
+        return view('backend.order.store.edit', compact('products', 'pmodes', 'padvisers', 'order', 'powers', 'states'));
     }
 
     /**
@@ -228,10 +237,16 @@ class StoreOrderController extends Controller
                     'product_adviser' => $request->product_adviser,
                     'expected_delivery_date' => $request->expected_delivery_date,
                     'order_note' => $request->order_note,
+                    'lab_note' => $request->lab_note,
+                    'invoice_note' => $request->invoice_note,
+                    'gstin' => $request->gstin,
+                    'company_name' => $request->company_name,
+                    'type' => $request->type,
+                    'state' => $request->state,
                     'updated_by' => $request->user()->id,
                 ]);
                 OrderDetail::where('order_id', $id)->delete();
-                Payment::where('order_id', $id)->where('payment_type', 'advance')->delete();
+                Payment::where('order_id', $id)->where('payment_type', 'advance')->forceDelete();
                 $data = [];
                 foreach ($request->product_id as $key => $item) :
                     $product = Product::findOrFail($item);
@@ -257,6 +272,7 @@ class StoreOrderController extends Controller
                 endforeach;
                 OrderDetail::insert($data);
                 if ($request->advance > 0) :
+                    $order = Order::findOrFail($id);
                     Payment::create([
                         'consultation_id' => $request->consultation_id,
                         'patient_id' => Consultation::find($request->consultation_id)?->patient_id,
@@ -264,7 +280,7 @@ class StoreOrderController extends Controller
                         'payment_type' => 'advance',
                         'amount' => $request->advance,
                         'payment_mode' => $request->payment_mode,
-                        'notes' => 'Advance received against invoice number ' . Order::findOrFail($id)->invoice_number,
+                        'notes' => 'Advance received against order number ' . $order->branch->code . '/' . $order->id,
                         'branch_id' => branch()->id,
                         'created_by' => $request->user()->id,
                         'updated_by' => $request->user()->id,

@@ -178,7 +178,7 @@ function headcategory()
 
 function paymentypes()
 {
-    return array('complete' => 'Complete', 'advance' => 'Advance', 'partial' => 'Partial', 'balance' => 'Balance', 'outside' => 'Outside', 'other' => 'Other');
+    return array('advance1' => 'Advance', 'partial' => 'Partial', 'balance' => 'Balance');
 }
 
 function checkOrderedProductsAvailability($request)
