@@ -99,90 +99,24 @@ class AjaxController extends Controller
         $fdate = Carbon::parse($request->from_date)->startOfDay();
         $tdate = Carbon::parse($request->to_date)->endOfDay();
         switch ($request->type):
-            case 'reg':
-                $data = getRegFeeDetailed($fdate, $tdate, $request->branch);
-                $op = '<div class="drawer-header">
-                <h6 class="drawer-title" id="drawer-3-title">Registration Fee Detailed</h6></div><div class="drawer-body table-responsive">';
-                $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>Patient Name</th><th>Patient ID</th><th>Fee</th></tr></thead><tbody>';
-                foreach ($data as $key => $item) :
-                    $op .= "<tr>";
-                    $op .= '<td>' . $key + 1 . '</td>';
-                    $op .= '<td>' . $item->name . '</td>';
-                    $op .= '<td>' . $item->patient_id . '</td>';
-                    $op .= '<td class="text-end">' . number_format($item->registration_fee, 2) . '</td>';
-                    $op .= "</tr>";
-                endforeach;
-                $op .= '</tbody><tfoot><tr><td colspan="3" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('registration_fee'), 2) . '</td></tr></tfoot></table>';
-                $op .= '</div><div class="drawer-footer">Daybook</div>';
-                break;
-            case 'con':
-                $data = getConsultationFeeDetailed($fdate, $tdate, $request->branch);
-                $op = '<div class="drawer-header">
-                <h6 class="drawer-title" id="drawer-3-title">Consultation Fee Detailed</h6></div><div class="drawer-body table-responsive">';
-                $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>Patient Name</th><th>Patient ID</th><th>MRN</th><th>Fee</th></tr></thead><tbody>';
-                foreach ($data as $key => $item) :
-                    $op .= "<tr>";
-                    $op .= '<td>' . $key + 1 . '</td>';
-                    $op .= '<td>' . $item->patient->name . '</td>';
-                    $op .= '<td>' . $item->patient->patient_id . '</td>';
-                    $op .= '<td>' . $item->mrn . '</td>';
-                    $op .= '<td class="text-end">' . number_format($item->doctor_fee, 2) . '</td>';
-                    $op .= "</tr>";
-                endforeach;
-                $op .= '</tbody><tfoot><tr><td colspan="4" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('doctor_fee'), 2) . '</td></tr></tfoot></table>';
-                $op .= '</div><div class="drawer-footer">Daybook</div>';
-                break;
-            case 'proc':
-                $tot = 0;
-                $data = getProcedureFeeDetailed($fdate, $tdate, $request->branch);
-                $op = '<div class="drawer-header">
-                <h6 class="drawer-title" id="drawer-3-title">Procedure Fee Detailed</h6></div><div class="drawer-body table-responsive">';
-                $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>Patient Name</th><th>Patient ID</th><th>MRN</th><th>Fee</th></tr></thead><tbody>';
-                foreach ($data as $key => $item) :
-                    $tot += $item->patientprocedures->sum('fee');
-                    $op .= "<tr>";
-                    $op .= '<td>' . $key + 1 . '</td>';
-                    $op .= '<td>' . $item->patient->name . '</td>';
-                    $op .= '<td>' . $item->patient->patient_id . '</td>';
-                    $op .= '<td>' . $item->consultation->mrn . '</td>';
-                    $op .= '<td class="text-end">' . number_format($item->patientprocedures->sum('fee'), 2) . '</td>';
-                    $op .= "</tr>";
-                endforeach;
-                $op .= '</tbody><tfoot><tr><td colspan="4" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($tot, 2) . '</td></tr></tfoot></table>';
-                $op .= '</div><div class="drawer-footer">Daybook</div>';
-                break;
             case 'ord':
-                $data = getOrderDetailed($request->from_date, $request->to_date, $request->branch);
+                //$data = getOrderDetailed($request->from_date, $request->to_date, $request->branch);
+                $data = Payment::whereBetween('created_at', [$fdate, $tdate])->where('amount', '>', 0)->when($request->branch > 0, function ($q) use ($request) {
+                    return $q->where('branch_id', $request->branch);
+                })->get();
                 $op = '<div class="drawer-header">
                 <h6 class="drawer-title" id="drawer-3-title">Order Detailed</h6></div><div class="drawer-body table-responsive">';
-                $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>Customer Name</th><th>Mobile</th><th>Invoice</th><th>Amount</th></tr></thead><tbody>';
+                $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>
+                Date<th>Order ID</th><th>Amount</th></tr></thead><tbody>';
                 foreach ($data as $key => $item) :
                     $op .= "<tr>";
                     $op .= '<td>' . $key + 1 . '</td>';
-                    $op .= '<td>' . $item->name . '</td>';
-                    $op .= '<td>' . $item->mobile . '</td>';
-                    $op .= '<td>' . $item->invoice_number . '</td>';
-                    $op .= '<td class="text-end">' . number_format($item->invoice_total, 2) . '</td>';
+                    $op .= '<td>' . $item->created_at->format('d, M Y') . '</td>';
+                    $op .= '<td>' . $item->order->branch->code . '/' . $item->order_id . '</td>';
+                    $op .= '<td class="text-end">' . number_format($item->amount, 2) . '</td>';
                     $op .= "</tr>";
                 endforeach;
-                $op .= '</tbody><tfoot><tr><td colspan="4" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('invoice_total'), 2) . '</td></tr></tfoot></table>';
-                $op .= '</div><div class="drawer-footer">Daybook</div>';
-                break;
-            case 'med':
-                $data = getPharmacyDetailed($request->from_date, $request->to_date, $request->branch);
-                $op = '<div class="drawer-header">
-                <h6 class="drawer-title" id="drawer-3-title">Pharmacy Detailed</h6></div><div class="drawer-body table-responsive">';
-                $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>Customer Name</th><th>Mobile</th><th>Invoice</th><th>Amount</th></tr></thead><tbody>';
-                foreach ($data as $key => $item) :
-                    $op .= "<tr>";
-                    $op .= '<td>' . $key + 1 . '</td>';
-                    $op .= '<td>' . $item->name . '</td>';
-                    $op .= '<td>' . $item->mobile . '</td>';
-                    $op .= '<td>' . $item->invoice_number . '</td>';
-                    $op .= '<td class="text-end">' . number_format($item->invoice_total, 2) . '</td>';
-                    $op .= "</tr>";
-                endforeach;
-                $op .= '</tbody><tfoot><tr><td colspan="4" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('invoice_total'), 2) . '</td></tr></tfoot></table>';
+                $op .= '</tbody><tfoot><tr><td colspan="3" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('amount'), 2) . '</td></tr></tfoot></table>';
                 $op .= '</div><div class="drawer-footer">Daybook</div>';
                 break;
             default:

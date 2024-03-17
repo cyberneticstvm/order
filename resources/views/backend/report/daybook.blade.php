@@ -99,7 +99,7 @@
                                             Other Income
                                         </td>
                                         <td class="text-end">
-                                            <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="ord" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->income_total, 2) }}</a>
+                                            {{ number_format($data->income_total, 2) }}
                                         </td>
                                         <td></td>
                                         <td></td>
