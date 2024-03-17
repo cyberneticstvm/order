@@ -8,6 +8,7 @@ use App\Models\Patient;
 use App\Models\Payment;
 use App\Models\PaymentMode;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -72,18 +73,28 @@ class PaymentController extends Controller
             'payment_mode' => 'required',
             'payment_type' => 'required',
         ]);
-        Payment::create([
-            'consultation_id' => $request->consultation_id,
-            'patient_id' => 0,
-            'order_id' => $request->order_id,
-            'payment_type' => $request->payment_type,
-            'payment_mode' => $request->payment_mode,
-            'amount' => $request->amount,
-            'notes' => $request->notes,
-            'branch_id' => branch()->id,
-            'created_by' => $request->user()->id,
-            'updated_by' => $request->user()->id,
-        ]);
+        try {
+            $tot = Order::findOrFail($request->order_id);
+            $paid = Payment::where('order_id', $request->order_id)->sum('amount');
+            $due = $tot->invoice_total - $paid;
+            if ($request->payment_type == 'balance' && ($due != $request->amount)) :
+                throw new Exception("Balance amount should be " . $due);
+            endif;
+            Payment::create([
+                'consultation_id' => $request->consultation_id,
+                'patient_id' => 0,
+                'order_id' => $request->order_id,
+                'payment_type' => $request->payment_type,
+                'payment_mode' => $request->payment_mode,
+                'amount' => $request->amount,
+                'notes' => $request->notes,
+                'branch_id' => branch()->id,
+                'created_by' => $request->user()->id,
+                'updated_by' => $request->user()->id,
+            ]);
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
         return redirect()->route('patient.payments')->with("success", "Payment recorded successfully!");
     }
 

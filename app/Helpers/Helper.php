@@ -206,23 +206,17 @@ function getDayBook($fdate, $tdate, $branch)
 {
     $from_date = Carbon::parse($fdate)->startOfDay();
     $to_date = Carbon::parse($tdate)->endOfDay();
-    $reg_fee_total = getRegFeeTotal($from_date, $to_date, $branch);
-    $consultation_fee_total = getConsultationFeeTotal($from_date, $to_date, $branch);
-    $procedure_fee_total = getProcedureFeeTotal($from_date, $to_date, $branch);
     $order_total = getOrderTotal($fdate, $tdate, $branch);
-    $pharmacy_total = getPharmacyTotal($fdate, $tdate, $branch);
     $paid_total = getPaidTotal($from_date, $to_date, $branch);
     $expense_total = getExpenseTotal($fdate, $tdate, $branch);
+    $income_total = getIncomeTotal($fdate, $tdate, $branch);
     $paid_total_cash = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [1]);
     $paid_total_other = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [2, 3, 4, 5]);
     return json_encode([
-        'reg_fee_total' => $reg_fee_total,
-        'consultation_fee_total' => $consultation_fee_total,
-        'procedure_fee_total' => $procedure_fee_total,
         'order_total' => $order_total,
-        'pharmacy_total' => $pharmacy_total,
         'paid_total' => $paid_total,
         'expense_total' => $expense_total,
+        'income_total' => $income_total,
         'paid_total_cash' => $paid_total_cash,
         'paid_total_other' => $paid_total_other,
     ]);
@@ -303,6 +297,13 @@ function getPaidTotal($from_date, $to_date, $branch)
 function getExpenseTotal($from_date, $to_date, $branch)
 {
     return IncomeExpense::whereBetween('date', [$from_date, $to_date])->where('category', 'expense')->when($branch > 0, function ($q) use ($branch) {
+        return $q->where('branch_id', $branch);
+    })->sum('amount');
+}
+
+function getIncomeTotal($from_date, $to_date, $branch)
+{
+    return IncomeExpense::whereBetween('date', [$from_date, $to_date])->where('category', 'income')->when($branch > 0, function ($q) use ($branch) {
         return $q->where('branch_id', $branch);
     })->sum('amount');
 }

@@ -81,55 +81,25 @@
                                 @if($data)
                                 @php
                                 $data = json_decode($data);
-                                $tot = $data->reg_fee_total + $data->consultation_fee_total + $data->procedure_fee_total + $data->order_total + $data->pharmacy_total;
+                                $tot = $data->paid_total + $data->income_total;
                                 @endphp
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            Registration Fee
-                                        </td>
-                                        <td class="text-end">
-                                            <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="reg" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->reg_fee_total, 2) }}</a>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Consultation Fee
-                                        </td>
-                                        <td class="text-end">
-                                            <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="con" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->consultation_fee_total, 2) }}</a>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Procedure Fee
-                                        </td>
-                                        <td class="text-end">
-                                            <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="proc" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->procedure_fee_total, 2) }}</a>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
                                     <tr>
                                         <td>
                                             Order
                                         </td>
                                         <td class="text-end">
-                                            <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="ord" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->order_total, 2) }}</a>
+                                            <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="ord" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->paid_total, 2) }}</a>
                                         </td>
                                         <td></td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            Pharmacy
+                                            Other Income
                                         </td>
                                         <td class="text-end">
-                                            <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="med" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->pharmacy_total, 2) }}</a>
+                                            <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="ord" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->income_total, 2) }}</a>
                                         </td>
                                         <td></td>
                                         <td></td>
@@ -149,26 +119,16 @@
                                             Payment collected
                                         </td>
                                         <td class="text-end fw-bold text-success">
-                                            {{ number_format($data->paid_total, 2) }}
+                                            {{ number_format($tot, 2) }}
                                         </td>
                                         <td>Cash</td>
-                                        <td>{{ number_format($data->paid_total_cash, 2) }}</td>
+                                        <td>{{ number_format($data->paid_total_cash + $data->income_total, 2) }}</td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td></td>
                                         <td>Bank</td>
                                         <td>{{ number_format($data->paid_total_other, 2) }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-end fw-bold text-danger">
-                                            Balance to be collected
-                                        </td>
-                                        <td class="text-end fw-bold text-danger">
-                                            {{ number_format($tot - $data->paid_total, 2) }}
-                                        </td>
-                                        <td></td>
-                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td class="text-end">

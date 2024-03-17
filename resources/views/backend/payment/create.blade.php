@@ -103,6 +103,7 @@
                                         <th>Mode</th>
                                         <th>Type</th>
                                         <th>Notes</th>
+                                        <th>Date</th>
                                         <th>Amount</th>
                                     </tr>
                                 </thead>
@@ -114,17 +115,18 @@
                                         <td>{{ $payment->paymentmode->name }}</td>
                                         <td>{{ $payment->payment_type }}</td>
                                         <td>{{ $payment->notes }}</td>
+                                        <td>{{ $payment->created_at->format('d, M Y h:i a') }}</td>
                                         <td class="text-end">{{ number_format($payment->amount, 2) }}</td>
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="6" class="text-center">No records found!</td>
+                                        <td colspan="7" class="text-center">No records found!</td>
                                     </tr>
                                     @endforelse
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="5" class="text-end fw-bold">Total</td>
+                                        <td colspan="6" class="text-end fw-bold">Total</td>
                                         <td class="text-end fw-bold">{{ number_format($payments->sum('amount'), 2) }}</td>
                                     </tr>
                                 </tfoot>
