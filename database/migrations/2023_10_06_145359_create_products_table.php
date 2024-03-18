@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('property')->nullable();
             $table->string('index')->nullable();
             $table->string('color')->nullable();
+            $table->unsignedBigInteger('collection_id')->comment('Applicable for Frames only')->nullable();
             $table->unsignedBigInteger('coating_id')->nullable();
             $table->unsignedBigInteger('manufacturer_id')->nullable();
             $table->integer('reorder_level')->nullable();

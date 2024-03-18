@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('product_subcategories', function (Blueprint $table) {
-            $table->id();            
+            $table->id();
             $table->enum('category', ['lens', 'frame', 'pharmacy', 'service', 'other']);
-            $table->string('attribute')->comment('Like type, shape, coating')->nullable();
+            $table->string('attribute')->comment('Like type, shape, coating, collection')->nullable();
             $table->string('name')->comment('Like rim, semirim, round, square, clarity, clarity blue')->nullable();
         });
     }
