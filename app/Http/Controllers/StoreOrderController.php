@@ -90,7 +90,6 @@ class StoreOrderController extends Controller
         $this->validate($request, [
             'order_date' => 'required',
             'name' => 'required',
-            'age' => 'required',
             'place' => 'required',
             'mobile' => 'required|numeric|digits:10',
             'product_adviser' => 'required',
@@ -209,7 +208,6 @@ class StoreOrderController extends Controller
         $this->validate($request, [
             'order_date' => 'required',
             'name' => 'required',
-            'age' => 'required',
             'place' => 'required',
             'mobile' => 'required|numeric|digits:10',
             'product_adviser' => 'required',

@@ -39,6 +39,7 @@ class Product extends Model
 
     public function taxamount($total)
     {
-        return $total - ($total - (($total * $this->tax_percentage) / 100));
+        //return $total - ($total - (($total * $this->tax_percentage) / 100));
+        return ($this->tax_percentage) ? ($total / (100 + $this->tax_percentage)) * $this->tax_percentage : 0;
     }
 }

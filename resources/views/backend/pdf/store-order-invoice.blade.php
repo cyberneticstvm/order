@@ -16,11 +16,11 @@
                 <td class="no-border" width="15%">Bill / Invoice No: </td>
                 <td class="no-border" width="35%">{{ $order->invoice_number }}</td>
                 <td class="no-border" width="20%">Bill / Invoice Date:</td>
-                <td class="no-border" width="30%"> {{ $order->payments?->first()?->created_at?->format('d, M Y') }}</td>
+                <td class="no-border" width="30%"> {{ $order->invoice_generated_at?->format('d, M Y h:i a') }}</td>
             </tr>
         </table>
     </div>
-    <div class="col mt-10">
+    <div class="col">
         <table width=100%>
             <tr>
                 <td class="no-border"><strong>Billed To</strong></td>
@@ -66,9 +66,20 @@
                 </td>
             </tr>
         </table>
+        <hr style="border: 1px solid; color:red;">
+        <table width="100%">
+            <tr>
+                <td class="no-border" width="20%">Company Name: </td>
+                <td class="no-border" width="30%">{{ ($order->company_name) ?? 'Na' }}</td>
+                <td class="no-border" width="10%">GSTIN: </td>
+                <td class="no-border" width="15%">{{ ($order->gstin) ?? 'Na' }}</td>
+                <td class="no-border" width="15%">State Code: </td>
+                <td class="no-border" width="10%">{{ $order->state }}</td>
+            </tr>
+        </table>
         <table width=100% class="mt-30" cellspacing="0" cellpadding="0">
             <tr>
-                <td colspan="7" class=""></td>
+                <td colspan="6" class=""></td>
                 <td colspan="3" class="text-center ">GST</td>
                 <td class=""></td>
             </tr>
@@ -79,7 +90,6 @@
                 <td>Qty</td>
                 <td>Rate</td>
                 <td>Amount</td>
-                <td>Disc.</td>
                 <td class="text-center">CGST</td>
                 <td class="text-center">SGST</td>
                 <td class="text-center">IGST</td>
@@ -93,49 +103,48 @@
                 <td class="text-center b-0">{{ $item->qty }}</td>
                 <td class="text-end b-0">{{ $item->unit_price }}</td>
                 <td class="text-end b-0">{{ number_format($item->qty*$item->unit_price, 2) }}</td>
-                <td class="text-end b-0">0.00</td>
-                <td class="text-end b-0">{{ ($item->tax_amount) ? number_format($item->tax_amount/2, 2) : 0 }}</td>
-                <td class="text-end b-0">{{ ($item->tax_amount) ? number_format($item->tax_amount/2, 2) : 0 }}</td>
-                <td class="text-end b-0">0.00</td>
+                <td class="text-end b-0">{{ ($item->tax_amount && $order->state == 32) ? number_format($item->tax_amount/2, 2) : 0 }}</td>
+                <td class="text-end b-0">{{ ($item->tax_amount && $order->state == 32) ? number_format($item->tax_amount/2, 2) : 0 }}</td>
+                <td class="text-end b-0">{{ ($item->tax_amount && $order->state != 32) ? number_format($item->tax_amount, 2) : 0 }}</td>
                 <td class="text-end b-0">{{ $item->total }}</td>
             </tr>
             @empty
             @endforelse
             <tr>
-                @for($i=1;$i<=11;$i++) <td class="b-0 pt-50">
+                @for($i=1;$i<=10;$i++) <td class="b-0 pt-50">
                     </td>
                     @endfor
             </tr>
             <tr style="border-top: 1px solid #000;">
-                <td colspan="10" class="text-end no-border">Order Total</td>
+                <td colspan="9" class="text-end no-border">Order Total</td>
                 <td class="text-end no-border">{{ number_format($order->order_total, 2) }}</td>
             </tr>
             <tr style="border-top: 1px solid #000;">
-                <td colspan="10" class="text-end no-border">Taxable Value</td>
+                <td colspan="9" class="text-end no-border">Taxable Value</td>
                 <td class="text-end no-border">{{ number_format(($order->order_total - $order->details->sum('tax_amount')), 2) }}</td>
             </tr>
             <tr style="border-top: 1px solid #000;">
-                <td colspan="10" class="text-end no-border">CGST</td>
+                <td colspan="9" class="text-end no-border">CGST</td>
                 <td class="text-end no-border">{{ number_format($order->details->sum('tax_amount') / 2, 2) }}</td>
             </tr>
             <tr style="border-top: 1px solid #000;">
-                <td colspan="10" class="text-end no-border">SGST</td>
+                <td colspan="9" class="text-end no-border">SGST</td>
                 <td class="text-end no-border">{{ number_format($order->details->sum('tax_amount') / 2, 2) }}</td>
             </tr>
             <tr style="border-top: 1px solid #000;">
-                <td colspan="10" class="text-end no-border">IGST</td>
+                <td colspan="9" class="text-end no-border">IGST</td>
                 <td class="text-end no-border">0.00</td>
             </tr>
             <tr style="border-top: 1px solid #000;">
-                <td colspan="10" class="text-end no-border">Grand Total</td>
+                <td colspan="9" class="text-end no-border">Grand Total</td>
                 <td class="text-end no-border fw-bold">{{ number_format($order->order_total, 2) }}</td>
             </tr>
             <tr style="border-top: 1px solid #000;">
-                <td colspan="10" class="text-end no-border">Special Discount</td>
+                <td colspan="9" class="text-end no-border">Special Discount</td>
                 <td class="text-end no-border">{{ number_format($order->discount, 2) }}</td>
             </tr>
             <tr style="border-top: 1px solid #000;">
-                <td colspan="8" class="no-border">Amount in words: {{ $nums }} </td>
+                <td colspan="7" class="no-border">Amount in words: {{ $nums }} </td>
                 <td colspan="2" class="text-end no-border">Bill Amount</td>
                 <td class="text-end no-border fw-bold">{{ number_format($order->invoice_total, 2) }}</td>
             </tr>

@@ -50,12 +50,11 @@
                                         <th>Customer</th>
                                         <th>Mobile</th>
                                         <th>Order Number</th>
-                                        <th>Invoice Number</th>
                                         <th>Invoice Total</th>
                                         <th>Paid</th>
                                         <th>Balance</th>
                                         <th>Order Status</th>
-                                        <th>Generate</th>
+                                        <th>Invoice</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -66,7 +65,6 @@
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->mobile }}</td>
                                             <td>{{ $item->branch->code }}/{{ $item->id }}</td>
-                                            <td>{{ $item->invoice_number }}</td>
                                             <td>{{ $item->invoice_total }}</td>
                                             <td>{{ number_format($item->payments->sum('amount'), 2) }}</td>
                                             <td>{{ number_format($item->invoice_total-$item->payments->sum('amount'), 2) }}</td>

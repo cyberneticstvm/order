@@ -12,7 +12,7 @@ class Order extends Model
 
     protected $guarded = [];
 
-    protected $casts = ['order_date' => 'datetime', 'expected_delivery_date' => 'datetime'];
+    protected $casts = ['order_date' => 'datetime', 'expected_delivery_date' => 'datetime', 'invoice_generated_at' => 'datetime'];
 
     public function status()
     {
