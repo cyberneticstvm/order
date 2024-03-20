@@ -80,6 +80,9 @@ class PaymentController extends Controller
             if ($request->payment_type == 'balance' && ($due != $request->amount)) :
                 throw new Exception("Balance amount should be " . $due);
             endif;
+            if ($request->payment_type != 'balance' && ($due != $request->amount) && $request->generate_invoice) :
+                throw new Exception("Please uncheck the Generate Invoice Box!");
+            endif;
             Payment::create([
                 'consultation_id' => $request->consultation_id,
                 'patient_id' => 0,
@@ -92,6 +95,13 @@ class PaymentController extends Controller
                 'created_by' => $request->user()->id,
                 'updated_by' => $request->user()->id,
             ]);
+            if ($request->generate_invoice) :
+                Order::findOrFail($request->order_id)->update([
+                    'invoice_number' => invoicenumber($request->order_id)->ino,
+                    'invoice_generated_by' => $request->user()->id,
+                    'invoice_generated_at' => Carbon::now(),
+                ]);
+            endif;
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }

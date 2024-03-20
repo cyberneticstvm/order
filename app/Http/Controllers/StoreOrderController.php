@@ -112,7 +112,7 @@ class StoreOrderController extends Controller
                     'age' => $request->age,
                     'place' => $request->place,
                     'mobile' => $request->mobile,
-                    'invoice_number' => invoicenumber('store')->ino,
+                    'invoice_number' => NULL,
                     'category' => 'store',
                     'branch_id' => branch()->id,
                     'order_total' => $request->order_total,

@@ -19,7 +19,9 @@ return new class extends Migration
             $table->integer('age')->nullable();
             $table->string('place', 100)->nullable();
             $table->string('mobile', 10)->nullable();
-            $table->string('invoice_number')->unique();
+            $table->string('invoice_number')->unique()->nullable();
+            $table->dateTime('invoice_generated_at')->nullable();
+            $table->unsignedBigInteger('invoice_generated_by')->nullable();
             $table->enum('category', ['store', 'pharmacy', 'service', 'other']);
             $table->unsignedBigInteger('branch_id');
             $table->decimal('order_total', 9, 2)->default(0);

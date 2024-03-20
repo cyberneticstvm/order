@@ -26,19 +26,19 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row mb-5">
-                            <div class="col-2">
+                            <div class="col-md-2">
                                 <h5 class="text-secondary">Patient Name: {{ $order->name ?? '' }}</h5>
                             </div>
-                            <div class="col-2">
-                                <h5 class="text-secondary">Order Number: {{ $order->branch->code }}/{{ $order->id }}</h5>
+                            <div class="col-md-2">
+                                <h5 class="text-secondary">Order Number: {{ $order?->branch?->code }}/{{ $order?->id }}</h5>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md-2">
                                 <h5 class="text-warning">Total Amount: {{ $order->invoice_total }}</h5>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md-2">
                                 <h5 class="text-success">Paid Amount: {{ $order->payments->sum('amount') }}</h5>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md-2">
                                 <h5 class="text-danger">Balance: {{ number_format($order->invoice_total - $order->payments->sum('amount'), 2)  }}</h5>
                             </div>
                         </div>
@@ -74,6 +74,10 @@
                                 <div class="col-md-4">
                                     <label class="form-label">Notes</label>
                                     {{ html()->text($name = 'notes', $value = old('notes'))->class('form-control')->placeholder('Notes') }}
+                                </div>
+                                <div class="col-md-2">
+                                    {{ html()->checkbox($name = 'generate_invoice', $checked=true, $value = '1')->class('form-check-input') }}
+                                    <label class="form-label">Generate Invoice</label>
                                 </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>

@@ -5,6 +5,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampPatientController;
+use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\DocumentController;
@@ -128,7 +129,9 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/product/frame', 'exportProductFrame')->name('pdf.product.frame');
         Route::get('/payment/receipt/{id}', 'exportPaymentReceipt')->name('pdf.payment.receipt');
         Route::get('/order/invoices', 'invoices')->name('invoice.register');
+        Route::get('/order/notgenerated/invoices', 'invoicesNotGenerated')->name('not.generated.invoice.register');
         Route::get('/order/invoice/{id}', 'exportOrderInvoice')->name('store.order.invoice');
+        Route::get('/order/invoice/generate/{id}', 'generateInvoice')->name('store.order.invoice.generate');
         Route::get('/order/receipt/{id}', 'exportOrderReceipt')->name('store.order.receipt');
         Route::get('/product/transfer/{id}', 'exportProductTransfer')->name('pdf.product.transfer');
     });
@@ -296,6 +299,15 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/edit/{id}', 'edit')->name('product.frame.edit');
         Route::post('/edit/{id}', 'update')->name('product.frame.update');
         Route::get('/delete/{id}', 'destroy')->name('product.frame.delete');
+    });
+
+    Route::prefix('/backend/product/collection')->controller(CollectionController::class)->group(function () {
+        Route::get('/', 'index')->name('collections');
+        Route::get('/create', 'create')->name('collection.create');
+        Route::post('/create', 'store')->name('collection.save');
+        Route::get('/edit/{id}', 'edit')->name('collection.edit');
+        Route::post('/edit/{id}', 'update')->name('collection.update');
+        Route::get('/delete/{id}', 'destroy')->name('collection.delete');
     });
 
     Route::prefix('/backend/product/service')->controller(ProductServiceController::class)->group(function () {

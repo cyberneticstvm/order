@@ -72,7 +72,7 @@
                 <h6>Order</h6>
             </div>
         </li>
-        @if(auth()->user()->can('store-order-list') || auth()->user()->can('store-order-create') || auth()->user()->can('store-order-edit') || auth()->user()->can('store-order-delete') || auth()->user()->can('invoice-register'))
+        @if(auth()->user()->can('store-order-list') || auth()->user()->can('store-order-create') || auth()->user()->can('store-order-edit') || auth()->user()->can('store-order-delete') || auth()->user()->can('invoice-register') || auth()->user()->can('invoice-register-not-generated'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -86,7 +86,8 @@
             {{
                 Menu::new()->addClass('sidebar-submenu')
                 ->linkIfCan('store-order-list', route('store.order'), 'Order Register')
-                ->linkIfCan('invoice-register', route('invoice.register'), 'Invoice Register');
+                ->linkIfCan('invoice-register', route('invoice.register'), 'Invoice Register')
+                ->linkIfCan('invoice-register-not-generated', route('not.generated.invoice.register'), 'Not Generated Invoices');
             }}
         </li>
         @endif
@@ -181,23 +182,28 @@
                         <li><a href="{{ route('pharmacy.transfer') }}">Pharmacy Transfer</a></li>
                     </ul>
                 </li>-->
+                <li><a class="submenu-title" href="javascript:void(0)">Collection<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+                    <ul class="nav-sub-childmenu submenu-content">
+                        <li><a href="{{ route('collections') }}">Collection Register</a></li>
+                    </ul>
+                </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Frame<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                     <ul class="nav-sub-childmenu submenu-content">
-                        <li><a href="{{ route('product.frame') }}">Frame List</a></li>
+                        <li><a href="{{ route('product.frame') }}">Frame Register</a></li>
                         <li><a href="{{ route('frame.purchase') }}">Frame Purchase</a></li>
                         <li><a href="{{ route('frame.transfer') }}">Frame Transfer</a></li>
                     </ul>
                 </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Lens<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                     <ul class="nav-sub-childmenu submenu-content">
-                        <li><a href="{{ route('product.lens') }}">Lens List</a></li>
+                        <li><a href="{{ route('product.lens') }}">Lens Register</a></li>
                         <li><a href="{{ route('lens.purchase') }}">Lens Purchase</a></li>
                         <li><a href="{{ route('lens.transfer') }}">Lens Transfer</a></li>
                     </ul>
                 </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Service<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                     <ul class="nav-sub-childmenu submenu-content">
-                        <li><a href="{{ route('product.service') }}">Service List</a></li>
+                        <li><a href="{{ route('product.service') }}">Service Register</a></li>
                     </ul>
                 </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Import Purchases<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>

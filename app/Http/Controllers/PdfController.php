@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PdfController extends Controller
@@ -25,6 +26,7 @@ class PdfController extends Controller
         $this->middleware('permission:export-today-appointments-pdf', ['only' => ['exportTodaysAppointment']]);
         $this->middleware('permission:invoice-register', ['only' => ['invoices']]);
         $this->middleware('permission:invoice-view-download', ['only' => ['exportOrderInvoice']]);
+        $this->middleware('permission:invoice-register-not-generated', ['only' => ['invoicesNotGenerated']]);
     }
 
     public function opt($id)
@@ -117,8 +119,24 @@ class PdfController extends Controller
 
     public function invoices()
     {
-        $invoices = Order::where('branch_id', Session::get('branch'))->latest()->get();
+        $invoices = Order::where('branch_id', Session::get('branch'))->WhereNotNull('invoice_number')->whereDate('invoice_generated_at', Carbon::today())->latest()->get();
         return view('backend.order.invoices', compact('invoices'));
+    }
+
+    public function invoicesNotGenerated()
+    {
+        $invoices = Order::where('branch_id', Session::get('branch'))->WhereNull('invoice_number')->latest()->get();
+        return view('backend.order.not-generated-invoices', compact('invoices'));
+    }
+
+    public function generateInvoice(string $id)
+    {
+        Order::findOrFail(decrypt($id))->update([
+            'invoice_number' => invoicenumber(decrypt($id))->ino,
+            'invoice_generated_by' => Auth::id(),
+            'invoice_generated_at' => Carbon::now(),
+        ]);
+        return redirect()->back()->with("success", "Invoice generated successfully!");
     }
 
     public function exportOrderInvoice($id)

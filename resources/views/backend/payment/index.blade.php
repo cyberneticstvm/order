@@ -55,7 +55,7 @@
                             <div class="col">
                                 <h5>Patient Payment Register</h5>
                             </div>
-                            <div class="col text-end"><a href="{{ route('patient.payment.create', ['id' => encrypt(0)]) }}" class="btn btn-primary" type="button">Add New</a></div>
+
                         </div>
                     </div>
                     <div class="card-body">
