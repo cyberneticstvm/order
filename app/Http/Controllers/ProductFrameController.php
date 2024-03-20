@@ -39,7 +39,8 @@ class ProductFrameController extends Controller
     {
         $manufacturers = $this->manufacturers;
         $ptypes = $this->ptypes;
-        return view('backend.product.frame.create', compact('ptypes', 'manufacturers'));
+        $collection = ProductSubcategory::where('category', 'frame')->where('attribute', 'collection')->get();
+        return view('backend.product.frame.create', compact('ptypes', 'manufacturers', 'collection'));
     }
 
     /**
@@ -79,8 +80,9 @@ class ProductFrameController extends Controller
     {
         $product = Product::findOrFail(decrypt($id));
         $manufacturers = $this->manufacturers;
+        $collection = ProductSubcategory::where('category', 'frame')->where('attribute', 'collection')->get();
         $ptypes = $this->ptypes;
-        return view('backend.product.frame.edit', compact('ptypes', 'manufacturers', 'product'));
+        return view('backend.product.frame.edit', compact('ptypes', 'manufacturers', 'product', 'collection'));
     }
 
     /**

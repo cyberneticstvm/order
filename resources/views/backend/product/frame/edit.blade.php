@@ -93,6 +93,22 @@
                                     <small class="text-danger">{{ $errors->first('reorder_level') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Eye Size</label>
+                                    {{ html()->text($name = 'eye_size', $product->eye_size)->class('form-control')->placeholder('Eye Size') }}
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Bridge Size</label>
+                                    {{ html()->text($name = 'bridge_size', $product->bridge_size)->class('form-control')->placeholder('Bridge Size') }}
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Temple Size</label>
+                                    {{ html()->text($name = 'temple_size', $product->temple_size)->class('form-control')->placeholder('Temple Size') }}
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Collection</label>
+                                    {{ html()->select($name = 'collection_id', $value = $collection->pluck('name', 'id'), $product->collection_id)->class('form-control select2')->placeholder('Select') }}
+                                </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Product Description</label>
                                     {{ html()->text($name = 'description', $value = $product->description )->class('form-control')->placeholder('Product Description if any') }}
