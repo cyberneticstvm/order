@@ -69,7 +69,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped mx-auto" width="50%">
+                            <table class="table table-bordered table-striped mx-auto w-50">
                                 <thead>
                                     <tr>
                                         <th width="90%">Particulars</th>
