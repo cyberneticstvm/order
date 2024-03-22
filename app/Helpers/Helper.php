@@ -3,6 +3,7 @@
 use App\Models\Appointment;
 use Illuminate\Support\Facades\Session;
 use App\Models\Branch;
+use App\Models\Closing;
 use App\Models\Consultation;
 use App\Models\ConsultationType;
 use App\Models\Doctor;
@@ -306,6 +307,11 @@ function getIncomeTotal($from_date, $to_date, $branch)
     return IncomeExpense::whereBetween('date', [$from_date, $to_date])->where('category', 'income')->when($branch > 0, function ($q) use ($branch) {
         return $q->where('branch_id', $branch);
     })->sum('amount');
+}
+
+function getOpeningBalance($date, $branch)
+{
+    return (Closing::where('branch', $branch)->whereDate('date', $date)->latest()->first()->closing_balance) ?? 0;
 }
 
 function getInventory($branch, $product, $category)

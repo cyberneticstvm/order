@@ -42,6 +42,7 @@ class ReportController extends Controller
         $inputs = [$request->from_date, $request->to_date, $request->branch];
         $branches = $this->branches;
         $data = getDayBook($inputs[0], $inputs[1], $inputs[2]);
+        $opening_balance = getOpeningBalance(Carbon::parse($request->from_date)->startOfDay()->subDay(), $request->branch);
         return view('backend.report.daybook', compact('data', 'inputs', 'branches'));
     }
 
