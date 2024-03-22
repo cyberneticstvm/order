@@ -89,7 +89,7 @@
                                             Opening Balance
                                         </td>
                                         <td></td>
-                                        <td class="text-end text-success">
+                                        <td class="text-end text-success fw-bold">
                                             {{ number_format($opening_balance, 2) }}
                                         </td>
                                         <td></td>
