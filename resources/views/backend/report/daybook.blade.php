@@ -86,12 +86,12 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            Order
-                                        </td>
-                                        <td class="text-end">
-                                            {{ number_format($opening_balance, 2) }}
+                                            Opening Balance
                                         </td>
                                         <td></td>
+                                        <td class="text-end text-success">
+                                            {{ number_format($opening_balance, 2) }}
+                                        </td>
                                         <td></td>
                                     </tr>
                                     <tr>
