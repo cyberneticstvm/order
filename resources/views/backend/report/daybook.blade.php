@@ -69,7 +69,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
+                            <table class="table table-bordered table-striped mx-auto" width="50%">
                                 <thead>
                                     <tr>
                                         <th width="90%">Particulars</th>
@@ -85,7 +85,7 @@
                                 @endphp
                                 <tbody>
                                     <tr>
-                                        <td>
+                                        <td class="text-success">
                                             Opening Balance
                                         </td>
                                         <td></td>
