@@ -55,7 +55,6 @@ class ProductFrameController extends Controller
             'shape_id' => 'required',
             'manufacturer_id' => 'required',
             'selling_price' => 'required',
-            'reorder_level' => 'required',
         ]);
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
@@ -96,7 +95,6 @@ class ProductFrameController extends Controller
             'shape_id' => 'required',
             'manufacturer_id' => 'required',
             'selling_price' => 'required',
-            'reorder_level' => 'required',
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;

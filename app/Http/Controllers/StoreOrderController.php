@@ -37,12 +37,14 @@ class StoreOrderController extends Controller
             $this->orders = Order::where('category', 'store')->when(Auth::user()->roles->first()->id != 1, function ($q) {
                 return $q->where('branch_id', Session::get('branch'));
             })->whereDate('created_at', Carbon::today())->withTrashed()->latest()->get();
+
+            $this->padvisers = User::leftJoin('user_branches as ub', 'users.id', 'ub.user_id')->select('users.id', 'users.name')->where('ub.branch_id', Session::get('branch'))->role('Sales Advisor')->get();
+
             return $next($request);
         });
 
         $this->products = Product::whereIn('category', ['lens', 'frame', 'service'])->orderBy('name')->get();
         $this->pmodes = PaymentMode::orderBy('name')->get();
-        $this->padvisers = User::orderBy('name')->get();
     }
     public function index()
     {

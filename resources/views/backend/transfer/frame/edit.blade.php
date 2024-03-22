@@ -41,14 +41,14 @@
                                 </div>
                                 <div class="col-md-5">
                                     <label class="form-label req">From Branch</label>
-                                    {{ html()->select('from_branch_id', array('0' => 'Main Stock') + $branches->pluck('name', 'id')->toArray(), $transfer->from_branch_id)->class('form-control select2 from_branch_id')->attribute('id', 'from_branch_id')->placeholder('Select')->required() }}
+                                    {{ html()->select('from_branch_id', $branches, $transfer->from_branch_id)->class('form-control select2 from_branch_id')->attribute('id', 'from_branch_id')->placeholder('Select')->required() }}
                                     @error('from_branch_id')
                                     <small class="text-danger">{{ $errors->first('from_branch_id') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-5">
                                     <label class="form-label req">To Branch</label>
-                                    {{ html()->select('to_branch_id', $branches->pluck('name', 'id'), $transfer->to_branch_id)->class('form-control select2')->placeholder('Select')->required() }}
+                                    {{ html()->select('to_branch_id', $tobranches, $transfer->to_branch_id)->class('form-control select2')->placeholder('Select')->required() }}
                                     @error('to_branch_id')
                                     <small class="text-danger">{{ $errors->first('to_branch_id') }}</small>
                                     @enderror

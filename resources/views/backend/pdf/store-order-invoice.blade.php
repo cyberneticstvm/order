@@ -79,9 +79,9 @@
         </table>
         <table width=100% class="mt-30" cellspacing="0" cellpadding="0">
             <tr>
-                <td colspan="6" class=""></td>
+                <td colspan="5" class=""></td>
                 <td colspan="3" class="text-center ">GST</td>
-                <td class=""></td>
+                <td colspan="2"></td>
             </tr>
             <tr>
                 <td>SL No</td>
@@ -89,10 +89,10 @@
                 <td>HSN / SAC</td>
                 <td>Qty</td>
                 <td>Rate</td>
-                <td>Amount</td>
                 <td class="text-center">CGST</td>
                 <td class="text-center">SGST</td>
                 <td class="text-center">IGST</td>
+                <td>Amount</td>
                 <td>Total</td>
             </tr>
             @forelse($order->details as $key => $item)
@@ -101,11 +101,11 @@
                 <td class="b-0">{{ $item->product->name }}</td>
                 <td class="text-center b-0">{{ ($item->eye) ? hsn()[$item->eye] : '' }}</td>
                 <td class="text-center b-0">{{ $item->qty }}</td>
-                <td class="text-end b-0">{{ $item->unit_price }}</td>
-                <td class="text-end b-0">{{ number_format($item->qty*$item->unit_price, 2) }}</td>
+                <td class="text-end b-0">{{ number_format($item->unit_price - $item->tax_amount, 2) }}</td>
                 <td class="text-end b-0">{{ ($item->tax_amount && $order->state == 32) ? number_format($item->tax_amount/2, 2) : 0 }}</td>
                 <td class="text-end b-0">{{ ($item->tax_amount && $order->state == 32) ? number_format($item->tax_amount/2, 2) : 0 }}</td>
                 <td class="text-end b-0">{{ ($item->tax_amount && $order->state != 32) ? number_format($item->tax_amount, 2) : 0 }}</td>
+                <td class="text-end b-0">{{ number_format($item->qty*$item->unit_price, 2) }}</td>
                 <td class="text-end b-0">{{ $item->total }}</td>
             </tr>
             @empty

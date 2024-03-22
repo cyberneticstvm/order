@@ -87,11 +87,8 @@
                                     {{ html()->number($name = 'tax_percentage', $value = old('tax_percentage'), $min="", $max="100", $step="any")->class('form-control')->placeholder('0%') }}
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="form-label req">Reorder Level</label>
+                                    <label class="form-label">Reorder Level</label>
                                     {{ html()->number($name = 'reorder_level', $value = old('reorder_level'), $min="1", $max="", $step="any")->class('form-control')->placeholder('0') }}
-                                    @error('reorder_level')
-                                    <small class="text-danger">{{ $errors->first('reorder_level') }}</small>
-                                    @enderror
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">Eye Size</label>

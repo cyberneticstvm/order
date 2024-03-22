@@ -51,7 +51,7 @@ class PaymentController extends Controller
         $this->validate($request, [
             'order_number' => 'required',
         ]);
-        $order = Order::findOrFail($request->order_number);
+        $order = Order::where('id', $request->order_number)->where('branch_id', Session::get('branch'))->firstOrFail();
         return view('backend.payment.proceed', compact('order'));
     }
 

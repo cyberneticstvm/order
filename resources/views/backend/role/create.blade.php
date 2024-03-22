@@ -9,10 +9,10 @@
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">                                       
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
-                            </svg></a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
+                                </svg></a></li>
                         <li class="breadcrumb-item">Role</li>
                         <li class="breadcrumb-item active">Create</li>
                     </ol>
@@ -26,7 +26,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                    <h5>Create Role</h5><span>Create New Role</span>
+                        <h5>Create Role</h5><span>Create New Role</span>
                     </div>
                     <div class="card-body">
                         <div class="card-wrapper">
@@ -36,19 +36,19 @@
                                     <label class="form-label req">Role Name</label>
                                     {{ html()->text($name = 'name', $value = NULL)->class('form-control')->placeholder('Role Name') }}
                                     @error('name')
-                                        <small class="text-danger">{{ $errors->first('name') }}</small>
+                                    <small class="text-danger">{{ $errors->first('name') }}</small>
                                     @enderror
                                 </div>
                                 <div class="row g-3">
                                     @forelse($permissions as $key => $permission)
-                                    <div class="col-2 form-check ">
-                                        {{ html()->checkbox($name = 'permission[]', $checked=false, $value = $permission->id)->class('form-check-input') }}
+                                    <div class="col-2 form-check_{{$key}}">
+                                        {{ html()->checkbox($name = 'permission[]', $checked=false, $value = $permission->id)->class('form-check-input')->attribute('id', 'form-check_'.$key) }}
                                         <label class="form-check-label">{{ $permission->name }}</label>
-                                    </div>                                    
+                                    </div>
                                     @empty
                                     @endforelse
                                     @error('permission')
-                                        <small class="text-danger">{{ $errors->first('permission') }}</small>
+                                    <small class="text-danger">{{ $errors->first('permission') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-12 text-end">

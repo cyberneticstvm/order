@@ -18,7 +18,7 @@ class TransferFrameController extends Controller
     /**
      * Display a listing of the resource.
      */
-    protected $products, $transfers, $branches;
+    protected $products, $transfers, $branches, $tobranches;
 
     public function __construct()
     {
@@ -28,14 +28,23 @@ class TransferFrameController extends Controller
         $this->middleware('permission:frame-transfer-delete', ['only' => ['destroy']]);
 
         $this->middleware(function ($request, $next) {
-            $this->transfers = Transfer::when(Auth::user()->roles->first()->id != 1, function ($q) {
+            $this->transfers = Transfer::when(Auth::user()->roles->first()->name != 'Administrator', function ($q) {
                 return $q->where('from_branch_id', Session::get('branch'));
             })->whereDate('created_at', Carbon::today())->where('category', 'frame')->withTrashed()->latest()->get();
+
+            $brs = Branch::selectRaw("0 as id, 'Main Branch' as name");
+            $this->branches = Branch::selectRaw("id, name")->union($brs)->when(Auth::user()->roles->first()->name != 'Administrator', function ($q) {
+                return $q->where('id', Session::get('branch'));
+            })->orderBy('id')->pluck('name', 'id');
+
+            $this->tobranches = Branch::selectRaw("id, name")->union($brs)->when(Auth::user()->roles->first()->name != 'Administrator', function ($q) {
+                return $q->where('id', Session::get('branch'));
+            })->orderBy('id')->pluck('name', 'id');
+
             return $next($request);
         });
 
-        $this->products = Product::whereIn('category', ['frame'])->orderBy('name')->pluck('name', 'id');
-        $this->branches = Branch::orderBy('name')->get();
+        $this->products = Product::whereIn('category', ['frame'])->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->pluck('name', 'id');
     }
 
     public function index()
@@ -51,7 +60,8 @@ class TransferFrameController extends Controller
     {
         $products = $this->products;
         $branches = $this->branches;
-        return view('backend.transfer.frame.create', compact('products', 'branches'));
+        $tobranches = $this->tobranches;
+        return view('backend.transfer.frame.create', compact('products', 'branches', 'tobranches'));
     }
 
     /**
@@ -112,7 +122,8 @@ class TransferFrameController extends Controller
         $products = $this->products;
         $branches = $this->branches;
         $transfer = Transfer::findOrFail(decrypt($id));
-        return view('backend.transfer.frame.edit', compact('products', 'branches', 'transfer'));
+        $tobranches = $this->tobranches;
+        return view('backend.transfer.frame.edit', compact('products', 'branches', 'transfer', 'tobranches'));
     }
 
     /**

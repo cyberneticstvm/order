@@ -106,17 +106,18 @@ class AjaxController extends Controller
                 })->get();
                 $op = '<div class="drawer-header">
                 <h6 class="drawer-title" id="drawer-3-title">Order Detailed</h6></div><div class="drawer-body table-responsive">';
-                $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>
+                $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>Customer Name</th><th>
                 Date<th>Order ID</th><th>Amount</th></tr></thead><tbody>';
                 foreach ($data as $key => $item) :
                     $op .= "<tr>";
                     $op .= '<td>' . $key + 1 . '</td>';
+                    $op .= '<td>' . $item->order->name . '</td>';
                     $op .= '<td>' . $item->created_at->format('d, M Y') . '</td>';
                     $op .= '<td>' . $item->order->branch->code . '/' . $item->order_id . '</td>';
                     $op .= '<td class="text-end">' . number_format($item->amount, 2) . '</td>';
                     $op .= "</tr>";
                 endforeach;
-                $op .= '</tbody><tfoot><tr><td colspan="3" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('amount'), 2) . '</td></tr></tfoot></table>';
+                $op .= '</tbody><tfoot><tr><td colspan="4" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('amount'), 2) . '</td></tr></tfoot></table>';
                 $op .= '</div><div class="drawer-footer">Daybook</div>';
                 break;
             default:

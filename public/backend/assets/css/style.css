@@ -50884,7 +50884,7 @@ input.form-control {
   border-color: transparent !important;
 }
 
-input,
+.form-control,
 select,
 .select2.select2-container--default .select2-selection--single {
   background: #efefef !important;
