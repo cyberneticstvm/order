@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Attribute</label>
-                                    {{ html()->select($name = 'attribute', $value = array('type' => 'Type', 'shape' => 'Shape', 'collection' => 'Collection'), 'collection')->class('form-control')->placeholder('Attribute') }}
+                                    {{ html()->select($name = 'attribute', $value = array('type' => 'Type', 'shape' => 'Shape', 'collection' => 'Collection', 'colour' => 'Colour'), 'collection')->class('form-control')->placeholder('Attribute') }}
                                     @error('attribute')
                                     <small class="text-danger">{{ $errors->first('attribute') }}</small>
                                     @enderror

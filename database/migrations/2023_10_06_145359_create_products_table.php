@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('material')->nullable();
             $table->string('property')->nullable();
             $table->string('index')->nullable();
-            $table->string('color')->nullable();
+            $table->unsignedBigInteger('color')->nullable();
             $table->string('eye_size', 25)->comment('Applicable for Frames only')->nullable();
             $table->string('bridge_size', 25)->comment('Applicable for Frames only')->nullable();
             $table->string('temple_size', 25)->comment('Applicable for Frames only')->nullable();

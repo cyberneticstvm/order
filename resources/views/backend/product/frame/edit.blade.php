@@ -105,9 +105,16 @@
                                     <label class="form-label">Temple Size</label>
                                     {{ html()->text($name = 'temple_size', $product->temple_size)->class('form-control')->placeholder('Temple Size') }}
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <label class="form-label">Collection</label>
-                                    {{ html()->select($name = 'collection_id', $value = $collection->pluck('name', 'id'), $product->collection_id)->class('form-control select2')->placeholder('Select') }}
+                                    {{ html()->select($name = 'collection_id', $collection->where('category', 'frame')->where('attribute', 'collection')->pluck('name', 'id'), $product->collection_id)->class('form-control select2')->placeholder('Select') }}
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Color</label>
+                                    {{ html()->select($name = 'color', $collection->where('category', 'frame')->where('attribute', 'colour')->pluck('name', 'id'), $product->color)->class('form-control select2')->placeholder('Select') }}
+                                    @error('color')
+                                    <small class="text-danger">{{ $errors->first('color') }}</small>
+                                    @enderror
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Product Description</label>
