@@ -20,7 +20,7 @@ class CollectionController extends Controller
 
     public function index()
     {
-        $collections = ProductSubcategory::where('category', 'frame')->where('attribute', 'collection')->get();
+        $collections = ProductSubcategory::all();
         return view('backend.collection.index', compact('collections'));
     }
 
@@ -41,9 +41,9 @@ class CollectionController extends Controller
             'name' => 'required',
         ]);
         ProductSubcategory::insert([
-            'category' => 'frame',
-            'attribute' => 'collection',
             'name' => $request->name,
+            'category' => $request->category,
+            'attribute' => $request->attribute,
         ]);
         return redirect()->route('collections')
             ->with('success', 'Collection has been created successfully');
@@ -76,6 +76,8 @@ class CollectionController extends Controller
         ]);
         ProductSubcategory::findOrFail($id)->update([
             'name' => $request->name,
+            'category' => $request->category,
+            'attribute' => $request->attribute,
         ]);
         return redirect()->route('collections')
             ->with('success', 'Collection has been updated successfully');

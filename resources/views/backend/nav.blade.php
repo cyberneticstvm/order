@@ -182,9 +182,9 @@
                         <li><a href="{{ route('pharmacy.transfer') }}">Pharmacy Transfer</a></li>
                     </ul>
                 </li>-->
-                <li><a class="submenu-title" href="javascript:void(0)">Collection<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+                <li><a class="submenu-title" href="javascript:void(0)">Col / Type / Shape<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                     <ul class="nav-sub-childmenu submenu-content">
-                        <li><a href="{{ route('collections') }}">Collection Register</a></li>
+                        <li><a href="{{ route('collections') }}">Collection / Shape / Type</a></li>
                     </ul>
                 </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Frame<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>

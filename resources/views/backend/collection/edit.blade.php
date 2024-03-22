@@ -5,7 +5,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Collection</h3>
+                    <h3>Collection / Type / Shape</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
@@ -13,7 +13,7 @@
                                 <svg class="stroke-icon">
                                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg></a></li>
-                        <li class="breadcrumb-item">Collection</li>
+                        <li class="breadcrumb-item">Collection / Type / Shape</li>
                         <li class="breadcrumb-item active">Update</li>
                     </ol>
                 </div>
@@ -26,17 +26,31 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Update Collection</h5><span>Update Collection</span>
+                        <h5>Update Collection / Type / Shape</h5><span>Update Collection / Type / Shape</span>
                     </div>
                     <div class="card-body">
                         <div class="card-wrapper">
                             <form class="row g-3" method="post" action="{{ route('collection.update', $collection->id) }}">
                                 @csrf
                                 <div class="col-md-3">
-                                    <label class="form-label req">Collection Name</label>
-                                    {{ html()->text($name = 'name', $collection->name)->class('form-control')->placeholder('Collection Name') }}
+                                    <label class="form-label req">Collection / Shape / Type Name</label>
+                                    {{ html()->text($name = 'name', $value = $collection->name)->class('form-control')->placeholder('Collection / Shape / Type Name') }}
                                     @error('name')
                                     <small class="text-danger">{{ $errors->first('name') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label req">Category</label>
+                                    {{ html()->select($name = 'category', $value = array('frame' => 'Frame', 'lens' => 'Lens'), $collection->category)->class('form-control')->placeholder('Category') }}
+                                    @error('category')
+                                    <small class="text-danger">{{ $errors->first('category') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label req">Attribute</label>
+                                    {{ html()->select($name = 'attribute', $value = array('type' => 'Type', 'shape' => 'Shape', 'collection' => 'Collection'), $collection->attribute)->class('form-control')->placeholder('Attribute') }}
+                                    @error('attribute')
+                                    <small class="text-danger">{{ $errors->first('attribute') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-12 text-end">

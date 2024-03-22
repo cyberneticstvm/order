@@ -5,7 +5,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Collection Register</h3>
+                    <h3>Collection / Type / Shape Register</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
@@ -13,8 +13,8 @@
                                 <svg class="stroke-icon">
                                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg></a></li>
-                        <li class="breadcrumb-item">Collection</li>
-                        <li class="breadcrumb-item active">Collection Register</li>
+                        <li class="breadcrumb-item">Collection / Type / Shape</li>
+                        <li class="breadcrumb-item active">Collection / Type / Shape Register</li>
                     </ol>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col">
-                                <h5>Collection Register</h5><span>Collection Management</span>
+                                <h5>Collection / Type / Shape Register</h5><span>Collection / Type / Shape Management</span>
                             </div>
                             <div class="col text-end"><a href="{{ route('collection.create') }}" class="btn btn-primary" type="button">Add New</a></div>
                         </div>
@@ -39,7 +39,9 @@
                                 <thead>
                                     <tr>
                                         <th>SL No</th>
-                                        <th>Collection Name</th>
+                                        <th>Name / Value</th>
+                                        <th>Category</th>
+                                        <th>Attribute</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
@@ -49,6 +51,8 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $col->name }}</td>
+                                        <td>{{ $col->category }}</td>
+                                        <td>{{ $col->attribute }}</td>
                                         <td class="text-center"><a href="{{ route('collection.edit', encrypt($col->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center"><a href="{{ route('collection.delete', encrypt($col->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
                                     </tr>
