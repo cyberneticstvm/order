@@ -26,7 +26,7 @@ class PurchaseFrameController extends Controller
 
         $this->purchases = Purchase::where('category', 'frame')->whereDate('delivery_date', Carbon::today())->withTrashed()->latest()->get();
         $this->suppliers = Supplier::pluck('name', 'id');
-        $this->products = Product::whereIn('category', ['frame'])->orderBy('name')->pluck('name', 'id');
+        $this->products = Product::whereIn('category', ['frame'])->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->pluck('name', 'id');
     }
     public function index()
     {

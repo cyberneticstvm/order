@@ -26,7 +26,7 @@ class PurchaseLensController extends Controller
 
         $this->purchases = Purchase::where('category', 'lens')->whereDate('delivery_date', Carbon::today())->withTrashed()->latest()->get();
         $this->suppliers = Supplier::pluck('name', 'id');
-        $this->products = Product::whereIn('category', ['lens'])->orderBy('name')->pluck('name', 'id');
+        $this->products = Product::whereIn('category', ['lens'])->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->pluck('name', 'id');
     }
 
     public function index()
