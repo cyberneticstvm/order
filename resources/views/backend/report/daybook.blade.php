@@ -81,9 +81,19 @@
                                 @if($data)
                                 @php
                                 $data = json_decode($data);
-                                $tot = $data->paid_total + $data->income_total;
+                                $tot = $data->paid_total + $data->income_total + $opening_balance;
                                 @endphp
                                 <tbody>
+                                    <tr>
+                                        <td>
+                                            Order
+                                        </td>
+                                        <td class="text-end">
+                                            {{ number_format($opening_balance, 2) }}
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
                                     <tr>
                                         <td>
                                             Order
