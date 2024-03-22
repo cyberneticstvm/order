@@ -78,9 +78,13 @@
         let frm = document.forms["orderForm"];
         if (frm['advance'].value > 0 && frm['payment_mode'].value == '') {
             failed({
-                'error': 'Please select payment mode!'
+                'error': 'Please select advance payment mode!'
             })
             return false;
+        }
+        if (frm['order_date'].value == frm['expected_delivery_date'].value) {
+            let c = confirm("Expected delivery date and order date are same. proceed?")
+            if (!c) return false
         }
         return true;
     }

@@ -10,12 +10,13 @@ class BranchController extends Controller
     /**
      * Display a listing of the resource.
      */
-    function __construct(){
-        $this->middleware('permission:branch-list|branch-create|branch-edit|branch-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:branch-create', ['only' => ['create','store']]);
-        $this->middleware('permission:branch-edit', ['only' => ['edit','update']]);
+    function __construct()
+    {
+        $this->middleware('permission:branch-list|branch-create|branch-edit|branch-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:branch-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:branch-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:branch-delete', ['only' => ['destroy']]);
-   }
+    }
 
     public function index()
     {
@@ -28,10 +29,10 @@ class BranchController extends Controller
      */
     public function create()
     {
-        if(Branch::count() < settings()->branch_limit || settings()->branch_limit == 0)
+        if (Branch::count() < settings()->branch_limit || settings()->branch_limit == 0)
             return view('backend.branch.create');
         return redirect()->route('branches')
-            ->with('error','Allowed branch limit reached!');
+            ->with('error', 'Allowed branch limit reached!');
     }
 
     /**
@@ -46,13 +47,14 @@ class BranchController extends Controller
             'email' => 'required|email:rfc,dns,filter',
             'address' => 'required',
             'gstin' => 'required',
+            'daily_expense_limit' => 'required',
         ]);
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
         Branch::create($input);
         return redirect()->route('branches')
-                        ->with('success','Branch created successfully');
+            ->with('success', 'Branch created successfully');
     }
 
     /**
@@ -78,19 +80,20 @@ class BranchController extends Controller
     public function update(Request $request, string $id)
     {
         $this->validate($request, [
-            'name' => 'required|unique:branches,name,'.$id,
-            'code' => 'required|unique:branches,name,'.$id,
+            'name' => 'required|unique:branches,name,' . $id,
+            'code' => 'required|unique:branches,name,' . $id,
             'phone' => 'required|numeric|digits:10',
             'email' => 'required|email:rfc,dns,filter',
             'address' => 'required',
             'gstin' => 'required',
+            'daily_expense_limit' => 'required',
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
         $branch = Branch::findOrFail($id);
         $branch->update($input);
         return redirect()->route('branches')
-                        ->with('success','Branch updated successfully');
+            ->with('success', 'Branch updated successfully');
     }
 
     /**
@@ -100,6 +103,6 @@ class BranchController extends Controller
     {
         Branch::findOrFail(decrypt($id))->delete();
         return redirect()->route('branches')
-                        ->with('success','Branch deleted successfully');
+            ->with('success', 'Branch deleted successfully');
     }
 }

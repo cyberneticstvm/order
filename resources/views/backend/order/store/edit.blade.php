@@ -152,7 +152,6 @@
                                                     <th width="6%">CYL</th>
                                                     <th width="6%">AXIS</th>
                                                     <th width="6%">ADD</th>
-                                                    <th width="6%">DIA</th>
                                                     <th>INT.ADD</th>
                                                     <th width="6%">IPD</th>
                                                     <th width="40%">Product</th>
@@ -196,21 +195,18 @@
                                                     <td>
                                                         {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $item->add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'add_'.$key) }}
                                                     </td>
-
-                                                    <td><input type="text" name='dia[]' class="w-100 border-0 text-center" placeholder="DIA" value="{{ $item->dia ?? '' }}" maxlength="6" /></td>
                                                     <td>
                                                         {{ html()->select('int_add[]', $powers?->where('name', 'intad')->pluck('value', 'value'), $item->int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'int_add_'.$key) }}
                                                     </td>
                                                     <td width="15%"><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" value="{{ $item->ipd ?? '' }}" maxlength="6" /></td>
                                                     @endif
                                                     @if(in_array($item->eye, ['frame', 'service']))
-                                                    <td colspan="7">
+                                                    <td colspan="6">
                                                         <div class="d-none">
                                                             <input type="hidden" name="sph[]" />
                                                             <input type="hidden" name="cyl[]" />
                                                             <input type="hidden" name="axis[]" />
                                                             <input type="hidden" name="add[]" />
-                                                            <input type="hidden" name="dia[]" />
                                                             <input type="hidden" name="ipd[]" />
                                                             <input type="hidden" name="int_add[]" />
                                                         </div>
@@ -234,7 +230,7 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <td colspan="12" class="text-end fw-bold border-0">
+                                                    <td colspan="11" class="text-end fw-bold border-0">
                                                         Order Total
                                                         @error('order_total')
                                                         <br /><small class="text-danger">{{ $errors->first('order_total') }}</small>
@@ -243,11 +239,11 @@
                                                     <td class="border-0"><input type="text" name="order_total" class="text-end border-0 fw-bold w-100 subtotal readOnly" placeholder="0.00" value="{{ $order->order_total }}" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" class="text-end fw-bold border-0">Discount</td>
+                                                    <td colspan="11" class="text-end fw-bold border-0">Discount</td>
                                                     <td class="text-end fw-bold border-0"><input type="number" name='discount' class="w-100 border-0 text-end discount" placeholder="0.00" step="any" value="{{ $order->discount }}" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" class="text-end fw-bold border-0">
+                                                    <td colspan="11" class="text-end fw-bold border-0">
                                                         Total After Discount
                                                         @error('invoice_total')
                                                         <br /><small class="text-danger">{{ $errors->first('invoice_total') }}</small>
@@ -256,14 +252,14 @@
                                                     <td class="border-0"><input type="number" name="invoice_total" class="text-end border-0 fw-bold w-100 nettotal readOnly" min="1" step="any" placeholder="0.00" value="{{ $order->invoice_total }}" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="11" class="text-end fw-bold border-0">Advance</td>
+                                                    <td colspan="10" class="text-end fw-bold border-0">Advance</td>
                                                     <td>
                                                         {{ html()->select('payment_mode', $pmodes->pluck('name', 'id'), $order->payments?->first()?->payment_mode)->class('border-0')->attribute('id', 'pmode')->placeholder('Payment Mode') }}
                                                     </td>
                                                     <td class="text-end fw-bold border-0"><input type="number" name='advance' class="w-100 border-0 text-end advance" placeholder="0.00" step="any" value="{{ $order->advance }}" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="12" class="text-end fw-bold border-0">Balance</td>
+                                                    <td colspan="11" class="text-end fw-bold border-0">Balance</td>
                                                     <td class="border-0"><input type="text" name="balance" class="text-end border-0 fw-bold w-100 balance readOnly" placeholder="0.00" value="{{ $order->balance }}" /></td>
                                                 </tr>
                                             </tfoot>

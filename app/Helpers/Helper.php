@@ -60,7 +60,7 @@ function isExpenseLimitReached($amount, $ded = 0)
 {
     $tot = IncomeExpense::where('category', 'expense')->whereDate('date', Carbon::today())->where('branch_id', branch()->id)->sum('amount');
     $tot = ($tot + $amount) - $ded;
-    if ($tot > settings()->daily_expense_limit)
+    if ($tot > branch()->daily_expense_limit)
         return 1;
     return 0;
 }

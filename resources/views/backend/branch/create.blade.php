@@ -88,6 +88,13 @@
                                     <small class="text-danger">{{ $errors->first('registration_fee') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-2">
+                                    <label class="form-label req">Daily Expense Limit</label>
+                                    {{ html()->number($name = 'daily_expense_limit', $value = old('daily_expense_limit'), $min='1', $max='', $step='1')->class('form-control')->placeholder('0.00') }}
+                                    @error('daily_expense_limit')
+                                    <small class="text-danger">{{ $errors->first('daily_expense_limit') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                                     <button class="btn btn-submit btn-success" type="submit">Save</button>
