@@ -19,8 +19,8 @@ class HelperController extends Controller
 
     public function closingBalance(){
         $payments = getPaidTotal(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), branch()->id);
-        $expense = getExpenseTotal(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), branch()->id);
-        $income = getIncomeTotal(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), branch()->id);
+        $expense = getExpenseTotal(Carbon::today(), Carbon::today(), branch()->id);
+        $income = getIncomeTotal(Carbon::today(), Carbon::today(), branch()->id);
         $opening_balance = getOpeningBalance(Carbon::today()->subDay(), branch()->id);
         return [
             'payments' => $payments,

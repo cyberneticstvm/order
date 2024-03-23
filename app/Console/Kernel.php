@@ -20,10 +20,10 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $branches = Branch::all();
             foreach ($branches as $key => $branch) :
-                $payments = getPaidTotal(Carbon::today(), Carbon::today(), $branch->id);
+                $payments = getPaidTotal(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id);
                 $expense = getExpenseTotal(Carbon::today(), Carbon::today(), $branch->id);
                 $income = getIncomeTotal(Carbon::today(), Carbon::today(), $branch->id);
-                $opening_balance = getOpeningBalance(Carbon::today()->startOfDay()->subDay(), $branch->id);
+                $opening_balance = getOpeningBalance(Carbon::today()->subDay(), $branch->id);
                 Closing::insert([
                     'date' => Carbon::today(),
                     'closing_balance' => ($opening_balance + $payments + $income) - $expense,
