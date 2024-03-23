@@ -77,6 +77,7 @@ Route::middleware(['web'])->group(function () {
 Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/backend/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
     Route::post('/user/branch/update', [UserController::class, 'updateBranch'])->name('user.branch.update');
+    Route::get('/closingbalance', [HelperController::class, 'closingBalance'])->name('closing.balance');
 });
 
 Route::middleware(['web', 'auth', 'branch'])->group(function () {

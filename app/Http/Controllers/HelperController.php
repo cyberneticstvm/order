@@ -17,6 +17,20 @@ class HelperController extends Controller
         $this->middleware('permission:pending-transfer-edit', ['only' => ['pendingTransferEdit', 'pendingTransferUpdate']]);
     }
 
+    public function closingBalance(){
+        $payments = getPaidTotal(Carbon::today(), Carbon::today(), branch()->id);
+        $expense = getExpenseTotal(Carbon::today(), Carbon::today(), branch()->id);
+        $income = getIncomeTotal(Carbon::today(), Carbon::today(), branch()->id);
+        $opening_balance = getOpeningBalance(Carbon::today()->startOfDay()->subDay(), branch()->id);
+        return [
+            'payments' => $payments,
+            'income' => $income,
+            'expense' => $expense,
+            'opening_balance' => $opening_balance,
+            'closing_balance' => ($opening_balance + $payments + $income) - $expense,
+        ];
+    }
+
     public function pendingTransfer()
     {
         $transfers = Transfer::where('to_branch_id', branch()->id)->where('transfer_status', 0)->latest()->get();
