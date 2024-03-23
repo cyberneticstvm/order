@@ -39,7 +39,7 @@ return new class extends Migration
             $table->string('gstin', 50)->nullable();
             $table->string('company_name', 150)->nullable();
             $table->unsignedBigInteger('state')->nullable();
-            $table->varchar('type', ['btob', 'btoc', 'other'])->nullable();
+            $table->enum('type', ['btob', 'btoc', 'other'])->nullable();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
             $table->foreign('branch_id')->references('id')->on('branches');
