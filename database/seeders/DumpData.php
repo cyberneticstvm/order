@@ -22,38 +22,13 @@ class DumpData extends Seeder
      */
     public function run(): void
     {
-        $permissions = [
-            'role-list', 'role-create', 'role-edit', 'role-delete',
-            'user-list', 'user-create', 'user-edit', 'user-delete',
-            'branch-list', 'branch-create', 'branch-edit', 'branch-delete',
-            'supplier-list', 'supplier-create', 'supplier-edit', 'supplier-delete',
-            'manufacturer-list', 'manufacturer-create', 'manufacturer-edit', 'manufacturer-delete',
-            'product-pharmacy-list', 'product-pharmacy-create', 'product-pharmacy-edit', 'product-pharmacy-delete',
-            'product-frame-list', 'product-frame-create', 'product-frame-edit', 'product-frame-delete',
-            'product-lens-list', 'product-lens-create', 'product-lens-edit', 'product-lens-delete',
-            'product-service-list', 'product-service-create', 'product-service-edit', 'product-service-delete',
-            'store-order-list', 'store-order-create', 'store-order-edit', 'store-order-delete',
-            'pharmacy-order-list', 'pharmacy-order-create', 'pharmacy-order-edit', 'pharmacy-order-delete',
-            'purchase-pharmacy-list', 'purchase-pharmacy-create', 'purchase-pharmacy-edit', 'purchase-pharmacy-delete',
-            'purchase-lens-list', 'purchase-lens-create', 'purchase-lens-edit', 'purchase-lens-delete',
-            'purchase-frame-list', 'purchase-frame-create', 'purchase-frame-edit', 'purchase-frame-delete',
-            'pharmacy-transfer-list', 'pharmacy-transfer-create', 'pharmacy-transfer-edit', 'pharmacy-transfer-delete',
-            'lens-transfer-list', 'lens-transfer-create', 'lens-transfer-edit', 'lens-transfer-delete',
-            'frame-transfer-list', 'frame-transfer-create', 'frame-transfer-edit', 'frame-transfer-delete',
-            'payment-list', 'payment-create', 'payment-edit', 'payment-delete',
-            'pending-transfer-list', 'pending-transfer-edit',
-        ];
-
-        foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission, 'guard_name' => 'web']);
-        }
 
         $user = User::create([
-            'name' => 'Speczone Order',
+            'name' => 'Vijoy Sasidharan',
             'username' => 'admin',
-            'email' => 'cssumesh@yahoo.com',
-            'mobile' => '9995050149',
-            'password' => bcrypt('admin')
+            'email' => 'mail@cybernetics.me',
+            'mobile' => '9188848860',
+            'password' => bcrypt('stupid')
         ]);
 
         $branch = Branch::create([
@@ -62,7 +37,6 @@ class DumpData extends Seeder
             'created_by' => $user->id,
             'updated_by' => $user->id,
         ]);
-
         $role = Role::create(['name' => 'Administrator']);
         $permissions = Permission::pluck('id', 'id')->all();
         $role->syncPermissions($permissions);
@@ -86,24 +60,6 @@ class DumpData extends Seeder
             'currency' => '₹',
             'daily_expense_limit' => 1000.00
         ]);
-
-        ConsultationType::insert([
-            'name' => 'Consultation',
-            'fee' => 1,
-        ]);
-
-        Department::insert([
-            'name' => 'Ophthalmology',
-        ]);
-
-        $ctypes = [
-            'Club', 'School', 'Residence Association', 'Other',
-        ];
-        foreach ($ctypes as $ctype) :
-            CampType::insert([
-                'name' => $ctype,
-            ]);
-        endforeach;
 
         $pmodes = [
             'Cash', 'Card', 'UPI', 'Bank Transfer', 'Cheque', 'Pay Later', 'Other',
