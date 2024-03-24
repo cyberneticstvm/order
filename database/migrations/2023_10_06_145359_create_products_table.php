@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('code')->unique();
-            $table->enum('category', ['lens', 'frame', 'pharmacy', 'service', 'other']);
+            $table->enum('category', ['lens', 'frame', 'pharmacy', 'service', 'contact-lens', 'accessory', 'other']);
             $table->unsignedBigInteger('type_id')->nullable();
             $table->unsignedBigInteger('shape_id')->nullable();
             $table->string('material')->nullable();

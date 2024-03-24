@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('qty')->default(0);
             $table->string('dosage')->nullable();
             $table->string('duration')->nullable();
-            $table->enum('eye', ['re', 'le', 'both', 'frame', 'service'])->nullable();
+            $table->enum('eye', ['re', 'le', 'both', 'frame', 'service', 'contact-lens', 'accessory'])->nullable();
             $table->string('sph', 7)->nullable();
             $table->string('cyl', 7)->nullable();
             $table->string('axis', 7)->nullable();

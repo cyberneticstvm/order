@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $branches = Branch::all();
             foreach ($branches as $key => $branch) :
-                $payments = getPaidTotal(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id);
+                $payments = getPaidTotalByMode(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id, $mode = [1]);
                 $expense = getExpenseTotal(Carbon::today(), Carbon::today(), $branch->id);
                 $income = getIncomeTotal(Carbon::today(), Carbon::today(), $branch->id);
                 $opening_balance = getOpeningBalance(Carbon::today()->subDay(), $branch->id);

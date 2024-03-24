@@ -206,9 +206,10 @@
                         <li><a href="{{ route('product.service') }}">Service Register</a></li>
                     </ul>
                 </li>
-                <li><a class="submenu-title" href="javascript:void(0)">Import Purchases<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+                <li><a class="submenu-title" href="javascript:void(0)">Imports<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                     <ul class="nav-sub-childmenu submenu-content">
-                        <li><a href="{{ route('import.frame.purchase') }}">Import</a></li>
+                        <li><a href="{{ route('import.frame.purchase') }}">Frame Purchase</a></li>
+                        <li><a href="{{ route('import.lens.purchase') }}">Lens Purchase</a></li>
                     </ul>
                 </li>
             </ul>

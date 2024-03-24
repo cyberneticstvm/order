@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Exports\AppointmentExport;
 use App\Exports\CampPatientExport;
+use App\Exports\FailedProductsExport;
 use App\Exports\ProductFrameExport;
 use App\Exports\ProductLensExport;
 use App\Exports\ProductPharmacyExport;
+use App\Imports\ProductLensPurchaseImport;
 use App\Imports\ProductPurchaseImport;
 use App\Models\Purchase;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ImportExportController extends Controller
@@ -48,7 +51,7 @@ class ImportExportController extends Controller
 
     public function importFramePurchase()
     {
-        return view('backend.purchase.import');
+        return view('backend.purchase.import.frame');
     }
 
     public function importFramePurchaseUpdate(Request $request)
@@ -66,10 +69,59 @@ class ImportExportController extends Controller
                 'created_by' => $request->user()->id,
                 'updated_by' => $request->user()->id,
             ]);
-            Excel::import(new ProductPurchaseImport($purchase), $request->file('file')->store('temp'));
+            $import = new ProductPurchaseImport($purchase);
+            Excel::import($import, $request->file('file')->store('temp'));
+            if ($import->data) :
+                Session::put('fdata', $import->data);
+                return redirect()->route('upload.failed')->with("warning", "Some products weren't uploaded. Please check the downloaded excel file for more info.");
+            endif;
         } catch (Exception $e) {
             return back()->with("error", $e->getMessage());
         }
-        return back()->with("success", "Success");
+        return back()->with("success", "Purchase Updated Successfully");
+    }
+
+    public function importLensPurchase()
+    {
+        return view('backend.purchase.import.lens');
+    }
+
+    public function importLensPurchaseUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'required',
+        ]);
+        try {
+            $purchase = Purchase::create([
+                'category' => 'lens',
+                'purchase_number' => purchaseId('lens')->pid,
+                'order_date' => Carbon::today(),
+                'delivery_date' => Carbon::today(),
+                'supplier_id' => 1,
+                'created_by' => $request->user()->id,
+                'updated_by' => $request->user()->id,
+            ]);
+            $import = new ProductLensPurchaseImport($purchase);
+            Excel::import($import, $request->file('file')->store('temp'));
+            if ($import->data) :
+                Session::put('fdata', $import->data);
+                return redirect()->route('upload.failed')->with("warning", "Some products weren't uploaded. Please check the downloaded excel file for more info.");
+            endif;
+        } catch (Exception $e) {
+            return back()->with("error", $e->getMessage());
+        }
+        return back()->with("success", "Purchase Updated Successfully");
+    }
+
+    public function uploadFailed()
+    {
+        return view('backend.failed-data');
+    }
+
+    public function uploadFailedExport()
+    {
+        $data = Session::get('fdata');
+        Session::forget('fdata');
+        return Excel::download(new FailedProductsExport($data), 'products.xlsx');
     }
 }
