@@ -29,7 +29,7 @@ class ProductPurchaseImport implements WithStartRow, ToCollection
     public function collection(Collection $rows)
     {
         foreach ($rows as $key => $row) :
-            $product = Product::where('code', strval($row[1]))->where('category', 'frame')->first();
+            $product = Product::where('code', strval($row[1]))->where('category', $this->purchase->category)->first();
             if ($product) :
                 PurchaseDetail::create([
                     'purchase_id' => $this->purchase->id,

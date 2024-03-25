@@ -5,7 +5,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Import Purchase (Frame)</h3>
+                    <h3>Import Purchase</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
@@ -13,8 +13,8 @@
                                 <svg class="stroke-icon">
                                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg></a></li>
-                        <li class="breadcrumb-item">Frame</li>
-                        <li class="breadcrumb-item active">Import Frame Purchase</li>
+                        <li class="breadcrumb-item">Purchase</li>
+                        <li class="breadcrumb-item active">Import Purchase</li>
                     </ol>
                 </div>
             </div>
@@ -26,9 +26,18 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-wrapper">
-                            <form class="row g-3" method="post" action="{{ route('import.frame.purchase.update') }}" enctype="multipart/form-data">
+                            <form class="row g-3" method="post" action="{{ route('import.product.purchase.update') }}" enctype="multipart/form-data">
                                 @csrf
-                                <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <label class="form-label">Product Category</label>
+                                    <div class="input-group">
+                                        {{ html()->select('category', array('lens' => 'Lens', 'frame' => 'Frame', 'solution' => 'Solution', 'accessory' => 'Accessory'))->class('form-control select2') }}
+                                    </div>
+                                    @error('category')
+                                    <small class="text-danger">{{ $errors->first('category') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
                                     <label class="form-label req">File Upload</label>&nbsp;&nbsp;<a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title="<strong>Number Parts Only.</strong>"><i class="fa fa-info txt-info"></i></a>
                                     <div class="input-group">
                                         {{ html()->file($name = 'file')->class('form-control') }}
@@ -38,6 +47,7 @@
                                     <small class="text-danger">{{ $errors->first('file') }}</small>
                                     @enderror
                                 </div>
+
                                 <div class="col-md-12">
                                     <a href="{{ asset('/backend/assets/docs/Purchases.xlsx') }}">Download Format</a>
                                 </div>

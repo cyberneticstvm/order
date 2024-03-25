@@ -49,19 +49,20 @@ class ImportExportController extends Controller
         return Excel::download(new ProductFrameExport($request), 'frame_products.xlsx');
     }
 
-    public function importFramePurchase()
+    public function importProductPurchase()
     {
-        return view('backend.purchase.import.frame');
+        return view('backend.purchase.import.index');
     }
 
-    public function importFramePurchaseUpdate(Request $request)
+    public function importProductPurchaseUpdate(Request $request)
     {
         $this->validate($request, [
-            'file' => 'required',
+            'file' => 'required|mimes:xlsx',
+            'category' => 'required',
         ]);
         try {
             $purchase = Purchase::create([
-                'category' => 'frame',
+                'category' => $request->category,
                 'purchase_number' => purchaseId('frame')->pid,
                 'order_date' => Carbon::today(),
                 'delivery_date' => Carbon::today(),
@@ -70,38 +71,6 @@ class ImportExportController extends Controller
                 'updated_by' => $request->user()->id,
             ]);
             $import = new ProductPurchaseImport($purchase);
-            Excel::import($import, $request->file('file')->store('temp'));
-            if ($import->data) :
-                Session::put('fdata', $import->data);
-                return redirect()->route('upload.failed')->with("warning", "Some products weren't uploaded. Please check the downloaded excel file for more info.");
-            endif;
-        } catch (Exception $e) {
-            return back()->with("error", $e->getMessage());
-        }
-        return back()->with("success", "Purchase Updated Successfully");
-    }
-
-    public function importLensPurchase()
-    {
-        return view('backend.purchase.import.lens');
-    }
-
-    public function importLensPurchaseUpdate(Request $request)
-    {
-        $this->validate($request, [
-            'file' => 'required',
-        ]);
-        try {
-            $purchase = Purchase::create([
-                'category' => 'lens',
-                'purchase_number' => purchaseId('lens')->pid,
-                'order_date' => Carbon::today(),
-                'delivery_date' => Carbon::today(),
-                'supplier_id' => 1,
-                'created_by' => $request->user()->id,
-                'updated_by' => $request->user()->id,
-            ]);
-            $import = new ProductLensPurchaseImport($purchase);
             Excel::import($import, $request->file('file')->store('temp'));
             if ($import->data) :
                 Session::put('fdata', $import->data);

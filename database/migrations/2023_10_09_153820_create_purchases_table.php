@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->enum('category', ['lens', 'frame', 'pharmacy', 'service', 'other']);
+            $table->enum('category', ['lens', 'frame', 'pharmacy', 'service', 'other', 'solution', 'accessory']);
             $table->string('purchase_number')->unique();
             $table->unsignedBigInteger('supplier_id');
             $table->date('order_date')->nullable();
