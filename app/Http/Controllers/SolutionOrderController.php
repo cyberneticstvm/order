@@ -3,23 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Consultation;
-use App\Models\MedicalRecord;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Payment;
 use App\Models\PaymentMode;
-use App\Models\Power;
 use App\Models\Product;
 use App\Models\State;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class StoreOrderController extends Controller
+class SolutionOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,56 +31,34 @@ class StoreOrderController extends Controller
         $this->middleware('permission:store-order-delete', ['only' => ['destroy']]);
 
         $this->middleware(function ($request, $next) {
-            $this->orders = Order::whereIn('category', ['store', 'solution'])->when(Auth::user()->roles->first()->id != 1, function ($q) {
-                return $q->where('branch_id', Session::get('branch'));
-            })->whereDate('created_at', Carbon::today())->withTrashed()->latest()->get();
 
             $this->padvisers = User::leftJoin('user_branches as ub', 'users.id', 'ub.user_id')->select('users.id', 'users.name')->where('ub.branch_id', Session::get('branch'))->role('Sales Advisor')->get();
 
             return $next($request);
         });
 
-        $this->products = Product::whereIn('category', ['lens', 'frame', 'service'])->orderBy('name')->get();
+        $this->products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['solution', 'accessory'])->orderBy('name')->get();
         $this->pmodes = PaymentMode::orderBy('name')->get();
     }
+
     public function index()
     {
-        $orders = Order::whereIn('category', ['store', 'solution'])->where('branch_id', Session::get('branch'))->whereDate('created_at', Carbon::today())->withTrashed()->latest()->get();
-        return view('backend.order.store.index', compact('orders'));
+        //
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create($id, $type)
+    public function create($id)
     {
-        $products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['lens', 'frame', 'service'])->orderBy('name')->get();
+        $products = $this->products;
         $pmodes = $this->pmodes;
         $padvisers = $this->padvisers;
         $states = State::all();
         /*$consultation = Consultation::with('patient')->find(decrypt($id));*/
         $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', decrypt($id))->first();
-        $spectacle = DB::connection('mysql1')->table('spectacles')->where('medical_record_id', decrypt($id))->first();
         $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();
-        $powers = Power::all();
-        return view(($type == 1) ? 'backend.order.store.create' : 'backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'mrecord', 'spectacle', 'powers', 'states'));
-    }
-
-    public function fetch(Request $request)
-    {
-        $this->validate($request, [
-            'medical_record_number' => 'required',
-            'type' => 'required',
-        ]);
-        /*$consultation = Consultation::with('patient')->findOrFail($request->medical_record_number);*/
-        $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', $request->medical_record_number)->first();
-        if ($mrecord) :
-            $type = $request->type;
-            $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id)->first();
-            return view('backend.order.store.proceed', compact('mrecord', 'patient', 'type'));
-        else :
-            return redirect()->back()->with('error', 'No records found')->withInput($request->all());
-        endif;
+        return view('backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'mrecord', 'states'));
     }
 
     /**
@@ -103,9 +78,6 @@ class StoreOrderController extends Controller
             'invoice_total' => 'required|numeric|min:0|not_in:0',
             'product_id' => 'present|array'
         ]);
-        /*if (!settings()->allow_sales_at_zero_qty) :
-            $status = checkOrderedProductsAvailability($request);
-        endif;*/
         try {
             DB::transaction(function () use ($request) {
                 $order = Order::create([
@@ -116,7 +88,7 @@ class StoreOrderController extends Controller
                     'place' => $request->place,
                     'mobile' => $request->mobile,
                     'invoice_number' => NULL,
-                    'category' => 'store',
+                    'category' => 'solution',
                     'branch_id' => branch()->id,
                     'order_total' => $request->order_total,
                     'invoice_total' => $request->invoice_total,
@@ -143,18 +115,13 @@ class StoreOrderController extends Controller
                     $data[] = [
                         'order_id' => $order->id,
                         'product_id' => $product->id,
+                        'batch_number' => $request->batch_number[$key],
+                        'expiry_date' => $request->expiry_date[$key],
                         'qty' => $request->qty[$key],
                         'unit_price' => $request->unit_price[$key],
                         'total' => $request->total[$key],
                         'tax_percentage' => $product->tax_percentage,
                         'tax_amount' => $product->taxamount($request->total[$key]),
-                        'eye' => $request->eye[$key],
-                        'sph' => $request->sph[$key] ?? NULL,
-                        'cyl' => $request->cyl[$key] ?? NULL,
-                        'axis' => $request->axis[$key] ?? NULL,
-                        'add' => $request->add[$key] ?? NULL,
-                        'ipd' => $request->ipd[$key],
-                        'int_add' => $request->int_add[$key],
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
@@ -194,13 +161,12 @@ class StoreOrderController extends Controller
      */
     public function edit(string $id)
     {
-        $products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['lens', 'frame', 'service'])->orderBy('name')->get();
+        $products = $this->products;
         $pmodes = $this->pmodes;
         $padvisers = $this->padvisers;
         $order = Order::with('details')->findOrFail(decrypt($id));
-        $powers = Power::all();
         $states = State::all();
-        return view('backend.order.store.edit', compact('products', 'pmodes', 'padvisers', 'order', 'powers', 'states'));
+        return view('backend.order.solution.edit', compact('products', 'pmodes', 'padvisers', 'order', 'states'));
     }
 
     /**
@@ -254,18 +220,13 @@ class StoreOrderController extends Controller
                     $data[] = [
                         'order_id' => $id,
                         'product_id' => $product->id,
+                        'batch_number' => $request->batch_number[$key],
+                        'expiry_date' => $request->expiry_date[$key],
                         'qty' => $request->qty[$key],
                         'unit_price' => $request->unit_price[$key],
                         'total' => $request->total[$key],
                         'tax_percentage' => $product->tax_percentage,
                         'tax_amount' => $product->taxamount($request->total[$key]),
-                        'eye' => $request->eye[$key],
-                        'sph' => $request->sph[$key] ?? NULL,
-                        'cyl' => $request->cyl[$key] ?? NULL,
-                        'axis' => $request->axis[$key] ?? NULL,
-                        'add' => $request->add[$key] ?? NULL,
-                        'ipd' => $request->ipd[$key] ?? NULL,
-                        'int_add' => $request->int_add[$key],
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];

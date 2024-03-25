@@ -43,7 +43,7 @@
                                 {{ html()->text($name = 'place', $value = $patient->address)->class('form-control')->attribute('disabled') }}
                             </div>
                             <div class="col-12 text-center">
-                                <a class="btn btn-success" type="submit" href="{{ route('store.order.create', encrypt($mrecord->id)) }}">Proceed</a>
+                                <a class="btn btn-success" type="submit" href="{{ route('store.order.create', ['id' => encrypt($mrecord->id), 'type' => $type]) }}">Proceed</a>
                                 <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                             </div>
                         </div>

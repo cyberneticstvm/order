@@ -11,6 +11,8 @@ class OrderDetail extends Model
 
     protected $guarded = [];
 
+    protected $casts = ['expiry_date' => 'date'];
+
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');

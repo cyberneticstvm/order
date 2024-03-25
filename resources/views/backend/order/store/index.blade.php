@@ -28,6 +28,15 @@
                         <div class="card-wrapper">
                             <form class="row g-3" method="post" action="{{ route('store.order.fetch') }}">
                                 @csrf
+                                <div class="col-md-3">
+                                    <label class="form-label req">Order Type</label>
+                                    <div class="input-group">
+                                        {{ html()->select('type', array('1' => 'Lens & Frames', '2' => 'Solution'), '1')->class('form-control select2') }}
+                                    </div>
+                                    @error('type')
+                                    <small class="text-danger">{{ $errors->first('type') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-md-4">
                                     <label class="form-label req">Medical Record Number</label>&nbsp;&nbsp;<a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title="<strong>Number Parts Only.</strong>"><i class="fa fa-info txt-info"></i></a>
                                     <div class="input-group">
@@ -57,7 +66,11 @@
                             </div>
                             <div class="col text-end">
                                 <div class="btn-group">
-                                    <a href="{{ route('store.order.create', ['id' => encrypt(0)]) }}" class="btn btn-primary" type="button">Add New</a>
+                                    <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Add New</button>
+                                    <ul class="dropdown-menu dropdown-block">
+                                        <li><a class="dropdown-item txt-dark" href="{{ route('store.order.create', ['id' => encrypt(0), 'type' => 1]) }}">Lenses / Frames</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('solution.order.create', ['id' => encrypt(0), 'type' => 2]) }}">Solutions / Accessories</a></li>
+                                    </ul>
                                 </div>
                                 <div class="btn-group">
                                     <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Export</button>
@@ -97,8 +110,8 @@
                                         <td class="text-end">{{ number_format($item->invoice_total, 2) }}</td>
                                         <td class="text-center"><a href="{{ route('store.order.receipt', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                         <td>{!! $item->status() !!}</td>
-                                        <td class="text-center"><a href="{{ route('store.order.edit', encrypt($item->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
-                                        <td class="text-center"><a href="{{ route('store.order.delete', encrypt($item->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
+                                        <td class="text-center"><a href="{{ route(($item->category == 'store') ? 'store.order.edit' : 'solution.order.edit', encrypt($item->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
+                                        <td class="text-center"><a href="{{ route(($item->category == 'store') ? 'store.order.delete' : 'solution.order.delete', encrypt($item->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
                                     </tr>
                                     @empty
                                     @endforelse

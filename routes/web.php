@@ -33,6 +33,7 @@ use App\Http\Controllers\PurchasePharmacyController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\SolutionOrderController;
 use App\Http\Controllers\StoreOrderController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransferFrameController;
@@ -350,11 +351,19 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/', 'index')->name('store.order');
         Route::post('/', 'fetch')->name('store.order.fetch');
         Route::get('/proceed', '')->name('store.order.proceed');
-        Route::get('/create/{id}', 'create')->name('store.order.create');
+        Route::get('/create/{id}/{type}', 'create')->name('store.order.create');
         Route::post('/create', 'store')->name('store.order.save');
         Route::get('/edit/{id}', 'edit')->name('store.order.edit');
         Route::post('/edit/{id}', 'update')->name('store.order.update');
         Route::get('/delete/{id}', 'destroy')->name('store.order.delete');
+    });
+
+    Route::prefix('/backend/solution/order')->controller(SolutionOrderController::class)->group(function () {
+        Route::get('/create/{id}', 'create')->name('solution.order.create');
+        Route::post('/create', 'store')->name('solution.order.save');
+        Route::get('/edit/{id}', 'edit')->name('solution.order.edit');
+        Route::post('/edit/{id}', 'update')->name('solution.order.update');
+        Route::get('/delete/{id}', 'destroy')->name('solution.order.delete');
     });
 
     Route::prefix('/backend/pharmacy/order')->controller(PharmacyOrderController::class)->group(function () {
