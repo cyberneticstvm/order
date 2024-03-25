@@ -87,7 +87,7 @@
                 Menu::new()->addClass('sidebar-submenu')
                 ->linkIfCan('store-order-list', route('store.order'), 'Order Register')
                 ->linkIfCan('invoice-register', route('invoice.register'), 'Invoice Register')
-                ->linkIfCan('invoice-register-not-generated', route('not.generated.invoice.register'), 'Not Generated Invoices');
+                ->linkIfCan('invoice-register-not-generated', route('not.generated.invoice.register'), 'Pending Invoice Register');
             }}
         </li>
         @endif

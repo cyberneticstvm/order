@@ -38,7 +38,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label req">File Upload</label>&nbsp;&nbsp;<a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title="<strong>Number Parts Only.</strong>"><i class="fa fa-info txt-info"></i></a>
+                                    <label class="form-label req">File Upload</label>
                                     <div class="input-group">
                                         {{ html()->file($name = 'file')->class('form-control') }}
                                         <button class="btn btn-outline-warning btn-submit" id="button-addon2" type="submit">Import</button>
