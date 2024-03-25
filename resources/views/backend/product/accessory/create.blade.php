@@ -5,7 +5,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Frame Products</h3>
+                    <h3>Accessory Products</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
@@ -13,7 +13,7 @@
                                 <svg class="stroke-icon">
                                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg></a></li>
-                        <li class="breadcrumb-item">Frame Product</li>
+                        <li class="breadcrumb-item">Accessory Product</li>
                         <li class="breadcrumb-item active">Create</li>
                     </ol>
                 </div>
@@ -26,11 +26,11 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Create Product</h5><span>Create New Frame Product</span>
+                        <h5>Create Product</h5><span>Create New Accessory Product</span>
                     </div>
                     <div class="card-body">
                         <div class="card-wrapper">
-                            <form class="row g-3" method="post" action="{{ route('product.frame.save') }}">
+                            <form class="row g-3" method="post" action="{{ route('product.accessory.save') }}">
                                 @csrf
                                 <div class="col-md-4">
                                     <label class="form-label req">Product Name</label>
@@ -39,37 +39,27 @@
                                     <small class="text-danger">{{ $errors->first('name') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-2">
+                                    <label class="form-label req">Product Code</label>
+                                    {{ html()->text($name = 'code', $value = productcode('accessory'))->class('form-control')->placeholder('Product Code') }}
+                                    @error('code')
+                                    <small class="text-danger">{{ $errors->first('code') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-md-3">
-                                    <label class="form-label req">Type of Product</label>
+                                    <label class="form-label req">Type</label>
                                     {{ html()->select($name = 'type_id', $value = $ptypes->where('attribute', 'type')->pluck('name', 'id'), old('type_id'))->class('form-control select2')->placeholder('Select') }}
                                     @error('type_id')
                                     <small class="text-danger">{{ $errors->first('type_id') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label req">Shape of Product</label>
-                                    {{ html()->select($name = 'shape_id', $value = $ptypes->where('attribute', 'shape')->pluck('name', 'id'), old('shape_id'))->class('form-control select2')->placeholder('Select') }}
-                                    @error('shape_id')
-                                    <small class="text-danger">{{ $errors->first('shape_id') }}</small>
-                                    @enderror
+                                    <label class="form-label">Material</label>
+                                    {{ html()->select($name = 'material', $value = $ptypes->where('attribute', 'material')->pluck('name', 'id'), old('material'))->class('form-control select2')->placeholder('Select') }}
                                 </div>
-                                <div class="col-md-2">
-                                    <label class="form-label">Product Material</label>
-                                    {{ html()->select($name = 'material', $value = $ptypes->where('attribute', 'material')->pluck('name', 'id'), '')->class('form-control select2')->placeholder('Select') }}
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="form-label req">Product Code</label>
-                                    {{ html()->text($name = 'code', $value = productcode($ptypes->first()->category))->class('form-control')->placeholder('Product Code') }}
-                                    @error('code')
-                                    <small class="text-danger">{{ $errors->first('code') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="form-label req">Manufacturer</label>
-                                    {{ html()->select($name = 'manufacturer_id', $value = $manufacturers, old('manufacturer_id'))->class('form-control select2')->placeholder('Select') }}
-                                    @error('manufacturer_id')
-                                    <small class="text-danger">{{ $errors->first('manufacturer_id') }}</small>
-                                    @enderror
+                                <div class="col-md-3">
+                                    <label class="form-label">Colour</label>
+                                    {{ html()->select($name = 'color', $value = $ptypes->where('attribute', 'colour')->pluck('name', 'id'), old('color'))->class('form-control select2')->placeholder('Select') }}
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">MRP</label>
@@ -89,28 +79,8 @@
                                 <div class="col-md-2">
                                     <label class="form-label">Reorder Level</label>
                                     {{ html()->number($name = 'reorder_level', $value = old('reorder_level'), $min="1", $max="", $step="any")->class('form-control')->placeholder('0') }}
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="form-label">Eye Size</label>
-                                    {{ html()->text($name = 'eye_size', old('eye_size'))->class('form-control')->placeholder('Eye Size') }}
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="form-label">Bridge Size</label>
-                                    {{ html()->text($name = 'bridge_size', old('bridge_size'))->class('form-control')->placeholder('Bridge Size') }}
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="form-label">Temple Size</label>
-                                    {{ html()->text($name = 'temple_size', old('temple_size'))->class('form-control')->placeholder('Temple Size') }}
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label">Collection</label>
-                                    {{ html()->select($name = 'collection_id', $collection->where('category', 'frame')->where('attribute', 'collection')->pluck('name', 'id'), old('collection_id'))->class('form-control select2')->placeholder('Select') }}
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="form-label">Color</label>
-                                    {{ html()->select($name = 'color', $collection->where('category', 'frame')->where('attribute', 'colour')->pluck('name', 'id'), old('color'))->class('form-control select2')->placeholder('Select') }}
-                                    @error('color')
-                                    <small class="text-danger">{{ $errors->first('color') }}</small>
+                                    @error('reorder_level')
+                                    <small class="text-danger">{{ $errors->first('reorder_level') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-4">

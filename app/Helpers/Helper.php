@@ -29,7 +29,7 @@ function settings()
 
 function hsn()
 {
-    return array('lens' => '9001', 'frame' => '9003', 're' => '9001', 'le' => '9001');
+    return array('lens' => '9001', 'frame' => '9003', 're' => '9001', 'le' => '9001', 'solution' => '9003', 'accessory' => '9003');
 }
 
 function title()
@@ -77,8 +77,8 @@ function camptId()
 
 function productcode($category)
 {
-    $key = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    return substr(strtoupper($category), 0, 2) . '-' . substr(str_shuffle($key), 0, 6);
+    $key = '0123456789';
+    return substr(strtoupper($category), 0, 1) . substr(str_shuffle($key), 0, 6);
 }
 
 function invoicenumber($oid)

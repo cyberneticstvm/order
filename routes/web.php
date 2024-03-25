@@ -21,10 +21,12 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PharmacyOrderController;
 use App\Http\Controllers\ProcedureController;
+use App\Http\Controllers\ProductAccessoryController;
 use App\Http\Controllers\ProductFrameController;
 use App\Http\Controllers\ProductLensController;
 use App\Http\Controllers\ProductPharmacyController;
 use App\Http\Controllers\ProductServiceController;
+use App\Http\Controllers\ProductSolutionController;
 use App\Http\Controllers\PurchaseFrameController;
 use App\Http\Controllers\PurchaseLensController;
 use App\Http\Controllers\PurchasePharmacyController;
@@ -110,6 +112,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/product/pharmacy', 'exportProductPharmacy')->name('export.product.pharmacy');
         Route::get('/product/lens', 'exportProductLens')->name('export.product.lens');
         Route::get('/product/frame', 'exportProductFrame')->name('export.product.frame');
+        Route::get('/product/solution', 'exportProductFrame')->name('export.product.solution');
+        Route::get('/product/accessory', 'exportProductFrame')->name('export.product.accessory');
     });
 
     Route::prefix('/backend/import')->controller(ImportExportController::class)->group(function () {
@@ -133,6 +137,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/product/pharmacy', 'exportProductPharmacy')->name('pdf.product.pharmacy');
         Route::get('/product/lens', 'exportProductLens')->name('pdf.product.lens');
         Route::get('/product/frame', 'exportProductFrame')->name('pdf.product.frame');
+        Route::get('/product/solution', 'exportProductLens')->name('pdf.product.solution');
+        Route::get('/product/accessory', 'exportProductFrame')->name('pdf.product.accessory');
         Route::get('/payment/receipt/{id}', 'exportPaymentReceipt')->name('pdf.payment.receipt');
         Route::get('/order/invoices', 'invoices')->name('invoice.register');
         Route::get('/order/notgenerated/invoices', 'invoicesNotGenerated')->name('not.generated.invoice.register');
@@ -305,6 +311,24 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/edit/{id}', 'edit')->name('product.frame.edit');
         Route::post('/edit/{id}', 'update')->name('product.frame.update');
         Route::get('/delete/{id}', 'destroy')->name('product.frame.delete');
+    });
+
+    Route::prefix('/backend/product/solution')->controller(ProductSolutionController::class)->group(function () {
+        Route::get('/', 'index')->name('product.solution');
+        Route::get('/create', 'create')->name('product.solution.create');
+        Route::post('/create', 'store')->name('product.solution.save');
+        Route::get('/edit/{id}', 'edit')->name('product.solution.edit');
+        Route::post('/edit/{id}', 'update')->name('product.solution.update');
+        Route::get('/delete/{id}', 'destroy')->name('product.solution.delete');
+    });
+
+    Route::prefix('/backend/product/accessory')->controller(ProductAccessoryController::class)->group(function () {
+        Route::get('/', 'index')->name('product.accessory');
+        Route::get('/create', 'create')->name('product.accessory.create');
+        Route::post('/create', 'store')->name('product.accessory.save');
+        Route::get('/edit/{id}', 'edit')->name('product.accessory.edit');
+        Route::post('/edit/{id}', 'update')->name('product.accessory.update');
+        Route::get('/delete/{id}', 'destroy')->name('product.accessory.delete');
     });
 
     Route::prefix('/backend/product/collection')->controller(CollectionController::class)->group(function () {

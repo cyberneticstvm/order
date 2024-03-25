@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('category', ['lens', 'frame', 'pharmacy', 'service', 'contact-lens', 'accessory', 'other']);
             $table->unsignedBigInteger('type_id')->nullable();
             $table->unsignedBigInteger('shape_id')->nullable();
-            $table->string('material')->nullable();
+            $table->unsignedBigInteger('material')->nullable();
             $table->string('property')->nullable();
             $table->string('index')->nullable();
             $table->unsignedBigInteger('color')->nullable();
@@ -28,6 +28,7 @@ return new class extends Migration
             $table->unsignedBigInteger('collection_id')->comment('Applicable for Frames only')->nullable();
             $table->unsignedBigInteger('coating_id')->nullable();
             $table->unsignedBigInteger('manufacturer_id')->nullable();
+            $table->unsignedBigInteger('brand_id')->nullable();
             $table->integer('reorder_level')->nullable();
             $table->decimal('tax_percentage', 5, 2)->nullable();
             $table->decimal('mrp', 7, 2)->nullable();

@@ -2,34 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Manufaturer;
 use App\Models\Product;
 use App\Models\ProductSubcategory;
 use Illuminate\Http\Request;
 
-class ProductLensController extends Controller
+class ProductSolutionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    protected $products, $ptypes, $manufacturers;
+    protected $products, $brands;
 
     function __construct()
     {
-        $this->middleware('permission:product-lens-list|product-lens-create|product-lens-edit|product-lens-delete', ['only' => ['index', 'store']]);
-        $this->middleware('permission:product-lens-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:product-lens-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:product-lens-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:product-solution-list|product-solution-create|product-solution-edit|product-solution-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:product-solution-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:product-solution-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:product-solution-delete', ['only' => ['destroy']]);
 
-        $this->products = Product::withTrashed()->where('category', 'lens')->orderBy('name')->get();
-        $this->ptypes = ProductSubcategory::where('category', 'lens')->get();
-        $this->manufacturers = Manufaturer::orderBy('name')->pluck('name', 'id');
+        $this->products = Product::withTrashed()->where('category', 'solution')->orderBy('name')->get();
+        $this->brands = ProductSubcategory::where('category', 'solution')->where('attribute', 'brand')->get();
     }
 
     public function index()
     {
         $products = $this->products;
-        return view('backend.product.lens.index', compact('products'));
+        return view('backend.product.solution.index', compact('products'));
     }
 
     /**
@@ -37,9 +35,8 @@ class ProductLensController extends Controller
      */
     public function create()
     {
-        $manufacturers = $this->manufacturers;
-        $ptypes = $this->ptypes;
-        return view('backend.product.lens.create', compact('ptypes', 'manufacturers'));
+        $brands = $this->brands;
+        return view('backend.product.solution.create', compact('brands'));
     }
 
     /**
@@ -50,16 +47,15 @@ class ProductLensController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'code' => 'required',
-            'type_id' => 'required',
-            'manufacturer_id' => 'required',
+            'brand_id' => 'required',
             'selling_price' => 'required',
         ]);
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
-        $input['category'] = 'lens';
+        $input['category'] = 'solution';
         Product::create($input);
-        return redirect()->route('product.lens')->with("success", "Product created successfully!");
+        return redirect()->route('product.solution')->with("success", "Product created successfully!");
     }
 
     /**
@@ -76,9 +72,8 @@ class ProductLensController extends Controller
     public function edit(string $id)
     {
         $product = Product::findOrFail(decrypt($id));
-        $manufacturers = $this->manufacturers;
-        $ptypes = $this->ptypes;
-        return view('backend.product.lens.edit', compact('ptypes', 'manufacturers', 'product'));
+        $brands = $this->brands;
+        return view('backend.product.solution.edit', compact('brands', 'product'));
     }
 
     /**
@@ -88,14 +83,13 @@ class ProductLensController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'type_id' => 'required',
-            'manufacturer_id' => 'required',
+            'brand_id' => 'required',
             'selling_price' => 'required',
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
         Product::findOrFail($id)->update($input);
-        return redirect()->route('product.lens')->with("success", "Product updated successfully!");
+        return redirect()->route('product.solution')->with("success", "Product updated successfully!");
     }
 
     /**
@@ -104,6 +98,6 @@ class ProductLensController extends Controller
     public function destroy(string $id)
     {
         Product::findOrFail(decrypt($id))->delete();
-        return redirect()->route('product.lens')->with("success", "Product deleted successfully!");
+        return redirect()->route('product.solution')->with("success", "Product deleted successfully!");
     }
 }

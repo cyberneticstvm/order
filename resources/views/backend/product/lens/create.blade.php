@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Product Material</label>
-                                    {{ html()->text($name = 'material', $value = old('material'))->class('form-control')->placeholder('Product Material') }}
+                                    {{ html()->select($name = 'material', $value = $ptypes->where('attribute', 'material')->pluck('name', 'id'), old('material'))->class('form-control select2')->placeholder('Select') }}
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">Coating</label>
