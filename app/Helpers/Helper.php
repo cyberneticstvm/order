@@ -336,3 +336,12 @@ function getInventory($branch, $product, $category)
     endif;
     return collect($stock);
 }
+
+function getPercentage($amount, $total)
+{
+    $percentage = 0;
+    if ($amount > 0 && $total > 0) :
+        $percentage = ($amount / $total) * 100;
+    endif;
+    return $percentage;
+}

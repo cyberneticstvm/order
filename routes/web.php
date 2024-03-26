@@ -32,6 +32,7 @@ use App\Http\Controllers\PurchaseLensController;
 use App\Http\Controllers\PurchasePharmacyController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SalesReturnContoller;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SolutionOrderController;
 use App\Http\Controllers\StoreOrderController;
@@ -458,6 +459,13 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/edit/{id}', 'edit')->name('patient.payment.edit');
         Route::post('/edit/{id}', 'update')->name('patient.payment.update');
         Route::get('/delete/{id}', 'destroy')->name('patient.payment.delete');
+    });
+
+    Route::prefix('/backend/sreturn')->controller(SalesReturnContoller::class)->group(function () {
+        Route::get('/', 'index')->name('sales.return');
+        Route::post('/', 'fetch')->name('sales.return.fetch');
+        Route::get('/list/{id}', 'list')->name('sales.return.list');
+        Route::post('/list/save/{id}', 'store')->name('sales.return.list.save');
     });
 
     Route::prefix('/backend/report')->controller(ReportController::class)->group(function () {

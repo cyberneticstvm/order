@@ -34,6 +34,8 @@ return new class extends Migration
             $table->decimal('total', 9, 2)->default(0);
             $table->decimal('tax_percentage', 5, 2)->nullable();
             $table->decimal('tax_amount', 8, 2)->nullable();
+            $table->boolean('return')->nullable();
+            $table->integer('returned_qty')->nullable();
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();

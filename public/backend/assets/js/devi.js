@@ -202,6 +202,11 @@ $(function () {
             }
         });
     });
+
+    $(document).on("keyup", ".retqty", function () {
+        let dis = $(this); let qty = parseInt(dis.val()); let price = parseFloat(dis.parent().parent().find(".retval").text().replace(/\,/g, ''));
+        dis.parent().parent().find(".custacc").val((parseFloat(qty * price) > 0) ? parseFloat(qty * price).toFixed(2) : 0.00);
+    })
 });
 
 function addMedicineRowForOrder(category, attribute) {

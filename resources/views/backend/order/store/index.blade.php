@@ -31,7 +31,7 @@
                                 <div class="col-md-3">
                                     <label class="form-label req">Order Type</label>
                                     <div class="input-group">
-                                        {{ html()->select('type', array('1' => 'Lens & Frames', '2' => 'Solution'), '1')->class('form-control select2') }}
+                                        {{ html()->select('type', array('1' => 'Spectacles', '2' => 'Solutions'), '1')->class('form-control select2') }}
                                     </div>
                                     @error('type')
                                     <small class="text-danger">{{ $errors->first('type') }}</small>
@@ -68,8 +68,8 @@
                                 <div class="btn-group">
                                     <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Add New</button>
                                     <ul class="dropdown-menu dropdown-block">
-                                        <li><a class="dropdown-item txt-dark" href="{{ route('store.order.create', ['id' => encrypt(0), 'type' => 1]) }}">Lenses / Frames</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('solution.order.create', ['id' => encrypt(0), 'type' => 2]) }}">Solutions / Accessories</a></li>
+                                        <li><a class="dropdown-item txt-dark" href="{{ route('store.order.create', ['id' => encrypt(0), 'type' => 1]) }}">Spectacles</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('solution.order.create', ['id' => encrypt(0), 'type' => 2]) }}">Solutions</a></li>
                                     </ul>
                                 </div>
                                 <div class="btn-group">
