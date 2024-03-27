@@ -472,6 +472,11 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
 
     Route::prefix('/backend/product/damage')->controller(ProductDamageController::class)->group(function () {
         Route::get('/', 'index')->name('product.damage.register');
+        Route::get('/create/{category}', 'create')->name('product.damage.create');
+        Route::post('/create', 'store')->name('product.damage.save');
+        Route::get('/edit/{id}', 'edit')->name('product.damage.edit');
+        Route::post('/edit/{id}', 'update')->name('product.damage.update');
+        Route::get('/delete/{id}', 'destroy')->name('product.damage.delete');
     });
 
     Route::prefix('/backend/report')->controller(ReportController::class)->group(function () {

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\ProductDamage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ProductDamageController extends Controller
 {
@@ -19,15 +22,17 @@ class ProductDamageController extends Controller
 
     public function index()
     {
-        //
+        $products = ProductDamage::withTrashed()->where('from_branch', Session::get('branch'))->latest()->get();
+        return view('backend.order.damage.index', compact('products'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($category)
     {
-        //
+        $products = Product::where('category', $category)->orderBy('name')->get();
+        return view('backend.order.damage.create', compact('products'));
     }
 
     /**
@@ -35,7 +40,19 @@ class ProductDamageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'product_id' => 'required',
+            'qty' => 'required',
+            'description' => 'required',
+        ]);
+        $input = $request->all();
+        $input['category'] = Product::findOrFail($request->product_id)->category;
+        $input['from_branch'] = Session::get('branch');
+        $input['to_branch'] = 0;
+        $input['created_by'] = $request->user()->id;
+        $input['updated_by'] = $request->user()->id;
+        ProductDamage::create($input);
+        return redirect()->route('product.damage.register')->with("success", "Damage added successfully");
     }
 
     /**
@@ -51,7 +68,9 @@ class ProductDamageController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $damage = ProductDamage::findOrFail(decrypt($id));
+        $products = Product::where('category', $damage->category)->orderBy('name')->get();
+        return view('backend.order.damage.edit', compact('damage', 'products'));
     }
 
     /**
@@ -59,7 +78,16 @@ class ProductDamageController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->validate($request, [
+            'product_id' => 'required',
+            'qty' => 'required',
+            'description' => 'required',
+        ]);
+        $input = $request->all();
+        $input['category'] = Product::findOrFail($request->product_id)->category;
+        $input['updated_by'] = $request->user()->id;
+        ProductDamage::findOrFail($id)->update($input);
+        return redirect()->route('product.damage.register')->with("success", "Damage updated successfully");
     }
 
     /**
@@ -67,6 +95,7 @@ class ProductDamageController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        ProductDamage::findOrFail(decrypt($id))->delete();
+        return redirect()->route('product.damage.register')->with("success", "Damage deleted successfully");
     }
 }

@@ -13,7 +13,16 @@ return new class extends Migration
     {
         Schema::create('product_damages', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->integer('qty')->nullable();
+            $table->enum('category', ['frame', 'lens', 'solution', 'accessorry', 'other'])->nullable();
+            $table->unsignedBigInteger('from_branch');
+            $table->unsignedBigInteger('to_branch');
+            $table->text('description')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
