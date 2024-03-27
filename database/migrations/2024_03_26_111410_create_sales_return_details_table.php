@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->integer('order_qty')->nullable();
             $table->integer('returned_qty')->nullable();
+            $table->decimal('returned_amount', 7, 2)->nullable();
             $table->foreign('return_id')->references('id')->on('sales_returns')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();

@@ -72,7 +72,7 @@
                 <h6>Order</h6>
             </div>
         </li>
-        @if(auth()->user()->can('store-order-list') || auth()->user()->can('store-order-create') || auth()->user()->can('store-order-edit') || auth()->user()->can('store-order-delete') || auth()->user()->can('invoice-register') || auth()->user()->can('invoice-register-not-generated') || auth()->user()->can('sales-return-list'))
+        @if(auth()->user()->can('store-order-list') || auth()->user()->can('store-order-create') || auth()->user()->can('store-order-edit') || auth()->user()->can('store-order-delete') || auth()->user()->can('invoice-register') || auth()->user()->can('invoice-register-not-generated') || auth()->user()->can('sales-return-list') || auth()->user()->can('product-damage-list'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -87,6 +87,7 @@
                 Menu::new()->addClass('sidebar-submenu')
                 ->linkIfCan('store-order-list', route('store.order'), 'Order Register')
                 ->linkIfCan('sales-return-list', route('sales.return'), 'Sales Return Register')
+                ->linkIfCan('product-damage-list', route('product.damage.register'), 'Product Damage Register')
                 ->linkIfCan('invoice-register', route('invoice.register'), 'Invoice Register')
                 ->linkIfCan('invoice-register-not-generated', route('not.generated.invoice.register'), 'Pending Invoice Register');
             }}

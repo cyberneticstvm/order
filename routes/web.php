@@ -22,6 +22,7 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PharmacyOrderController;
 use App\Http\Controllers\ProcedureController;
 use App\Http\Controllers\ProductAccessoryController;
+use App\Http\Controllers\ProductDamageController;
 use App\Http\Controllers\ProductFrameController;
 use App\Http\Controllers\ProductLensController;
 use App\Http\Controllers\ProductPharmacyController;
@@ -466,6 +467,11 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/', 'fetch')->name('sales.return.fetch');
         Route::get('/list/{id}', 'list')->name('sales.return.list');
         Route::post('/list/save/{id}', 'store')->name('sales.return.list.save');
+        Route::get('/list/detail/{id}', 'show')->name('sales.return.list.detail');
+    });
+
+    Route::prefix('/backend/product/damage')->controller(ProductDamageController::class)->group(function () {
+        Route::get('/', 'index')->name('product.damage.register');
     });
 
     Route::prefix('/backend/report')->controller(ReportController::class)->group(function () {

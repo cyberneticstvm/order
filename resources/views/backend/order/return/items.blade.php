@@ -53,14 +53,20 @@
                                             <td class="text-end retval">{{ number_format(($item->unit_price - ($item->unit_price*getPercentage($item->order->discount, $item->order->order_total)/100))* $item->qty, 2) }} </td>
                                             <td>
                                                 <input name="qty[]" type="number" min="" max="{{ $item->qty }}" step="1" class="form-control text-end retqty" placeholder="0" />
-                                                @error('qty')
-                                                <small class="text-danger">{{ $errors->first('qty') }}</small>
-                                                @enderror
+                                                <input type="hidden" name="oqty[]" value="{{ $item->qty }}" />
+                                                <input type="hidden" name="odid[]" value="{{ $item->id }}" />
+                                                <input type="hidden" name="pid[]" value="{{ $item->product_id }}" />
                                             </td>
-                                            <td><input type="text" class="form-control text-end custacc" placeholder="0.00" readonly /></td>
+                                            <td><input type="text" class="form-control text-end custacc" name="amount[]" placeholder="0.00" readonly /></td>
                                         </tr>
                                         @empty
                                         @endforelse
+                                        <tr>
+                                            <td colspan="7" class="text-end">@error('qty')
+                                                <small class="text-danger">{{ $errors->first('qty') }}</small>
+                                                @enderror
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

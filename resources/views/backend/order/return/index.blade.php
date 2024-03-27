@@ -56,18 +56,26 @@
                                 <thead>
                                     <tr>
                                         <th>SL No</th>
+                                        <th>Return ID</th>
                                         <th>Order Number</th>
-                                        <th>Branch</th>
+                                        <th>Order Branch</th>
+                                        <th>Returned Branch</th>
                                         <th>Customer Name</th>
+                                        <th>Order Date</th>
+                                        <th>Return Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse($data as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $item->branch->code }}/{{ $item->id }}</td>
-                                        <td>{{ $item->branch?->name }}</td>
-                                        <td>{{ $item->name }}</td>
+                                        <td><a href="{{ route('sales.return.list.detail', encrypt($item->id)) }}">{{ $item->id }}</a></td>
+                                        <td>{{ $item->order->branch->code }}/{{ $item->order->id }}</td>
+                                        <td>{{ $item->orderBranch->name }}</td>
+                                        <td>{{ $item->returnBranch->name }}</td>
+                                        <td>{{ $item->order->name }}</td>
+                                        <td>{{ $item->order->created_at->format('d, M Y') }}</td>
+                                        <td>{{ $item->created_at->format('d, M Y') }}</td>
                                     </tr>
                                     @empty
                                     @endforelse
