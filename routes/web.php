@@ -105,6 +105,9 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/pending/transfer', 'pendingTransfer')->name('pending.transfer');
         Route::get('/pending/transfer/edit/{id}', 'pendingTransferEdit')->name('pending.transfer.edit');
         Route::post('/pending/transfer/edit/{id}', 'pendingTransferUpdate')->name('pending.transfer.update');
+        Route::get('/pending/damage/transfer', 'pendingDamageTransfer')->name('pending.damage.transfer');
+        Route::get('/pending/damage/transfer/edit/{id}', 'pendingDamageTransferEdit')->name('pending.damage.transfer.edit');
+        Route::post('/pending/damage/transfer/edit/{id}', 'pendingDamageTransferUpdate')->name('pending.damage.transfer.update');
         Route::get('/search', 'search')->name('search');
         Route::post('/search', 'searchFetch')->name('search.fetch');
     });

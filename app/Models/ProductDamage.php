@@ -31,4 +31,9 @@ class ProductDamage extends Model
     {
         return ($this->deleted_at) ? "<span class='badge badge-danger'>Deleted</span>" : "<span class='badge badge-success'>Active</span>";
     }
+
+    public function isTransferAccepted()
+    {
+        return ($this->approved_status != 1) ? "<span class='badge badge-warning'>Pending</span>" : "<span class='badge badge-info'>Approved</span>";
+    }
 }

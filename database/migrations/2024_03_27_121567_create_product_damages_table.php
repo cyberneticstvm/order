@@ -19,6 +19,10 @@ return new class extends Migration
             $table->unsignedBigInteger('from_branch');
             $table->unsignedBigInteger('to_branch');
             $table->text('description')->nullable();
+            $table->boolean('approved_status')->nullable();
+            $table->unsignedBigInteger('approved_by')->nullable();
+            $table->datetime('approved_at')->nullable();
+            $table->text('remarks')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

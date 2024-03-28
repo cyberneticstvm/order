@@ -110,7 +110,7 @@
             }}
         </li>
         @endif-->
-        @if(auth()->user()->can('pending-transfer-list') || auth()->user()->can('pending-transfer-edit'))
+        @if(auth()->user()->can('pending-transfer-list') || auth()->user()->can('pending-transfer-edit') || auth()->user()->can('product-damage-transfer-list'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -123,7 +123,8 @@
             </a>
             {{
                 Menu::new()->addClass('sidebar-submenu')
-                ->linkIfCan('pending-transfer-list', route('pending.transfer'), 'Pending Transfer Register');
+                ->linkIfCan('pending-transfer-list', route('pending.transfer'), 'Pending Transfer Register')
+                ->linkIfCan('product-damage-transfer-list', route('pending.damage.transfer'), 'Product Damage Register');
             }}
         </li>
         @endif
