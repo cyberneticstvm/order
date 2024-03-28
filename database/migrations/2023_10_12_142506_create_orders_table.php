@@ -28,6 +28,7 @@ return new class extends Migration
             $table->decimal('discount', 7, 2)->nullable();
             $table->decimal('invoice_total', 9, 2)->comment('total-discount')->default(0);
             $table->decimal('advance', 9, 2)->nullable();
+            $table->decimal('credit_used', 9, 2)->nullable();
             $table->decimal('balance', 9, 2)->nullable();
             $table->enum('order_status', ['booked', 'under-process', 'pending', 'ready-for-delivery', 'delivered'])->default('booked');
             $table->enum('case_type', ['box', 'rexine', 'other'])->nullable();

@@ -6,6 +6,7 @@ use App\Models\Branch;
 use App\Models\Closing;
 use App\Models\Consultation;
 use App\Models\ConsultationType;
+use App\Models\Customer;
 use App\Models\Doctor;
 use App\Models\IncomeExpense;
 use App\Models\Order;
@@ -344,4 +345,9 @@ function getPercentage($amount, $total)
         $percentage = ($amount / $total) * 100;
     endif;
     return $percentage;
+}
+
+function getAvailableCredit($mobile)
+{
+    return (Customer::where('mobile', $mobile)->selectRaw("SUM(IFNULL(credit, 0) - IFNULL(debit, 0)) AS cr")->value('cr')) ?? 0;
 }

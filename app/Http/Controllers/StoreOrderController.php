@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Consultation;
+use App\Models\Customer;
 use App\Models\MedicalRecord;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -122,7 +123,8 @@ class StoreOrderController extends Controller
                     'invoice_total' => $request->invoice_total,
                     'discount' => $request->discount,
                     'advance' => $request->advance,
-                    'balance' => $request->balance,
+                    'credit_used' => $request->credit_used,
+                    'balance' => $request->balance - $request->credit_used,
                     'order_status' => $request->order_status,
                     'case_type' => $request->case_type,
                     'product_adviser' => $request->product_adviser,
@@ -172,6 +174,13 @@ class StoreOrderController extends Controller
                         'branch_id' => branch()->id,
                         'created_by' => $request->user()->id,
                         'updated_by' => $request->user()->id,
+                    ]);
+                endif;
+                if ($request->credit_used > 0) :
+                    Customer::create([
+                        'mobile' => $request->mobile,
+                        'order_id' => $order->id,
+                        'debit' => $request->credit_used,
                     ]);
                 endif;
             });
@@ -232,7 +241,8 @@ class StoreOrderController extends Controller
                     'invoice_total' => $request->invoice_total,
                     'discount' => $request->discount,
                     'advance' => $request->advance,
-                    'balance' => $request->balance,
+                    'credit_used' => $request->credit_used,
+                    'balance' => $request->balance - $request->credit_used,
                     'order_status' => $request->order_status,
                     'case_type' => $request->case_type,
                     'product_adviser' => $request->product_adviser,
@@ -284,6 +294,14 @@ class StoreOrderController extends Controller
                         'branch_id' => branch()->id,
                         'created_by' => $request->user()->id,
                         'updated_by' => $request->user()->id,
+                    ]);
+                endif;
+                Customer::where('order_id', $order->id)->delete();
+                if ($request->credit_used > 0) :
+                    Customer::create([
+                        'mobile' => $request->mobile,
+                        'order_id' => $order->id,
+                        'debit' => $request->credit_used,
                     ]);
                 endif;
             });

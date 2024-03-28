@@ -86,6 +86,12 @@
             let c = confirm("Expected delivery date and order date are same. proceed?")
             if (!c) return false
         }
+        if (frm['credit_used'].value > frm['available_credit'].value) {
+            failed({
+                'error': 'Credit used is greater than available credit!'
+            })
+            return false;
+        }
         return true;
     }
 
