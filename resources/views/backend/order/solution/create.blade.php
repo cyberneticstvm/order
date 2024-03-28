@@ -209,8 +209,8 @@
                                                     <td class="border-0"><input type="text" name="balance" class="text-end border-0 fw-bold w-100 balance readOnly" placeholder="0.00" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="3" class="fw-bold border-0">Available Credit</td>
-                                                    <td colspan="6" class="border-0"><input type="text" class="border-0 text-success fw-bold" name="available_credit" value="{{ getAvailableCredit($patient?->mobile_number ?? 0) }}" readonly /></td>
+                                                    <td colspan="2" class="fw-bold border-0">Available Credit</td>
+                                                    <td colspan="2" class="border-0"><input type="text" class="border-0 text-success fw-bold" name="available_credit" value="{{ getAvailableCredit($patient?->mobile_number ?? 0) }}" readonly /></td>
                                                     <td colspan="2" class="text-end fw-bold border-0">Credit Used</td>
                                                     <td class="border-0">
                                                         {{ html()->number('credit_used', '', '', '', '')->class('text-end border-0 fw-bold w-100')->if(getAvailableCredit($patient?->mobile_number ?? 0) <= 0, function($el){
