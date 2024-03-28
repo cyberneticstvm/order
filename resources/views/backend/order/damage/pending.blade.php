@@ -38,6 +38,8 @@
                                 <thead>
                                     <tr>
                                         <th>SL No</th>
+                                        <th>Product</th>
+                                        <th>Qty</th>
                                         <th>Transfer ID</th>
                                         <th>Transfer Date</th>
                                         <th>From Branch</th>
@@ -53,6 +55,8 @@
                                     @forelse($products as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
+                                        <td>{{ $item->product->name }}</td>
+                                        <td>{{ $item->qty }}</td>
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->created_at?->format('d/M/Y') }}</td>
                                         <td>{{ $item->frombranch?->name }}</td>
