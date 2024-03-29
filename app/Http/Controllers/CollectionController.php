@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductSubcategory;
+use Exception;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Catch_;
 
 class CollectionController extends Controller
 {
@@ -40,11 +42,15 @@ class CollectionController extends Controller
         $this->validate($request, [
             'name' => 'required',
         ]);
-        ProductSubcategory::insert([
-            'name' => $request->name,
-            'category' => $request->category,
-            'attribute' => $request->attribute,
-        ]);
+        try {
+            ProductSubcategory::insert([
+                'name' => $request->name,
+                'category' => $request->category,
+                'attribute' => $request->attribute,
+            ]);
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
         return redirect()->route('collections')
             ->with('success', 'Collection has been created successfully');
     }
@@ -74,11 +80,15 @@ class CollectionController extends Controller
         $this->validate($request, [
             'name' => 'required',
         ]);
-        ProductSubcategory::findOrFail($id)->update([
-            'name' => $request->name,
-            'category' => $request->category,
-            'attribute' => $request->attribute,
-        ]);
+        try {
+            ProductSubcategory::findOrFail($id)->update([
+                'name' => $request->name,
+                'category' => $request->category,
+                'attribute' => $request->attribute,
+            ]);
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
         return redirect()->route('collections')
             ->with('success', 'Collection has been updated successfully');
     }
