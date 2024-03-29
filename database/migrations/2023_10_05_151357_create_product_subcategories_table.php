@@ -16,6 +16,7 @@ return new class extends Migration
             $table->enum('category', ['lens', 'frame', 'pharmacy', 'service', 'other']);
             $table->string('attribute')->comment('Like type, shape, coating, collection')->nullable();
             $table->string('name')->comment('Like rim, semirim, round, square, clarity, clarity blue')->nullable();
+            $table->unique(['category', 'attribute', 'name']);
         });
     }
 
