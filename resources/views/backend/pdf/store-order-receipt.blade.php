@@ -63,7 +63,7 @@
             @endforelse
             <tr>
                 <td colspan="4" class="text-right border-0"><b>Total</b></td>
-                <td class="text-right border-0"><b>{{ $order->invoice_total }}</b></td>
+                <td class="text-right border-0"><b>{{ $order->order_total }}</b></td>
             </tr>
             <tr>
                 <td colspan="4" class="text-right border-0"><b>Discount</b></td>
@@ -71,15 +71,15 @@
             </tr>
             <tr>
                 <td colspan="4" class="text-right border-0"><b>Advance</b></td>
-                <td class="text-right border-0"><b>{{ $order->advance }}</b></td>
+                <td class="text-right border-0"><b>{{ ($order->advance) ?? '0.00' }}</b></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="text-right border-0"><b>Availbale Credit Used</b></td>
+                <td class="text-right border-0"><b>{{ ($order->credit_used) ?? '0.00' }}</b></td>
             </tr>
             <tr>
                 <td colspan="4" class="text-right border-0"><b>Balance</b></td>
                 <td class="text-right border-0"><b>{{ $order->balance }}</b></td>
-            </tr>
-            <tr>
-                <td colspan="4" class="text-right border-0"><b>Availbale Credit Used</b></td>
-                <td class="text-right border-0"><b>{{ $order->credit_used }}</b></td>
             </tr>
         </tbody>
     </table>
