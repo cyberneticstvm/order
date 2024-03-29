@@ -24,7 +24,7 @@ class LensImport implements ToModel, WithStartRow
             $product = Product::where('code', strval($row[1]))->first();
             $type = ProductSubcategory::where('category', 'lens')->where('name', $row[2])->where('attribute', 'type')->first();
             $material = ProductSubcategory::where('category', 'lens')->where('name', $row[3])->where('attribute', 'material')->first();
-            $coating = ProductSubcategory::where('category', 'lens')->where('name', $row[4])->where('attribute', 'colour')->first();
+            $coating = ProductSubcategory::where('category', 'lens')->where('name', $row[4])->where('attribute', 'coating')->first();
             if ((!$product) && $type && $material && $coating) :
                 return new Product([
                     'name' => $row[0],
