@@ -77,6 +77,10 @@
                 <td colspan="4" class="text-right border-0"><b>Balance</b></td>
                 <td class="text-right border-0"><b>{{ $order->balance }}</b></td>
             </tr>
+            <tr>
+                <td colspan="4" class="text-right border-0"><b>Availbale Credit Used</b></td>
+                <td class="text-right border-0"><b>{{ $order->credit_used }}</b></td>
+            </tr>
         </tbody>
     </table>
     <div class="row mt-30">
