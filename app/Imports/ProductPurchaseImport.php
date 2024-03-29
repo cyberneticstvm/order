@@ -42,6 +42,7 @@ class ProductPurchaseImport implements WithStartRow, ToCollection
                 ]);
             else :
                 $this->data[] = [
+                    'product_name' => '',
                     'product_code' => $row[1],
                 ];
             endif;

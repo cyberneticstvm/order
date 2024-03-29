@@ -24,6 +24,6 @@ class FailedProductsExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ['Product Code'];
+        return ['Product Name', 'Product Code'];
     }
 }

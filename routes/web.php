@@ -127,6 +127,11 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/failed/uploads/export', 'uploadFailedExport')->name('upload.failed.export');
         Route::get('/product/purchase', 'importProductPurchase')->name('import.product.purchase');
         Route::post('/product/purchase', 'importProductPurchaseUpdate')->name('import.product.purchase.update');
+
+        Route::get('/frames', 'importFrames')->name('import.frames');
+        Route::post('/frames', 'importFramesUpdate')->name('import.frames.update');
+        Route::get('/lenses', 'importLenses')->name('import.lenses');
+        Route::post('/lenses', 'importLensesUpdate')->name('import.lenses.update');
     });
 
     Route::prefix('/backend/pdf')->controller(PdfController::class)->group(function () {

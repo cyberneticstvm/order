@@ -8,6 +8,8 @@ use App\Exports\FailedProductsExport;
 use App\Exports\ProductFrameExport;
 use App\Exports\ProductLensExport;
 use App\Exports\ProductPharmacyExport;
+use App\Imports\FrameImport;
+use App\Imports\LensImport;
 use App\Imports\ProductLensPurchaseImport;
 use App\Imports\ProductPurchaseImport;
 use App\Models\Purchase;
@@ -74,12 +76,58 @@ class ImportExportController extends Controller
             Excel::import($import, $request->file('file')->store('temp'));
             if ($import->data) :
                 Session::put('fdata', $import->data);
-                return redirect()->route('upload.failed')->with("warning", "Some products weren't uploaded. Please check the downloaded excel file for more info.");
+                return redirect()->route('upload.failed')->with("warning", "Some products weren't uploaded. Please check the excel file for more info.");
             endif;
         } catch (Exception $e) {
             return back()->with("error", $e->getMessage());
         }
         return back()->with("success", "Purchase Updated Successfully");
+    }
+
+    public function importFrames()
+    {
+        return view('backend.product.import.frame');
+    }
+
+    public function importFramesUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'required|mimes:xlsx',
+        ]);
+        try {
+            $import = new FrameImport();
+            Excel::import($import, $request->file('file')->store('temp'));
+            if ($import->data) :
+                Session::put('fdata', $import->data);
+                return redirect()->route('upload.failed')->with("warning", "Some products weren't uploaded. Please check the excel file for more info.");
+            endif;
+        } catch (Exception $e) {
+            return back()->with("error", $e->getMessage());
+        }
+        return back()->with("success", "Frames Imported Successfully");
+    }
+
+    public function importLenses()
+    {
+        return view('backend.product.import.lens');
+    }
+
+    public function importLensesUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'required|mimes:xlsx',
+        ]);
+        try {
+            $import = new LensImport();
+            Excel::import($import, $request->file('file')->store('temp'));
+            if ($import->data) :
+                Session::put('fdata', $import->data);
+                return redirect()->route('upload.failed')->with("warning", "Some products weren't uploaded. Please check the excel file for more info.");
+            endif;
+        } catch (Exception $e) {
+            return back()->with("error", $e->getMessage());
+        }
+        return back()->with("success", "Frames Imported Successfully");
     }
 
     public function uploadFailed()
@@ -91,6 +139,6 @@ class ImportExportController extends Controller
     {
         $data = Session::get('fdata');
         Session::forget('fdata');
-        return Excel::download(new FailedProductsExport($data), 'products.xlsx');
+        return Excel::download(new FailedProductsExport($data), 'failed_upload.xlsx');
     }
 }
