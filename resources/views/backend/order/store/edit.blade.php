@@ -252,8 +252,8 @@
                                                     <td class="border-0"><input type="number" name="invoice_total" class="text-end border-0 fw-bold w-100 nettotal readOnly" min="1" step="any" placeholder="0.00" value="{{ $order->invoice_total }}" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="10" class="text-end fw-bold border-0">Advance</td>
-                                                    <td>
+                                                    <td colspan="9" class="text-end fw-bold border-0">Advance</td>
+                                                    <td colspan="2">
                                                         {{ html()->select('payment_mode', $pmodes->pluck('name', 'id'), $order->payments?->first()?->payment_mode)->class('border-0')->attribute('id', 'pmode')->placeholder('Payment Mode') }}
                                                     </td>
                                                     <td class="text-end fw-bold border-0"><input type="number" name='advance' class="w-100 border-0 text-end advance" placeholder="0.00" step="any" value="{{ $order->advance }}" /></td>
