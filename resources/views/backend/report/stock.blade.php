@@ -68,6 +68,7 @@
                                     <tr>
                                         <th>SL No</th>
                                         <th>Product Name</th>
+                                        <th>Sold Qty</th>
                                         <th>Purchased Qty</th>
                                         <th>Transferred Qty</th>
                                         <th>Returned Qty</th>
@@ -80,6 +81,7 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->product_name }}</td>
+                                        <td>{{ $item->soldQty }}</td>
                                         <td>{{ $item->purchasedQty }}</td>
                                         <td>{{ $item->transferredQty }}</td>
                                         <td>{{ $item->returnedQty }} </td>
