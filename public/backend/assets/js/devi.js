@@ -124,7 +124,6 @@ $(function () {
         var dis = $(this); var product = dis.val(); var category = dis.data('category');
         var branch = $("#from_branch_id").val();
         if (product && category && branch) {
-            alert(product)
             $.ajax({
                 type: 'GET',
                 url: '/ajax/product/batch/' + branch + '/' + product + '/' + category,
