@@ -142,6 +142,9 @@ $(function () {
                     dis.parent().parent().find(".qtyAvailable").text(res[0].balanceQty);
                     dis.parent().parent().find(".qtyMax").attr("max", res[0].balanceQty);
                 }
+            },
+            error: function (err) {
+                console.log(err);
             }
         });
     });
