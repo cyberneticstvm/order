@@ -96,7 +96,7 @@ $(function () {
         });
     });
 
-    $(document).on("keyup", ".qty, .discount, .advance, .price, .total", function () {
+    $(document).on("keyup", ".qty, .discount, .advance, .price, .total, .credit_used", function () {
         calculateTotal();
     });
 
@@ -206,7 +206,37 @@ $(function () {
     $(document).on("keyup", ".retqty", function () {
         let dis = $(this); let qty = parseInt(dis.val()); let price = parseFloat(dis.parent().parent().find(".retval").text().replace(/\,/g, ''));
         dis.parent().parent().find(".custacc").val((parseFloat(qty * price) > 0) ? parseFloat(qty * price).toFixed(2) : 0.00);
-    })
+    });
+
+    $(".refreshAvailableCr").click(function () {
+        let mobile = $("#orderForm").find(".custmob").val();
+        if (mobile) {
+            $.ajax({
+                type: 'GET',
+                url: '/ajax/get/availablecredit/' + mobile,
+                success: function (res) {
+                    let cr = parseFloat(res)
+                    $(".avCr").text(cr.toFixed(2));
+                    $(".avCr").val(cr.toFixed(2));
+                    if (cr > 0) {
+                        $(".credit_used").removeAttr('readonly')
+                    } else {
+                        $(".credit_used").attr('readonly', 'true')
+                    }
+                },
+                beforeSend: function (jqXHR) {
+                    $(".avCr").text("Loading..");
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            });
+        } else {
+            failed({
+                'error': 'Please provide Mobile Number'
+            });
+        }
+    });
 });
 
 function addMedicineRowForOrder(category, attribute) {
@@ -432,6 +462,8 @@ function addStoreOrderRow(category) {
     });
 }
 
+
+
 function calculateTotal() {
     var subtotal = 0; var nettot = 0;
     $(".powerbox tr, .medicineBox tr").each(function () {
@@ -445,7 +477,9 @@ function calculateTotal() {
     nettot = (discount > 0) ? subtotal - discount : subtotal;
     $(".nettotal").val(parseFloat(nettot).toFixed(2));
     var advance = parseFloat($(".advance").val());
+    var credit_used = parseFloat($(".credit_used").val());
     var balance = (advance > 0) ? nettot - advance : nettot;
+    balance = (credit_used > 0) ? balance - credit_used : balance;
     $(".balance").val(parseFloat(balance).toFixed(2));
 }
 

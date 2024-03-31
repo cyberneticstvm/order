@@ -61,6 +61,12 @@ class AjaxController extends Controller
         return response()->json($types);
     }
 
+    public function getAvailableCredit($mobile)
+    {
+        $cr = getAvailableCredit($mobile);
+        return response()->json($cr);
+    }
+
     public function powers()
     {
         $sph = Power::where('name', 'sph')->selectRaw("value as id, value as name")->get();

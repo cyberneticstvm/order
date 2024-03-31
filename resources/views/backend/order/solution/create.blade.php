@@ -26,7 +26,14 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Create Order</h5><span>Create New Order</span>
+                        <div class="row">
+                            <div class="col">
+                                <h5>Create Order</h5><span>Create New Order</span>
+                            </div>
+                            <div class="col text-end">
+                                <h5>Available Credit: <span class="text-success avCr">0.00</span>&nbsp;&nbsp;<a href="javascript:void(0)" class="refreshAvailableCr"><i class="fa fa-refresh text-info"></i></a></h5>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="card-wrapper">
@@ -205,18 +212,18 @@
                                                     <td class="text-end fw-bold border-0"><input type="number" name='advance' class="w-100 border-0 text-end advance" placeholder="0.00" step="any" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="6" class="text-end fw-bold border-0">Balance</td>
-                                                    <td class="border-0"><input type="text" name="balance" class="text-end border-0 fw-bold w-100 balance readOnly" placeholder="0.00" /></td>
-                                                </tr>
-                                                <tr>
                                                     <td colspan="2" class="fw-bold border-0">Available Credit</td>
-                                                    <td colspan="2" class="border-0"><input type="text" class="border-0 text-success fw-bold" name="available_credit" value="{{ getAvailableCredit($patient?->mobile_number ?? 0) }}" readonly /></td>
+                                                    <td colspan="2" class="border-0"><input type="text" class="border-0 text-success fw-bold avCr" name="available_credit" value="{{ getAvailableCredit($patient?->mobile_number ?? 0) }}" readonly /></td>
                                                     <td colspan="2" class="text-end fw-bold border-0">Credit Used</td>
                                                     <td class="border-0">
                                                         {{ html()->number('credit_used', '', '', '', '')->class('text-end border-0 fw-bold w-100')->if(getAvailableCredit($patient?->mobile_number ?? 0) <= 0, function($el){
                                                             return $el->attribute('readonly', 'true');
                                                         })->placeholder('0.00') }}
                                                     </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="6" class="text-end fw-bold border-0">Balance</td>
+                                                    <td class="border-0"><input type="text" name="balance" class="text-end border-0 fw-bold w-100 balance readOnly" placeholder="0.00" /></td>
                                                 </tr>
                                             </tfoot>
                                         </table>
