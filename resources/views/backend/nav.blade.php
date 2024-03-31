@@ -273,9 +273,8 @@
             </a>
             <ul class="sidebar-submenu">
                 <li><a href="{{ route('report.daybook') }}">Daybook</a></li>
-                <!--<li><a href="{{ route('report.consultation') }}">Consultation</a></li>
-                <li><a href="{{ route('report.lab') }}">Lab</a></li>-->
                 <li><a href="{{ route('report.sales') }}">Sales</a></li>
+                <li><a href="{{ route('report.stock.status') }}">Stock Status</a></li>
             </ul>
         </li>
         <li class="sidebar-main-title">

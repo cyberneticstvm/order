@@ -5,7 +5,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Consultation</h3>
+                    <h3>Stock In Hand</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
@@ -13,8 +13,8 @@
                                 <svg class="stroke-icon">
                                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg></a></li>
-                        <li class="breadcrumb-item">Reports</li>
-                        <li class="breadcrumb-item active">Consultation</li>
+                        <li class="breadcrumb-item">Inventory</li>
+                        <li class="breadcrumb-item active">Stock In Hand</li>
                     </ol>
                 </div>
             </div>
@@ -26,25 +26,22 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-wrapper">
-                            <form class="row g-3" method="post" action="{{ route('report.consultation.fetch') }}">
+                            <form class="row g-3" method="post" action="{{ route('report.stock.status.fetch') }}">
                                 @csrf
-                                <div class="col-md-2">
-                                    <label class="form-label req">From Date</label>
-                                    {{ html()->date($name = 'from_date', $value = ($inputs[0]) ?? date('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}
-                                    @error('from_date')
-                                    <small class="text-danger">{{ $errors->first('from_date') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="form-label req">To Date</label>
-                                    {{ html()->date($name = 'to_date', $value = ($inputs[1]) ?? date('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}
-                                    @error('to_date')
-                                    <small class="text-danger">{{ $errors->first('to_date') }}</small>
+                                <div class="col-md-3">
+                                    <label class="form-label req">Product Category</label>
+                                    <div class="input-group">
+                                        {{ html()->select('category', array('frame' => 'Frame', 'lens' => 'Lens', 'solution' => 'Solution', 'accessory' => 'Accessory'), $inputs[1])->class('form-control select2') }}
+                                    </div>
+                                    @error('category')
+                                    <small class="text-danger">{{ $errors->first('category') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label req">Branch</label>
-                                    {{ html()->select($name = 'branch', $value = $branches, ($inputs[2]) ?? old('branch'))->class('form-control select2')->placeholder('Select') }}
+                                    <label class="form-label req">Product Category</label>
+                                    <div class="input-group">
+                                        {{ html()->select('branch', array('0' => 'Main Branch') + $branches, $inputs[0])->class('form-control select2') }}
+                                    </div>
                                     @error('branch')
                                     <small class="text-danger">{{ $errors->first('branch') }}</small>
                                     @enderror
@@ -64,33 +61,30 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4>Consultation</h4>
-                    </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
+                        <div class="table-responsive theme-scrollbar">
+                            <table class="display" id="dataTable" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>SL No</th>
-                                        <th>MRN</th>
-                                        <th>Patient Name</th>
-                                        <th>Place</th>
-                                        <th>Mobile</th>
-                                        <th>Doctor</th>
-                                        <th>Date</th>
+                                        <th>Product Name</th>
+                                        <th>Purchased Qty</th>
+                                        <th>Transferred Qty</th>
+                                        <th>Returned Qty</th>
+                                        <th>Damaged Qty</th>
+                                        <th>Balance Qty</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse($data as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $item->mrn }}</td>
-                                        <td>{{ $item->patient->name }}</td>
-                                        <td>{{ $item->patient->place }}</td>
-                                        <td>{{ $item->patient->mobile }}</td>
-                                        <td>{{ $item->doctor->name }}</td>
-                                        <td>{{ $item->created_at->format('d/M/Y h:i a') }}</td>
+                                        <td>{{ $item->product_name }}</td>
+                                        <td>{{ $item->purchasedQty }}</td>
+                                        <td>{{ $item->transferredQty }}</td>
+                                        <td>{{ $item->returnedQty }} </td>
+                                        <td>{{ $item->damagedQty }}</td>
+                                        <td>{{ $item->balanceQty }} </td>
                                     </tr>
                                     @empty
                                     @endforelse

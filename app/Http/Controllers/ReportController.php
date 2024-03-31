@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Branch;
 use App\Models\Consultation;
 use App\Models\Order;
+use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -105,5 +106,21 @@ class ReportController extends Controller
             return $q->where('order_status', $request->order_status);
         })->orderByDesc('created_at')->get();
         return view('backend.report.sales', compact('sales', 'inputs', 'branches'));
+    }
+
+    public function stockStatus()
+    {
+        $branches = Branch::pluck('name', 'id')->toArray();
+        $data = [];
+        $inputs = array('0', 'frame');
+        return view('backend.report.stock', compact('branches', 'data', 'inputs'));
+    }
+
+    public function fetchStockStatus(Request $request)
+    {
+        $data = getInventory($request->branch, 0, $request->category);
+        $branches = Branch::pluck('name', 'id')->toArray();
+        $inputs = array($request->branch, $request->category);
+        return view('backend.report.stock', compact('data', 'branches', 'inputs'));
     }
 }
