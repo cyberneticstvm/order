@@ -123,30 +123,32 @@ $(function () {
     $(document).on("change", ".selPdctForTransfer, .selPdct", function () {
         var dis = $(this); var product = dis.val(); var category = dis.data('category');
         var branch = $("#from_branch_id").val();
-        $.ajax({
-            type: 'GET',
-            url: '/ajax/product/batch/' + branch + '/' + product + '/' + category,
-            dataType: 'json',
-            success: function (res) {
-                if (category == 'pharmacy') {
-                    let data;
-                    data += `<option value=''>Select</option>`;
-                    var xdata = $.map(res, function (obj) {
-                        data += `<option value="${obj.batch_number}">${obj.batch_number} (${obj.balanceQty} Qty Available)</option>`
-                    });
-                    dis.parent().parent().find('.selBatch').html(data);
-                    dis.parent().parent().find('.selBatch').select2({
-                        placeholder: 'Select'
-                    });
-                } else {
-                    dis.parent().parent().find(".qtyAvailable").text(res[0].balanceQty);
-                    dis.parent().parent().find(".qtyMax").attr("max", res[0].balanceQty);
+        if (product && category && branch) {
+            $.ajax({
+                type: 'GET',
+                url: '/ajax/product/batch/' + branch + '/' + product + '/' + category,
+                dataType: 'json',
+                success: function (res) {
+                    if (category == 'pharmacy') {
+                        let data;
+                        data += `<option value=''>Select</option>`;
+                        var xdata = $.map(res, function (obj) {
+                            data += `<option value="${obj.batch_number}">${obj.batch_number} (${obj.balanceQty} Qty Available)</option>`
+                        });
+                        dis.parent().parent().find('.selBatch').html(data);
+                        dis.parent().parent().find('.selBatch').select2({
+                            placeholder: 'Select'
+                        });
+                    } else {
+                        dis.parent().parent().find(".qtyAvailable").text(res[0].balanceQty);
+                        dis.parent().parent().find(".qtyMax").attr("max", res[0].balanceQty);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
                 }
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        });
+            });
+        }
     });
 
     $(document).on("change", ".selPdctType", function () {
