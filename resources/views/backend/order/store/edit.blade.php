@@ -146,8 +146,8 @@
                                         <table class="table table-bordered table-stripped mt-3">
                                             <thead class="text-center">
                                                 <tr>
-                                                    <th>Remove</th>
-                                                    <th>Eye</th>
+                                                    <th width="5%">Del</th>
+                                                    <th width="5%">Eye</th>
                                                     <th width="6%">SPH</th>
                                                     <th width="6%">CYL</th>
                                                     <th width="6%">AXIS</th>
@@ -157,7 +157,7 @@
                                                     <th width="40%">Product</th>
                                                     <th width="5%">Qty</th>
                                                     <th>Price</th>
-                                                    <th width="10%">Total</th>
+                                                    <th width="15%">Total</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="powerbox">
