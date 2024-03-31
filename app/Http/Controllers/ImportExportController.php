@@ -8,22 +8,42 @@ use App\Exports\FailedProductsExport;
 use App\Exports\ProductFrameExport;
 use App\Exports\ProductLensExport;
 use App\Exports\ProductPharmacyExport;
+use App\Models\Branch;
 use App\Imports\FrameImport;
 use App\Imports\LensImport;
 use App\Imports\ProductLensPurchaseImport;
 use App\Imports\ProductPurchaseImport;
+use App\Imports\ProductTransferImport;
 use App\Models\Purchase;
+use App\Models\Transfer;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ImportExportController extends Controller
 {
+    protected $branches, $tobranches;
+
     function __construct()
     {
         $this->middleware('permission:export-today-appointments-excel', ['only' => ['exportTodayAppointments']]);
+
+        $this->middleware(function ($request, $next) {
+
+            $brs = Branch::selectRaw("0 as id, 'Main Branch' as name");
+            $this->branches = Branch::selectRaw("id, name")->union($brs)->when(Auth::user()->roles->first()->name != 'Administrator', function ($q) {
+                return $q->where('id', Session::get('branch'));
+            })->orderBy('id')->pluck('name', 'id');
+
+            $this->tobranches = Branch::selectRaw("id, name")->union($brs)->when(Auth::user()->roles->first()->name != 'Administrator', function ($q) {
+                return $q->where('id', Session::get('branch'));
+            })->orderBy('id')->pluck('name', 'id');
+
+            return $next($request);
+        });
     }
 
     public function exportTodayAppointments(Request $request)
@@ -128,6 +148,46 @@ class ImportExportController extends Controller
             return back()->with("error", $e->getMessage());
         }
         return back()->with("success", "Frames Imported Successfully");
+    }
+
+    public function importTransfer()
+    {
+        $branches = $this->branches;
+        $tobranches = $this->tobranches;
+        return view('backend.transfer.import.index', compact('branches', 'tobranches'));
+    }
+
+    public function importTransferUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'required|mimes:xlsx',
+            'category' => 'required',
+            'from_branch_id' => 'required',
+            'to_branch_id' => 'required',
+        ]);
+        try {
+            $transfer = Transfer::create([
+                'transfer_number' => transferId($request->category)->tid,
+                'category' => $request->category,
+                'transfer_date' => Carbon::today(),
+                'from_branch_id' => $request->from_branch_id,
+                'to_branch_id' => $request->to_branch_id,
+                'transfer_note' => 'Transfer via excel import',
+                'transfer_status' => 0,
+                'created_by' => $request->user()->id,
+                'updated_by' => $request->user()->id,
+            ]);
+
+            $import = new ProductTransferImport($transfer);
+            Excel::import($import, $request->file('file')->store('temp'));
+            if ($import->data) :
+                Session::put('fdata', $import->data);
+                return redirect()->route('upload.failed')->with("warning", "Some products weren't uploaded. Please check the excel file for more info.");
+            endif;
+        } catch (Exception $e) {
+            return back()->with("error", $e->getMessage());
+        }
+        return back()->with("success", "Products Transferred Successfully");
     }
 
     public function uploadFailed()

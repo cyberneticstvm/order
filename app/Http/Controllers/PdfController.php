@@ -113,7 +113,8 @@ class PdfController extends Controller
     public function exportProductTransfer($id)
     {
         $transfer = Transfer::findOrFail(decrypt($id));
-        $pdf = PDF::loadView('/backend/pdf/product-transfer', compact('transfer'));
+        $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
+        $pdf = PDF::loadView('/backend/pdf/product-transfer', compact('transfer', 'qrcode'));
         return $pdf->stream($transfer->transfer_number . '.pdf');
     }
 

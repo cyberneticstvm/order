@@ -221,9 +221,10 @@
                 </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Imports<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                     <ul class="nav-sub-childmenu submenu-content">
-                        <li><a href="{{ route('import.product.purchase') }}">Purchase</a></li>
+                        <li><a href="{{ route('import.product.purchase') }}">Product Purchase</a></li>
                         <li><a href="{{ route('import.frames') }}">Frames</a></li>
                         <li><a href="{{ route('import.lenses') }}">Lenses</a></li>
+                        <li><a href="{{ route('import.transfer') }}">Product Transfer</a></li>
                     </ul>
                 </li>
             </ul>

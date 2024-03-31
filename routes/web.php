@@ -133,6 +133,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/frames', 'importFramesUpdate')->name('import.frames.update');
         Route::get('/lenses', 'importLenses')->name('import.lenses');
         Route::post('/lenses', 'importLensesUpdate')->name('import.lenses.update');
+        Route::get('/transfer', 'importTransfer')->name('import.transfer');
+        Route::post('/transfer', 'importTransferUpdate')->name('import.transfer.update');
     });
 
     Route::prefix('/backend/pdf')->controller(PdfController::class)->group(function () {
