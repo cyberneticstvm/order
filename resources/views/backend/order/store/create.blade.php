@@ -79,6 +79,10 @@
                                     <small class="text-danger">{{ $errors->first('mobile') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Alt. Mobile</label>
+                                    {{ html()->text($name = 'alt_mobile', old('alt_mobile'))->class('form-control')->maxlength('10')->placeholder('Alt Mobile') }}
+                                </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Product Adviser</label>
                                     {{ html()->select('product_adviser', $padvisers->pluck('name', 'id'), old('product_adviser'))->class('form-control select2')->placeholder('Select')->required() }}

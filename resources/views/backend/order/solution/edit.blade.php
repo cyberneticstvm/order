@@ -79,6 +79,10 @@
                                     <small class="text-danger">{{ $errors->first('mobile') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Alt. Mobile</label>
+                                    {{ html()->text($name = 'alt_mobile', $order->alt_mobile)->class('form-control')->maxlength('10')->placeholder('Alt Mobile') }}
+                                </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Product Adviser</label>
                                     {{ html()->select('product_adviser', $padvisers->pluck('name', 'id'), $order->product_adviser)->class('form-control select2')->placeholder('Select')->required() }}
@@ -226,7 +230,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="6" class="text-end fw-bold border-0">Balance</td>
-                                                    <td class="border-0"><input type="text" name="balance" class="text-end border-0 fw-bold w-100 balance readOnly" placeholder="0.00" value="{{ number_format($order->balance + $order->credit_used, 2) }}" /></td>
+                                                    <td class="border-0"><input type="text" name="balance" class="text-end border-0 fw-bold w-100 balance readOnly" placeholder="0.00" value="{{ number_format($order->balance + $order->credit_used, 2, '.', '') }}" /></td>
                                                 </tr>
                                             </tfoot>
                                         </table>

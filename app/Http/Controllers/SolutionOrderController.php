@@ -87,6 +87,7 @@ class SolutionOrderController extends Controller
                     'age' => $request->age,
                     'place' => $request->place,
                     'mobile' => $request->mobile,
+                    'alt_mobile' => $request->alt_mobile,
                     'invoice_number' => NULL,
                     'category' => 'solution',
                     'branch_id' => branch()->id,
@@ -188,12 +189,14 @@ class SolutionOrderController extends Controller
         ]);
         try {
             DB::transaction(function () use ($request, $id) {
+                $order = Order::findOrFail($id);
                 Order::findOrFail($id)->update([
                     'order_date' => $request->order_date,
                     'name' => $request->name,
                     'age' => $request->age,
                     'place' => $request->place,
                     'mobile' => $request->mobile,
+                    'alt_mobile' => $request->alt_mobile,
                     'order_total' => $request->order_total,
                     'invoice_total' => $request->invoice_total,
                     'discount' => $request->discount,
@@ -233,7 +236,6 @@ class SolutionOrderController extends Controller
                 endforeach;
                 OrderDetail::insert($data);
                 if ($request->advance > 0) :
-                    $order = Order::findOrFail($id);
                     Payment::create([
                         'consultation_id' => $request->consultation_id,
                         'patient_id' => Consultation::find($request->consultation_id)?->patient_id,
