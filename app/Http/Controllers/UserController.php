@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use App\Models\Order;
 use App\Models\Patient;
 use App\Models\User;
 use App\Models\UserBranch;
@@ -50,7 +51,12 @@ class UserController extends Controller
     {
         $patients = Patient::whereDate('created_at', Carbon::today())->where('branch_id', Session::get('branch'))->withTrashed()->latest()->get();
         $branches = Branch::whereIn('id', UserBranch::where('user_id', Auth::id())->pluck('branch_id'))->pluck('name', 'id');
-        return view('backend.dashboard', compact('branches', 'patients'));
+        $dvals = array('0' => '0.00', '1' => '0.00');
+        if (Session::has('branch')) :
+            $dvals[0] = Branch::findOrFail(Session::get('branch'))->monthly_target;
+            $dvals[1] = Order::where('branch_id', Session::get('branch'))->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->sum('invoice_total');
+        endif;
+        return view('backend.dashboard', compact('branches', 'patients', 'dvals'));
     }
 
     public function updateBranch(Request $request)

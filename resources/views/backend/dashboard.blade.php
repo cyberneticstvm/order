@@ -35,6 +35,62 @@
         </div>
     </div>
     <!-- Container-fluid Ends-->
+    <div class="container-fluid">
+        <div class="row widget-grid">
+            <div class="col-xl-3">
+                <div class="card course-box widget-course">
+                    <div class="card-body">
+                        <div class="course-widget">
+                            <div class="course-icon">
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#course-1') }}"></use>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="mb-0">₹{{ number_format($dvals[0], 2) }}</h4><span class="f-light">Current Month Target</span>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="square-group">
+                        <li class="square-1 warning"></li>
+                        <li class="square-1 primary"></li>
+                        <li class="square-2 warning1"></li>
+                        <li class="square-3 danger"></li>
+                        <li class="square-4 light"></li>
+                        <li class="square-5 warning"></li>
+                        <li class="square-6 success"></li>
+                        <li class="square-7 success"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="card course-box widget-course">
+                    <div class="card-body">
+                        <div class="course-widget">
+                            <div class="course-icon warning">
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#course-1') }}"></use>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="mb-0">₹{{ number_format($dvals[1], 2) }}</h4><span class="f-light">Current Month Achieved</span>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="square-group">
+                        <li class="square-1 warning"></li>
+                        <li class="square-1 primary"></li>
+                        <li class="square-2 warning1"></li>
+                        <li class="square-3 danger"></li>
+                        <li class="square-4 light"></li>
+                        <li class="square-5 warning"></li>
+                        <li class="square-6 success"></li>
+                        <li class="square-7 success"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @if(!Session::has('branch'))
 <div class="modal fade" id="branchSelector" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="branchSelector" aria-hidden="true">
