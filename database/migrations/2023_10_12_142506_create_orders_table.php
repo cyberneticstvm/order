@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('order_sequence')->nullable();
             $table->date('order_date')->nullable();
             $table->unsignedBigInteger('consultation_id')->comment('0 if outside order')->nullable();
             $table->string('name', 55)->comment('Customer Name only applicable if outside order')->nullable();
