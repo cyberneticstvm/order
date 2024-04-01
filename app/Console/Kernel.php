@@ -23,10 +23,11 @@ class Kernel extends ConsoleKernel
                 $payments = getPaidTotalByMode(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id, $mode = [1]);
                 $expense = getExpenseTotal(Carbon::today(), Carbon::today(), $branch->id);
                 $income = getIncomeTotal(Carbon::today(), Carbon::today(), $branch->id);
+                $bank = getBankTransferTotal(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id);
                 $opening_balance = getOpeningBalance(Carbon::today()->subDay(), $branch->id);
                 Closing::insert([
                     'date' => Carbon::today(),
-                    'closing_balance' => ($opening_balance + $payments + $income) - $expense,
+                    'closing_balance' => ($opening_balance + $payments + $income) - ($expense + $bank),
                     'branch' => $branch->id,
                     'closed_by' => 1,
                     'created_at' => Carbon::now(),

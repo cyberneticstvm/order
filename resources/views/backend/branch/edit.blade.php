@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Phone Number</label>
-                                    {{ html()->text($name = 'phone', $value = $branch->phone)->class('form-control')->maxlength(10)->placeholder('Phone') }}
+                                    {{ html()->text($name = 'phone', $value = $branch->phone)->class('form-control')->maxlength(25)->placeholder('Phone') }}
                                     @error('phone')
                                     <small class="text-danger">{{ $errors->first('phone') }}</small>
                                     @enderror

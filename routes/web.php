@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\BankTransferController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampPatientController;
@@ -157,6 +158,15 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/order/invoice/generate/{id}', 'generateInvoice')->name('store.order.invoice.generate');
         Route::get('/order/receipt/{id}', 'exportOrderReceipt')->name('store.order.receipt');
         Route::get('/product/transfer/{id}', 'exportProductTransfer')->name('pdf.product.transfer');
+    });
+
+    Route::prefix('/backend/bank/transfer')->controller(BankTransferController::class)->group(function () {
+        Route::get('/', 'index')->name('bank.transfers');
+        Route::get('/create', 'create')->name('bank.transfer.create');
+        Route::post('/save', 'store')->name('bank.transfer.save');
+        Route::get('/edit/{id}', 'edit')->name('bank.transfer.edit');
+        Route::post('/edit/{id}', 'update')->name('bank.transfer.update');
+        Route::get('/delete/{id}', 'destroy')->name('bank.transfer.delete');
     });
 
     Route::prefix('/backend/user')->controller(UserController::class)->group(function () {

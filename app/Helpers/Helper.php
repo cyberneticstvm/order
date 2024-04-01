@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Appointment;
+use App\Models\BankTransfer;
 use Illuminate\Support\Facades\Session;
 use App\Models\Branch;
 use App\Models\Closing;
@@ -214,6 +215,7 @@ function getDayBook($fdate, $tdate, $branch)
     $income_total = getIncomeTotal($fdate, $tdate, $branch);
     $paid_total_cash = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [1]);
     $paid_total_other = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [2, 3, 4, 5]);
+    $bank_transfer_total = getBankTransferTotal($from_date, $to_date, $branch);
     return json_encode([
         'order_total' => $order_total,
         'paid_total' => $paid_total,
@@ -221,8 +223,17 @@ function getDayBook($fdate, $tdate, $branch)
         'income_total' => $income_total,
         'paid_total_cash' => $paid_total_cash,
         'paid_total_other' => $paid_total_other,
+        'bank_transfer_total' => $bank_transfer_total,
     ]);
 }
+
+function getBankTransferTotal($from_date, $to_date, $branch)
+{
+    return BankTransfer::whereBetween('created_at', [$from_date, $to_date])->when($branch > 0, function ($q) use ($branch) {
+        return $q->where('branch_id', $branch);
+    })->sum('amount');
+}
+
 function getPaidTotalByMode($from_date, $to_date, $branch, $mode)
 {
     return Payment::whereBetween('created_at', [$from_date, $to_date])->whereIn('payment_mode', $mode)->when($branch > 0, function ($q) use ($branch) {

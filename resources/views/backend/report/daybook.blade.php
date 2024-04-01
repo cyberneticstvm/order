@@ -151,11 +151,21 @@
                                         <td></td>
                                     </tr>
                                     <tr>
+                                        <td class="text-end">
+                                            Bank Transfer
+                                        </td>
+                                        <td class="text-end text-secondary">
+                                            {{ number_format($data->bank_transfer_total, 2) }}
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
                                         <td class="text-end fw-bold text-success">
-                                            Day Total
+                                            Balance
                                         </td>
                                         <td class="text-end fw-bold text-success">
-                                            {{ number_format($tot - $data->expense_total, 2) }}
+                                            {{ number_format($tot - ($data->expense_total+$data->bank_transfer_total), 2) }}
                                         </td>
                                         <td></td>
                                         <td></td>

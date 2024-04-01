@@ -215,8 +215,8 @@
                                                     <td class="text-end fw-bold border-0"><input type="number" name='advance' class="w-100 border-0 text-end advance" placeholder="0.00" step="any" value="{{ $order->advance }}" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="2" class="fw-bold border-0">Available Credit</td>
-                                                    <td colspan="2" class="border-0"><input type="text" class="border-0 text-success fw-bold avCr" name="available_credit" value="{{ ($order->credit_used) ?? getAvailableCredit($patient?->mobile_number ?? 0) }}" readonly /></td>
+                                                    <td colspan="2" class="fw-bold border-0"></td>
+                                                    <td colspan="2" class="border-0"><input type="hidden" class="border-0 text-success fw-bold avCr" name="available_credit" value="{{ ($order->credit_used) ?? getAvailableCredit($patient?->mobile_number ?? 0) }}" readonly /></td>
                                                     <td colspan="2" class="text-end fw-bold border-0">Credit Used</td>
                                                     <td class="border-0">
                                                         {{ html()->number('credit_used', $order->credit_used, '', '', '')->class('text-end border-0 fw-bold w-100')->if((getAvailableCredit($order?->mobile ?? 0) + $order->credit_used) <= 0, function($el){

@@ -43,7 +43,7 @@ class BranchController extends Controller
         $this->validate($request, [
             'name' => 'required|unique:branches,name',
             'code' => 'required|unique:branches,name',
-            'phone' => 'required|numeric|digits:10',
+            'phone' => 'required',
             'email' => 'required|email:rfc,dns,filter',
             'address' => 'required',
             'gstin' => 'required',
@@ -83,7 +83,7 @@ class BranchController extends Controller
         $this->validate($request, [
             'name' => 'required|unique:branches,name,' . $id,
             'code' => 'required|unique:branches,name,' . $id,
-            'phone' => 'required|numeric|digits:10',
+            'phone' => 'required',
             'email' => 'required|email:rfc,dns,filter',
             'address' => 'required',
             'gstin' => 'required',

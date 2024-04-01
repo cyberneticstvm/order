@@ -65,10 +65,12 @@
                 <td colspan="4" class="text-right border-0"><b>Total</b></td>
                 <td class="text-right border-0"><b>{{ $order->order_total }}</b></td>
             </tr>
+            @if($order->discount > 0)
             <tr>
                 <td colspan="4" class="text-right border-0"><b>Discount</b></td>
                 <td class="text-right border-0"><b>{{ $order->discount ?? '0.00' }}</b></td>
             </tr>
+            @endif
             <tr>
                 <td colspan="4" class="text-right border-0"><b>Advance</b></td>
                 <td class="text-right border-0"><b>{{ ($order->advance) ?? '0.00' }}</b></td>

@@ -146,7 +146,8 @@
             {{
                 Menu::new()->addClass('sidebar-submenu')
                 ->linkIfCan('head-list', route('heads'), 'Heads')
-                ->linkIfCan('income-expense-list', route('iande'), 'Income & Expense Register');
+                ->linkIfCan('income-expense-list', route('iande'), 'Income & Expense Register')
+                ->linkIfCan('bank-transfer-list', route('bank.transfers'), 'Bank Transfer');
             }}
         </li>
         <li class="sidebar-main-title">
