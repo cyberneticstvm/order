@@ -17,6 +17,10 @@ class ReportController extends Controller
 
     public function __construct()
     {
+        $this->middleware('permission:report-daybook', ['only' => ['daybook', 'fetchDayBook']]);
+        $this->middleware('permission:report-sales', ['only' => ['sales', 'fetchSales']]);
+        $this->middleware('permission:report-stock-status', ['only' => ['stockStatus', 'fetchStockStatus']]);
+
         $this->middleware(function ($request, $next) {
             $br = Branch::selectRaw("id, name")->when(Auth::user()->roles->first()->id != 1, function ($q) {
                 return $q->where('id', Session::get('branch'));
@@ -46,44 +50,6 @@ class ReportController extends Controller
         $data = getDayBook($inputs[0], $inputs[1], $inputs[2]);
         $opening_balance = getOpeningBalance(Carbon::parse($request->from_date)->startOfDay()->subDay(), $request->branch);
         return view('backend.report.daybook', compact('data', 'inputs', 'branches', 'opening_balance'));
-    }
-
-    public function consultation()
-    {
-        $inputs = [date('Y-m-d'), date('Y-m-d'), branch()->id];
-        $branches = $this->branches;
-        $data = [];
-        return view('backend.report.consultation', compact('data', 'inputs', 'branches'));
-    }
-
-    public function fetchConsultation(Request $request)
-    {
-        $inputs = [$request->from_date, $request->to_date, $request->branch];
-        $branches = $this->branches;
-        $data = Consultation::whereBetween('created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
-            return $q->where('branch_id', $request->branch);
-        })->get();
-        return view('backend.report.consultation', compact('data', 'inputs', 'branches'));
-    }
-
-    public function lab()
-    {
-        $inputs = [date('Y-m-d'), date('Y-m-d'), 'booked', branch()->id];
-        $branches = $this->branches;
-        $labs = Order::whereBetween('order_date', [date('Y-m-d'), date('Y-m-d')])->where('category', 'store')->orderByDesc('created_at')->get();
-        return view('backend.report.lab', compact('labs', 'inputs', 'branches'));
-    }
-
-    public function fetchLab(Request $request)
-    {
-        $inputs = [$request->from_date, $request->to_date, $request->order_status, $request->branch];
-        $branches = $this->branches;
-        $labs = Order::whereBetween('order_date', [$request->from_date, $request->to_date])->where('category', 'store')->when($request->branch > 0, function ($q) use ($request) {
-            return $q->where('branch_id', $request->branch);
-        })->when($request->order_status != 'all', function ($q) use ($request) {
-            return $q->where('order_status', $request->order_status);
-        })->orderByDesc('created_at')->get();
-        return view('backend.report.lab', compact('labs', 'inputs', 'branches'));
     }
 
     public function sales()

@@ -225,7 +225,7 @@
                 <span>Supplier</span>
             </a>
             {{
-                Menu::new()->addClass('nav-sub-childmenu submenu-content')
+                Menu::new()->addClass('sidebar-submenu')
                 ->linkIfCan('supplier-list', route('suppliers'), 'Supplier Register');
             }}
         </li>
@@ -240,7 +240,7 @@
                 <span>Manufacturer</span>
             </a>
             {{
-                Menu::new()->addClass('nav-sub-childmenu submenu-content')
+                Menu::new()->addClass('sidebar-submenu')
                 ->linkIfCan('manufacturer-list', route('manufacturers'), 'Manufacturer Register');
             }}
         </li>
@@ -259,11 +259,12 @@
                 </svg>
                 <span>Reports</span>
             </a>
-            <ul class="sidebar-submenu">
-                <li><a href="{{ route('report.daybook') }}">Daybook</a></li>
-                <li><a href="{{ route('report.sales') }}">Sales</a></li>
-                <li><a href="{{ route('report.stock.status') }}">Stock Status</a></li>
-            </ul>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('report-daybook', route('report.daybook'), 'Daybook')
+                ->linkIfCan('report-sales', route('report.sales'), 'Sales')
+                ->linkIfCan('report-stock-status', route('report.stock.status'), 'Stock Status');
+            }}
         </li>
         <li class="sidebar-main-title">
             <div>
