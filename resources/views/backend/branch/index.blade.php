@@ -44,7 +44,7 @@
                                         <th>Email</th>
                                         <th>Contact</th>
                                         <th>GSTIN</th>
-                                        <th>Reg. Fee</th>
+                                        <th>Target</th>
                                         <th>Exp. Limit</th>
                                         <th>Status</th>
                                         <th>Edit</th>
@@ -60,7 +60,7 @@
                                         <td>{{ $item->email }}</td>
                                         <td>{{ $item->phone }}</td>
                                         <td>{{ $item->gstin }}</td>
-                                        <td>{{ $item->registration_fee }}</td>
+                                        <td>{{ $item->monthly_target }}</td>
                                         <td>{{ $item->daily_expense_limit }}</td>
                                         <td class="text-center">{!! $item->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('branch.edit', encrypt($item->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>

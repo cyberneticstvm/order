@@ -76,16 +76,16 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Display Capacity</label>
-                                    {{ html()->number($name = 'display_capacity', $value = $branch->display_capacity, $min='0', $max='1000', $step='1')->class('form-control')->placeholder('0') }}
+                                    {{ html()->number($name = 'display_capacity', $value = $branch->display_capacity, $min='0', $max='', $step='1')->class('form-control')->placeholder('0') }}
                                     @error('display_capacity')
                                     <small class="text-danger">{{ $errors->first('display_capacity') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="form-label req">Registration Fee</label>
-                                    {{ html()->number($name = 'registration_fee', $value = $branch->registration_fee, $min='0', $max='1000', $step='1')->class('form-control')->placeholder('0.00') }}
-                                    @error('registration_fee')
-                                    <small class="text-danger">{{ $errors->first('registration_fee') }}</small>
+                                    <label class="form-label req">Monthly Target</label>
+                                    {{ html()->number($name = 'monthly_target', $value = $branch->monthly_target, $min='0', $max='', $step='1')->class('form-control')->placeholder('0.00') }}
+                                    @error('monthly_target')
+                                    <small class="text-danger">{{ $errors->first('monthly_target') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-2">

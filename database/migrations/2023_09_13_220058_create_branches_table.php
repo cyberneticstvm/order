@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('gstin', 25)->nullable();
             $table->integer('display_capacity')->default(0);
-            $table->decimal('registration_fee')->default(0);
+            $table->decimal('monthly_target', 9, 2)->default(0);
             $table->decimal('daily_expense_limit', 8, 2)->default(0)->nullable();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');

@@ -48,6 +48,7 @@ class BranchController extends Controller
             'address' => 'required',
             'gstin' => 'required',
             'daily_expense_limit' => 'required',
+            'monthly_target' => 'required',
         ]);
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
@@ -87,6 +88,7 @@ class BranchController extends Controller
             'address' => 'required',
             'gstin' => 'required',
             'daily_expense_limit' => 'required',
+            'monthly_target' => 'required',
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
