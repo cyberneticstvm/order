@@ -30,7 +30,7 @@ class IncomeExpenseController extends Controller
             return $next($request);
         });
 
-        $this->heads = Head::selectRaw("id, CONCAT_WS('-', name, category) AS name")->orderBy('name')->pluck('name', 'id');
+        //$this->heads = Head::selectRaw("id, CONCAT_WS('-', name, category) AS name")->orderBy('name')->pluck('name', 'id');
     }
 
     public function index()
@@ -42,9 +42,9 @@ class IncomeExpenseController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($category)
     {
-        $heads = $this->heads;
+        $heads = Head::selectRaw("id, CONCAT_WS('-', name, category) AS name")->where('category', $category)->orderBy('name')->pluck('name', 'id');
         return view('backend.iande.create', compact('heads'));
     }
 
@@ -87,7 +87,7 @@ class IncomeExpenseController extends Controller
     public function edit(string $id)
     {
         $iande = IncomeExpense::findOrFail(decrypt($id));
-        $heads = $this->heads;
+        $heads = Head::selectRaw("id, CONCAT_WS('-', name, category) AS name")->where('category', $iande->category)->orderBy('name')->pluck('name', 'id');
         return view('backend.iande.edit', compact('iande', 'heads'));
     }
 

@@ -465,7 +465,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
 
     Route::prefix('/backend/iande')->controller(IncomeExpenseController::class)->group(function () {
         Route::get('/', 'index')->name('iande');
-        Route::get('/create', 'create')->name('iande.create');
+        Route::get('/create/{category}', 'create')->name('iande.create');
         Route::post('/create', 'store')->name('iande.save');
         Route::get('/edit/{id}', 'edit')->name('iande.edit');
         Route::post('/edit/{id}', 'update')->name('iande.update');

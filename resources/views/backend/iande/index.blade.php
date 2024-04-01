@@ -30,7 +30,15 @@
                             <div class="col">
                                 <h5>Income & Expense Register</h5><span>Income & Expense Management</span>
                             </div>
-                            <div class="col text-end"><a href="{{ route('iande.create') }}" class="btn btn-primary" type="button">Add New</a></div>
+                            <div class="col text-end">
+                                <div class="btn-group">
+                                    <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Add New</button>
+                                    <ul class="dropdown-menu dropdown-block">
+                                        <li><a class="dropdown-item txt-dark" href="{{ route('iande.create', 'income') }}">Income</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('iande.create', 'expense') }}">Expense</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">
