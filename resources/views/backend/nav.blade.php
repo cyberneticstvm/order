@@ -93,23 +93,6 @@
             }}
         </li>
         @endif
-        <!--@if(auth()->user()->can('pharmacy-order-list') || auth()->user()->can('pharmacy-order-create') || auth()->user()->can('pharmacy-order-edit') || auth()->user()->can('pharmacy-order-delete'))
-        <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
-            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                <svg class="stroke-icon">
-                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-form') }}"></use>
-                </svg>
-                <svg class="fill-icon">
-                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#fill-form') }}"></use>
-                </svg>
-                <span>Pharmacy</span>
-            </a>
-            {{
-                Menu::new()->addClass('sidebar-submenu')
-                ->linkIfCan('pharmacy-order-list', route('pharmacy.order'), 'Pharmacy Order Register');
-            }}
-        </li>
-        @endif-->
         @if(auth()->user()->can('pending-transfer-list') || auth()->user()->can('pending-transfer-edit') || auth()->user()->can('product-damage-transfer-list'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
@@ -160,10 +143,11 @@
                 </svg>
                 <span>Income & Expenses</span>
             </a>
-            <ul class="sidebar-submenu">
-                <li><a href="{{ route('heads') }}">Heads</a></li>
-                <li><a href="{{ route('iande') }}">Income & Expense Register</a></li>
-            </ul>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('head-list', route('heads'), 'Heads')
+                ->linkIfCan('income-expense-list', route('iande'), 'Income & Expense Register');
+            }}
         </li>
         <li class="sidebar-main-title">
             <div>
@@ -178,54 +162,55 @@
                 <span>Product</span>
             </a>
             <ul class="sidebar-submenu">
-                <!--<li><a class="submenu-title" href="javascript:void(0)">Pharmacy<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
-                    <ul class="nav-sub-childmenu submenu-content">
-                        <li><a href="{{ route('product.pharmacy') }}">Pharmacy List</a></li>
-                        <li><a href="{{ route('pharmacy.purchase') }}">Pharmacy Purchase</a></li>
-                        <li><a href="{{ route('pharmacy.transfer') }}">Pharmacy Transfer</a></li>
-                    </ul>
-                </li>-->
                 <li><a class="submenu-title" href="javascript:void(0)">Extras<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
-                    <ul class="nav-sub-childmenu submenu-content">
-                        <li><a href="{{ route('collections') }}">Extras</a></li>
-                    </ul>
+                    {{
+                        Menu::new()->addClass('nav-sub-childmenu submenu-content')
+                        ->linkIfCan('collection-list', route('collections'), 'Extras');
+                    }}
                 </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Frame<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
-                    <ul class="nav-sub-childmenu submenu-content">
-                        <li><a href="{{ route('product.frame') }}">Frame Register</a></li>
-                        <li><a href="{{ route('frame.purchase') }}">Frame Purchase</a></li>
-                        <li><a href="{{ route('frame.transfer') }}">Frame Transfer</a></li>
-                    </ul>
+                    {{
+                        Menu::new()->addClass('nav-sub-childmenu submenu-content')
+                        ->linkIfCan('product-frame-list', route('product.frame'), 'Frame Register')
+                        ->linkIfCan('purchase-frame-list', route('frame.purchase'), 'Frame Purchase')
+                        ->linkIfCan('frame-transfer-list', route('frame.transfer'), 'Frame Transfer');
+                    }}
                 </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Lens<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
-                    <ul class="nav-sub-childmenu submenu-content">
-                        <li><a href="{{ route('product.lens') }}">Lens Register</a></li>
-                        <li><a href="{{ route('lens.purchase') }}">Lens Purchase</a></li>
-                        <li><a href="{{ route('lens.transfer') }}">Lens Transfer</a></li>
-                    </ul>
+                    {{
+                        Menu::new()->addClass('nav-sub-childmenu submenu-content')
+                        ->linkIfCan('product-lens-list', route('product.lens'), 'Lens Register')
+                        ->linkIfCan('purchase-lens-list', route('lens.purchase'), 'Lens Purchase')
+                        ->linkIfCan('lens-transfer-list', route('lens.transfer'), 'Lens Transfer');
+                    }}
                 </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Service<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
-                    <ul class="nav-sub-childmenu submenu-content">
-                        <li><a href="{{ route('product.service') }}">Service Register</a></li>
-                    </ul>
+                    {{
+                        Menu::new()->addClass('nav-sub-childmenu submenu-content')
+                        ->linkIfCan('product-service-list', route('product.service'), 'Service Register');
+                    }}
                 </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Solutions<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
-                    <ul class="nav-sub-childmenu submenu-content">
-                        <li><a href="{{ route('product.solution') }}">Solutions Register</a></li>
-                    </ul>
+                    {{
+                        Menu::new()->addClass('nav-sub-childmenu submenu-content')
+                        ->linkIfCan('product-solution-list', route('product.solution'), 'Solutions Register');
+                    }}
                 </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Accessories<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
-                    <ul class="nav-sub-childmenu submenu-content">
-                        <li><a href="{{ route('product.accessory') }}">Accessory Register</a></li>
-                    </ul>
+                    {{
+                        Menu::new()->addClass('nav-sub-childmenu submenu-content')
+                        ->linkIfCan('product-accessory-list', route('product.accessory'), 'Accessory Register');
+                    }}
                 </li>
+
                 <li><a class="submenu-title" href="javascript:void(0)">Imports<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
-                    <ul class="nav-sub-childmenu submenu-content">
-                        <li><a href="{{ route('import.product.purchase') }}">Product Purchase</a></li>
-                        <li><a href="{{ route('import.frames') }}">Frames</a></li>
-                        <li><a href="{{ route('import.lenses') }}">Lenses</a></li>
-                        <li><a href="{{ route('import.transfer') }}">Product Transfer</a></li>
-                    </ul>
+                    {{
+                        Menu::new()->addClass('nav-sub-childmenu submenu-content')
+                        ->linkIfCan('import-product-purchase', route('import.product.purchase'), 'Add Product Purchases')
+                        ->linkIfCan('import-new-frames', route('import.frames'), 'Add New Frames')
+                        ->linkIfCan('import-new-lenses', route('import.lenses'), 'Add New Lenses')
+                        ->linkIfCan('import-product-transfer', route('import.transfer'), 'Add Product Transfer')
+                    }}
                 </li>
             </ul>
         </li>
@@ -239,9 +224,10 @@
                 </svg>
                 <span>Supplier</span>
             </a>
-            <ul class="sidebar-submenu">
-                <li><a href="{{ route('suppliers') }}">Supplier Register</a></li>
-            </ul>
+            {{
+                Menu::new()->addClass('nav-sub-childmenu submenu-content')
+                ->linkIfCan('supplier-list', route('suppliers'), 'Supplier Register');
+            }}
         </li>
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
@@ -253,9 +239,10 @@
                 </svg>
                 <span>Manufacturer</span>
             </a>
-            <ul class="sidebar-submenu">
-                <li><a href="{{ route('manufacturers') }}">Manufacturer Register</a></li>
-            </ul>
+            {{
+                Menu::new()->addClass('nav-sub-childmenu submenu-content')
+                ->linkIfCan('manufacturer-list', route('manufacturers'), 'Manufacturer Register');
+            }}
         </li>
         <li class="sidebar-main-title">
             <div>

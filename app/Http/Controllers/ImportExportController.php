@@ -29,7 +29,12 @@ class ImportExportController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:export-today-appointments-excel', ['only' => ['exportTodayAppointments']]);
+        $this->middleware('permission:export-product-lens-excel', ['only' => ['exportProductLens']]);
+        $this->middleware('permission:export-product-frame-excel', ['only' => ['exportProductFrame']]);
+        $this->middleware('permission:import-product-purchase', ['only' => ['importProductPurchase', 'importProductPurchaseUpdate']]);
+        $this->middleware('permission:import-new-frames', ['only' => ['importFrames', 'importFramesUpdate']]);
+        $this->middleware('permission:import-new-lenses', ['only' => ['importLenses', 'importLensesUpdate']]);
+        $this->middleware('permission:import-product-transfer', ['only' => ['importTransfer', 'importTransferUpdate']]);
 
         $this->middleware(function ($request, $next) {
 
@@ -44,21 +49,6 @@ class ImportExportController extends Controller
 
             return $next($request);
         });
-    }
-
-    public function exportTodayAppointments(Request $request)
-    {
-        return Excel::download(new AppointmentExport($request), 'appointments_' . Carbon::today()->format('d-M-Y') . '.xlsx');
-    }
-
-    public function exportCampPatientList(Request $request, $id)
-    {
-        return Excel::download(new CampPatientExport($request, $id), 'patient_list.xlsx');
-    }
-
-    public function exportProductPharmacy(Request $request)
-    {
-        return Excel::download(new ProductPharmacyExport($request), 'pharmacy_products.xlsx');
     }
 
     public function exportProductLens(Request $request)

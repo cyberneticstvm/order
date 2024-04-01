@@ -73,7 +73,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <h4 class="mb-0">₹{{ number_format($dvals[1], 2) }}</h4><span class="f-light">Current Month Achieved</span>
+                                <h4 class="mb-0 text-success">₹{{ number_format($dvals[1], 2) }}</h4><span class="f-light">Current Month Achieved</span>
                             </div>
                         </div>
                     </div>
