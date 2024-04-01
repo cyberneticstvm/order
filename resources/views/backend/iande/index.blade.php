@@ -40,6 +40,7 @@
                                     <tr>
                                         <th>SL No</th>
                                         <th>Date</th>
+                                        <th>Branch</th>
                                         <th>Head</th>
                                         <th>Category</th>
                                         <th>Description</th>
@@ -54,6 +55,7 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $ie->date->format('d/M/Y') }}</td>
+                                        <td>{{ $ie->branch->name }}</td>
                                         <td>{{ $ie->head->name }}</td>
                                         <td>{{ ucfirst($ie->category) }}</td>
                                         <td>{{ $ie->description }}</td>
