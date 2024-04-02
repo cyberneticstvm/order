@@ -88,10 +88,10 @@
                                         <td class="text-success">
                                             Opening Balance
                                         </td>
-                                        <td></td>
                                         <td class="text-end text-success fw-bold">
                                             {{ number_format($opening_balance, 2) }}
                                         </td>
+                                        <td></td>
                                         <td></td>
                                     </tr>
                                     <tr>
@@ -144,10 +144,10 @@
                                         <td class="text-end">
                                             Expenses
                                         </td>
+                                        <td></td>
                                         <td class="text-end text-secondary">
                                             {{ number_format($data->expense_total, 2) }}
                                         </td>
-                                        <td></td>
                                         <td></td>
                                     </tr>
                                     <tr>
@@ -162,7 +162,7 @@
                                     </tr>
                                     <tr>
                                         <td class="text-end fw-bold text-success">
-                                            Day Total
+                                            Day Closing
                                         </td>
                                         <td class="text-end fw-bold text-success">
                                             {{ number_format(($data->paid_total_cash + $data->income_total) - ($data->expense_total+$data->bank_transfer_total), 2) }}
