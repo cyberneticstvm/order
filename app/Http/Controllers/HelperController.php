@@ -120,7 +120,12 @@ class HelperController extends Controller
         $this->validate($request, [
             'order_status' => 'required',
         ]);
-        Order::findOrFail($id)->update(['order_status' => $request->order_status]);
-        return redirect()->route('search.order')->with("success", "Status updated successfully");
+        $order = Order::findOrFail($id);
+        if (!$order->invoice_number) :
+            $order->update(['order_status' => $request->order_status]);
+            return redirect()->route('search.order')->with("success", "Status updated successfully");
+        else :
+            return redirect()->back()->with("error", "Cannot update status for the order which has invoice number already been generated");
+        endif;
     }
 }
