@@ -36,7 +36,7 @@
                     <table>
                         <tr>
                             <td class="no-border">MRN: </td>
-                            <td class="no-border">{{ $order->consultation_id }}</td>
+                            <td class="no-border">{{ ($order->consultation_id == 0) ? 'Direct' : $order->consultation_id }}</td>
                         </tr>
                         <tr>
                             <td class="no-border">Customer Name: </td>
@@ -52,7 +52,7 @@
                     <table>
                         <tr>
                             <td class="no-border">MRN: </td>
-                            <td class="no-border">{{ $order->consultation_id }}</td>
+                            <td class="no-border">{{ ($order->consultation_id == 0) ? 'Direct' : $order->consultation_id }}</td>
                         </tr>
                         <tr>
                             <td class="no-border">Customer Name: </td>
