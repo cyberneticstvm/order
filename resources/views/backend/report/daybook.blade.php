@@ -74,7 +74,7 @@
                                     <tr>
                                         <th width="90%">Particulars</th>
                                         <th>Income</th>
-                                        <th></th>
+                                        <th>Expense</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -154,10 +154,10 @@
                                         <td class="text-end">
                                             Bank Transfer
                                         </td>
+                                        <td></td>
                                         <td class="text-end text-secondary">
                                             {{ number_format($data->bank_transfer_total, 2) }}
                                         </td>
-                                        <td></td>
                                         <td></td>
                                     </tr>
                                     <tr>
