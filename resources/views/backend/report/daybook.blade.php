@@ -72,10 +72,10 @@
                             <table class="table table-bordered table-striped mx-auto w-50">
                                 <thead>
                                     <tr>
-                                        <th width="60%">Particulars</th>
-                                        <th>Income</th>
-                                        <th>Expense</th>
-                                        <th></th>
+                                        <th width="55%">Particulars</th>
+                                        <th width="15%">Income</th>
+                                        <th width="15%">Expense</th>
+                                        <th width="15%"></th>
                                     </tr>
                                 </thead>
                                 @if($data)
