@@ -132,13 +132,13 @@
                                             {{ number_format($tot, 2) }}
                                         </td>
                                         <td></td>
-                                        <td>{{ number_format($data->paid_total_cash + $data->income_total, 2) }} (C)</td>
+                                        <td class="text-info">{{ number_format($data->paid_total_cash + $data->income_total, 2) }} (C)</td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>{{ number_format($data->paid_total_other, 2) }} (B)</td>
+                                        <td class="text-info">{{ number_format($data->paid_total_other, 2) }} (B)</td>
                                     </tr>
                                     <tr>
                                         <td class="text-end">
