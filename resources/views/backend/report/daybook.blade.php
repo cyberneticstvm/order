@@ -72,7 +72,7 @@
                             <table class="table table-bordered table-striped mx-auto w-50">
                                 <thead>
                                     <tr>
-                                        <th width="90%">Particulars</th>
+                                        <th width="75%">Particulars</th>
                                         <th>Income</th>
                                         <th>Expense</th>
                                         <th></th>
