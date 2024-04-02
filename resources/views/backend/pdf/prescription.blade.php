@@ -1,49 +1,75 @@
 @extends("backend.pdf.base")
 @section("pdfcontent")
 <div class="row">
-    <div class="col text-center">
-        <h3>{{ title() }}</h3>
-        {{ $consultation->branch->name }}, {{ $consultation->branch->address }}, {{ $consultation->branch->phone }}
+    <div class="text-center">
+        {{ $order->branch->name }}, {{ $order->branch->address }}, {{ $order->branch->phone }}
     </div>
 </div>
 <div class="row">
     <div class="col">
-        <h4 class="text-center">PRESCRIPTION</h4>
-        <table class="table bordered" width="100%" cellspacing="0" cellpadding="0">
-            <tbody>
-                <tr><td width="40%">Name / Age: {{ strtoupper($consultation->patient->name) }} / {{ $consultation->patient->age }}</td><td>ID: {{ $consultation->patient->patient_id }}</td><td>MRN: {{ $consultation->mrn }}</td></tr>
-                <tr><td>Place: {{ $consultation->patient->place }}</td><td>Contact: {{ $consultation->patient->mobile }}</td><td>Doctor: {{ $consultation->doctor->name }}</td></tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col mt-50">
-        <table class="table bordered" width="100%" cellspacing="0" cellpadding="0">
+        <h4 class="text-center">ORDER DETAILS</h4>
+        <table class="table" width="100%" cellpadding="0" cellspacing="0">
             <thead>
-                <tr><th colspan="5" class="text-center">RE</th><th colspan="3" class="text-center">LE</th></tr>
-                <tr><th colspan="2"></th><th>SPH</th><th>CYL</th><th>AXIS</th><th>SPH</th><th>CYL</th><th>AXIS</th></tr>
+                <tr>
+                    <td width="20%" class="border-0">Customer Name</td>
+                    <td width="25%" class="border-0 fw-bold">{{ $order->name }}</td>
+                    <td width="10%" class="border-0">Address</td>
+                    <td width="45%" class="border-0 fw-bold" colspan="3">{{ $order->place }}</td>
+                </tr>
+                <tr>
+                    <td width="20%" class="border-0">Product Adviser</td>
+                    <td width="25%" class="border-0 fw-bold">{{ $order->adviser->name }}</td>
+                    <td width="15%" class="border-0">Order Number</td>
+                    <td width="40%" class="border-0 fw-bold" colspan="3">{{ $order->branch->code }}/{{ $order->id }}</td>
+                </tr>
+                <tr>
+                    <td width="20%" class="border-0">MRN</td>
+                    <td width="20%" class="border-0 fw-bold">{{ ($order->consultation_id == 0) ? 'Direct' : $order->consultation_id }}</td>
+                    <td width="10%" class="border-0">Order Date</td>
+                    <td width="15%" class="border-0 fw-bold">{{ $order->created_at->format('d, M Y') }}</td>
+                    <td class="border-0" width="10%">Exp.Del.Date</td>
+                    <td class="border-0 fw-bold" width="25%">{{ $order->expected_delivery_date->format('d, M Y') }}</td>
+                </tr>
             </thead>
-            <tbody class="h-50">
-                <tr><td colspan="2">DIST</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr><td colspan="2">READ</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-            </tbody>
         </table>
     </div>
-    <div class="col mt-30">
-        <p>I.P.D ..............................</p>
+    <hr style="border: 1px solid; color:red;">
+    <table class="table mt-30" width="100%" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <th class="border-0">Eye</th>
+                <th class="border-0">Sph</th>
+                <th class="border-0">Cyl</th>
+                <th class="border-0">Axis</th>
+                <th class="border-0">Add</th>
+                <th class="border-0">Ipd</th>
+                <th class="border-0">Int.Add</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($order->details as $key => $item)
+            @if(in_array($item->eye, ['re', 'le']))
+            <tr style="border-top: 1px solid gray;">
+                <td class="border-0">{{ strtoupper($item->eye) }}</td>
+                <td class="border-0">{{ $item->sph }}</td>
+                <td class="border-0">{{ $item->cyl }}</td>
+                <td class="border-0">{{ $item->axis }}</td>
+                <td class="border-0">{{ $item->add }}</td>
+                <td class="border-0">{{ $item->ipd }}</td>
+                <td class="border-0">{{ $item->int_add }}</td>
+            </tr>
+            @endif
+            @empty
+            @endforelse
+        </tbody>
+    </table>
+    <div class="col text-end mt-50">
+        <p>For DEVI OPTICIANS</p>
+        <br />
+        <p>Authorised Signatory</p>
     </div>
-    <div class="col mt-30">
-        <p>Remarks ....................................................................................................</p>
-    </div>
-    <div class="col mt-50">
-        <table width="100%"><tr><td class="no-border">Optometrist</td><td class="text-right no-border">Ophthalmologist</td></tr></table>
-    </div>
-    <div class="col mt-50">
-        <table width="100%"><tr><td class="no-border text-right">Single Vision</td><td class="text-center no-border">Bifocals</td><td class="no-border">Multifocals / PAL</td></tr></table>
-    </div>
-    <br /><br /><br /><br /><br />
-    <div class="col text-right mt-50">
-        <img src="data:image/png;base64, {!! $qrcode !!}"><br><br>
-        <small>{{ $consultation->created_at->format('d, M Y h:i A') }}</small>
-    </div>
+    <footer>
+        <p>Thank You and Visit Again..</p>
+    </footer>
 </div>
 @endsection

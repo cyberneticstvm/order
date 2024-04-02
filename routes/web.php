@@ -110,8 +110,10 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/pending/damage/transfer', 'pendingDamageTransfer')->name('pending.damage.transfer');
         Route::get('/pending/damage/transfer/edit/{id}', 'pendingDamageTransferEdit')->name('pending.damage.transfer.edit');
         Route::post('/pending/damage/transfer/edit/{id}', 'pendingDamageTransferUpdate')->name('pending.damage.transfer.update');
-        Route::get('/search', 'search')->name('search');
-        Route::post('/search', 'searchFetch')->name('search.fetch');
+        Route::get('/search/order', 'searchOrder')->name('search.order');
+        Route::post('/search/order', 'searchOrderFetch')->name('search.order.fetch');
+        Route::get('/order/status/update/{id}', 'orderStatus')->name('order.status');
+        Route::post('/order/status/update/{id}', 'orderStatusUpdate')->name('order.status.update');
     });
 
     Route::prefix('/backend/export')->controller(ImportExportController::class)->group(function () {
@@ -158,6 +160,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/order/invoice/generate/{id}', 'generateInvoice')->name('store.order.invoice.generate');
         Route::get('/order/receipt/{id}', 'exportOrderReceipt')->name('store.order.receipt');
         Route::get('/product/transfer/{id}', 'exportProductTransfer')->name('pdf.product.transfer');
+        Route::get('/order/prescription/{id}', 'exportOrderPrescription')->name('store.order.prescription');
     });
 
     Route::prefix('/backend/bank/transfer')->controller(BankTransferController::class)->group(function () {

@@ -10,6 +10,10 @@
       font-weight: normal;
     }
 
+    .font-big {
+      font-size: 15px;
+    }
+
     .text-center {
       text-align: center;
     }

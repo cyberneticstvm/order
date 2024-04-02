@@ -136,6 +136,7 @@ class PdfController extends Controller
             'invoice_number' => invoicenumber(decrypt($id))->ino,
             'invoice_generated_by' => Auth::id(),
             'invoice_generated_at' => Carbon::now(),
+            'order_status' => 'delivered',
         ]);
         return redirect()->back()->with("success", "Invoice generated successfully!");
     }
@@ -143,10 +144,14 @@ class PdfController extends Controller
     public function exportOrderInvoice($id)
     {
         $order = Order::findOrFail(decrypt($id));
-        $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
-        $nums = $this->NumberintoWords($order->invoice_total);
-        $pdf = PDF::loadView('/backend/pdf/store-order-invoice', compact('order', 'qrcode', 'nums'));
-        return $pdf->stream($order->invoice_number . '.pdf');
+        if ($order->invoice_number) :
+            $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
+            $nums = $this->NumberintoWords($order->invoice_total);
+            $pdf = PDF::loadView('/backend/pdf/store-order-invoice', compact('order', 'qrcode', 'nums'));
+            return $pdf->stream($order->invoice_number . '.pdf');
+        else :
+            return redirect()->back()->with("error", "Invoice yet to be generated");
+        endif;
     }
 
     public function exportOrderReceipt($id)
@@ -156,6 +161,14 @@ class PdfController extends Controller
         $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('upi://pay?pa=9995050149@okbizaxis&pn=' . $pn . '&tn=' . $order->id . '&am=' . $order->balance . '&cu=INR'));
         $pdf = PDF::loadView('/backend/pdf/store-order-receipt', compact('order', 'qrcode'));
         return $pdf->stream('ORDER-' . $order->id . '.pdf');
+    }
+
+    public function exportOrderPrescription($id)
+    {
+        $order = Order::findOrFail(decrypt($id));
+        $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
+        $pdf = PDF::loadView('/backend/pdf/prescription', compact('order', 'qrcode'));
+        return $pdf->stream($order->invoice_number . '.pdf');
     }
 
     public function NumberintoWords(float $number)

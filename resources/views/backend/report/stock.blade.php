@@ -68,12 +68,12 @@
                                     <tr>
                                         <th>SL No</th>
                                         <th>Product Name</th>
-                                        <th>Sold Qty</th>
-                                        <th>Purchased Qty</th>
-                                        <th>Transferred Qty</th>
-                                        <th>Returned Qty</th>
-                                        <th>Damaged Qty</th>
-                                        <th>Balance Qty</th>
+                                        <th>Order</th>
+                                        <th>Transfer In</th>
+                                        <th>Transfer Out</th>
+                                        <th>Returned</th>
+                                        <th>Damaged</th>
+                                        <th>Balance</th>
                                     </tr>
                                 </thead>
                                 <tbody>

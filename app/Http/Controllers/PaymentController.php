@@ -100,6 +100,7 @@ class PaymentController extends Controller
                     'invoice_number' => invoicenumber($request->order_id)->ino,
                     'invoice_generated_by' => $request->user()->id,
                     'invoice_generated_at' => Carbon::now(),
+                    'order_status' => 'delivered',
                 ]);
             endif;
         } catch (Exception $e) {

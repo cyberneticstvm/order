@@ -114,7 +114,7 @@
                     <td width="20%" class="no-border">P.Adviser</td>
                     <td width="25%" class="no-border">{{ $order->adviser->name }}</td>
                     <td width="10%" class="no-border">Ord.Number</td>
-                    <td width="45%" class="no-border fw-bold">{{ $order->branch->code }}/{{ $order->id }}</td>
+                    <td width="45%" class="no-border fw-bold font-big">{{ $order->branch->code }}/{{ $order->id }}</td>
                 </tr>
                 <tr>
                     <td width="20%" class="no-border">MRN</td>

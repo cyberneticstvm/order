@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Consultation;
+use App\Models\Order;
 use App\Models\Patient;
 use App\Models\ProductDamage;
 use App\Models\Transfer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class HelperController extends Controller
 {
@@ -18,6 +20,7 @@ class HelperController extends Controller
         $this->middleware('permission:pending-transfer-edit', ['only' => ['pendingTransferEdit', 'pendingTransferUpdate']]);
         $this->middleware('permission:product-damage-transfer-list', ['only' => ['pendingDamageTransfer']]);
         $this->middleware('permission:product-damage-transfer-update', ['only' => ['pendingDamageTransferEdit', 'pendingDamageTransferUpdate']]);
+        $this->middleware('permission:search-order', ['only' => ['searchOrder', 'searchOrderFetch']]);
     }
 
     public function closingBalance()
@@ -89,37 +92,35 @@ class HelperController extends Controller
         return redirect()->route('pending.damage.transfer')->with("success", "Status updated successfully");
     }
 
-    public function search()
+    public function searchOrder()
     {
-        $inputs = [];
         $data = [];
-        return view('backend.search.index', compact('inputs', 'data'));
+        $inputs = [];
+        return view('backend.search.order', compact('inputs', 'data'));
     }
 
-    public function searchFetch(Request $request)
+    public function searchOrderFetch(Request $request)
     {
         $this->validate($request, [
-            'search_by' => 'required',
             'search_term' => 'required',
         ]);
-        $inputs = array($request->search_by, $request->search_term);
-        switch ($request->search_by):
-            case 'mrn':
-                $con = Consultation::with('patient')->findOrFail($request->search_term);
-                $data = Patient::with('consultation')->where('id', $con->patient->id)->withTrashed()->get();
-                break;
-            case 'mobile':
-                $data = Patient::with('consultation')->where('mobile', $request->search_term)->withTrashed()->get();
-                break;
-            case 'pid':
-                $data = Patient::with('consultation')->where('id', $request->search_term)->withTrashed()->get();
-                break;
-            case 'pname':
-                $data = Patient::with('consultation')->where('name', $request->search_term)->withTrashed()->get();
-                break;
-            default:
-                $data = [];
-        endswitch;
-        return view('backend.search.index', compact('inputs', 'data'));
+        $inputs = array($request->search_term);
+        $data = Order::where('id', $request->search_term)->orWhere('mobile', $request->search_term)->orWhere('alt_mobile', $request->search_term)->where('branch_id', Session::get('branch'))->get();
+        return view('backend.search.order', compact('inputs', 'data'));
+    }
+
+    public function orderStatus(string $id)
+    {
+        $order = Order::findOrFail(decrypt($id));
+        return view('backend.order.status-update', compact('order'));
+    }
+
+    public function orderStatusUpdate(Request $request, string $id)
+    {
+        $this->validate($request, [
+            'order_status' => 'required',
+        ]);
+        Order::findOrFail($id)->update(['order_status' => $request->order_status]);
+        return redirect()->route('search.order')->with("success", "Status updated successfully");
     }
 }
