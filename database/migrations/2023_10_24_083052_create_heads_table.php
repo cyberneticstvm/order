@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->enum('category', ['income', 'expense', 'other']);
+            $table->boolean('daily_expense_limit')->comment('1-true, 0-false')->default('1');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
             $table->timestamps();

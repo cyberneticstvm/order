@@ -46,6 +46,13 @@
                                     <small class="text-danger">{{ $errors->first('category') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-3">
+                                    <label class="form-label req">Apply Daily Expense Limit</label>
+                                    {{ html()->select($name = 'daily_expense_limit', array('1' => 'Yes', '0' => 'No'), $value = $head->daily_expense_limit)->class('form-control select2')->placeholder('Select') }}
+                                    @error('daily_expense_limit')
+                                    <small class="text-danger">{{ $errors->first('daily_expense_limit') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                                     <button class="btn btn-submit btn-success" type="submit">Update</button>

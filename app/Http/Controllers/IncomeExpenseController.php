@@ -63,11 +63,16 @@ class IncomeExpenseController extends Controller
         $input['branch_id'] = branch()->id;
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
-        $input['category'] = Head::findOrFail($request->head_id)->category;
-        if (!isExpenseLimitReached($request->amount)) :
-            IncomeExpense::create($input);
+        $head = Head::findOrFail($request->head_id);
+        $input['category'] = $head->category;
+        if ($head->category == 'expense' && $head->daily_expense_limit == 1) :
+            if (!isExpenseLimitReached($request->amount)) :
+                IncomeExpense::create($input);
+            else :
+                return redirect()->back()->with("error", "Daily expense limit reached for this branch!")->withInput($request->all());
+            endif;
         else :
-            return redirect()->back()->with("error", "Daily expense limit reached for this branch!")->withInput($request->all());
+            IncomeExpense::create($input);
         endif;
         return redirect()->route('iande')
             ->with('success', 'Income/Expense has been created successfully');
@@ -103,12 +108,17 @@ class IncomeExpenseController extends Controller
         ]);
         $input = $request->all();
         $ie = IncomeExpense::findOrFail($id);
+        $head = Head::findOrFail($request->head_id);
         $input['updated_by'] = $request->user()->id;
-        $input['category'] = Head::findOrFail($request->head_id)->category;
-        if (!isExpenseLimitReached($request->amount, $ie->getOriginal('amount'))) :
-            $ie->update($input);
+        $input['category'] = $head->category;
+        if ($head->category == 'expense' && $head->daily_expense_limit == 1) :
+            if (!isExpenseLimitReached($request->amount, $ie->getOriginal('amount'))) :
+                $ie->update($input);
+            else :
+                return redirect()->back()->with("error", "Daily expense limit reached for this branch!")->withInput($request->all());
+            endif;
         else :
-            return redirect()->back()->with("error", "Daily expense limit reached for this branch!")->withInput($request->all());
+            $ie->update($input);
         endif;
         return redirect()->route('iande')
             ->with('success', 'Income/Expense has been updated successfully');

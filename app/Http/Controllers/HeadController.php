@@ -40,6 +40,7 @@ class HeadController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'category' => 'required',
+            'daily_expense_limit' => 'required',
         ]);
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
@@ -74,6 +75,7 @@ class HeadController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'category' => 'required',
+            'daily_expense_limit' => 'required',
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
