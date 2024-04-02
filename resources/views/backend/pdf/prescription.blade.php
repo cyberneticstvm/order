@@ -2,29 +2,27 @@
 @section("pdfcontent")
 <div class="row">
     <div class="text-center">
-        {{ $order->branch->name }}, {{ $order->branch->address }}, {{ $order->branch->phone }}
+        {{ $order->branch->address }}, {{ $order->branch->phone }}
     </div>
 </div>
 <div class="row">
     <div class="col">
-        <h4 class="text-center">ORDER DETAILS</h4>
+        <h4 class="text-center"><u>SPECTACLE PRESCRIPTION</u></h4>
         <table class="table" width="100%" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
                     <td width="20%" class="border-0">Customer Name</td>
                     <td width="25%" class="border-0 fw-bold">{{ $order->name }}</td>
                     <td width="10%" class="border-0">Address</td>
-                    <td width="45%" class="border-0 fw-bold" colspan="3">{{ $order->place }}</td>
-                </tr>
-                <tr>
-                    <td width="20%" class="border-0">Product Adviser</td>
-                    <td width="25%" class="border-0 fw-bold">{{ $order->adviser->name }}</td>
-                    <td width="15%" class="border-0">Order Number</td>
-                    <td width="40%" class="border-0 fw-bold" colspan="3">{{ $order->branch->code }}/{{ $order->id }}</td>
+                    <td width="45%" class="border-0 fw-bold">{{ $order->place }}</td>
                 </tr>
                 <tr>
                     <td width="20%" class="border-0">MRN</td>
                     <td width="20%" class="border-0 fw-bold">{{ ($order->consultation_id == 0) ? 'Direct' : $order->consultation_id }}</td>
+                    <td width="15%" class="border-0">Order Number</td>
+                    <td width="40%" class="border-0 fw-bold">{{ $order->branch->code }}/{{ $order->id }}</td>
+                </tr>
+                <tr>
                     <td width="10%" class="border-0">Order Date</td>
                     <td width="15%" class="border-0 fw-bold">{{ $order->created_at->format('d, M Y') }}</td>
                     <td class="border-0" width="10%">Exp.Del.Date</td>
@@ -42,7 +40,7 @@
                 <th class="border-0">Cyl</th>
                 <th class="border-0">Axis</th>
                 <th class="border-0">Add</th>
-                <th class="border-0">Ipd</th>
+                <th class="border-0">IPD</th>
                 <th class="border-0">Int.Add</th>
             </tr>
         </thead>

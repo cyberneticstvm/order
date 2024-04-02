@@ -2,8 +2,7 @@
 @section("pdfcontent")
 <div class="row">
     <div class="col text-center">
-        <h3>{{ title() }}</h3>
-        {{ $payment->order->branch->name }}, {{ $payment->order->branch->address }}, {{ $payment->order->branch->phone }}
+        {{ $payment->order->branch->address }}, {{ $payment->order->branch->phone }}
     </div>
 </div>
 <div class="row">

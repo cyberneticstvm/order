@@ -2,7 +2,7 @@
 @section("pdfcontent")
 <div class="row">
     <div class="col text-center">
-        {{ $order->branch->name }}, {{ $order->branch->address }}, {{ $order->branch->phone }}
+        {{ $order->branch->address }}, {{ $order->branch->phone }}
     </div>
     <div class="col text-center">
         GSTIN: {{ $order->branch->gstin }}
