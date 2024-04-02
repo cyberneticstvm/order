@@ -24,7 +24,7 @@
                 </tr>
                 <tr>
                     <td width="20%" class="border-0">MRN</td>
-                    <td width="20%" class="border-0 fw-bold">{{ ($order->consultation_id) ?? 'Direct' }}</td>
+                    <td width="20%" class="border-0 fw-bold">{{ ($order->consultation_id == 0) ? 'Direct' : $order->consultation_id }}</td>
                     <td width="10%" class="border-0">Order Date</td>
                     <td width="15%" class="border-0 fw-bold">{{ $order->created_at->format('d, M Y') }}</td>
                     <td class="border-0" width="10%">Exp.Del.Date</td>
@@ -118,7 +118,7 @@
                 </tr>
                 <tr>
                     <td width="20%" class="no-border">MRN</td>
-                    <td width="25%" class="no-border">{{ ($order->consultation_id) ?? 'Direct' }}</td>
+                    <td width="25%" class="no-border">{{ ($order->consultation_id == 0) ? 'Direct' : $order->consultation_id }}</td>
                     <td width="10%" class="no-border">Order Date</td>
                     <td width="45%" class="no-border">{{ $order->created_at->format('d, M Y') }}</td>
                 </tr>
