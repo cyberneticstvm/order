@@ -41,7 +41,6 @@ class TransferLensController extends Controller
                 return $q->union($brs);
             })->orderBy('id')->pluck('name', 'id');
 
-
             return $next($request);
         });
 
