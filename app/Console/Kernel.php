@@ -22,7 +22,7 @@ class Kernel extends ConsoleKernel
             foreach ($branches as $key => $branch) :
                 $payments = getPaidTotalByMode(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id, $mode = [1]);
                 $expense = getExpenseTotal(Carbon::today(), Carbon::today(), $branch->id);
-                $income = getIncomeTotal(Carbon::today(), Carbon::today(), $branch->id);
+                $income = getIncomeTotalByMode(Carbon::today(), Carbon::today(), $branch->id, $mode = [1]);
                 $bank = getBankTransferTotal(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id);
                 $opening_balance = getOpeningBalance(Carbon::today()->subDay(), $branch->id);
                 Closing::insert([
