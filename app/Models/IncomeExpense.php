@@ -28,4 +28,9 @@ class IncomeExpense extends Model
     {
         return $this->belongsTo(Branch::class, 'branch_id', 'id');
     }
+
+    public function pmode()
+    {
+        return $this->hasOne(PaymentMode::class, 'id', 'payment_mode');
+    }
 }
