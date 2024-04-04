@@ -33,12 +33,12 @@ class TransferLensController extends Controller
             })->whereDate('created_at', Carbon::today())->where('category', 'lens')->withTrashed()->latest()->get();
 
             $brs = Branch::selectRaw("0 as id, 'Main Branch' as name");
-            $this->branches = Branch::selectRaw("id, name")->union($brs)->when(Auth::user()->roles->first()->name != 'Administrator', function ($q) {
-                return $q->where('id', Session::get('branch'));
+            $this->branches = Branch::selectRaw("id, name")->where('id', Session::get('branch'))->when(Auth::user()->roles->first()->name == 'Administrator', function ($q) use ($brs) {
+                return $q->union($brs);
             })->orderBy('id')->pluck('name', 'id');
 
-            $this->tobranches = Branch::selectRaw("id, name")->union($brs)->when(Auth::user()->roles->first()->name != 'Administrator', function ($q) {
-                return $q->where('id', Session::get('branch'));
+            $this->tobranches = Branch::selectRaw("id, name")->where('id', '<>', Session::get('branch'))->when(Auth::user()->roles->first()->name == 'Administrator', function ($q) use ($brs) {
+                return $q->union($brs);
             })->orderBy('id')->pluck('name', 'id');
 
 
