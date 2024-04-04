@@ -38,9 +38,9 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label req">Product Category</label>
+                                    <label class="form-label req">Branch</label>
                                     <div class="input-group">
-                                        {{ html()->select('branch', array('0' => 'Main Branch') + $branches, $inputs[0])->class('form-control select2') }}
+                                        {{ html()->select('branch', $branches, $inputs[0])->class('form-control select2') }}
                                     </div>
                                     @error('branch')
                                     <small class="text-danger">{{ $errors->first('branch') }}</small>

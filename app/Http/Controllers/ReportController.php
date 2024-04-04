@@ -23,13 +23,11 @@ class ReportController extends Controller
 
         $this->middleware(function ($request, $next) {
             $brs = Branch::selectRaw("0 as id, 'Main Branch' as name");
-            /*$this->branches = Branch::selectRaw("id, name")->when(Auth::user()->roles->first()->id == 1, function ($q) use ($brs) {
+            $this->branches = Branch::selectRaw("id, name")->when(Auth::user()->roles->first()->id == 1, function ($q) use ($brs) {
                 return $q->union($brs);
             })->when(Auth::user()->roles->first()->name != 1, function ($q) {
                 return $q->where('id', Session::get('branch'));
-            })->orderBy('id')->pluck('name', 'id');*/
-            $this->branches = Branch::where('id', Session::get('branch'))->pluck('name', 'id');
-
+            })->orderBy('id')->pluck('name', 'id');
             return $next($request);
         });
     }
@@ -76,7 +74,7 @@ class ReportController extends Controller
 
     public function stockStatus()
     {
-        $branches = Branch::pluck('name', 'id')->toArray();
+        $branches = $this->branches;
         $data = [];
         $inputs = array('0', 'frame');
         return view('backend.report.stock', compact('branches', 'data', 'inputs'));
@@ -85,7 +83,7 @@ class ReportController extends Controller
     public function fetchStockStatus(Request $request)
     {
         $data = getInventory($request->branch, 0, $request->category);
-        $branches = Branch::pluck('name', 'id')->toArray();
+        $branches = $this->branches;
         $inputs = array($request->branch, $request->category);
         return view('backend.report.stock', compact('data', 'branches', 'inputs'));
     }
