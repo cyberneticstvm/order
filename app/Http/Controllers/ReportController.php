@@ -23,11 +23,12 @@ class ReportController extends Controller
 
         $this->middleware(function ($request, $next) {
             $brs = Branch::selectRaw("0 as id, 'Main Branch' as name");
-            $this->branches = Branch::selectRaw("id, name")->when(Auth::user()->roles->first()->id == 1, function ($q) use ($brs) {
+            /*$this->branches = Branch::selectRaw("id, name")->when(Auth::user()->roles->first()->id == 1, function ($q) use ($brs) {
                 return $q->union($brs);
             })->when(Auth::user()->roles->first()->name != 1, function ($q) {
                 return $q->where('id', Session::get('branch'));
-            })->orderBy('id')->pluck('name', 'id');
+            })->orderBy('id')->pluck('name', 'id');*/
+            $this->branches = Branch::where('id', Session::get('branch'))->pluck('name', 'id');
 
             return $next($request);
         });
