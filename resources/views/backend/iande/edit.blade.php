@@ -60,6 +60,13 @@
                                     <small class="text-danger">{{ $errors->first('amount') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-3">
+                                    <label class="form-label req">Payment Mode</label>
+                                    {{ html()->select('payment_mode', $pmodes->pluck('name', 'id'), $iande->payment_mode)->class('form-control')->attribute('id', 'pmode')->placeholder('Payment Mode') }}
+                                    @error('payment_mode')
+                                    <small class="text-danger">{{ $errors->first('payment_mode') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                                     <button class="btn btn-submit btn-success" type="submit">Update</button>

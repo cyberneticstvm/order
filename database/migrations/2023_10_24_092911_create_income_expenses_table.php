@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('category')->nullable();
             $table->text('description')->nullable();
             $table->decimal('amount', 9, 2)->nullable();
+            $table->unsignedBigInteger('payment_mode')->nullable();
             $table->unsignedBigInteger('branch_id');
             $table->foreign('head_id')->references('id')->on('heads')->onDelete('cascade');
             $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');

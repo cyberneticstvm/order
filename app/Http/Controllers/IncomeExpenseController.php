@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Head;
 use App\Models\IncomeExpense;
+use App\Models\PaymentMode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,7 +46,8 @@ class IncomeExpenseController extends Controller
     public function create($category)
     {
         $heads = Head::selectRaw("id, CONCAT_WS('-', name, category) AS name")->where('category', $category)->orderBy('name')->pluck('name', 'id');
-        return view('backend.iande.create', compact('heads'));
+        $pmodes = PaymentMode::orderBy('name')->get();
+        return view('backend.iande.create', compact('heads', 'pmodes'));
     }
 
     /**
@@ -57,6 +59,7 @@ class IncomeExpenseController extends Controller
             'head_id' => 'required',
             'description' => 'required',
             'amount' => 'required',
+            'payment_mode' => 'required',
         ]);
         $input = $request->all();
         $input['date'] = Carbon::today();
@@ -93,7 +96,8 @@ class IncomeExpenseController extends Controller
     {
         $iande = IncomeExpense::findOrFail(decrypt($id));
         $heads = Head::selectRaw("id, CONCAT_WS('-', name, category) AS name")->where('category', $iande->category)->orderBy('name')->pluck('name', 'id');
-        return view('backend.iande.edit', compact('iande', 'heads'));
+        $pmodes = PaymentMode::orderBy('name')->get();
+        return view('backend.iande.edit', compact('iande', 'heads', 'pmodes'));
     }
 
     /**
@@ -105,6 +109,7 @@ class IncomeExpenseController extends Controller
             'head_id' => 'required',
             'description' => 'required',
             'amount' => 'required',
+            'payment_mode' => 'required',
         ]);
         $input = $request->all();
         $ie = IncomeExpense::findOrFail($id);
