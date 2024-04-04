@@ -31,6 +31,6 @@ class IncomeExpense extends Model
 
     public function pmode()
     {
-        return $this->hasOne(PaymentMode::class, 'payment_mode', 'id');
+        return $this->hasOne(PaymentMode::class, 'id', 'payment_mode');
     }
 }
