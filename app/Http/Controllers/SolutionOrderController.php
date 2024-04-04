@@ -162,10 +162,10 @@ class SolutionOrderController extends Controller
      */
     public function edit(string $id)
     {
+        $order = Order::where('id', decrypt($id))->whereNull('invoice_number')->firstOrFail();
         $products = $this->products;
         $pmodes = $this->pmodes;
         $padvisers = $this->padvisers;
-        $order = Order::with('details')->findOrFail(decrypt($id));
         $states = State::all();
         return view('backend.order.solution.edit', compact('products', 'pmodes', 'padvisers', 'order', 'states'));
     }

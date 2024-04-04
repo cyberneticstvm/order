@@ -29,8 +29,8 @@
                             <form class="row g-3" method="post" action="{{ route('search.order.fetch') }}">
                                 @csrf
                                 <div class="col-md-6">
-                                    <label class="form-label req">Search Term</label> <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title="<strong>MRN and Patient ID number parts only.</strong>"><i class="fa fa-info txt-info"></i></a>
-                                    {{ html()->text($name = 'search_term', $value = ($inputs[0]) ?? old('search_term'))->class('form-control')->placeholder('Search by Order Id, Mobile Number') }}
+                                    <label class="form-label req">Search Term</label>
+                                    {{ html()->text($name = 'search_term', $value = ($inputs[0]) ?? old('search_term'))->class('form-control')->placeholder('Search by Order Id, Mobile Number, Customer Name') }}
                                     @error('search_term')
                                     <small class="text-danger">{{ $errors->first('search_term') }}</small>
                                     @enderror
@@ -65,6 +65,7 @@
                                         <th>Receipt</th>
                                         <th>Invoice</th>
                                         <th>Order Status</th>
+                                        <th>Edit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -79,6 +80,7 @@
                                         <td class="text-center"><a href="{{ route('store.order.receipt', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                         <td class="text-center"><a href="{{ route('store.order.invoice', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                         <td><a href="{{ route('order.status', encrypt($item->id)) }}">{{ $item->order_status }}</a></td>
+                                        <td class="text-center"><a href="{{ route(($item->category == 'store') ? 'store.order.edit' : 'solution.order.edit', encrypt($item->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                     </tr>
                                     @empty
                                     @endforelse

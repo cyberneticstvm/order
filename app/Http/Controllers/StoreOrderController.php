@@ -206,10 +206,11 @@ class StoreOrderController extends Controller
      */
     public function edit(string $id)
     {
+        $order = Order::where('id', decrypt($id))->whereNull('invoice_number')->firstOrFail();
         $products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['lens', 'frame', 'service'])->orderBy('name')->get();
         $pmodes = $this->pmodes;
         $padvisers = $this->padvisers;
-        $order = Order::with('details')->findOrFail(decrypt($id));
+
         $powers = Power::all();
         $states = State::all();
         return view('backend.order.store.edit', compact('products', 'pmodes', 'padvisers', 'order', 'powers', 'states'));
