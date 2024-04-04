@@ -77,33 +77,43 @@
                                 <thead>
                                     <tr>
                                         <th>SL No</th>
+                                        <th>Order No.</th>
                                         <th>Invoice Number</th>
                                         <th>Branch</th>
                                         <th>Customer Name</th>
                                         <th>MRN</th>
                                         <th>Order Date</th>
                                         <th>Order Status</th>
-                                        <th>Invoice Total</th>
+                                        <th>Order Total</th>
+                                        <th>Discount</th>
+                                        <th>Credit Used</th>
+                                        <th>Advance</th>
+                                        <th>Balance</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse($sales as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
+                                        <td>{{ $item->ono() }}</td>
                                         <td>{{ $item->invoice_number }}</td>
                                         <td>{{ $item->branch?->name }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->consultation?->mrn }}</td>
                                         <td>{{ $item->order_date->format('d/M/Y') }}</td>
                                         <td>{{ ucfirst($item->order_status) }}</td>
-                                        <td class="text-end">{{ number_format($item->invoice_total, 2) }}</td>
+                                        <td class="text-end">{{ number_format($item->order_total, 2) }}</td>
+                                        <td class="text-end">{{ number_format($item->discount, 2) }}</td>
+                                        <td class="text-end">{{ number_format($item->credit_used, 2) }}</td>
+                                        <td class="text-end">{{ number_format($item->advance, 2) }}</td>
+                                        <td class="text-end">{{ number_format($item->balance, 2) }}</td>
                                     </tr>
                                     @empty
                                     @endforelse
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="7" class="text-end">Total</th>
+                                        <th colspan="12" class="text-end">Total</th>
                                         <th class="text-end">{{ ($sales) ? number_format($sales->sum('invoice_total'), 2) : '0.00' }}</th>
                                     </tr>
                                 </tfoot>
