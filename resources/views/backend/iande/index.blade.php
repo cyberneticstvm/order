@@ -53,6 +53,7 @@
                                         <th>Category</th>
                                         <th>Description</th>
                                         <th>Amount</th>
+                                        <th>Payment Mode</th>
                                         <th>Status</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
@@ -68,6 +69,7 @@
                                         <td>{{ ucfirst($ie->category) }}</td>
                                         <td>{{ $ie->description }}</td>
                                         <td>{{ $ie->amount }}</td>
+                                        <td></td>
                                         <td>{!! $ie->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('iande.edit', encrypt($ie->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center"><a href="{{ route('iande.delete', encrypt($ie->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
