@@ -52,7 +52,7 @@ class ReportController extends Controller
 
     public function sales()
     {
-        $inputs = [date('Y-m-d'), date('Y-m-d'), 'booked', 'all', branch()->id];
+        $inputs = [date('Y-m-d'), date('Y-m-d'), 'booked', branch()->id];
         $branches = $this->branches;
         $sales = [];
         return view('backend.report.sales', compact('sales', 'inputs', 'branches'));
@@ -60,7 +60,7 @@ class ReportController extends Controller
 
     public function fetchSales(Request $request)
     {
-        $inputs = [$request->from_date, $request->to_date, $request->order_status, $request->category, $request->branch];
+        $inputs = [$request->from_date, $request->to_date, $request->order_status, $request->branch];
         $branches = $this->branches;
         $sales = Order::whereBetween('order_date', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->category != 'all', function ($q) use ($request) {
             return $q->where('category', $request->category);

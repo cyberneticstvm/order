@@ -50,15 +50,8 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label req">Category</label>
-                                    {{ html()->select('category', array('all' => 'All', 'store' => 'Store'), ($inputs[3]) ?? old('category'))->class('form-control select2')->placeholder('Select')->required() }}
-                                    @error('category')
-                                    <small class="text-danger">{{ $errors->first('category') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-md-3">
                                     <label class="form-label req">Branch</label>
-                                    {{ html()->select($name = 'branch', $value = $branches, ($inputs[4]) ?? old('branch'))->class('form-control select2')->placeholder('Select') }}
+                                    {{ html()->select($name = 'branch', $value = $branches, ($inputs[3]) ?? old('branch'))->class('form-control select2')->placeholder('Select') }}
                                     @error('branch')
                                     <small class="text-danger">{{ $errors->first('branch') }}</small>
                                     @enderror
