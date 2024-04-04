@@ -112,7 +112,15 @@
                                             {{ number_format($data->income_total, 2) }}
                                         </td>
                                         <td></td>
+                                        <td>{{ number_format($data->income_total_cash, 2) }} (C)</td>
+                                    </tr>
+                                    <tr>
                                         <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-end">
+                                            {{ number_format($data->income_total - $data->income_total_cash, 2) }} (B)
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="text-end fw-bold text-danger">
