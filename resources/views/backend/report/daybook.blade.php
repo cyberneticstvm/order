@@ -140,7 +140,7 @@
                                             {{ number_format($tot, 2) }}
                                         </td>
                                         <td></td>
-                                        <td class="text-success">{{ number_format($data->paid_total_cash + $data->income_total, 2) }} (C)</td>
+                                        <td class="text-success">{{ number_format($data->paid_total_cash + $data->income_total_cash, 2) }} (C)</td>
                                     </tr>
                                     <tr>
                                         <td></td>
