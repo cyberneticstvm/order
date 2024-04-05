@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,5 +21,11 @@ class Customer extends Model
     public function spectacles()
     {
         return $this->hasMany(Spectacle::class, 'id', 'customer_id');
+    }
+
+    public function customerHasOrder($cid)
+    {
+        $ocount = Order::where('customer_id', $cid)->whereDate('created_at', Carbon::today())->count('id');
+        return ($ocount == 1) ? true : false;
     }
 }

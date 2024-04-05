@@ -98,6 +98,9 @@
                                         <td>{{ $customer->name }}</td>
                                         <td>{{ $customer->mobile }}</td>
                                         <td>{{ $customer->mrn }}</td>
+                                        @if(customerHasOrder($customer->id))
+                                        <td></td>
+                                        @else
                                         <td>
                                             <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Create</button>
                                             <ul class="dropdown-menu dropdown-block">
@@ -105,6 +108,7 @@
                                                 <li><a class="dropdown-item txt-dark" href="{{ route('solution.order.create', ['id' => encrypt($customer->id), 'type' => '2']) }}">Solutions</a></li>
                                             </ul>
                                         </td>
+                                        @endif
                                         <td>{!! $customer->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('customer.edit', encrypt($customer->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center"><a href="{{ route('customer.delete', encrypt($customer->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
