@@ -98,7 +98,7 @@
                                         <td>{{ $customer->name }}</td>
                                         <td>{{ $customer->mobile }}</td>
                                         <td>{{ $customer->mrn }}</td>
-                                        @if(customerHasOrder($customer->id))
+                                        @if($customer->hasOrder($customer->id))
                                         <td></td>
                                         @else
                                         <td>
