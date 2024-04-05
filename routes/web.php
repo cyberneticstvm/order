@@ -8,6 +8,7 @@ use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampPatientController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\HeadController;
@@ -43,6 +44,7 @@ use App\Http\Controllers\TransferFrameController;
 use App\Http\Controllers\TransferLensController;
 use App\Http\Controllers\TransferPharmacyController;
 use App\Http\Controllers\UserController;
+use App\Models\CustomerAccount;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -503,6 +505,17 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/delete/{id}', 'destroy')->name('product.damage.delete');
     });
 
+    Route::prefix('/backend/customer')->controller(CustomerController::class)->group(function () {
+        Route::get('/', 'index')->name('customer.register');
+        Route::post('/', 'fetch')->name('customer.fetch');
+        Route::get('/proceed', '')->name('customer.proceed');
+        Route::get('/create/{id}/{source}', 'create')->name('customer.create');
+        Route::post('/create', 'store')->name('customer.save');
+        Route::get('/edit/{id}', 'edit')->name('customer.edit');
+        Route::post('/edit/{id}', 'update')->name('customer.update');
+        Route::get('/delete/{id}', 'destroy')->name('customer.delete');
+    });
+
     Route::prefix('/backend/report')->controller(ReportController::class)->group(function () {
         Route::get('/daybook', 'daybook')->name('report.daybook');
         Route::post('/daybook', 'fetchDaybook')->name('report.daybook.fetch');
@@ -516,7 +529,9 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/stock/status', 'fetchStockStatus')->name('report.stock.status.fetch');
     });
 
-    Route::prefix('/backend/report')->controller(SettingController::class)->group(function () {
-        Route::get('/settings', 'settings')->name('setting.global');
+    Route::prefix('/backend/settings')->controller(SettingController::class)->group(function () {
+        Route::get('/', 'accountSetting')->name('account.setting');
+        Route::get('/fetch', 'accountSettingFetch')->name('account.setting.fetch');
+        Route::post('/update', 'accountSettingUpdate')->name('account.setting.update');
     });
 });

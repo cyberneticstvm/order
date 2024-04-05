@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Consultation;
+use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Payment;
@@ -55,10 +56,11 @@ class SolutionOrderController extends Controller
         $pmodes = $this->pmodes;
         $padvisers = $this->padvisers;
         $states = State::all();
-        /*$consultation = Consultation::with('patient')->find(decrypt($id));*/
+        /*$consultation = Consultation::with('patient')->find(decrypt($id));
         $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', decrypt($id))->first();
-        $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();
-        return view('backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'mrecord', 'states'));
+        $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();*/
+        $patient = Customer::findOrFail(decrypt($id));
+        return view('backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'states'));
     }
 
     /**
@@ -216,7 +218,6 @@ class SolutionOrderController extends Controller
                     'updated_by' => $request->user()->id,
                 ]);
                 OrderDetail::where('order_id', $id)->delete();
-                Payment::where('order_id', $id)->where('payment_type', 'advance')->forceDelete();
                 $data = [];
                 foreach ($request->product_id as $key => $item) :
                     $product = Product::findOrFail($item);
@@ -230,12 +231,14 @@ class SolutionOrderController extends Controller
                         'total' => $request->total[$key],
                         'tax_percentage' => $product->tax_percentage,
                         'tax_amount' => $product->taxamount($request->total[$key]),
-                        'created_at' => Carbon::now(),
+                        'created_at' => $order->created_at ?? Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
                 endforeach;
                 OrderDetail::insert($data);
                 if ($request->advance > 0) :
+                    /*$p = Payment::where('order_id', $id)->where('payment_type', 'advance')->latest()->first();
+                    Payment::where('order_id', $id)->where('payment_type', 'advance')->forceDelete();
                     Payment::create([
                         'consultation_id' => $request->consultation_id,
                         'patient_id' => Consultation::find($request->consultation_id)?->patient_id,
@@ -247,6 +250,14 @@ class SolutionOrderController extends Controller
                         'branch_id' => branch()->id,
                         'created_by' => $request->user()->id,
                         'updated_by' => $request->user()->id,
+                        'created_at' => $p->created_at ?? Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);*/
+                    Payment::where('order_id', $id)->where('payment_type', 'advance')->update([
+                        'amount' => $request->advance,
+                        'payment_mode' => $request->payment_mode,
+                        'updated_by' => $request->user()->id,
+                        'updated_at' => Carbon::now(),
                     ]);
                 endif;
             });

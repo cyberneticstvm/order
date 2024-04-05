@@ -67,6 +67,23 @@
             }}
         </li>
         @endif
+        @if(auth()->user()->can('customer-list') || auth()->user()->can('customer-create') || auth()->user()->can('customer-edit') || auth()->user()->can('customer-delete'))
+        <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
+            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                <svg class="stroke-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#customers') }}"></use>
+                </svg>
+                <svg class="fill-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#customers') }}"></use>
+                </svg>
+                <span>Customer Management</span>
+            </a>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('customer-list', route('customer.register'), 'Customer Register');
+            }}
+        </li>
+        @endif
         <li class="sidebar-main-title">
             <div>
                 <h6>Order</h6>
@@ -283,9 +300,10 @@
                 </svg>
                 <span>Settings</span>
             </a>
-            <ul class="sidebar-submenu">
-                <li><a href="{{ route('setting.global') }}">Settings</a></li>
-            </ul>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('setting-account-adjustment', route('account.setting'), 'Adjust Account');
+            }}
         </li>
     </ul>
 </div>

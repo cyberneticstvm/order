@@ -13,13 +13,19 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50)->nullable();
+            $table->string('name', 100)->nullable();
+            $table->unsignedBigInteger('mrn')->nullable();
+            $table->integer('age')->nullable();
+            $table->string('address', 150)->nullable();
             $table->string('mobile', 10)->nullable();
-            $table->unsignedBigInteger('order_id')->nullable();
-            $table->unsignedBigInteger('return_id')->nullable();
-            $table->decimal('credit', 7, 2)->nullable();
-            $table->decimal('debit', 7, 2)->nullable();
+            $table->string('alt_mobile', 10)->nullable();
+            $table->string('gstin', 50)->nullable();
+            $table->string('company_name', 150)->nullable();
+            $table->unsignedBigInteger('branch_id');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

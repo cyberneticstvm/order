@@ -76,7 +76,7 @@
                                     {{ html()->text($name = 'notes', $value = old('notes'))->class('form-control')->placeholder('Notes') }}
                                 </div>
                                 <div class="col-md-2">
-                                    {{ html()->checkbox($name = 'generate_invoice', $checked=true, $value = '1')->class('form-check-input') }}
+                                    {{ html()->checkbox($name = 'generate_invoice', $checked=false, $value = '1')->class('form-check-input') }}
                                     <label class="form-label">Generate Invoice</label>
                                 </div>
                                 <div class="col-12 text-end">

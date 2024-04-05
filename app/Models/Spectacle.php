@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Customer extends Model
+class Spectacle extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -17,8 +17,13 @@ class Customer extends Model
         return ($this->deleted_at) ? "<span class='badge badge-danger'>Deleted</span>" : "<span class='badge badge-success'>Active</span>";
     }
 
-    public function spectacles()
+    public function optometrist()
     {
-        return $this->hasMany(Spectacle::class, 'id', 'customer_id');
+        return $this->belongsTo(User::class, 'id', 'optometrist');
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo(User::class, 'id', 'doctor');
     }
 }

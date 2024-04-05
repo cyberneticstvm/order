@@ -363,5 +363,5 @@ function getPercentage($amount, $total)
 
 function getAvailableCredit($mobile)
 {
-    return (Customer::where('mobile', $mobile)->selectRaw("SUM(IFNULL(credit, 0) - IFNULL(debit, 0)) AS cr")->value('cr')) ?? 0;
+    return 0; //(Customer::where('mobile', $mobile)->selectRaw("SUM(IFNULL(credit, 0) - IFNULL(debit, 0)) AS cr")->value('cr')) ?? 0;
 }

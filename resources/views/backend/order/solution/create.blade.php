@@ -39,7 +39,7 @@
                         <div class="card-wrapper">
                             <form class="row g-3" method="post" action="{{ route('solution.order.save') }}" name="orderForm">
                                 @csrf
-                                <input type="hidden" name="consultation_id" value="{{ $mrecord?->id ?? 0 }}" />
+                                <input type="hidden" name="consultation_id" value="{{ $patient?->mrn ?? 0 }}" />
                                 <div class="col-md-2">
                                     <label class="form-label req">Order Date</label>
                                     {{ html()->date($name = 'order_date', $value = date('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}
@@ -49,11 +49,11 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">MRN</label>
-                                    {{ html()->text($name = 'mrn', $value = $mrecord?->id ?? 0)->class('form-control')->placeholder('MRN') }}
+                                    {{ html()->text($name = 'mrn', $value = $patient?->mrn ?? 0)->class('form-control')->placeholder('MRN') }}
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Customer Name</label>
-                                    {{ html()->text($name = 'name', $value = $patient?->patient_name ?? old('name'))->class('form-control')->placeholder('Customer Name')->required() }}
+                                    {{ html()->text($name = 'name', $value = $patient?->name ?? old('name'))->class('form-control')->placeholder('Customer Name')->required() }}
                                     @error('name')
                                     <small class="text-danger">{{ $errors->first('name') }}</small>
                                     @enderror
@@ -74,14 +74,14 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Mobile</label>
-                                    {{ html()->text($name = 'mobile', $value = $patient?->mobile_number ?? old('mobile'))->class('form-control')->maxlength('10')->placeholder('Mobile')->required() }}
+                                    {{ html()->text($name = 'mobile', $value = $patient?->mobile ?? old('mobile'))->class('form-control')->maxlength('10')->placeholder('Mobile')->required() }}
                                     @error('mobile')
                                     <small class="text-danger">{{ $errors->first('mobile') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">Alt. Mobile</label>
-                                    {{ html()->text($name = 'alt_mobile', old('alt_mobile'))->class('form-control')->maxlength('10')->placeholder('Alt Mobile') }}
+                                    {{ html()->text($name = 'alt_mobile', $patient?->alt_mobile ?? old('alt_mobile'))->class('form-control')->maxlength('10')->placeholder('Alt Mobile') }}
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Product Adviser</label>
@@ -136,11 +136,11 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">GSTIN</label>
-                                    {{ html()->text($name = 'gstin', $value = old('gstin'))->class('form-control')->placeholder('GSTIN') }}
+                                    {{ html()->text($name = 'gstin', $value = $patient?->gstin ?? old('gstin'))->class('form-control')->placeholder('GSTIN') }}
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Company Name</label>
-                                    {{ html()->text($name = 'company_name', $value = old('company_name'))->class('form-control')->placeholder('Company Name') }}
+                                    {{ html()->text($name = 'company_name', $value = $patient?->company_name ?? old('company_name'))->class('form-control')->placeholder('Company Name') }}
                                 </div>
                                 <div class="row g-4 table-responsive">
                                     <div class="col text-end">

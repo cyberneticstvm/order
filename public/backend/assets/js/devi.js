@@ -2,12 +2,12 @@ $(function () {
     "use strict";
     var today = new Date().toISOString().split('T')[0];
     if (document.getElementsByName("date")[0])
-        document.getElementsByName("date")[0].setAttribute('min', today);
+        //document.getElementsByName("date")[0].setAttribute('min', today);
 
-    $('.select2').select2({
-        placeholder: "Select",
-        /*allowClear: true*/
-    });
+        $('.select2').select2({
+            placeholder: "Select",
+            /*allowClear: true*/
+        });
 
     $("#branchSelector").modal('show');
 
@@ -363,7 +363,7 @@ function addStoreOrderRow(category) {
                     url: '/ajax/power/',
                     dataType: 'json',
                     success: function (power) {
-                        $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="border-0" name="eye[]"><option value="re">RE</option><option value="le">LE</option></select></td><td><select name='sph[]' class="border-0 select2 selSph"></select></td><td><select name='cyl[]' class="border-0 select2 selCyl"></select></td><td><select name='axis[]' class="border-0 select2 selAxis"></select></td><td><select name='add[]' class="border-0 select2 selAdd"></select></td><td><select name='int_add[]' class="border-0 select2 selIntAdd"></select></td><td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" maxlength="6" /></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="lens" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
+                        $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="border-0" name="eye[]"><option value="re">RE</option><option value="le">LE</option></select></td><td><select name='sph[]' class="border-0 select2 selSph"></select></td><td><select name='cyl[]' class="border-0 select2 selCyl"></select></td><td><select name='axis[]' class="border-0 select2 selAxis"></select></td><td><select name='add[]' class="border-0 select2 selAdd"></select></td><td><select name='int_add[]' class="border-0 select2 selIntAdd"></select></td><td><input type="text" name='ipd[]' class="w-100 border-0 text-center ipd" placeholder="IPD" maxlength="6" /></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="lens" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
 
                         var xdata = $.map(res, function (obj) {
                             obj.text = obj.name || obj.id;
@@ -377,17 +377,18 @@ function addStoreOrderRow(category) {
 
                         var sphdata = $.map(power.sph, function (obj) {
                             obj.text = obj.name || obj.id;
-                            obj.selected = (obj.default) ?? '';
+                            obj.selected = (obj.name == $('.fSph').val()) ? true : false;
                             return obj;
                         });
+                        console.log(sphdata)
                         $('.selSph').last().select2({
                             placeholder: 'Select',
-                            data: sphdata
+                            data: sphdata,
                         });
 
                         var cyldata = $.map(power.cyl, function (obj) {
                             obj.text = obj.name || obj.id;
-                            obj.selected = (obj.default) ?? '';
+                            obj.selected = (obj.name == $('.fCyl').val()) ? true : false;
                             return obj;
                         });
                         $('.selCyl').last().select2({
@@ -397,7 +398,7 @@ function addStoreOrderRow(category) {
 
                         var axisdata = $.map(power.axis, function (obj) {
                             obj.text = obj.name || obj.id;
-                            obj.selected = (obj.default) ?? '';
+                            obj.selected = (obj.name == $('.fAxis').val()) ? true : false;
                             return obj;
                         });
                         $('.selAxis').last().select2({
@@ -407,7 +408,7 @@ function addStoreOrderRow(category) {
 
                         var adddata = $.map(power.add, function (obj) {
                             obj.text = obj.name || obj.id;
-                            obj.selected = (obj.default) ?? '';
+                            obj.selected = obj.selected = (obj.name == $('.fAdd').val()) ? true : false;
                             return obj;
                         });
                         $('.selAdd').last().select2({
@@ -417,13 +418,15 @@ function addStoreOrderRow(category) {
 
                         var intaddata = $.map(power.intad, function (obj) {
                             obj.text = obj.name || obj.id;
-                            obj.selected = (obj.default) ?? '';
+                            obj.selected = (obj.name == $('.fIntAd').val()) ? true : false;
                             return obj;
                         });
                         $('.selIntAdd').last().select2({
                             placeholder: 'Select',
                             data: intaddata
                         });
+
+                        $(".ipd").last().val($('.fIpd').val());
                     },
                     error: function (err) {
                         console.log(err)

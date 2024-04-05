@@ -39,7 +39,8 @@
                         <div class="card-wrapper">
                             <form class="row g-3" method="post" action="{{ route('store.order.save') }}" name="orderForm" id="orderForm">
                                 @csrf
-                                <input type="hidden" name="consultation_id" value="{{ $mrecord?->id ?? 0 }}" />
+                                <input type="hidden" name="consultation_id" value="{{ $patient?->mrn ?? 0 }}" />
+                                <input type="hidden" name="spectacle_id" value="{{ $spectacle?->id ?? 0 }}" />
                                 <div class="col-md-2">
                                     <label class="form-label req">Order Date</label>
                                     {{ html()->date($name = 'order_date', $value = date('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}
@@ -49,11 +50,11 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">MRN</label>
-                                    {{ html()->text($name = 'mrn', $value = $mrecord?->id ?? 0)->class('form-control')->placeholder('MRN') }}
+                                    {{ html()->text($name = 'mrn', $value = $patient?->rn ?? 0)->class('form-control')->placeholder('MRN') }}
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Customer Name</label>
-                                    {{ html()->text($name = 'name', $value = $patient?->patient_name ?? old('name'))->class('form-control')->placeholder('Customer Name')->required() }}
+                                    {{ html()->text($name = 'name', $value = $patient?->name ?? old('name'))->class('form-control')->placeholder('Customer Name')->required() }}
                                     @error('name')
                                     <small class="text-danger">{{ $errors->first('name') }}</small>
                                     @enderror
@@ -74,14 +75,14 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Mobile</label>
-                                    {{ html()->text($name = 'mobile', $value = $patient?->mobile_number ?? old('mobile'))->class('form-control custmob')->maxlength('10')->placeholder('Mobile')->required() }}
+                                    {{ html()->text($name = 'mobile', $value = $patient?->mobile ?? old('mobile'))->class('form-control custmob')->maxlength('10')->placeholder('Mobile')->required() }}
                                     @error('mobile')
                                     <small class="text-danger">{{ $errors->first('mobile') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">Alt. Mobile</label>
-                                    {{ html()->text($name = 'alt_mobile', old('alt_mobile'))->class('form-control')->maxlength('10')->placeholder('Alt Mobile') }}
+                                    {{ html()->text($name = 'alt_mobile', $patient?->alt_mobile ?? old('alt_mobile'))->class('form-control')->maxlength('10')->placeholder('Alt Mobile') }}
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Product Adviser</label>
@@ -136,11 +137,11 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">GSTIN</label>
-                                    {{ html()->text($name = 'gstin', $value = old('gstin'))->class('form-control')->placeholder('GSTIN') }}
+                                    {{ html()->text($name = 'gstin', $value = $patient?->gstin ?? old('gstin'))->class('form-control')->placeholder('GSTIN') }}
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Company Name</label>
-                                    {{ html()->text($name = 'company_name', $value = old('company_name'))->class('form-control')->placeholder('Company Name') }}
+                                    {{ html()->text($name = 'company_name', $value = $patient?->company_name ?? old('company_name'))->class('form-control')->placeholder('Company Name') }}
                                 </div>
                                 <div class="row g-4 table-responsive">
                                     <div class="col text-end">
@@ -183,21 +184,21 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->re_dist_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2') }}
+                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->re_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 fSph') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->re_dist_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2') }}
+                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->re_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2 fCyl') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->re_dist_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2') }}
+                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->re_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2 fAxis') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->re_dist_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2') }}
+                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->re_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 fAdd') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('int_add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->re_int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2') }}
+                                                        {{ html()->select('int_add[]', $powers?->where('name', 'intad')->pluck('value', 'value'), $spectacle?->re_int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2 fIntAd') }}
                                                     </td>
-                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" value="{{ $spectacle?->rpd ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center fIpd" placeholder="IPD" value="{{ $spectacle?->re_pd ?? '' }}" maxlength="6" /></td>
                                                     <td>
                                                         {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctFirst')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens1')->placeholder('Select')->required() }}
                                                     </td>
@@ -215,21 +216,21 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->le_dist_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'sph1') }}
+                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->le_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'sph1') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->le_dist_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'cyl1') }}
+                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->le_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'cyl1') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->le_dist_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'axis1') }}
+                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->le_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'axis1') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->le_dist_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'add1') }}
+                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->le_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'add1') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('int_add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->le_int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'intadd1') }}
+                                                        {{ html()->select('int_add[]', $powers?->where('name', 'intad')->pluck('value', 'value'), $spectacle?->le_int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'intadd1') }}
                                                     </td>
-                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" value="{{ $spectacle?->lpd ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" value="{{ $spectacle?->le_pd ?? '' }}" maxlength="6" /></td>
                                                     <td>
                                                         {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctSecond')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens2')->placeholder('Select')->required() }}
                                                     </td>

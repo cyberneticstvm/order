@@ -78,12 +78,12 @@ class SalesReturnContoller extends Controller
                     endif;
                 endforeach;
                 SalesReturnDetail::insert($returns);
-                Customer::create([
+                /*Customer::create([
                     'name' => $order->name,
                     'mobile' => $order->mobile,
                     'return_id' => $return->id,
                     'credit' => $tot,
-                ]);
+                ]);*/
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
