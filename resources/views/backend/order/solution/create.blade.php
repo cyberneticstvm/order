@@ -40,6 +40,7 @@
                             <form class="row g-3" method="post" action="{{ route('solution.order.save') }}" name="orderForm">
                                 @csrf
                                 <input type="hidden" name="consultation_id" value="{{ $patient?->mrn ?? 0 }}" />
+                                <input type="hidden" name="customer_id" value="{{ $patient?->id ?? 0 }}" />
                                 <div class="col-md-2">
                                     <label class="form-label req">Order Date</label>
                                     {{ html()->date($name = 'order_date', $value = date('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}

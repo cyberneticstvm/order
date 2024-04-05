@@ -82,7 +82,10 @@ class SolutionOrderController extends Controller
         ]);
         try {
             DB::transaction(function () use ($request) {
+                $sid = Order::where('branch_id', branch()->id)->selectRaw("IFNULL(MAX(order_sequence)+1, 1) AS sid")->value('sid');
                 $order = Order::create([
+                    'customer_id' => $request->customer_id,
+                    'order_sequence' => $sid,
                     'order_date' => $request->order_date,
                     'consultation_id' => $request->consultation_id,
                     'name' => $request->name,
