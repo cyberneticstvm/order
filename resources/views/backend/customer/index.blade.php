@@ -99,7 +99,7 @@
                                         <td>{{ $customer->mobile }}</td>
                                         <td>{{ $customer->mrn }}</td>
                                         @if($customer->hasOrder($customer->id))
-                                        <td></td>
+                                        <td class="text-success text-center">Done!</td>
                                         @else
                                         <td>
                                             <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Create</button>
