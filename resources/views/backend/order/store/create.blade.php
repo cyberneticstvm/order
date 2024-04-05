@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">MRN</label>
-                                    {{ html()->text($name = 'mrn', $value = $patient?->rn ?? 0)->class('form-control')->placeholder('MRN') }}
+                                    {{ html()->text($name = 'mrn', $value = $patient?->mrn ?? 0)->class('form-control')->placeholder('MRN') }}
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Customer Name</label>
