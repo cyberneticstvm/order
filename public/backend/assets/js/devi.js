@@ -2,12 +2,12 @@ $(function () {
     "use strict";
     var today = new Date().toISOString().split('T')[0];
     if (document.getElementsByName("date")[0])
-        //document.getElementsByName("date")[0].setAttribute('min', today);
+        document.getElementsByName("date")[0].setAttribute('min', today);
 
-        $('.select2').select2({
-            placeholder: "Select",
-            /*allowClear: true*/
-        });
+    $('.select2').select2({
+        placeholder: "Select",
+        /*allowClear: true*/
+    });
 
     $("#branchSelector").modal('show');
 
