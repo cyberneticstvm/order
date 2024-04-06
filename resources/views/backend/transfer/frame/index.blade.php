@@ -13,7 +13,7 @@
                                 <svg class="stroke-icon">
                                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg></a></li>
-                        <li class="breadcrumb-item">Frames</li>
+                        <li class="breadcrumb-item">Frames ({{ $role }})</li>
                         <li class="breadcrumb-item active">Transfer Register</li>
                     </ol>
                 </div>
