@@ -69,13 +69,21 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped mx-auto w-50">
+                            <table class="table table-bordered table-striped mx-auto w-75">
                                 <thead>
                                     <tr>
-                                        <th width="55%">Particulars</th>
+                                        <th width="45%">Particulars</th>
                                         <th width="15%">Income</th>
                                         <th width="15%">Expense</th>
-                                        <th width="15%"></th>
+                                        <th width="25%" colspan="5" class="text-center">Split up</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3"></th>
+                                        <th width="">Cash</th>
+                                        <th width="">Bank</th>
+                                        <th width="">Card</th>
+                                        <th width="">UPI</th>
+                                        <th width="">Other</th>
                                     </tr>
                                 </thead>
                                 @if($data)
@@ -92,35 +100,35 @@
                                             {{ number_format($opening_balance, 2) }}
                                         </td>
                                         <td></td>
-                                        <td></td>
+                                        <td colspan="5"></td>
                                     </tr>
                                     <tr>
                                         <td>
                                             Order
                                         </td>
                                         <td class="text-end">
-                                            <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="ord" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->paid_total, 2) }}</a>
+                                            <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="ord" data-mode="0" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->paid_total, 2) }}</a>
                                         </td>
                                         <td></td>
-                                        <td></td>
+                                        <td class="text-end"><a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="ord" data-mode="1" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->paid_total_cash, 2) }}</a></td>
+                                        <td class="text-end"><a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="ord" data-mode="4" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->paid_total_bank, 2) }}</a></td>
+                                        <td class="text-end"><a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="ord" data-mode="2" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->paid_total_card, 2) }}</a></td>
+                                        <td class="text-end"><a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="ord" data-mode="3" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->paid_total_upi, 2) }}</a></td>
+                                        <td class="text-end"><a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="ord" data-mode="5" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->paid_total_other, 2) }}</a></td>
                                     </tr>
                                     <tr>
                                         <td>
                                             Other Income
                                         </td>
                                         <td class="text-end">
-                                            {{ number_format($data->income_total, 2) }}
+                                            <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="income" data-mode="0" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->income_total, 2) }}</a>
                                         </td>
                                         <td></td>
-                                        <td>{{ number_format($data->income_total_cash, 2) }} (C)</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="text-end">
-                                            {{ number_format($data->income_total - $data->income_total_cash, 2) }} (B)
-                                        </td>
+                                        <td class="text-end"><a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="income" data-mode="1" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->income_total_cash, 2) }}</a></td>
+                                        <td class="text-end"><a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="income" data-mode="4" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->income_total_bank, 2) }}</a></td>
+                                        <td class="text-end"><a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="income" data-mode="2" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->income_total_card, 2) }}</a></td>
+                                        <td class="text-end"><a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="income" data-mode="3" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->income_total_upi, 2) }}</a></td>
+                                        <td class="text-end"><a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="income" data-mode="5" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->income_total_other, 2) }}</a></td>
                                     </tr>
                                     <tr>
                                         <td class="text-end fw-bold text-danger">
@@ -130,7 +138,7 @@
                                             {{ number_format($tot, 2) }}
                                         </td>
                                         <td></td>
-                                        <td></td>
+                                        <td colspan="5"></td>
                                     </tr>
                                     <tr>
                                         <td class="text-end fw-bold text-success">
@@ -140,13 +148,11 @@
                                             {{ number_format($tot, 2) }}
                                         </td>
                                         <td></td>
-                                        <td class="text-success">{{ number_format($data->paid_total_cash + $data->income_total_cash, 2) }} (C)</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="text-success">{{ number_format($data->paid_total_other, 2) }} (B)</td>
+                                        <td class="text-end">{{ number_format($data->paid_total_cash + $data->income_total_cash, 2) }}</td>
+                                        <td class="text-end">{{ number_format($data->paid_total_bank + $data->income_total_bank, 2) }}</td>
+                                        <td class="text-end">{{ number_format($data->paid_total_card + $data->income_total_card, 2) }}</td>
+                                        <td class="text-end">{{ number_format($data->paid_total_upi + $data->income_total_upi, 2) }}</td>
+                                        <td class="text-end">{{ number_format($data->paid_total_other + $data->income_total_other, 2) }}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-end">
@@ -156,6 +162,10 @@
                                         <td class="text-end text-secondary">
                                             {{ number_format($data->expense_total, 2) }}
                                         </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                         <td></td>
                                     </tr>
                                     <tr>
@@ -167,6 +177,10 @@
                                             {{ number_format($data->bank_transfer_total, 2) }}
                                         </td>
                                         <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td class="text-end fw-bold text-success">
@@ -175,6 +189,10 @@
                                         <td class="text-end fw-bold text-success">
                                             {{ number_format(($data->paid_total_cash + $data->income_total_cash + $opening_balance) - ($data->expense_total + $data->bank_transfer_total), 2) }}
                                         </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                     </tr>

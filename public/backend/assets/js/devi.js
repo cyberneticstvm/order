@@ -184,10 +184,11 @@ $(function () {
         var tdate = $(this).data('to-date');
         var branch = $(this).data('branch');
         var type = $(this).data('type');
+        var mode = $(this).data('mode');
         $.ajax({
             type: 'GET',
             url: '/ajax/daybook/details/',
-            data: { 'from_date': fdate, 'to_date': tdate, 'branch': branch, 'type': type },
+            data: { 'from_date': fdate, 'to_date': tdate, 'branch': branch, 'type': type, 'mode': mode },
             success: function (res) {
                 $("#" + drawer).drawer('toggle');
                 $("#" + drawer).find(".drawer-content").html(res);

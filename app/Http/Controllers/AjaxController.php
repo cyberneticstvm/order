@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Consultation;
+use App\Models\IncomeExpense;
 use App\Models\Order;
 use App\Models\PatientProcedure;
 use App\Models\Payment;
@@ -109,6 +110,10 @@ class AjaxController extends Controller
                 //$data = getOrderDetailed($request->from_date, $request->to_date, $request->branch);
                 $data = Payment::whereBetween('created_at', [$fdate, $tdate])->where('amount', '>', 0)->when($request->branch > 0, function ($q) use ($request) {
                     return $q->where('branch_id', $request->branch);
+                })->when(in_array($request->mode, array(5)), function ($q) use ($request) {
+                    return $q->whereIn('payment_mode', [5, 6, 7]);
+                })->when(in_array($request->mode, array(1, 2, 3, 4)), function ($q) use ($request) {
+                    return $q->where('payment_mode', $request->mode);
                 })->get();
                 $op = '<div class="drawer-header">
                 <h6 class="drawer-title" id="drawer-3-title">Order Detailed</h6></div><div class="drawer-body table-responsive">';
@@ -125,6 +130,31 @@ class AjaxController extends Controller
                 endforeach;
                 $op .= '</tbody><tfoot><tr><td colspan="4" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('amount'), 2) . '</td></tr></tfoot></table>';
                 $op .= '</div><div class="drawer-footer">Daybook</div>';
+                break;
+            case 'income':
+                $data = IncomeExpense::whereBetween('created_at', [$fdate, $tdate])->where('amount', '>', 0)->where('category', 'income')->when($request->branch > 0, function ($q) use ($request) {
+                    return $q->where('branch_id', $request->branch);
+                })->when(in_array($request->mode, array(5)), function ($q) use ($request) {
+                    return $q->whereIn('payment_mode', [5, 6, 7]);
+                })->when(in_array($request->mode, array(1, 2, 3, 4)), function ($q) use ($request) {
+                    return $q->where('payment_mode', $request->mode);
+                })->get();
+                $op = '<div class="drawer-header">
+                <h6 class="drawer-title" id="drawer-3-title">Income Detailed</h6></div><div class="drawer-body table-responsive">';
+                $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>Branch Name</th><th>
+                Head<th>Date<th>Description</th><th>Amount</th></tr></thead><tbody>';
+                foreach ($data as $key => $item) :
+                    $op .= "<tr>";
+                    $op .= '<td>' . $key + 1 . '</td>';
+                    $op .= '<td>' . $item->branch->name . '</td>';
+                    $op .= '<td>' . $item->head->name . '</td>';
+                    $op .= '<td>' . $item->created_at->format('d, M Y') . '</td>';
+                    $op .= '<td>' . $item->description . '</td>';
+                    $op .= '<td class="text-end">' . number_format($item->amount, 2) . '</td>';
+                    $op .= "</tr>";
+                endforeach;
+                $op .= '</tbody><tfoot><tr><td colspan="5" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('amount'), 2) . '</td></tr></tfoot></table>';
+                $op .= '</div><div class="drawer-footer">Income</div>';
                 break;
             default:
                 $op = "No records found";

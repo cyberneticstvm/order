@@ -214,8 +214,15 @@ function getDayBook($fdate, $tdate, $branch)
     $expense_total = getExpenseTotal($fdate, $tdate, $branch);
     $income_total = getIncomeTotal($fdate, $tdate, $branch);
     $income_total_cash = getIncomeTotalByMode($fdate, $tdate, $branch, $mode = [1]);
+    $income_total_bank = getIncomeTotalByMode($fdate, $tdate, $branch, $mode = [4]);
+    $income_total_card = getIncomeTotalByMode($fdate, $tdate, $branch, $mode = [2]);
+    $income_total_upi = getIncomeTotalByMode($fdate, $tdate, $branch, $mode = [3]);
+    $income_total_other = getIncomeTotalByMode($fdate, $tdate, $branch, $mode = [5, 6, 7]);
     $paid_total_cash = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [1]);
-    $paid_total_other = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [2, 3, 4, 5]);
+    $paid_total_bank = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [4]);
+    $paid_total_card = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [2]);
+    $paid_total_upi = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [3]);
+    $paid_total_other = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [5, 6, 7]);
     $bank_transfer_total = getBankTransferTotal($from_date, $to_date, $branch);
     return json_encode([
         'order_total' => $order_total,
@@ -223,7 +230,14 @@ function getDayBook($fdate, $tdate, $branch)
         'expense_total' => $expense_total,
         'income_total' => $income_total,
         'income_total_cash' => $income_total_cash,
+        'income_total_bank' => $income_total_bank,
+        'income_total_card' => $income_total_card,
+        'income_total_upi' => $income_total_upi,
+        'income_total_other' => $income_total_other,
         'paid_total_cash' => $paid_total_cash,
+        'paid_total_bank' => $paid_total_bank,
+        'paid_total_card' => $paid_total_card,
+        'paid_total_upi' => $paid_total_upi,
         'paid_total_other' => $paid_total_other,
         'bank_transfer_total' => $bank_transfer_total,
     ]);
