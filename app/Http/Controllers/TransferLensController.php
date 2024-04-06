@@ -30,7 +30,7 @@ class TransferLensController extends Controller
         $this->middleware(function ($request, $next) {
             $this->transfers = Transfer::when(Auth::user()->roles->first()->name != 'Administrator' || Auth::user()->roles->first()->name != 'CEO' || Auth::user()->roles->first()->name != 'Store Manager', function ($q) {
                 return $q->where('from_branch_id', Session::get('branch'));
-            })->whereDate('created_at', Carbon::today())->where('category', 'frame')->withTrashed()->latest()->get();
+            })->whereDate('created_at', Carbon::today())->where('category', 'lens')->withTrashed()->latest()->get();
 
             $brs = Branch::selectRaw("0 as id, 'Main Branch' as name");
             $this->branches = Branch::selectRaw("id, name")->where('id', Session::get('branch'))->when(Auth::user()->roles->first()->name == 'Administrator' || Auth::user()->roles->first()->name == 'CEO' || Auth::user()->roles->first()->name == 'Store Manager', function ($q) use ($brs) {
