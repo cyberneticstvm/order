@@ -105,8 +105,8 @@
         <table class="table" width="75%" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
-                    <td width="20%" class="no-border">C.Name</td>
-                    <td width="25%" class="no-border">{{ $order->name }}</td>
+                    <td width="20%" class="no-border">C.Name / ID</td>
+                    <td width="25%" class="no-border fw-bold font-big">{{ $order->name }} / {{ $order->customer_id }}</td>
                     <td width="10%" class="no-border">E.D.Date</td>
                     <td width="45%" class="no-border">{{ $order->expected_delivery_date->format('d, M Y') }}</td>
                 </tr>
