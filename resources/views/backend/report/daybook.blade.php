@@ -162,11 +162,7 @@
                                         <td class="text-end text-secondary">
                                             {{ number_format($data->expense_total, 2) }}
                                         </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td colspan="5"></td>
                                     </tr>
                                     <tr>
                                         <td class="text-end">
@@ -176,11 +172,7 @@
                                         <td class="text-end text-secondary">
                                             {{ number_format($data->bank_transfer_total, 2) }}
                                         </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td colspan="5"></td>
                                     </tr>
                                     <tr>
                                         <td class="text-end fw-bold text-success">
@@ -190,11 +182,7 @@
                                             {{ number_format(($data->paid_total_cash + $data->income_total_cash + $opening_balance) - ($data->expense_total + $data->bank_transfer_total), 2) }}
                                         </td>
                                         <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td colspan="5"></td>
                                     </tr>
                                 </tbody>
                                 @else
