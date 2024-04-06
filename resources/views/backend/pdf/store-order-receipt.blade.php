@@ -106,21 +106,21 @@
             <thead>
                 <tr>
                     <td width="20%" class="no-border">C.Name / ID</td>
-                    <td width="25%" class="no-border fw-bold font-big">{{ $order->name }} / {{ $order->customer_id }}</td>
+                    <td width="45%" class="no-border fw-bold font-big">{{ $order->name }} / {{ $order->customer_id }}</td>
                     <td width="10%" class="no-border">Ord.Number</td>
-                    <td width="45%" class="no-border fw-bold font-big">{{ $order->branch->code }}/{{ $order->id }}</td>
+                    <td width="25%" class="no-border fw-bold font-big">{{ $order->branch->code }}/{{ $order->id }}</td>
                 </tr>
                 <tr>
                     <td width="20%" class="no-border">P.Adviser</td>
-                    <td width="25%" class="no-border">{{ $order->adviser->name }}</td>
+                    <td width="45%" class="no-border">{{ $order->adviser->name }}</td>
                     <td width="10%" class="no-border">E.D.Date</td>
-                    <td width="45%" class="no-border">{{ $order->expected_delivery_date->format('d, M Y') }}</td>
+                    <td width="25%" class="no-border">{{ $order->expected_delivery_date->format('d, M Y') }}</td>
                 </tr>
                 <tr>
                     <td width="20%" class="no-border">MRN</td>
-                    <td width="25%" class="no-border">{{ ($order->consultation_id == 0) ? 'Direct' : $order->consultation_id }}</td>
+                    <td width="45%" class="no-border">{{ ($order->consultation_id == 0) ? 'Direct' : $order->consultation_id }}</td>
                     <td width="10%" class="no-border">Order Date</td>
-                    <td width="45%" class="no-border">{{ $order->created_at->format('d, M Y') }}</td>
+                    <td width="25%" class="no-border">{{ $order->created_at->format('d, M Y') }}</td>
                 </tr>
             </thead>
         </table>
