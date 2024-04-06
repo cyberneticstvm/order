@@ -50,7 +50,7 @@ class TransferFrameController extends Controller
     public function index()
     {
         $transfers = $this->transfers;
-        $role = Auth::user()->roles->first()->name;
+        $role = Auth::user()->roles->first()->id;
         return view('backend.transfer.frame.index', compact('transfers', 'role'));
     }
 
