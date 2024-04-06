@@ -28,7 +28,7 @@ class TransferLensController extends Controller
         $this->middleware('permission:lens-transfer-delete', ['only' => ['destroy']]);
 
         $this->middleware(function ($request, $next) {
-            $this->transfers = Transfer::when(Auth::user()->roles->first()->name != 'Administrator' || Auth::user()->roles->first()->name != 'CEO' || Auth::user()->roles->first()->name != 'Store Manager', function ($q) {
+            $this->transfers = Transfer::when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'CEO', 'Store Manager')), function ($q) {
                 return $q->where('from_branch_id', Session::get('branch'));
             })->whereDate('created_at', Carbon::today())->where('category', 'lens')->withTrashed()->latest()->get();
 
