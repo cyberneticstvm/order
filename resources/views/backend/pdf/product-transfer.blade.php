@@ -9,6 +9,7 @@
     <div class="col">
         <h4 class="text-center">Product Transfer List ({{ $transfer->transfer_number }}) </h4>
         <p class="text-center">Transfer Date: {{ $transfer->transfer_date->format('d-M-Y') }}</p>
+        <p class="text-center">From Branch: {{ ($transfer->frombranch->name) ?? 'Main Branch' }}, To Branch: {{ ($transfer->tobranch->name) ?? 'Main Branch' }}</p>
     </div>
     <div class="col">
         <table width="100%" class="mt-10" cellspacing="0" cellpadding="0">
