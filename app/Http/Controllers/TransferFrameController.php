@@ -28,7 +28,7 @@ class TransferFrameController extends Controller
         $this->middleware('permission:frame-transfer-delete', ['only' => ['destroy']]);
 
         $this->middleware(function ($request, $next) {
-            $this->transfers = Transfer::when((Auth::user()->roles->first()->name != 'Administrator' || Auth::user()->roles->first()->name != 'CEO'), function ($q) {
+            $this->transfers = Transfer::when(in_array(array('Administrator', 'CEO', 'Store Manager'), Auth::user()->roles->first()->name), function ($q) {
                 return $q->where('from_branch_id', Session::get('branch'));
             })->whereDate('created_at', Carbon::today())->where('category', 'frame')->withTrashed()->latest()->get();
 
