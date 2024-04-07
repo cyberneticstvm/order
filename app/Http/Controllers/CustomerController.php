@@ -113,6 +113,17 @@ class CustomerController extends Controller
                     'mrn' => $request->mrn,
                 ]);
                 $cid = $customer->id;
+            else :
+                Customer::findOrFail($request->cid)->update([
+                    'name' => $request->name,
+                    'age' => $request->age,
+                    'address' => $request->address,
+                    'mobile' => ($request->mobile) ?? $this->mobile,
+                    'alt_mobile' => $request->alt_mobile,
+                    'gstin' => $request->gstin,
+                    'company_name' => $request->company_name,
+                    'updated_at' => Carbon::now(),
+                ]);
             endif;
             if (!$request->rx) :
                 Spectacle::create([
