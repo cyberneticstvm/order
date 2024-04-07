@@ -88,6 +88,7 @@
                                         <th>Discount</th>
                                         <th>Credit Used</th>
                                         <th>Advance</th>
+                                        <th>Balance</th>
                                         <th>Bill Total</th>
                                     </tr>
                                 </thead>
@@ -106,6 +107,7 @@
                                         <td class="text-end">{{ number_format($item->discount, 2) }}</td>
                                         <td class="text-end">{{ number_format($item->credit_used, 2) }}</td>
                                         <td class="text-end">{{ number_format($item->advance, 2) }}</td>
+                                        <td class="text-end">{{ number_format($item->balance, 2) }}</td>
                                         <td class="text-end">{{ number_format($item->invoice_total, 2) }}</td>
                                     </tr>
                                     @empty
