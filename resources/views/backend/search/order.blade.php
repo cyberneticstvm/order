@@ -59,6 +59,7 @@
                                         <th>SL No</th>
                                         <th>Order Number</th>
                                         <th>Customer Name</th>
+                                        <th>Customer ID</th>
                                         <th>Mobile</th>
                                         <th>Alt. Mobile</th>
                                         <th>Prescription</th>
@@ -74,6 +75,7 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->branch->code }}/{{ $item->id }}</td>
                                         <td>{{ $item->name }}</td>
+                                        <td>{{ $item->customer_id }}</td>
                                         <td>{{ $item->mobile }}</td>
                                         <td>{{ $item->alt_mobile }}</td>
                                         <td class="text-center"><a href="{{ route('store.order.prescription', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
