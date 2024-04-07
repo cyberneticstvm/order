@@ -31,7 +31,7 @@
                                 <div class="col-md-3">
                                     <label class="form-label req">Source</label>
                                     <div class="input-group">
-                                        {{ html()->select('source', array('hospital' => 'Hospital', 'store' => 'Store'), '1')->class('form-control select2') }}
+                                        {{ html()->select('source', array('hospital' => 'Medical Record Number', 'store' => 'Customer ID'), 'hospital')->class('form-control select2') }}
                                     </div>
                                     @error('type')
                                     <small class="text-danger">{{ $errors->first('type') }}</small>
