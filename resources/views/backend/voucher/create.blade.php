@@ -26,7 +26,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Create Voucher</h5><span>Create New Voucher</span>
+                        <h5>Create {{ ucfirst($category) }} Voucher</h5><span>Create New Voucher</span>
                     </div>
                     <div class="card-body">
                         <div class="card-wrapper">

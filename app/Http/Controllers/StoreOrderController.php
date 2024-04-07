@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Consultation;
 use App\Models\Customer;
+use App\Models\CustomerAccount;
 use App\Models\MedicalRecord;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -177,20 +178,25 @@ class StoreOrderController extends Controller
                         'payment_type' => 'advance',
                         'amount' => $request->advance,
                         'payment_mode' => $request->payment_mode,
-                        'notes' => 'Advance received against order number ' . $order->branch->code . '/' . $order->id,
+                        'notes' => 'Advance received against order number ' . $order->ono(),
                         'branch_id' => branch()->id,
                         'created_by' => $request->user()->id,
                         'updated_by' => $request->user()->id,
                     ]);
                 endif;
                 Spectacle::where('id', $request->spectacle_id)->update(['order_id' => $order->id]);
-                /*if ($request->credit_used > 0) :
-                    Customer::create([
-                        'mobile' => $request->mobile,
-                        'order_id' => $order->id,
-                        'debit' => $request->credit_used,
+                if ($request->credit_used > 0) :
+                    CustomerAccount::create([
+                        'customer_id' => $order->customer_id,
+                        'voucher_id' => $order->id,
+                        'type' => 'debit',
+                        'category' => 'order',
+                        'amount' => $request->credit_used,
+                        'remarks' => 'Credit used against order number' . $order->ono(),
+                        'created_by' => $request->user()->id,
+                        'updated_by' => $request->user()->id,
                     ]);
-                endif;*/
+                endif;
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
@@ -292,22 +298,6 @@ class StoreOrderController extends Controller
                 endforeach;
                 OrderDetail::insert($data);
                 if ($request->advance > 0) :
-                    /*$p = Payment::where('order_id', $id)->where('payment_type', 'advance')->latest()->first();
-                    Payment::where('order_id', $id)->where('payment_type', 'advance')->forceDelete();
-                    Payment::create([
-                        'consultation_id' => $request->consultation_id,
-                        'patient_id' => Consultation::find($request->consultation_id)?->patient_id,
-                        'order_id' => $id,
-                        'payment_type' => 'advance',
-                        'amount' => $request->advance,
-                        'payment_mode' => $request->payment_mode,
-                        'notes' => 'Advance received against order number ' . $order->branch->code . '/' . $order->id,
-                        'branch_id' => branch()->id,
-                        'created_by' => $request->user()->id,
-                        'updated_by' => $request->user()->id,
-                        'created_at' => $p->created_at ?? Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ]);*/
                     Payment::where('order_id', $id)->where('payment_type', 'advance')->update([
                         'amount' => $request->advance,
                         'payment_mode' => $request->payment_mode,
@@ -315,14 +305,13 @@ class StoreOrderController extends Controller
                         'updated_at' => Carbon::now(),
                     ]);
                 endif;
-                /*Customer::where('order_id', $order->id)->delete();
                 if ($request->credit_used > 0) :
-                    Customer::create([
-                        'mobile' => $request->mobile,
-                        'order_id' => $order->id,
-                        'debit' => $request->credit_used,
+                    CustomerAccount::where('category', 'order')->where('type', 'debit')->where('voucher_id', $id)->update([
+                        'amount' => $request->credit_used,
+                        'updated_by' => $request->user()->id,
+                        'updated_at' => Carbon::now(),
                     ]);
-                endif;*/
+                endif;
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());

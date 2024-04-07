@@ -131,6 +131,16 @@
                                         <td class="text-end"><a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="income" data-mode="5" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->income_total_other, 2) }}</a></td>
                                     </tr>
                                     <tr>
+                                        <td>Voucher</td>
+                                        <td class="text-end">{{ number_format($data->voucher_receipt_total, 2) }}</td>
+                                        <td class="text-end">{{ number_format($data->voucher_payment_total, 2) }}</td>
+                                        <td class="text-end">{{ number_format($data->voucher_income_total_cash, 2) }}</td>
+                                        <td class="text-end">{{ number_format($data->voucher_income_total_bank, 2) }}</td>
+                                        <td class="text-end">{{ number_format($data->voucher_income_total_card, 2) }}</td>
+                                        <td class="text-end">{{ number_format($data->voucher_income_total_upi, 2) }}</td>
+                                        <td class="text-end">{{ number_format($data->voucher_income_total_other, 2) }}</td>
+                                    </tr>
+                                    <tr>
                                         <td class="text-end fw-bold text-danger">
                                             Total
                                         </td>
@@ -148,11 +158,11 @@
                                             {{ number_format($tot, 2) }}
                                         </td>
                                         <td></td>
-                                        <td class="text-end">{{ number_format($data->paid_total_cash + $data->income_total_cash, 2) }}</td>
-                                        <td class="text-end">{{ number_format($data->paid_total_bank + $data->income_total_bank, 2) }}</td>
-                                        <td class="text-end">{{ number_format($data->paid_total_card + $data->income_total_card, 2) }}</td>
-                                        <td class="text-end">{{ number_format($data->paid_total_upi + $data->income_total_upi, 2) }}</td>
-                                        <td class="text-end">{{ number_format($data->paid_total_other + $data->income_total_other, 2) }}</td>
+                                        <td class="text-end">{{ number_format($data->paid_total_cash + $data->income_total_cash + $data->voucher_income_total_cash, 2) }}</td>
+                                        <td class="text-end">{{ number_format($data->paid_total_bank + $data->income_total_bank + $data->voucher_income_total_bank, 2) }}</td>
+                                        <td class="text-end">{{ number_format($data->paid_total_card + $data->income_total_card + $data->voucher_income_total_card, 2) }}</td>
+                                        <td class="text-end">{{ number_format($data->paid_total_upi + $data->income_total_upi + $data->voucher_income_total_upi, 2) }}</td>
+                                        <td class="text-end">{{ number_format($data->paid_total_other + $data->income_total_other + $data->voucher_income_total_other, 2) }}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-end">
@@ -179,7 +189,7 @@
                                             Day Closing
                                         </td>
                                         <td class="text-end fw-bold text-success">
-                                            {{ number_format(($data->paid_total_cash + $data->income_total_cash + $opening_balance) - ($data->expense_total + $data->bank_transfer_total), 2) }}
+                                            {{ number_format(($data->paid_total_cash + $data->income_total_cash + $data->voucher_income_total_cash + $opening_balance) - ($data->expense_total + $data->bank_transfer_total + $data->voucher_paid_total_cash), 2) }}
                                         </td>
                                         <td></td>
                                         <td colspan="5"></td>

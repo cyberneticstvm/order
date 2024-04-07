@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Consultation;
 use App\Models\Customer;
+use App\Models\CustomerAccount;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Payment;
@@ -141,8 +142,20 @@ class SolutionOrderController extends Controller
                         'payment_type' => 'advance',
                         'amount' => $request->advance,
                         'payment_mode' => $request->payment_mode,
-                        'notes' => 'Advance received against order number ' . $order->branch->code . '/' . $order->id,
+                        'notes' => 'Advance received against order number ' . $order->ono(),
                         'branch_id' => branch()->id,
+                        'created_by' => $request->user()->id,
+                        'updated_by' => $request->user()->id,
+                    ]);
+                endif;
+                if ($request->credit_used > 0) :
+                    CustomerAccount::create([
+                        'customer_id' => $order->customer_id,
+                        'voucher_id' => $order->id,
+                        'type' => 'debit',
+                        'category' => 'order',
+                        'amount' => $request->credit_used,
+                        'remarks' => 'Credit used against order number' . $order->ono(),
                         'created_by' => $request->user()->id,
                         'updated_by' => $request->user()->id,
                     ]);
@@ -240,25 +253,16 @@ class SolutionOrderController extends Controller
                 endforeach;
                 OrderDetail::insert($data);
                 if ($request->advance > 0) :
-                    /*$p = Payment::where('order_id', $id)->where('payment_type', 'advance')->latest()->first();
-                    Payment::where('order_id', $id)->where('payment_type', 'advance')->forceDelete();
-                    Payment::create([
-                        'consultation_id' => $request->consultation_id,
-                        'patient_id' => Consultation::find($request->consultation_id)?->patient_id,
-                        'order_id' => $id,
-                        'payment_type' => 'advance',
-                        'amount' => $request->advance,
-                        'payment_mode' => $request->payment_mode,
-                        'notes' => 'Advance received against order number ' . $order->branch->code . '/' . $order->id,
-                        'branch_id' => branch()->id,
-                        'created_by' => $request->user()->id,
-                        'updated_by' => $request->user()->id,
-                        'created_at' => $p->created_at ?? Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ]);*/
                     Payment::where('order_id', $id)->where('payment_type', 'advance')->update([
                         'amount' => $request->advance,
                         'payment_mode' => $request->payment_mode,
+                        'updated_by' => $request->user()->id,
+                        'updated_at' => Carbon::now(),
+                    ]);
+                endif;
+                if ($request->credit_used > 0) :
+                    CustomerAccount::where('category', 'order')->where('type', 'debit')->where('voucher_id', $id)->update([
+                        'amount' => $request->credit_used,
                         'updated_by' => $request->user()->id,
                         'updated_at' => Carbon::now(),
                     ]);

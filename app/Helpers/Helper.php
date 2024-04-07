@@ -261,6 +261,8 @@ function getDayBook($fdate, $tdate, $branch)
         'voucher_paid_total_card' => $voucher_paid_total_card,
         'voucher_paid_total_upi' => $voucher_paid_total_upi,
         'voucher_paid_total_other' => $voucher_paid_total_other,
+        'voucher_receipt_total' => $voucher_income_total_cash + $voucher_income_total_bank + $voucher_income_total_card + $voucher_income_total_upi + $voucher_income_total_other,
+        'voucher_payment_total' => $voucher_paid_total_cash + $voucher_paid_total_bank + $voucher_paid_total_card + $voucher_paid_total_upi + $voucher_paid_total_other,
     ]);
 }
 

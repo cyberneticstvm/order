@@ -63,6 +63,7 @@ class VoucherController extends Controller
                     'voucher_id' => $voucher->id,
                     'customer_id' => $customer->id,
                     'type' => $type,
+                    'category' => 'voucher',
                     'amount' => $request->amount,
                     'remarks' => $request->description,
                     'created_by' => $request->user()->id,
