@@ -91,27 +91,27 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($spectacles as $key => $spectacle)
+                                    @forelse($customers as $key => $customer)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $spectacle->customer->id }}</td>
-                                        <td>{{ $spectacle->customer->name }}</td>
-                                        <td>{{ $spectacle->customer->mobile }}</td>
-                                        <td>{{ $spectacle->customer->mrn }}</td>
-                                        @if($spectacle->customer->hasOrder($spectacle->customer->id))
+                                        <td>{{ $customer->id }}</td>
+                                        <td>{{ $customer->name }}</td>
+                                        <td>{{ $customer->mobile }}</td>
+                                        <td>{{ $customer->mrn }}</td>
+                                        @if($customer->hasOrder($customer->id))
                                         <td class="text-success text-center">Done!</td>
                                         @else
                                         <td>
                                             <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Create</button>
                                             <ul class="dropdown-menu dropdown-block">
-                                                <li><a class="dropdown-item txt-dark" href="{{ route('store.order.create', ['id' => encrypt($spectacle->customer->id), 'type' => '1']) }}">Spectacles</a></li>
-                                                <li><a class="dropdown-item txt-dark" href="{{ route('solution.order.create', ['id' => encrypt($spectacle->customer->id), 'type' => '2']) }}">Solutions</a></li>
+                                                <li><a class="dropdown-item txt-dark" href="{{ route('store.order.create', ['id' => encrypt($customer->id), 'type' => '1']) }}">Spectacles</a></li>
+                                                <li><a class="dropdown-item txt-dark" href="{{ route('solution.order.create', ['id' => encrypt($customer->id), 'type' => '2']) }}">Solutions</a></li>
                                             </ul>
                                         </td>
                                         @endif
-                                        <td>{!! $spectacle->customer->status() !!}</td>
-                                        <td class="text-center"><a href="{{ route('customer.edit', encrypt($spectacle->customer->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
-                                        <td class="text-center"><a href="{{ route('customer.delete', encrypt($spectacle->customer->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
+                                        <td>{!! $customer->status() !!}</td>
+                                        <td class="text-center"><a href="{{ route('customer.edit', encrypt($customer->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
+                                        <td class="text-center"><a href="{{ route('customer.delete', encrypt($customer->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
                                     </tr>
                                     @empty
                                     @endforelse

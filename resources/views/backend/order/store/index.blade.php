@@ -89,6 +89,7 @@
                                 <thead>
                                     <tr>
                                         <th>SL No</th>
+                                        <th>Customer ID</th>
                                         <th>Order Number</th>
                                         <th>Branch</th>
                                         <th>Customer Name</th>
@@ -104,6 +105,7 @@
                                     @forelse($orders as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
+                                        <td>{{ $item->customer_id }}</td>
                                         <td>{{ $item->branch->code }}/{{ $item->id }}</td>
                                         <td>{{ $item->branch?->name }}</td>
                                         <td>{{ $item->name }}</td>
