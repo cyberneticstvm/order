@@ -112,10 +112,14 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/pending/damage/transfer', 'pendingDamageTransfer')->name('pending.damage.transfer');
         Route::get('/pending/damage/transfer/edit/{id}', 'pendingDamageTransferEdit')->name('pending.damage.transfer.edit');
         Route::post('/pending/damage/transfer/edit/{id}', 'pendingDamageTransferUpdate')->name('pending.damage.transfer.update');
-        Route::get('/search/order', 'searchOrder')->name('search.order');
-        Route::post('/search/order', 'searchOrderFetch')->name('search.order.fetch');
         Route::get('/order/status/update/{id}', 'orderStatus')->name('order.status');
         Route::post('/order/status/update/{id}', 'orderStatusUpdate')->name('order.status.update');
+
+        Route::get('/search/order', 'searchOrder')->name('search.order');
+        Route::post('/search/order', 'searchOrderFetch')->name('search.order.fetch');
+
+        Route::get('/search/customer', 'searchCustomer')->name('search.customer');
+        Route::post('/search/customer', 'searchCustomerFetch')->name('search.customer.fetch');
     });
 
     Route::prefix('/backend/export')->controller(ImportExportController::class)->group(function () {

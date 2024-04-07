@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Consultation;
+use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Patient;
 use App\Models\ProductDamage;
@@ -21,6 +22,7 @@ class HelperController extends Controller
         $this->middleware('permission:product-damage-transfer-list', ['only' => ['pendingDamageTransfer']]);
         $this->middleware('permission:product-damage-transfer-update', ['only' => ['pendingDamageTransferEdit', 'pendingDamageTransferUpdate']]);
         $this->middleware('permission:search-order', ['only' => ['searchOrder', 'searchOrderFetch']]);
+        $this->middleware('permission:search-customer', ['only' => ['searchCustomer', 'searchCustomerFetch']]);
     }
 
     public function closingBalance()
@@ -127,5 +129,22 @@ class HelperController extends Controller
         else :
             return redirect()->back()->with("error", "Cannot update status for the order which has invoice number already been generated");
         endif;
+    }
+
+    public function searchCustomer()
+    {
+        $data = [];
+        $inputs = [];
+        return view('backend.search.customer', compact('inputs', 'data'));
+    }
+
+    public function searchCustomerFetch(Request $request)
+    {
+        $this->validate($request, [
+            'search_term' => 'required',
+        ]);
+        $inputs = array($request->search_term);
+        $data = Customer::where('id', $request->search_term)->orWhere('mobile', $request->search_term)->orWhere('alt_mobile', $request->search_term)->orWhere('name', $request->search_term)->where('branch_id', Session::get('branch'))->get();
+        return view('backend.search.customer', compact('inputs', 'data'));
     }
 }

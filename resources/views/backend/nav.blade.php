@@ -27,6 +27,23 @@
                 <li><a class="" href="{{ route('dashboard') }}">Dashboard</a></li>
             </ul>
         </li>
+        <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
+            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                <svg class="stroke-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-search') }}"></use>
+                </svg>
+                <svg class="fill-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#fill-search') }}"></use>
+                </svg>
+                <span class="">Search </span>
+            </a>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('search-order', route('search.order'), 'Order')
+                ->linkIfCan('search-customer', route('search.customer'), 'Customer');
+            }}
+
+        </li>
         <li class="sidebar-main-title">
             <div>
                 <h6 class="">Operations</h6>
@@ -106,8 +123,7 @@
                 ->linkIfCan('sales-return-list', route('sales.return'), 'Sales Return Register')
                 ->linkIfCan('product-damage-list', route('product.damage.register'), 'Product Damage Register')
                 ->linkIfCan('invoice-register', route('invoice.register'), 'Invoice Register')
-                ->linkIfCan('invoice-register-not-generated', route('not.generated.invoice.register'), 'Pending Invoice Register')
-                ->linkIfCan('search-order', route('search.order'), 'Search Order');
+                ->linkIfCan('invoice-register-not-generated', route('not.generated.invoice.register'), 'Pending Invoice Register');
             }}
         </li>
         @endif
