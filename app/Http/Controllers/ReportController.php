@@ -22,7 +22,7 @@ class ReportController extends Controller
         $this->middleware('permission:report-stock-status', ['only' => ['stockStatus', 'fetchStockStatus']]);
 
         $this->middleware(function ($request, $next) {
-            $brs = Branch::selectRaw("0 as id, 'Main Branch' as name");
+            $brs = Branch::selectRaw("0 as id, 'All Branches' as name");
             $this->branches = Branch::selectRaw("id, name")->when(Auth::user()->roles->first()->name == 'Administrator' || Auth::user()->roles->first()->name == 'CEO' || Auth::user()->roles->first()->name == 'Store Manager', function ($q) use ($brs) {
                 return $q->union($brs);
             })->when(Auth::user()->roles->first()->id != 1, function ($q) {
