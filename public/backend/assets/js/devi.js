@@ -365,70 +365,79 @@ function addStoreOrderRow(category) {
                     url: '/ajax/power/',
                     dataType: 'json',
                     success: function (power) {
-                        $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="border-0" name="eye[]"><option value="re">RE</option><option value="le">LE</option></select></td><td><select name='sph[]' class="border-0 select2 selSph"></select></td><td><select name='cyl[]' class="border-0 select2 selCyl"></select></td><td><select name='axis[]' class="border-0 select2 selAxis"></select></td><td><select name='add[]' class="border-0 select2 selAdd"></select></td><td><select name='int_add[]' class="border-0 select2 selIntAdd"></select></td><td><input type="text" name='ipd[]' class="w-100 border-0 text-center ipd" placeholder="IPD" maxlength="6" /></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="lens" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
+                        for (let i = 0; i <= 1; i++) {
+                            let eye = (i == 0) ? 'RE' : 'LE';
+                            let oval = (i == 0) ? 're' : 'le';
+                            $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="border-0" name="eye[]"><option value="${oval}">${eye}</option></select></td><td><select name='sph[]' class="border-0 select2 selSph"></select></td><td><select name='cyl[]' class="border-0 select2 selCyl"></select></td><td><select name='axis[]' class="border-0 select2 selAxis"></select></td><td><select name='add[]' class="border-0 select2 selAdd"></select></td><td><select name='int_add[]' class="border-0 select2 selIntAdd"></select></td><td><input type="text" name='ipd[]' class="w-100 border-0 text-center ipd" placeholder="IPD" maxlength="6" /></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="lens" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
 
-                        var xdata = $.map(res, function (obj) {
-                            obj.text = obj.name || obj.id;
-                            return obj;
-                        });
-                        //$('.selPdct').last().select2().empty();                      
-                        $('.selPdct').last().select2({
-                            placeholder: 'Select',
-                            data: xdata
-                        });
+                            var xdata = $.map(res, function (obj) {
+                                obj.text = obj.name || obj.id;
+                                return obj;
+                            });
+                            //$('.selPdct').last().select2().empty();                      
+                            $('.selPdct').last().select2({
+                                placeholder: 'Select',
+                                data: xdata
+                            });
+                            let sph = (i == 0) ? $('.fSph').val() : $('.sSph').val()
+                            var sphdata = $.map(power.sph, function (obj) {
+                                obj.text = obj.name || obj.id;
+                                obj.selected = (obj.name == sph) ? true : false;
+                                return obj;
+                            });
+                            console.log(sphdata)
+                            $('.selSph').last().select2({
+                                placeholder: 'Select',
+                                data: sphdata,
+                            });
 
-                        var sphdata = $.map(power.sph, function (obj) {
-                            obj.text = obj.name || obj.id;
-                            obj.selected = (obj.name == $('.fSph').val()) ? true : false;
-                            return obj;
-                        });
-                        console.log(sphdata)
-                        $('.selSph').last().select2({
-                            placeholder: 'Select',
-                            data: sphdata,
-                        });
+                            let cyl = (i == 0) ? $('.fCyl').val() : $('.sCyl').val()
+                            var cyldata = $.map(power.cyl, function (obj) {
+                                obj.text = obj.name || obj.id;
+                                obj.selected = (obj.name == cyl) ? true : false;
+                                return obj;
+                            });
+                            $('.selCyl').last().select2({
+                                placeholder: 'Select',
+                                data: cyldata
+                            });
 
-                        var cyldata = $.map(power.cyl, function (obj) {
-                            obj.text = obj.name || obj.id;
-                            obj.selected = (obj.name == $('.fCyl').val()) ? true : false;
-                            return obj;
-                        });
-                        $('.selCyl').last().select2({
-                            placeholder: 'Select',
-                            data: cyldata
-                        });
+                            let axis = (i == 0) ? $('.fAxis').val() : $('.sAxis').val()
+                            var axisdata = $.map(power.axis, function (obj) {
+                                obj.text = obj.name || obj.id;
+                                obj.selected = (obj.name == axis) ? true : false;
+                                return obj;
+                            });
+                            $('.selAxis').last().select2({
+                                placeholder: 'Select',
+                                data: axisdata
+                            });
 
-                        var axisdata = $.map(power.axis, function (obj) {
-                            obj.text = obj.name || obj.id;
-                            obj.selected = (obj.name == $('.fAxis').val()) ? true : false;
-                            return obj;
-                        });
-                        $('.selAxis').last().select2({
-                            placeholder: 'Select',
-                            data: axisdata
-                        });
+                            let add = (i == 0) ? $('.fAdd').val() : $('.sAdd').val()
+                            var adddata = $.map(power.add, function (obj) {
+                                obj.text = obj.name || obj.id;
+                                obj.selected = obj.selected = (obj.name == add) ? true : false;
+                                return obj;
+                            });
+                            $('.selAdd').last().select2({
+                                placeholder: 'Select',
+                                data: adddata
+                            });
 
-                        var adddata = $.map(power.add, function (obj) {
-                            obj.text = obj.name || obj.id;
-                            obj.selected = obj.selected = (obj.name == $('.fAdd').val()) ? true : false;
-                            return obj;
-                        });
-                        $('.selAdd').last().select2({
-                            placeholder: 'Select',
-                            data: adddata
-                        });
+                            let intadd = (i == 0) ? $('.fIntAd').val() : $('.sIntAd').val()
+                            var intaddata = $.map(power.intad, function (obj) {
+                                obj.text = obj.name || obj.id;
+                                obj.selected = (obj.name == intadd) ? true : false;
+                                return obj;
+                            });
+                            $('.selIntAdd').last().select2({
+                                placeholder: 'Select',
+                                data: intaddata
+                            });
 
-                        var intaddata = $.map(power.intad, function (obj) {
-                            obj.text = obj.name || obj.id;
-                            obj.selected = (obj.name == $('.fIntAd').val()) ? true : false;
-                            return obj;
-                        });
-                        $('.selIntAdd').last().select2({
-                            placeholder: 'Select',
-                            data: intaddata
-                        });
-
-                        $(".ipd").last().val($('.fIpd').val());
+                            let ipd = (i == 0) ? $('.fIpd').val() : $('.sIpd').val()
+                            $(".ipd").last().val(ipd);
+                        }
                     },
                     error: function (err) {
                         console.log(err)

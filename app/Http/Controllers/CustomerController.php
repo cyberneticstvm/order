@@ -38,8 +38,8 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $customers = Customer::where('branch_id', Session::get('branch'))->whereDate('created_at', Carbon::today())->latest()->get();
-        return view('backend.customer.index', compact('customers'));
+        $spectacles = Spectacle::where('branch_id', Session::get('branch'))->whereDate('created_at', Carbon::today())->latest()->get();
+        return view('backend.customer.index', compact('spectacles'));
     }
 
     public function fetch(Request $request)

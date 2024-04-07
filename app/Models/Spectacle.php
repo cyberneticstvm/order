@@ -26,4 +26,9 @@ class Spectacle extends Model
     {
         return $this->belongsTo(User::class, 'id', 'doctor');
     }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
 }
