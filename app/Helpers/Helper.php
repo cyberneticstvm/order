@@ -19,6 +19,7 @@ use App\Models\Payment;
 use App\Models\Procedure;
 use App\Models\Setting;
 use App\Models\Transfer;
+use App\Models\Voucher;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -224,6 +225,16 @@ function getDayBook($fdate, $tdate, $branch)
     $paid_total_upi = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [3]);
     $paid_total_other = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [5, 6, 7]);
     $bank_transfer_total = getBankTransferTotal($from_date, $to_date, $branch);
+    $voucher_income_total_cash = getVoucherTotal($from_date, $to_date, $branch, $type = 'receipt', $mode = [1]);
+    $voucher_income_total_bank = getVoucherTotal($from_date, $to_date, $branch, $type = 'receipt', $mode = [4]);
+    $voucher_income_total_card = getVoucherTotal($from_date, $to_date, $branch, $type = 'receipt', $mode = [2]);
+    $voucher_income_total_upi = getVoucherTotal($from_date, $to_date, $branch, $type = 'receipt', $mode = [3]);
+    $voucher_income_total_other = getVoucherTotal($from_date, $to_date, $branch, $type = 'receipt', $mode = [5, 6, 7]);
+    $voucher_paid_total_cash = getVoucherTotal($from_date, $to_date, $branch, $type = 'payment', $mode = [1]);
+    $voucher_paid_total_bank = getVoucherTotal($from_date, $to_date, $branch, $type = 'payment', $mode = [4]);
+    $voucher_paid_total_card = getVoucherTotal($from_date, $to_date, $branch, $type = 'payment', $mode = [2]);
+    $voucher_paid_total_upi = getVoucherTotal($from_date, $to_date, $branch, $type = 'payment', $mode = [3]);
+    $voucher_paid_total_other = getVoucherTotal($from_date, $to_date, $branch, $type = 'payment', $mode = [5, 6, 7]);
     return json_encode([
         'order_total' => $order_total,
         'paid_total' => $paid_total,
@@ -240,7 +251,24 @@ function getDayBook($fdate, $tdate, $branch)
         'paid_total_upi' => $paid_total_upi,
         'paid_total_other' => $paid_total_other,
         'bank_transfer_total' => $bank_transfer_total,
+        'voucher_income_total_cash' => $voucher_income_total_cash,
+        'voucher_income_total_bank' => $voucher_income_total_bank,
+        'voucher_income_total_card' => $voucher_income_total_card,
+        'voucher_income_total_upi' => $voucher_income_total_upi,
+        'voucher_income_total_other' => $voucher_income_total_other,
+        'voucher_paid_total_cash' => $voucher_paid_total_cash,
+        'voucher_paid_total_bank' => $voucher_paid_total_bank,
+        'voucher_paid_total_card' => $voucher_paid_total_card,
+        'voucher_paid_total_upi' => $voucher_paid_total_upi,
+        'voucher_paid_total_other' => $voucher_paid_total_other,
     ]);
+}
+
+function getVoucherTotal($from_date, $to_date, $branch, $type, $mode)
+{
+    return Voucher::whereBetween('created_at', [$from_date, $to_date])->where('category', $type)->whereIn('payment_mode', $mode)->when($branch > 0, function ($q) use ($branch) {
+        return $q->where('branch_id', $branch);
+    })->sum('amount');
 }
 
 function getBankTransferTotal($from_date, $to_date, $branch)

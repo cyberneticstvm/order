@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('customer_accounts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('voucher_id')->nullable();
             $table->string('type', 7)->comment('debit, credit')->nullable();
             $table->decimal('amount', 7, 2)->nullable();
             $table->text('remarks')->nullable();

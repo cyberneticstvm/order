@@ -44,6 +44,7 @@ use App\Http\Controllers\TransferFrameController;
 use App\Http\Controllers\TransferLensController;
 use App\Http\Controllers\TransferPharmacyController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VoucherController;
 use App\Models\CustomerAccount;
 use Illuminate\Support\Facades\Route;
 
@@ -534,6 +535,15 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/sales', 'fetchSales')->name('report.sales.fetch');
         Route::get('/stock/status', 'stockStatus')->name('report.stock.status');
         Route::post('/stock/status', 'fetchStockStatus')->name('report.stock.status.fetch');
+    });
+
+    Route::prefix('/backend/voucher')->controller(VoucherController::class)->group(function () {
+        Route::get('/', 'index')->name('voucher');
+        Route::get('/create/{category}', 'create')->name('voucher.create');
+        Route::post('/create', 'store')->name('voucher.save');
+        Route::get('/edit/{id}', 'edit')->name('voucher.edit');
+        Route::post('/edit/{id}', 'update')->name('voucher.update');
+        Route::get('/delete/{id}', 'destroy')->name('voucher.delete');
     });
 
     Route::prefix('/backend/settings')->controller(SettingController::class)->group(function () {

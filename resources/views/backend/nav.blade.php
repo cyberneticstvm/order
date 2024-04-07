@@ -163,7 +163,8 @@
             </a>
             {{
                 Menu::new()->addClass('sidebar-submenu')
-                ->linkIfCan('payment-list', route('patient.payments'), 'Payment Register');
+                ->linkIfCan('payment-list', route('patient.payments'), 'Payment Register')
+                ->linkIfCan('voucher-list', route('voucher'), 'Voucher Register');
             }}
         </li>
         @endif
