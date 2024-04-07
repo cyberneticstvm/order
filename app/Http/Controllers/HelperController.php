@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Consultation;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\OrderStatusNote;
 use App\Models\Patient;
 use App\Models\ProductDamage;
 use App\Models\Transfer;
@@ -114,7 +115,8 @@ class HelperController extends Controller
     public function orderStatus(string $id)
     {
         $order = Order::findOrFail(decrypt($id));
-        return view('backend.order.status-update', compact('order'));
+        $notes = OrderStatusNote::where('order_id', $order->id)->latest()->get();
+        return view('backend.order.status-update', compact('order', 'notes'));
     }
 
     public function orderStatusUpdate(Request $request, string $id)
@@ -125,6 +127,14 @@ class HelperController extends Controller
         $order = Order::findOrFail($id);
         if (!$order->invoice_number) :
             $order->update(['order_status' => $request->order_status]);
+            if ($request->status_note) :
+                OrderStatusNote::create([
+                    'order_id' => $order->id,
+                    'order_status' => $request->order_status,
+                    'status_note' => $request->status_note,
+                    'created_by' => $request->user()->id,
+                ]);
+            endif;
             return redirect()->route('search.order')->with("success", "Status updated successfully");
         else :
             return redirect()->back()->with("error", "Cannot update status for the order which has invoice number already been generated");

@@ -5,7 +5,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Search</h3>
+                    <h3>Order Status Update</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
@@ -13,8 +13,8 @@
                                 <svg class="stroke-icon">
                                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg></a></li>
-                        <li class="breadcrumb-item">Search</li>
-                        <li class="breadcrumb-item active">All</li>
+                        <li class="breadcrumb-item">Order Status</li>
+                        <li class="breadcrumb-item active">Update</li>
                     </ol>
                 </div>
             </div>
@@ -39,11 +39,35 @@
                                     <small class="text-danger">{{ $errors->first('order_status') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-8">
+                                    <label class="form-label">Status Note / Customer Feedback</label>
+                                    {{ html()->textarea('status_note', old('status_note'))->class('form-control')->rows(5)->placeholder('Status Note / Customer Feedback') }}
+                                </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                                     <button class="btn btn-submit btn-success" type="submit">Update</button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-wrapper">
+                            @forelse($notes as $key => $note)
+                            <div class="info-block mb-3">
+                                <h6>{{ $note->status_note }}</h6>
+                                <p>By {{ $note->user->name }}, at {{ $note->created_at->format('d, m Y h:i a') }}</p>
+                            </div>
+                            <hr />
+                            @empty
+                            @endforelse
                         </div>
                     </div>
                 </div>
