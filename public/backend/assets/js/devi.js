@@ -205,11 +205,11 @@ $(function () {
     });
 
     $(".refreshAvailableCr").click(function () {
-        let mobile = $("#orderForm").find(".custmob").val();
-        if (mobile) {
+        let cid = $("#orderForm").find("#customer_id").val();
+        if (cid) {
             $.ajax({
                 type: 'GET',
-                url: '/ajax/get/availablecredit/' + mobile,
+                url: '/ajax/get/availablecredit/' + cid,
                 success: function (res) {
                     let cr = parseFloat(res)
                     $(".avCr").text(cr.toFixed(2));
@@ -229,7 +229,7 @@ $(function () {
             });
         } else {
             failed({
-                'error': 'Please provide Mobile Number'
+                'error': 'Please provide Customer Id'
             });
         }
     });

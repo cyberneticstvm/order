@@ -62,9 +62,9 @@ class AjaxController extends Controller
         return response()->json($types);
     }
 
-    public function getAvailableCredit($mobile)
+    public function getAvailableCredit($cid)
     {
-        $cr = getAvailableCredit($mobile);
+        $cr = getAvailableCredit($cid);
         return response()->json($cr);
     }
 

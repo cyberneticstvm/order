@@ -31,7 +31,7 @@
                                 <h5>Create Order</h5><span>Create New Order</span>
                             </div>
                             <div class="col text-end">
-                                <h5>Available Credit: <span class="text-success avCr">0.00</span>&nbsp;&nbsp;<a href="javascript:void(0)" class="refreshAvailableCr"><i class="fa fa-refresh text-info"></i></a></h5>
+                                <h5>Available Credit: <span class="text-success avCr">{{ getAvailableCredit($patient?->id ?? 0) }}</span>&nbsp;&nbsp;<a href="javascript:void(0)" class="refreshAvailableCr"><i class="fa fa-refresh text-info"></i></a></h5>
                             </div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                                 @csrf
                                 <input type="hidden" name="consultation_id" value="{{ $patient?->mrn ?? 0 }}" />
                                 <input type="hidden" name="spectacle_id" value="{{ $spectacle?->id ?? 0 }}" />
-                                <input type="hidden" name="customer_id" value="{{ $patient?->id ?? 0 }}" />
+                                <input type="hidden" name="customer_id" id="customer_id" value="{{ $patient?->id ?? 0 }}" />
                                 <div class="col-md-2">
                                     <label class="form-label req">Order Date</label>
                                     {{ html()->date($name = 'order_date', $value = date('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}
@@ -296,10 +296,10 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="3" class="fw-bold border-0"></td>
-                                                    <td colspan="6" class="border-0"><input type="hidden" class="border-0 text-success fw-bold avCr" name="available_credit" value="{{ getAvailableCredit($patient?->mobile_number ?? 0) }}" readonly /></td>
+                                                    <td colspan="6" class="border-0"><input type="hidden" class="border-0 text-success fw-bold avCr" name="available_credit" value="{{ getAvailableCredit($patient?->id ?? 0) }}" readonly /></td>
                                                     <td colspan="2" class="text-end fw-bold border-0">Credit Used</td>
                                                     <td class="border-0">
-                                                        {{ html()->number('credit_used', '', '', '', '')->class('text-end border-0 fw-bold w-100 credit_used')->if(getAvailableCredit($patient?->mobile_number ?? 0) <= 0, function($el){
+                                                        {{ html()->number('credit_used', '', '', '', '')->class('text-end border-0 fw-bold w-100 credit_used')->if(getAvailableCredit($patient?->id ?? 0) <= 0, function($el){
                                                             return $el->attribute('readonly', 'true');
                                                         })->placeholder('0.00') }}
                                                     </td>

@@ -8,6 +8,7 @@ use App\Models\Closing;
 use App\Models\Consultation;
 use App\Models\ConsultationType;
 use App\Models\Customer;
+use App\Models\CustomerAccount;
 use App\Models\Doctor;
 use App\Models\IncomeExpense;
 use App\Models\Order;
@@ -405,7 +406,7 @@ function getPercentage($amount, $total)
     return $percentage;
 }
 
-function getAvailableCredit($mobile)
+function getAvailableCredit($cid)
 {
-    return 0; //(Customer::where('mobile', $mobile)->selectRaw("SUM(IFNULL(credit, 0) - IFNULL(debit, 0)) AS cr")->value('cr')) ?? 0;
+    return CustomerAccount::where('customer_id', $cid)->selectRaw("SUM(CASE WHEN type='credit' THEN amount ELSE 0 END) - SUM(CASE WHEN type='debit' THEN amount ELSE 0 END) AS cr")->value('cr') ?? 0;
 }

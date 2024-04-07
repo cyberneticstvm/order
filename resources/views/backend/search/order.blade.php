@@ -62,9 +62,9 @@
                                         <th>Customer ID</th>
                                         <th>Mobile</th>
                                         <th>Alt. Mobile</th>
-                                        <th>Prescription</th>
-                                        <th>Receipt</th>
-                                        <th>Invoice</th>
+                                        <th>Bill Total</th>
+                                        <th>Advance</th>
+                                        <th>Balance</th>
                                         <th>Order Status</th>
                                         <th>Edit</th>
                                     </tr>
@@ -78,9 +78,12 @@
                                         <td>{{ $item->customer_id }}</td>
                                         <td>{{ $item->mobile }}</td>
                                         <td>{{ $item->alt_mobile }}</td>
-                                        <td class="text-center"><a href="{{ route('store.order.prescription', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
+                                        <td>{{ $item->invoice_total }}</td>
+                                        <td>{{ number_format($item->payments->sum('amount') + $item->credit_used, 2) }}</td>
+                                        <td>{{ number_format($item->invoice_total - ($item->payments->sum('amount') + $item->credit_used), 2) }}</td>
+                                        <!--<td class="text-center"><a href="{{ route('store.order.prescription', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                         <td class="text-center"><a href="{{ route('store.order.receipt', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
-                                        <td class="text-center"><a href="{{ route('store.order.invoice', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
+                                        <td class="text-center"><a href="{{ route('store.order.invoice', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>-->
                                         <td><a href="{{ route('order.status', encrypt($item->id)) }}">{{ $item->order_status }}</a></td>
                                         <td class="text-center"><a href="{{ route(($item->category == 'store') ? 'store.order.edit' : 'solution.order.edit', encrypt($item->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                     </tr>
