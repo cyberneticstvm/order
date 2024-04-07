@@ -85,6 +85,7 @@
                                         <th>Contact Number</th>
                                         <th>MRN</th>
                                         <th>Order</th>
+                                        <th>Prescription</th>
                                         <th>Status</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
@@ -109,6 +110,7 @@
                                             </ul>
                                         </td>
                                         @endif
+                                        <td><a href="{{ route('customer.spectacle.edit', encrypt($customer->id)) }}">Prescription</a></td>
                                         <td>{!! $customer->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('customer.edit', encrypt($customer->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center"><a href="{{ route('customer.delete', encrypt($customer->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>

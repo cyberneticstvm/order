@@ -514,6 +514,9 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/edit/{id}', 'edit')->name('customer.edit');
         Route::post('/edit/{id}', 'update')->name('customer.update');
         Route::get('/delete/{id}', 'destroy')->name('customer.delete');
+
+        Route::get('/spectacle/edit/{id}', 'editSpectacle')->name('customer.spectacle.edit');
+        Route::post('/spectacle/edit/{id}', 'updateSpectacle')->name('customer.spectacle.update');
     });
 
     Route::prefix('/backend/report')->controller(ReportController::class)->group(function () {

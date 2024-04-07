@@ -216,7 +216,7 @@
                                 </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
-                                    <button class="btn btn-submit btn-success" onclick="return validateOrderForm()" type="submit">Save</button>
+                                    <button class="btn btn-submit btn-success" type="submit">Save</button>
                                 </div>
                             </form>
                         </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Order;
 use App\Models\Power;
 use App\Models\Spectacle;
 use App\Models\User;
@@ -163,7 +164,8 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $customer = Customer::findOrFail(decrypt($id));
+        return view('backend.customer.edit', compact('customer'));
     }
 
     /**
@@ -171,7 +173,13 @@ class CustomerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+        $input = $request->all();
+        $input['updated_by'] = $request->user()->id;
+        Customer::findOrFail($id)->update($input);
+        return redirect()->route('customer.register')->with("success", "Customer updated successfully!");
     }
 
     /**
@@ -179,6 +187,31 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Customer::findOrFail(decrypt($id))->delete();
+        return redirect()->route('customer.register')->with("success", "Customer deleted successfully!");
+    }
+
+    public function editSpectacle(string $id)
+    {
+        $optometrists = $this->optometrists;
+        $doctors = $this->doctors;
+        $powers = $this->powers;
+        $spectacle = Spectacle::where('customer_id', decrypt($id))->whereDate('created_at', Carbon::today())->where('branch_id', Session::get('branch'))->firstOrFail();
+        $customer = Customer::findOrFail(decrypt($id));
+        return view('backend.customer.spectacle', compact('spectacle', 'customer', 'doctors', 'optometrists', 'powers'));
+    }
+
+    public function updateSpectacle(Request $request, string $id)
+    {
+        $spectacle = Spectacle::findOrFail($id);
+        $ocount = Order::where('customer_id', $spectacle->customer_id)->whereDate('created_at', Carbon::today())->count('id');
+        if ($ocount == 1) :
+            return redirect()->back()->with("error", "Cant update the prescription since the Order has already been placed.")->withInput($request->all());
+        else :
+            $input = $request->all();
+            $input['updated_by'] = $request->user()->id;
+            $spectacle->update($input);
+        endif;
+        return redirect()->route('customer.register')->with("success", "Spectacle prescription updated successfully!");
     }
 }
