@@ -115,7 +115,12 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="12" class="text-end">Total</th>
+                                        <th colspan="8" class="text-end">Total</th>
+                                        <th class="text-end">{{ ($sales) ? number_format($sales->sum('order_total'), 2) : '0.00' }}</th>
+                                        <th class="text-end">{{ ($sales) ? number_format($sales->sum('discount'), 2) : '0.00' }}</th>
+                                        <th class="text-end">{{ ($sales) ? number_format($sales->sum('credit_used'), 2) : '0.00' }}</th>
+                                        <th class="text-end">{{ ($sales) ? number_format($sales->sum('advance'), 2) : '0.00' }}</th>
+                                        <th class="text-end">{{ ($sales) ? number_format($sales->sum('balance'), 2) : '0.00' }}</th>
                                         <th class="text-end">{{ ($sales) ? number_format($sales->sum('invoice_total'), 2) : '0.00' }}</th>
                                     </tr>
                                 </tfoot>
