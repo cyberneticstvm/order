@@ -39,7 +39,7 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $customers = Spectacle::leftJoin('customers', 'spectacles.customer_id', 'customers.id')->selectRaw('customers.*, spectacles.id as specid')->where('spectacles.branch_id', Session::get('branch'))->whereDate('spectacles.created_at', Carbon::today())->latest()->get();
+        $customers = Spectacle::leftJoin('customers', 'spectacles.customer_id', 'customers.id')->selectRaw('customers.*, spectacles.id as specid, spectacles.created_at as stime')->where('spectacles.branch_id', Session::get('branch'))->whereDate('spectacles.created_at', Carbon::today())->latest()->get();
         //$customers = Customer::where('branch_id', Session::get('branch'))->whereDate('updated_at', Carbon::today())->latest()->get();
         return view('backend.customer.index', compact('customers'));
     }

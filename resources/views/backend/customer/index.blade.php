@@ -111,7 +111,7 @@
                                             </ul>
                                         </td>
                                         @endif
-                                        <td>{{ $customer->created_at->format('d, M Y h:i a') }}</td>
+                                        <td>{{ $customer->stime->format('d, M Y h:i a') }}</td>
                                         <td class="text-center"><a href="{{ route('customer.spectacle.edit', encrypt($customer->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></a></td>
                                         <td>{!! $customer->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('customer.edit', encrypt($customer->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
