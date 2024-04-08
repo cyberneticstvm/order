@@ -152,7 +152,7 @@
                                     </tr>
                                     <tr>
                                         <td class="text-end fw-bold text-success">
-                                            Payment collected
+                                            Day Total
                                         </td>
                                         <td class="text-end fw-bold text-success">
                                             {{ number_format($tot, 2) }}
