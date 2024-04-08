@@ -68,7 +68,7 @@
                                 <div class="btn-group">
                                     <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Create New</button>
                                     <ul class="dropdown-menu dropdown-block">
-                                        <!--<li><a class="dropdown-item txt-dark" href="{{ route('store.order.create', ['id' => encrypt(0), 'type' => 1]) }}">Spectacles</a></li>
+                                        <!--<li><a class="dropdown-item txt-dark" href="{{ route('store.order.create', ['cid' => encrypt(0), 'sid' => encrypt(0), 'type' => 1]) }}">Spectacles</a></li>
                                         <li><a class="dropdown-item" href="{{ route('solution.order.create', ['id' => encrypt(0), 'type' => 2]) }}">Solutions</a></li>-->
                                         <li><a class="dropdown-item txt-dark" href="{{ route('customer.create', ['id' => encrypt(0), 'source' => 'direct']) }}">Customer</a></li>
                                     </ul>
