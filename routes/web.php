@@ -384,7 +384,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/', 'index')->name('store.order');
         Route::post('/', 'fetch')->name('store.order.fetch');
         Route::get('/proceed', '')->name('store.order.proceed');
-        Route::get('/create/{id}/{type}', 'create')->name('store.order.create');
+        Route::get('/create/{cid}/{sid}/{type}', 'create')->name('store.order.create');
         Route::post('/create', 'store')->name('store.order.save');
         Route::get('/edit/{id}', 'edit')->name('store.order.edit');
         Route::post('/edit/{id}', 'update')->name('store.order.update');

@@ -105,7 +105,7 @@
                                         <td>
                                             <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Create</button>
                                             <ul class="dropdown-menu dropdown-block">
-                                                <li><a class="dropdown-item txt-dark" href="{{ route('store.order.create', ['id' => encrypt($customer->id), 'type' => '1']) }}">Spectacles</a></li>
+                                                <li><a class="dropdown-item txt-dark" href="{{ route('store.order.create', ['cid' => encrypt($customer->id), 'sid' => encrypt($customer->specid), 'type' => '1']) }}">Spectacles</a></li>
                                                 <li><a class="dropdown-item txt-dark" href="{{ route('solution.order.create', ['id' => encrypt($customer->id), 'type' => '2']) }}">Solutions</a></li>
                                             </ul>
                                         </td>

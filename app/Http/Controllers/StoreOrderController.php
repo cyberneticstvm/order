@@ -58,7 +58,7 @@ class StoreOrderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($id, $type)
+    public function create($cid, $sid, $type)
     {
         $products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['lens', 'frame', 'service'])->orderBy('name')->get();
         $pmodes = $this->pmodes;
@@ -68,8 +68,8 @@ class StoreOrderController extends Controller
         $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', decrypt($id))->first();
         $spectacle = DB::connection('mysql1')->table('spectacles')->where('medical_record_id', decrypt($id))->first();
         $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();*/
-        $patient = Customer::findOrFail(decrypt($id));
-        $spectacle = Spectacle::where('customer_id', decrypt($id))->latest()->first();
+        $patient = Customer::findOrFail(decrypt($cid));
+        $spectacle = Spectacle::where('id', decrypt($sid))->latest()->first();
         $powers = Power::all();
         return view(($type == 1) ? 'backend.order.store.create' : 'backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'spectacle', 'powers', 'states'));
     }
