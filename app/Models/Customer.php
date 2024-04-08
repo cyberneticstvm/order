@@ -23,9 +23,10 @@ class Customer extends Model
         return $this->hasMany(Spectacle::class, 'id', 'customer_id');
     }
 
-    public function hasOrder($cid)
+    public function hasOrder($specid)
     {
-        $ocount = Order::where('customer_id', $cid)->whereDate('created_at', Carbon::today())->count('id');
-        return ($ocount == 1) ? true : false;
+        //$ocount = Order::where('customer_id', $cid)->whereDate('created_at', Carbon::today())->count('id');
+        $spec = Spectacle::where('id', $specid)->whereDate('created_at', Carbon::today())->first();
+        return ($spec?->order_id) ? true : false;
     }
 }

@@ -99,7 +99,7 @@
                                         <td>{{ $customer->name }}</td>
                                         <td>{{ $customer->mobile }}</td>
                                         <td>{{ $customer->mrn }}</td>
-                                        @if($customer->hasOrder($customer->id))
+                                        @if($customer->hasOrder($customer->specid))
                                         <td class="text-success text-center">Done!</td>
                                         @else
                                         <td>
