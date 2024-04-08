@@ -40,7 +40,7 @@
                             <form class="row g-3" method="post" action="{{ route('store.order.save') }}" name="orderForm" id="orderForm">
                                 @csrf
                                 <input type="hidden" name="consultation_id" value="{{ $patient?->mrn ?? 0 }}" />
-                                <input type="hidden" name="spectacle_id" value="{{ $spectacle?->id ?? 0 }}" />
+                                <input type="hidden" name="registration_id" value="{{ $registration?->id ?? 0 }}" />
                                 <input type="hidden" name="customer_id" id="customer_id" value="{{ $patient?->id ?? 0 }}" />
                                 <div class="col-md-2">
                                     <label class="form-label req">Order Date</label>

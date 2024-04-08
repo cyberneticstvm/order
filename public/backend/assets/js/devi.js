@@ -233,6 +233,42 @@ $(function () {
             });
         }
     });
+
+    $(document).on('change', '.changePresc', function () {
+        let source = $(this).data('source');
+        let val = $(this).val();
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/prescription/' + source + '/' + val,
+            success: function (spectacle) {
+                $(".sre_sph").val(spectacle.re_sph);
+                $(".sre_cyl").val(spectacle.re_cyl);
+                $(".sre_axis").val(spectacle.re_axis);
+                $(".sre_add").val(spectacle.re_add);
+                $(".sre_va").val(spectacle.re_va);
+                $(".sre_pd").val(spectacle.re_pd);
+                $(".sre_int_add").val(spectacle.re_int_add);
+
+                $(".sle_sph").val(spectacle.le_sph);
+                $(".sle_cyl").val(spectacle.le_cyl);
+                $(".sle_axis").val(spectacle.le_axis);
+                $(".sle_add").val(spectacle.le_add);
+                $(".sle_va").val(spectacle.le_va);
+                $(".sle_pd").val(spectacle.le_pd);
+                $(".sle_int_add").val(spectacle.le_int_add);
+
+                $(".a_size").val(spectacle.a_size);
+                $(".b_size").val(spectacle.b_size);
+                $(".dbl").val(spectacle.dbl);
+                $(".fh").val(spectacle.fh);
+                $(".vd").val(spectacle.vd);
+                $(".ed").val(spectacle.ed);
+                $(".w_angle").val(spectacle.w_angle);
+
+                $(".select2").select2();
+            }
+        });
+    });
 });
 
 function addMedicineRowForOrder(category, attribute) {

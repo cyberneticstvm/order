@@ -10,6 +10,7 @@ use App\Models\OrderDetail;
 use App\Models\Payment;
 use App\Models\PaymentMode;
 use App\Models\Product;
+use App\Models\Registration;
 use App\Models\State;
 use App\Models\User;
 use Carbon\Carbon;
@@ -51,7 +52,7 @@ class SolutionOrderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($id)
+    public function create($id, $type)
     {
         $products = $this->products;
         $pmodes = $this->pmodes;
@@ -60,8 +61,9 @@ class SolutionOrderController extends Controller
         /*$consultation = Consultation::with('patient')->find(decrypt($id));
         $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', decrypt($id))->first();
         $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();*/
-        $patient = Customer::findOrFail(decrypt($id));
-        return view('backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'states'));
+        $registration = Registration::findOrFail(decrypt($id));
+        $patient = Customer::findOrFail($registration->customer_id);
+        return view('backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'states', 'registration'));
     }
 
     /**
@@ -160,6 +162,7 @@ class SolutionOrderController extends Controller
                         'updated_by' => $request->user()->id,
                     ]);
                 endif;
+                Registration::where('id', $request->registration_id)->update(['order_id' => $order->id]);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());

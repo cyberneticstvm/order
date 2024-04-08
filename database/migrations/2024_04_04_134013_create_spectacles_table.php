@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('spectacles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('registration_id')->nullable();
             $table->string('re_sph', 7)->nullable();
             $table->string('re_cyl', 7)->nullable();
             $table->string('re_axis', 7)->nullable();

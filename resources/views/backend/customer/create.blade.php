@@ -61,7 +61,7 @@
                                     <label class="form-label">Alt. Mobile</label>
                                     {{ html()->text($name = 'alt_mobile', $patient?->alt_mobile ?? old('alt_mobile'))->class('form-control')->maxlength('10')->placeholder('Alt Mobile') }}
                                 </div>
-                                <div class="col-md-3">
+                                <!--<div class="col-md-3">
                                     <label class="form-label">Optometrist</label>
                                     {{ html()->select('optometrist', $optometrists, old('optometrist'))->class('form-control select2')->placeholder('Select') }}
                                     @error('optometrist')
@@ -74,7 +74,7 @@
                                     @error('doctor')
                                     <small class="text-danger">{{ $errors->first('doctor') }}</small>
                                     @enderror
-                                </div>
+                                </div>-->
                                 <div class="col-md-2">
                                     <label class="form-label">GSTIN</label>
                                     {{ html()->text($name = 'gstin', $value = $patient?->gstin ?? old('gstin'))->class('form-control')->placeholder('GSTIN') }}
@@ -83,19 +83,7 @@
                                     <label class="form-label">Company Name</label>
                                     {{ html()->text($name = 'company_name', $value = $patient?->company_name ?? old('company_name'))->class('form-control')->placeholder('Company Name') }}
                                 </div>
-                                <div class="col-12 mt-5">
-                                    <div class="form-check-size">
-                                        <div class="form-check form-check-inline checkbox checkbox-dark mb-0">
-                                            <input class="form-check-input" name="mob" id="inline-1" type="checkbox" value="1">
-                                            <label class="form-check-label" for="inline-1">Customer doesn't have Mobile</label>
-                                        </div>
-                                        <div class="form-check form-check-inline checkbox checkbox-dark mb-0">
-                                            <input class="form-check-input" name="rx" id="inline-2" type="checkbox" value="1">
-                                            <label class="form-check-label" for="inline-2">Prescription Not Required</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 mt-5 table-responsive">
+                                <!-- <div class="col-12 mt-5 table-responsive">
                                     <h5 class="text-center text-secondary">Prescription Details</h5>
                                     <table class="table table-bordered table-stripped mt-3">
                                         <thead class="text-center">
@@ -213,7 +201,7 @@
                                             </tr>
                                         </thead>
                                     </table>
-                                </div>
+                                </div> -->
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                                     <button class="btn btn-submit btn-success" type="submit">Save</button>

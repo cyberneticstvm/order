@@ -84,38 +84,35 @@
                                         <th>Customer Name</th>
                                         <th>Contact Number</th>
                                         <th>MRN</th>
-                                        <th>Order</th>
-                                        <th>Created_at</th>
                                         <th>Prescription</th>
+                                        <th>Created at</th>
                                         <th>Status</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
+                                        <th>Order</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($customers as $key => $customer)
+                                    @forelse($registrations as $key => $reg)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $customer->id }}</td>
-                                        <td>{{ $customer->name }}</td>
-                                        <td>{{ $customer->mobile }}</td>
-                                        <td>{{ ($customer->mrn == '0') ? 'Direct' : $customer->mrn }}</td>
-                                        @if($customer->hasOrder($customer->specid))
-                                        <td class="text-success text-center">Done!</td>
-                                        @else
+                                        <td>{{ $reg->customer->id }}</td>
+                                        <td>{{ $reg->customer->name }}</td>
+                                        <td>{{ $reg->customer->mobile }}</td>
+                                        <td>{{ ($reg->customer->mrn == '0') ? 'Direct' : $reg->customer->mrn }}</td>
                                         <td>
                                             <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Create</button>
                                             <ul class="dropdown-menu dropdown-block">
-                                                <li><a class="dropdown-item txt-dark" href="{{ route('store.order.create', ['cid' => encrypt($customer->id), 'sid' => encrypt($customer->specid), 'type' => '1']) }}">Spectacles</a></li>
-                                                <li><a class="dropdown-item txt-dark" href="{{ route('solution.order.create', ['id' => encrypt($customer->id), 'type' => '2']) }}">Solutions</a></li>
+                                                <li><a class="dropdown-item txt-dark" href="{{ route('customer.spectacle.edit', encrypt($reg->id)) }}">Prescription</a></li>
                                             </ul>
                                         </td>
-                                        @endif
-                                        <td>{{ $customer->stime->format('d, M Y h:i a') }}</td>
-                                        <td class="text-center"><a href="{{ route('customer.spectacle.edit', encrypt($customer->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></a></td>
-                                        <td>{!! $customer->status() !!}</td>
-                                        <td class="text-center"><a href="{{ route('customer.edit', encrypt($customer->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
-                                        <td class="text-center"><a href="{{ route('customer.delete', encrypt($customer->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
+                                        <td>{{ $reg->created_at->format('d, M Y h:i a') }}</td>
+                                        <td>{!! $reg->status() !!}</td>
+                                        <td>
+                                            <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Create</button>
+                                            <ul class="dropdown-menu dropdown-block">
+                                                <li><a class="dropdown-item txt-dark" href="{{ route('store.order.create', ['id' => encrypt($reg->id), 'type' => '1']) }}">Spectacles</a></li>
+                                                <li><a class="dropdown-item txt-dark" href="{{ route('solution.order.create', ['id' => encrypt($reg->id), 'type' => '2']) }}">Solutions</a></li>
+                                            </ul>
+                                        </td>
                                     </tr>
                                     @empty
                                     @endforelse

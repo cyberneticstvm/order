@@ -35,7 +35,7 @@
                                 {{ html()->text($name = 'pname', $value = $patient->patient_name)->class('form-control')->attribute('readonly', 'true') }}
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">Patient ID</label>
+                                <label class="form-label">Patient ID / Customer ID</label>
                                 {{ html()->text($name = 'pid', $value = $patient->patient_id)->class('form-control')->attribute('readonly', 'true') }}
                             </div>
                             <div class="col-md-4">

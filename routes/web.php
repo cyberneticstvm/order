@@ -104,6 +104,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
 
         Route::get('/power', 'powers')->name('ajax.power.get');
         Route::get('/get/availablecredit/{cid}', 'getAvailableCredit')->name('ajax.available.credit.get');
+
+        Route::get('/prescription/{source}/{val}', 'getPrescription')->name('ajax.get.prescription');
     });
 
     Route::prefix('/backend')->controller(HelperController::class)->group(function () {
@@ -384,7 +386,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/', 'index')->name('store.order');
         Route::post('/', 'fetch')->name('store.order.fetch');
         Route::get('/proceed', '')->name('store.order.proceed');
-        Route::get('/create/{cid}/{sid}/{type}', 'create')->name('store.order.create');
+        Route::get('/create/{id}/{type}', 'create')->name('store.order.create');
         Route::post('/create', 'store')->name('store.order.save');
         Route::get('/edit/{id}', 'edit')->name('store.order.edit');
         Route::post('/edit/{id}', 'update')->name('store.order.update');
@@ -392,7 +394,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
     });
 
     Route::prefix('/backend/solution/order')->controller(SolutionOrderController::class)->group(function () {
-        Route::get('/create/{id}', 'create')->name('solution.order.create');
+        Route::get('/create/{id}/{type}', 'create')->name('solution.order.create');
         Route::post('/create', 'store')->name('solution.order.save');
         Route::get('/edit/{id}', 'edit')->name('solution.order.edit');
         Route::post('/edit/{id}', 'update')->name('solution.order.update');

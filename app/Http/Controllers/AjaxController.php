@@ -11,8 +11,10 @@ use App\Models\Power;
 use App\Models\Product;
 use App\Models\ProductSubcategory;
 use App\Models\PurchaseDetail;
+use App\Models\Spectacle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AjaxController extends Controller
 {
@@ -38,6 +40,15 @@ class AjaxController extends Controller
     {
         $products = Product::where('type_id', $type)->orderBy('name')->get();
         return response()->json($products);
+    }
+
+    public function getPrescription($source, $val)
+    {
+        $spectacle = Spectacle::find($val);
+        if ($source == 'hospital') :
+            $spectacle = DB::connection('mysql1')->table('spectacles')->selectRaw("re_dist_sph as re_sph, re_dist_cyl as re_cyl, re_dist_axis as re_axis, re_dist_add as re_add, re_dist_va as re_va, rpd as re_pd, lpd as le_pd, le_dist_sph as le_sph, le_dist_cyl as le_cyl, le_dist_axis as le_axis, le_dist_add as le_add, le_dist_va as le_va, re_int_add, le_int_add, '' as a_size, '' as b_size, '' as dbl, '' as fh, '' as ed, '' as vd, '' as w_angle, 0 as doctor, 0 as optometrist")->where('id', $val)->first();
+        endif;
+        return response()->json($spectacle);
     }
 
     public function getProductPrice($pid, $category, $batch)

@@ -12,6 +12,7 @@ use App\Models\Payment;
 use App\Models\PaymentMode;
 use App\Models\Power;
 use App\Models\Product;
+use App\Models\Registration;
 use App\Models\Spectacle;
 use App\Models\State;
 use App\Models\User;
@@ -58,7 +59,7 @@ class StoreOrderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($cid, $sid, $type)
+    public function create($id, $type)
     {
         $products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['lens', 'frame', 'service'])->orderBy('name')->get();
         $pmodes = $this->pmodes;
@@ -68,10 +69,11 @@ class StoreOrderController extends Controller
         $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', decrypt($id))->first();
         $spectacle = DB::connection('mysql1')->table('spectacles')->where('medical_record_id', decrypt($id))->first();
         $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();*/
-        $patient = Customer::findOrFail(decrypt($cid));
-        $spectacle = Spectacle::where('id', decrypt($sid))->latest()->first();
+        $registration = Registration::findOrFail(decrypt($id));
+        $patient = Customer::findOrFail($registration->customer_id);
+        $spectacle = Spectacle::where('registration_id', $registration)->latest()->first();
         $powers = Power::all();
-        return view(($type == 1) ? 'backend.order.store.create' : 'backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'spectacle', 'powers', 'states'));
+        return view(($type == 1) ? 'backend.order.store.create' : 'backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'spectacle', 'powers', 'states', 'registration'));
     }
 
     public function fetch(Request $request)
@@ -184,7 +186,7 @@ class StoreOrderController extends Controller
                         'updated_by' => $request->user()->id,
                     ]);
                 endif;
-                Spectacle::where('id', $request->spectacle_id)->update(['order_id' => $order->id]);
+                Registration::where('id', $request->registration_id)->update(['order_id' => $order->id]);
                 if ($request->credit_used > 0) :
                     CustomerAccount::create([
                         'customer_id' => $order->customer_id,

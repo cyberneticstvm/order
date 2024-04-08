@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Customer extends Model
+class Registration extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -21,5 +20,10 @@ class Customer extends Model
     public function spectacles()
     {
         return $this->hasMany(Spectacle::class, 'id', 'customer_id');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
 }

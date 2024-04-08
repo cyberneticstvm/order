@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Power;
+use App\Models\Registration;
 use App\Models\Spectacle;
 use App\Models\User;
 use Carbon\Carbon;
@@ -12,6 +13,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Monolog\Registry;
 
 class CustomerController extends Controller
 {
@@ -39,9 +41,10 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $customers = Spectacle::leftJoin('customers', 'spectacles.customer_id', 'customers.id')->selectRaw('customers.*, spectacles.id as specid, spectacles.created_at as stime')->where('spectacles.branch_id', Session::get('branch'))->whereDate('spectacles.created_at', Carbon::today())->latest()->get();
+        /*$customers = Spectacle::leftJoin('customers', 'spectacles.customer_id', 'customers.id')->selectRaw('customers.*, spectacles.id as specid, spectacles.created_at as stime')->where('spectacles.branch_id', Session::get('branch'))->whereDate('spectacles.created_at', Carbon::today())->latest()->get();*/
         //$customers = Customer::where('branch_id', Session::get('branch'))->whereDate('updated_at', Carbon::today())->latest()->get();
-        return view('backend.customer.index', compact('customers'));
+        $registrations = Registration::where('branch_id', Session::get('branch'))->whereDate('created_at', Carbon::today())->whereNull('order_id')->latest()->get();
+        return view('backend.customer.index', compact('registrations'));
     }
 
     public function fetch(Request $request)
@@ -54,7 +57,9 @@ class CustomerController extends Controller
         if ($request->source == 'hospital') :
             $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', $request->search_term)->first();
             if ($mrecord) :
-                $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id)->first();
+                $patient = Customer::selectRaw("name as patient_name, address, id as patient_id")->where('mrn', $mrecord->id)->latest()->first();
+                if (!$patient)
+                    $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id)->first();
                 return view('backend.customer.proceed', compact('mrecord', 'patient', 'source'));
             else :
                 return redirect()->back()->with('error', 'No records found')->withInput($request->all());
@@ -81,7 +86,12 @@ class CustomerController extends Controller
         if ($source == 'hospital') :
             $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', decrypt($id))->first();
             $spectacle = DB::connection('mysql1')->table('spectacles')->where('medical_record_id', decrypt($id))->first();
-            $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();
+            $patient = Customer::selectRaw("id, name as patient_name, age, address, mobile as mobile_number, alt_mobile, gstin, company_name")->where('mrn', $mrecord->id)->latest()->first();
+            if (!$patient) :
+                $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();
+            else :
+                $cid = $patient->id;
+            endif;
         elseif ($source == 'store') :
             $patient = Customer::selectRaw("id, name as patient_name, age, address, mobile as mobile_number, alt_mobile, gstin, company_name")->where('id', decrypt($id))->firstOrFail();
             $cid = $patient->id;
@@ -100,62 +110,26 @@ class CustomerController extends Controller
         ]);
         $cid = $request->cid;
         try {
-            if ($request->cid == 0) :
-                $customer = Customer::create([
-                    'name' => $request->name,
-                    'age' => $request->age,
-                    'address' => $request->address,
-                    'mobile' => ($request->mobile) ?? $this->mobile,
-                    'alt_mobile' => $request->alt_mobile,
-                    'gstin' => $request->gstin,
-                    'company_name' => $request->company_name,
-                    'branch_id' => Session::get('branch'),
-                    'mrn' => $request->mrn,
-                ]);
-                $cid = $customer->id;
-            else :
-                Customer::findOrFail($request->cid)->update([
-                    'name' => $request->name,
-                    'age' => $request->age,
-                    'address' => $request->address,
-                    'mobile' => ($request->mobile) ?? $this->mobile,
-                    'alt_mobile' => $request->alt_mobile,
-                    'gstin' => $request->gstin,
-                    'company_name' => $request->company_name,
-                    'updated_at' => Carbon::now(),
-                ]);
-            endif;
-            if (!$request->rx) :
-                Spectacle::create([
+            DB::transaction(function () use ($request, $cid) {
+                if ($request->cid == 0) :
+                    $customer = Customer::create([
+                        'name' => $request->name,
+                        'age' => $request->age,
+                        'address' => $request->address,
+                        'mobile' => ($request->mobile) ?? $this->mobile,
+                        'alt_mobile' => $request->alt_mobile,
+                        'gstin' => $request->gstin,
+                        'company_name' => $request->company_name,
+                        'branch_id' => Session::get('branch'),
+                        'mrn' => $request->mrn,
+                    ]);
+                    $cid = $customer->id;
+                endif;
+                $reg = Registration::create([
                     'customer_id' => $cid,
-                    're_sph' => $request->re_sph,
-                    're_cyl' => $request->re_cyl,
-                    're_axis' => $request->re_axis,
-                    're_add' => $request->re_add,
-                    're_va' => $request->re_va,
-                    're_pd' => $request->re_pd,
-                    're_int_add' => $request->re_int_add,
-                    'le_sph' => $request->le_sph,
-                    'le_cyl' => $request->le_cyl,
-                    'le_axis' => $request->le_axis,
-                    'le_add' => $request->le_add,
-                    'le_va' => $request->le_va,
-                    'le_pd' => $request->le_pd,
-                    'le_int_add' => $request->le_int_add,
-                    'a_size' => $request->a_size,
-                    'b_size' => $request->b_size,
-                    'dbl' => $request->dbl,
-                    'fh' => $request->fh,
-                    'ed' => $request->ed,
-                    'vd' => $request->vd,
-                    'w_angle' => $request->w_angle,
-                    'doctor' => $request->doctor,
-                    'optometrist' => $request->optometrist,
                     'branch_id' => Session::get('branch'),
-                    'created_by' => $request->user()->id,
-                    'updated_by' => $request->user()->id,
                 ]);
-            endif;
+            });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
@@ -207,21 +181,32 @@ class CustomerController extends Controller
         $optometrists = $this->optometrists;
         $doctors = $this->doctors;
         $powers = $this->powers;
-        $spectacle = Spectacle::where('customer_id', decrypt($id))->whereDate('created_at', Carbon::today())->where('branch_id', Session::get('branch'))->firstOrFail();
-        $customer = Customer::findOrFail(decrypt($id));
-        return view('backend.customer.spectacle', compact('spectacle', 'customer', 'doctors', 'optometrists', 'powers'));
+        $registration = Registration::findOrFail(decrypt($id));
+        $customer = Customer::findOrFail($registration->customer_id);
+        $spectacle = Spectacle::where('registration_id', $registration->id)->first();
+        $store_prescriptions = Spectacle::where('customer_id', $registration->customer_id)->selectRaw("CONCAT_WS(' / ', 'OID', order_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS oid, id")->get();
+        $hospital_prescriptions = DB::connection('mysql1')->table('spectacles')->selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->where('medical_record_id', $customer->mrn)->get();
+        if (!$spectacle) :
+            $spectacle = Spectacle::where('customer_id', $registration->customer_id)->latest()->first();
+        endif;
+        /*if (!$spectacle) :
+            $spectacle = DB::connection('mysql1')->table('spectacles')->where('medical_record_id', $customer->mrn)->first();
+        endif;*/
+        return view('backend.customer.spectacle', compact('spectacle', 'customer', 'doctors', 'optometrists', 'powers', 'registration', 'store_prescriptions', 'hospital_prescriptions'));
     }
 
     public function updateSpectacle(Request $request, string $id)
     {
-        $spectacle = Spectacle::findOrFail($id);
-        $ocount = Order::where('customer_id', $spectacle->customer_id)->whereDate('created_at', Carbon::today())->count('id');
-        if ($ocount == 1) :
-            return redirect()->back()->with("error", "Cant update the prescription since the Order has already been placed.")->withInput($request->all());
-        else :
-            $input = $request->all();
+        $spectacle = Spectacle::find($id);
+        $input = $request->all();
+        if ($spectacle) :
             $input['updated_by'] = $request->user()->id;
             $spectacle->update($input);
+        else :
+            $input['created_by'] = $request->user()->id;
+            $input['updated_by'] = $request->user()->id;
+            $input['branch_id'] = Session::get('branch');
+            Spectacle::create($input);
         endif;
         return redirect()->route('customer.register')->with("success", "Spectacle prescription updated successfully!");
     }

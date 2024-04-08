@@ -34,8 +34,20 @@
                     </div>
                     <div class="card-body">
                         <div class="card-wrapper">
-                            <form class="row g-3" method="post" action="{{ route('customer.spectacle.update', $spectacle->id) }}">
+                            <div class="row mb-5">
+                                <div class="col-md-3">
+                                    <label class="form-label">Hospital Prescription</label>
+                                    {{ html()->select('hpresc', $hospital_prescriptions->pluck('mrn', 'id'), '')->class('form-control select2 changePresc')->attribute('data-source', 'hospital')->placeholder('Select') }}
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Store Prescription</label>
+                                    {{ html()->select('spresc', $store_prescriptions->pluck('oid', 'id'), '')->class('form-control select2 changePresc')->attribute('data-source', 'store')->placeholder('Select') }}
+                                </div>
+                            </div>
+                            <form class="row g-3" method="post" action="{{ route('customer.spectacle.update', ($spectacle->id) ?? 0) }}">
                                 @csrf
+                                <input type="hidden" name="registration_id" value="{{ $registration?->id ?? 0}}" />
+                                <input type="hidden" name="customer_id" value="{{ $customer?->id ?? 0}}" />
                                 <div class="col-md-3">
                                     <label class="form-label req">Customer Name</label>
                                     {{ html()->text($name = 'name', $value = $customer->name)->class('form-control')->placeholder('Customer Name')->disabled() }}
@@ -45,21 +57,21 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Optometrist</label>
-                                    {{ html()->select('optometrist', $optometrists, $spectacle->optometrist)->class('form-control select2')->placeholder('Select') }}
+                                    {{ html()->select('optometrist', $optometrists, $spectacle->optometrist ?? '')->class('form-control select2')->placeholder('Select') }}
                                     @error('optometrist')
                                     <small class="text-danger">{{ $errors->first('optometrist') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Doctor</label>
-                                    {{ html()->select('doctor', $doctors, $spectacle->doctor)->class('form-control select2')->placeholder('Select') }}
+                                    {{ html()->select('doctor', $doctors, $spectacle->doctor ?? '')->class('form-control select2')->placeholder('Select') }}
                                     @error('doctor')
                                     <small class="text-danger">{{ $errors->first('doctor') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-12 mt-5 table-responsive">
                                     <h5 class="text-center text-secondary">Prescription Details</h5>
-                                    <table class="table table-bordered table-stripped mt-3">
+                                    <table class="table table-bordered table-stripped mt-3 tblPrescription">
                                         <thead class="text-center">
                                             <tr>
                                                 <th width="16%">Eye</th>
@@ -78,29 +90,29 @@
                                                     }}
                                                 </td>
                                                 <td>
-                                                    {{ html()->select('re_sph', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->re_dist_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 're_sph') }}
+                                                    {{ html()->select('re_sph', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->re_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 sre_sph')->attribute('id', 're_sph') }}
                                                 </td>
                                                 <td>
-                                                    {{ html()->select('re_cyl', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->re_dist_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 're_cyl') }}
+                                                    {{ html()->select('re_cyl', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->re_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2 sre_cyl')->attribute('id', 're_cyl') }}
                                                 </td>
                                                 <td>
-                                                    {{ html()->select('re_axis', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->re_dist_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 're_axis') }}
+                                                    {{ html()->select('re_axis', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->re_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2 sre_axis')->attribute('id', 're_axis') }}
                                                 </td>
                                                 <td>
-                                                    {{ html()->select('re_add', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->re_dist_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 're_add') }}
+                                                    {{ html()->select('re_add', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->re_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 sre_add')->attribute('id', 're_add') }}
                                                 </td>
                                                 <td>
                                                     {{
-                                                        html()->text('re_va', $spectacle->re_va)->class('form-control border-0 text-center')->maxlength(6)->placeholder('VA')
+                                                        html()->text('re_va', $spectacle->re_va ?? '')->class('form-control border-0 text-center sre_va')->maxlength(6)->placeholder('VA')
                                                     }}
                                                 </td>
                                                 <td>
                                                     {{
-                                                        html()->text('re_pd', $spectacle?->rpd ?? '')->class('form-control border-0 text-center')->placeholder('PD')
+                                                        html()->text('re_pd', $spectacle?->re_pd ?? '')->class('form-control border-0 text-center sre_pd')->placeholder('PD')
                                                     }}
                                                 </td>
                                                 <td>
-                                                    {{ html()->select('re_int_add', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->re_int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 're_int_add') }}
+                                                    {{ html()->select('re_int_add', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->re_int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2 sre_int_add')->attribute('id', 're_int_add') }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -110,66 +122,66 @@
                                                     }}
                                                 </td>
                                                 <td>
-                                                    {{ html()->select('le_sph', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->le_dist_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'le_sph') }}
+                                                    {{ html()->select('le_sph', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->le_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 sle_sph')->attribute('id', 'le_sph') }}
                                                 </td>
                                                 <td>
-                                                    {{ html()->select('le_cyl', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->le_dist_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'le_cyl') }}
+                                                    {{ html()->select('le_cyl', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->le_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2 sle_cyl')->attribute('id', 'le_cyl') }}
                                                 </td>
                                                 <td>
-                                                    {{ html()->select('le_axis', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->le_dist_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'le_axis') }}
+                                                    {{ html()->select('le_axis', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->le_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2 sle_axis')->attribute('id', 'le_axis') }}
                                                 </td>
                                                 <td>
-                                                    {{ html()->select('le_add', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->le_dist_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'le_add') }}
+                                                    {{ html()->select('le_add', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->le_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 sle_add')->attribute('id', 'le_add') }}
                                                 </td>
                                                 <td>
                                                     {{
-                                                        html()->text('le_va', $spectacle->le_va)->class('form-control border-0 text-center')->maxlength(6)->placeholder('VA')
+                                                        html()->text('le_va', $spectacle->le_va ?? '')->class('form-control border-0 text-center sle_va')->maxlength(6)->placeholder('VA')
                                                     }}
                                                 </td>
                                                 <td>
                                                     {{
-                                                        html()->text('le_pd', $spectacle?->lpd ?? '')->class('form-control border-0 text-center')->placeholder('PD')
+                                                        html()->text('le_pd', $spectacle?->le_pd ?? '')->class('form-control border-0 text-center sle_pd')->placeholder('PD')
                                                     }}
                                                 </td>
                                                 <td>
-                                                    {{ html()->select('le_int_add', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->le_int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'le_int_add') }}
+                                                    {{ html()->select('le_int_add', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->le_int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2 sle_int_add')->attribute('id', 'le_int_add') }}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>
                                                     {{
-                                                        html()->text('a_size', $spectacle->a_size)->class('form-control border-0 text-center')->maxlength(2)->placeholder('A Size')
+                                                        html()->text('a_size', $spectacle->a_size ?? '')->class('form-control border-0 text-center a_size')->maxlength(2)->placeholder('A Size')
                                                     }}
                                                 </td>
                                                 <td>
                                                     {{
-                                                        html()->text('b_size', $spectacle->b_size)->class('form-control border-0 text-center')->maxlength(2)->placeholder('B Size')
+                                                        html()->text('b_size', $spectacle->b_size ?? '')->class('form-control border-0 text-center b_size')->maxlength(2)->placeholder('B Size')
                                                     }}
                                                 </td>
                                                 <td>
                                                     {{
-                                                        html()->text('dbl', $spectacle->dbl)->class('form-control border-0 text-center')->maxlength(2)->placeholder('DBL')
+                                                        html()->text('dbl', $spectacle->dbl ?? '')->class('form-control border-0 text-center dbl')->maxlength(2)->placeholder('DBL')
                                                     }}
                                                 </td>
                                                 <td>
                                                     {{
-                                                        html()->text('fh', $spectacle->fh)->class('form-control border-0 text-center')->maxlength(2)->placeholder('FH')
+                                                        html()->text('fh', $spectacle->fh ?? '')->class('form-control border-0 text-center fh')->maxlength(2)->placeholder('FH')
                                                     }}
                                                 </td>
                                                 <td>
                                                     {{
-                                                        html()->text('ed', $spectacle->ed)->class('form-control border-0 text-center')->maxlength(2)->placeholder('ED')
+                                                        html()->text('ed', $spectacle->ed ?? '')->class('form-control border-0 text-center ed')->maxlength(2)->placeholder('ED')
                                                     }}
                                                 </td>
                                                 <td>
                                                     {{
-                                                        html()->text('vd', $spectacle->vd)->class('form-control border-0 text-center')->maxlength(2)->placeholder('VD')
+                                                        html()->text('vd', $spectacle->vd ?? '')->class('form-control border-0 text-center vd')->maxlength(2)->placeholder('VD')
                                                     }}
                                                 </td>
                                                 <td>
                                                     {{
-                                                        html()->text('w_angle', $spectacle->w_angle)->class('form-control border-0 text-center')->maxlength(2)->placeholder('W. Angle')
+                                                        html()->text('w_angle', $spectacle->w_angle ?? '')->class('form-control border-0 text-center w_angle')->maxlength(2)->placeholder('W. Angle')
                                                     }}
                                                 </td>
                                             </tr>
