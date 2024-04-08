@@ -10,6 +10,7 @@ use App\Models\ConsultationType;
 use App\Models\Customer;
 use App\Models\CustomerAccount;
 use App\Models\Doctor;
+use App\Models\Head;
 use App\Models\IncomeExpense;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -63,7 +64,7 @@ function branch()
 
 function isExpenseLimitReached($amount, $ded = 0)
 {
-    $tot = IncomeExpense::where('category', 'expense')->whereDate('date', Carbon::today())->where('branch_id', branch()->id)->sum('amount');
+    $tot = IncomeExpense::where('category', 'expense')->whereIn('head_id', Head::where('daily_expense_limit', 1)->pluck('id'))->whereDate('date', Carbon::today())->where('branch_id', branch()->id)->sum('amount');
     $tot = ($tot + $amount) - $ded;
     if ($tot > branch()->daily_expense_limit)
         return 1;
