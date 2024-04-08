@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('display_capacity')->default(0);
             $table->decimal('monthly_target', 9, 2)->default(0);
             $table->decimal('daily_expense_limit', 8, 2)->default(0)->nullable();
+            $table->integer('cash_sales_id')->nullable();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
             $table->timestamps();

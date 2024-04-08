@@ -27,7 +27,8 @@
                 <div class="card no-radius">
                     <div class="card-header">
                         @if(Session::has('branch'))
-                        <h5>Dashboard</h5><span>Hello <span class="text-primary"> {{ Auth::user()->name }}</span>, You are now logged into <span class="text-primary">{{ branches()->where('id', Session::get('branch'))->first()->name}}</span> branch!</span>
+                        <h5>Dashboard</h5><span>Hello <span class="text-primary"> {{ Auth::user()->name }}</span>, You are now logged into <span class="text-primary">{{ branches()->where('id', Session::get('branch'))->first()->name }}</span> branch!</span>
+                        <p>Your Default Cash Sale Customer ID is {{ branches()->where('id', Session::get('branch'))->first()->cash_sales_id }}</p>
                         @endif
                     </div>
                 </div>
