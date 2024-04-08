@@ -13,7 +13,7 @@ class Spectacle extends Model
 
     protected $guarded = [];
 
-    protected $casts = ['created_at' => 'datetime'];
+    protected $casts = ['stime' => 'datetime'];
 
     public function status()
     {
