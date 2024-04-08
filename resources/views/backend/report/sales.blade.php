@@ -106,8 +106,8 @@
                                         <td class="text-end">{{ number_format($item->order_total, 2) }}</td>
                                         <td class="text-end">{{ number_format($item->discount, 2) }}</td>
                                         <td class="text-end">{{ number_format($item->credit_used, 2) }}</td>
-                                        <td class="text-end">{{ number_format($item->advance, 2) }}</td>
-                                        <td class="text-end">{{ number_format($item->balance, 2) }}</td>
+                                        <td class="text-end">{{ number_format($item->payments->sum('amount'), 2) }}</td>
+                                        <td class="text-end">{{ number_format($item->invoice_total - $item->payments->sum('amount'), 2) }}</td>
                                         <td class="text-end">{{ number_format($item->invoice_total, 2) }}</td>
                                     </tr>
                                     @empty
