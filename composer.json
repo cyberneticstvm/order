@@ -16,6 +16,7 @@
         "maatwebsite/excel": "^3.1",
         "milon/barcode": "^10.0",
         "simplesoftwareio/simple-qrcode": "^4.2",
+        "spatie/laravel-db-snapshots": "^2.6",
         "spatie/laravel-html": "^3.2",
         "spatie/laravel-menu": "^4.1",
         "spatie/laravel-permission": "^5.11",
