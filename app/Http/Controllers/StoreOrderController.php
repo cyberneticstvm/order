@@ -71,7 +71,7 @@ class StoreOrderController extends Controller
         $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();*/
         $registration = Registration::findOrFail(decrypt($id));
         $patient = Customer::findOrFail($registration->customer_id);
-        $spectacle = Spectacle::where('registration_id', $registration)->latest()->first();
+        $spectacle = Spectacle::where('registration_id', $registration->id)->latest()->first();
         $powers = Power::all();
         return view(($type == 1) ? 'backend.order.store.create' : 'backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'spectacle', 'powers', 'states', 'registration'));
     }
