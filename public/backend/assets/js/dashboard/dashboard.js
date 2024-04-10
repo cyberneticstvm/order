@@ -1,6 +1,6 @@
 $(function () {
     $.getJSON('/ajax/chart/order', function (response) {
-        /*console.log(response)*/
+        console.log(response)
         var orderoptions = {
             series: [
                 {
@@ -106,11 +106,11 @@ $(function () {
             },
             yaxis: {
                 min: 0,
-                max: 20,
+                //max: 20,
                 tickAmount: 5,
                 labels: {
                     formatter: function (val) {
-                        return val + "";
+                        return val + "N";
                     },
                     style: {
                         fontSize: "12px",
@@ -118,9 +118,6 @@ $(function () {
                         colors: "var(--chart-text-color)",
                     },
                 },
-                title: {
-                    text: '# (Count)'
-                }
             },
             xaxis: {
                 tooltip: {
