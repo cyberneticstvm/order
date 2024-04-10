@@ -1,6 +1,6 @@
 $(function () {
     $.getJSON('/ajax/chart/order', function (response) {
-        console.log(response)
+        /*console.log(response)*/
         var orderoptions = {
             series: [
                 {
