@@ -98,7 +98,7 @@ function isFullyPaid($oid, $status)
 {
     $order = Order::findOrFail($oid);
     $paid = Payment::where('order_id', $oid)->sum('amount');
-    if ($paid < $order->invoice_total && $status = 'delivered')
+    if ($paid < $order->invoice_total && $status == 'delivered')
         return false;
     return true;
 }
