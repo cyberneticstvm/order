@@ -50,7 +50,7 @@
                 <p>Enter your username & password to login</p>
                 <div class="form-group">
                   <label class="col-form-label">Username</label>
-                  {{ html()->text($name="username", $value=old('username'))->class('form-control')->placeholder("Username") }}
+                  {{ html()->text($name="username", $value=old('username'))->class('form-control uname')->placeholder("Username") }}
                   @error('username')
                   <small class="text-danger">{{ $errors->first('username') }}</small>
                   @enderror
@@ -95,6 +95,11 @@
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="{{ asset('/backend/assets/js/script.js') }}"></script>
+    <script>
+      $(function() {
+        $(".uname").focus();
+      })
+    </script>
   </div>
   @include("backend.message")
 </body>
