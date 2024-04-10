@@ -17,13 +17,18 @@ class Registration extends Model
         return ($this->deleted_at) ? "<span class='badge badge-danger'>Deleted</span>" : "<span class='badge badge-success'>Active</span>";
     }
 
-    public function spectacles()
+    /*public function spectacles()
     {
         return $this->hasMany(Spectacle::class, 'id', 'customer_id');
-    }
+    }*/
 
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
+
+    public function spectacle()
+    {
+        return $this->hasOne(Spectacle::class, 'registration_id', 'id');
     }
 }

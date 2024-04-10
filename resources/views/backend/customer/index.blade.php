@@ -98,12 +98,16 @@
                                         <td>{{ $reg->customer->name }}</td>
                                         <td>{{ $reg->customer->mobile }}</td>
                                         <td>{{ ($reg->customer->mrn == '0') ? 'Direct' : $reg->customer->mrn }}</td>
+                                        @if($reg->spectacle):
+                                        <td></td>
+                                        @else
                                         <td>
                                             <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Create</button>
                                             <ul class="dropdown-menu dropdown-block">
                                                 <li><a class="dropdown-item txt-dark" href="{{ route('customer.spectacle.edit', encrypt($reg->id)) }}">Prescription</a></li>
                                             </ul>
                                         </td>
+                                        @endif
                                         <td>{{ $reg->created_at->format('d, M Y h:i a') }}</td>
                                         <td>{!! $reg->status() !!}</td>
                                         <td>
