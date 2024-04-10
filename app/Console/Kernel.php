@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('snapshot:create ' . Carbon::now())->hourly();
+        $schedule->command('snapshot:create ' . time())->hourly();
         $schedule->command('snapshot:cleanup --keep=5')->hourly();
         $schedule->call(function () {
             $branches = Branch::all();
