@@ -140,6 +140,7 @@
   <script src="{{ asset('/backend/assets/js/slick/slick.min.js') }}"></script>
   <script src="{{ asset('/backend/assets/js/slick/slick.js') }}"></script>
   <script src="{{ asset('/backend/assets/js/header-slick.js') }}"></script>
+
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" type="text/javascript"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.6.0/bootstrap-tagsinput.min.js" type="text/javascript"></script>
   <script src="{{ asset('/backend/assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
@@ -148,6 +149,11 @@
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <!-- Plugins JS Ends-->
   <!-- Theme js-->
+  @if(Route::current()->getName() == 'dashboard')
+  <script src="{{ asset('/backend/assets/js/chart/apex-chart/apex-chart.js') }}"></script>
+  <script src="{{ asset('/backend/assets/js/chart/apex-chart/stock-prices.js') }}"></script>
+  <script src="{{ asset('/backend/assets/js/dashboard/dashboard.js') }}"></script>
+  @endif
   <script src="{{ asset('/backend/assets/js/script.js') }}"></script>
   <script src="{{ asset('/backend/assets/js/devi.js') }}"></script>
   <script src="{{ asset('/backend/assets/js/theme-customizer/customizer.js') }}"></script>

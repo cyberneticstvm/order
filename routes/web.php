@@ -92,6 +92,7 @@ Route::middleware(['web', 'auth'])->group(function () {
 Route::middleware(['web', 'auth', 'branch'])->group(function () {
 
     Route::prefix('/ajax')->controller(AjaxController::class)->group(function () {
+        Route::get('/chart/order', 'getOrderData')->name('ajax.chart.order');
         Route::post('/appointment/time', 'getAppointmentTime')->name('ajax.appointment.time');
         Route::get('/product/{category}', 'getProductsByCategory')->name('ajax.product.get');
         Route::get('/productprice/{product}/{category}/{batch}', 'getProductPrice')->name('ajax.productprice.get');
