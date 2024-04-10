@@ -87,7 +87,7 @@
             </tr>
         </tbody>
     </table>
-    <div class="row mt-30">
+    <div class="row">
         <div class="col">
             <p>Order Note / Comments: {{ $order->order_note }}</p>
         </div>
@@ -100,7 +100,7 @@
     </div>-->
 </div>
 <hr style="border: 1px dotted; color:blue;">
-<div class="row mt-30">
+<div class="row">
     <div class="col">
         <table class="table" width="05%" cellpadding="0" cellspacing="0">
             <thead>
@@ -126,7 +126,7 @@
         </table>
     </div>
 </div>
-<div class="row mt-10">
+<div class="row">
     <div class="col">
         <table class="bordered" width="75%" cellspacing="0" cellpadding="0">
             <thead>
@@ -152,7 +152,7 @@
         </table>
     </div>
 </div>
-<div class="row mt-10">
+<div class="row">
     <div class="col">
         <table class="no-border" cellpadding="0" cellspacing="0" width="75%">
             <thead>
@@ -183,7 +183,7 @@
         </table>
     </div>
 </div>
-<div class="row mt-10">
+<div class="row">
     <div class="col">
         <p>Order Note / Comments: {{ $order->order_note }}</p>
     </div>
