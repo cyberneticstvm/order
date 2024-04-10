@@ -116,7 +116,7 @@
                     </div>
                     <div class="card-body pt-0">
                         <div class="row m-0 overall-card">
-                            <div class="col-xxl-8 col-xl-7 col-md-8 col-sm-7 p-0 box-col-7 col-ed-7">
+                            <div class="col-xxl-12 col-xl-7 col-md-8 col-sm-7 p-0 box-col-7 col-ed-7">
                                 <div class="market-chart-container">
                                     <div id="order-chart"></div>
                                 </div>
