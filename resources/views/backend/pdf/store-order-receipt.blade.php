@@ -102,7 +102,7 @@
 <hr style="border: 1px dotted; color:blue;">
 <div class="row">
     <div class="col">
-        <table class="table" width="05%" cellpadding="0" cellspacing="0">
+        <table class="table" width="75%" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
                     <td width="25%" class="no-border">C.Name / ID</td>
