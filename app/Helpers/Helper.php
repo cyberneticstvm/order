@@ -94,11 +94,11 @@ function invoicenumber($oid)
     return DB::table('orders')->selectRaw("CONCAT_WS('/', 'INV', '$bcode', LPAD(IFNULL($oid, 1), 7, '0')) AS ino")->first();
 }
 
-function isFullyPaid($oid)
+function isFullyPaid($oid, $status)
 {
     $order = Order::findOrFail($oid);
     $paid = Payment::where('order_id', $oid)->sum('amount');
-    if ($paid < $order->invoice_total)
+    if ($paid < $order->invoice_total && $status = 'delivered')
         return false;
     return true;
 }

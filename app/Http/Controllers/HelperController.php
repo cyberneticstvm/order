@@ -127,7 +127,7 @@ class HelperController extends Controller
         ]);
         $order = Order::findOrFail($id);
         if (!$order->invoice_number) :
-            if (!isFullyPaid($order->id)) :
+            if (!isFullyPaid($order->id, $request->order_status)) :
                 return redirect()->back()->with("error", "Amount due.");
             else :
                 $order->update(['order_status' => $request->order_status]);
