@@ -151,7 +151,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
 
     Route::prefix('/backend/pdf')->controller(PdfController::class)->group(function () {
         Route::get('/opt/{id}', 'opt')->name('pdf.opt');
-        Route::get('/prescription/{id}', 'prescription')->name('pdf.prescription');
+        Route::get('/prescription/{id}', 'prescription')->name('pdf.prescription'); // Order
         Route::get('/consultation/receipt/{id}', 'cReceipt')->name('pdf.consultation.receipt');
         Route::get('/mrecord/{id}', 'medicalRecord')->name('pdf.mrecord');
         Route::get('/appointment', 'exportTodaysAppointment')->name('pdf.appointment');
@@ -170,6 +170,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/order/receipt/{id}', 'exportOrderReceipt')->name('store.order.receipt');
         Route::get('/product/transfer/{id}', 'exportProductTransfer')->name('pdf.product.transfer');
         Route::get('/order/prescription/{id}', 'exportOrderPrescription')->name('store.order.prescription');
+        Route::get('/customer/prescription/{id}', 'exportCustomerPrescription')->name('customer.order.prescription');
     });
 
     Route::prefix('/backend/bank/transfer')->controller(BankTransferController::class)->group(function () {
@@ -514,6 +515,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
 
     Route::prefix('/backend/customer')->controller(CustomerController::class)->group(function () {
         Route::get('/', 'index')->name('customer.register');
+        Route::get('/spectacles', 'spectacles')->name('customer.spectacles');
         Route::post('/', 'fetch')->name('customer.fetch');
         Route::get('/proceed', '')->name('customer.proceed');
         Route::get('/create/{id}/{source}', 'create')->name('customer.create');

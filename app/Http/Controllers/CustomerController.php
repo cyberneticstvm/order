@@ -23,7 +23,7 @@ class CustomerController extends Controller
     protected $optometrists, $doctors, $powers, $mobile;
     public function __construct()
     {
-        $this->middleware('permission:customer-list|customer-create|customer-edit|customer-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:customer-list|customer-create|customer-edit|customer-delete', ['only' => ['index', 'store', 'spectacles']]);
         $this->middleware('permission:customer-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:customer-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:customer-delete', ['only' => ['destroy']]);
@@ -45,6 +45,12 @@ class CustomerController extends Controller
         //$customers = Customer::where('branch_id', Session::get('branch'))->whereDate('updated_at', Carbon::today())->latest()->get();
         $registrations = Registration::where('branch_id', Session::get('branch'))->whereDate('created_at', Carbon::today())->whereNull('order_id')->latest()->get();
         return view('backend.customer.index', compact('registrations'));
+    }
+
+    public function spectacles()
+    {
+        $spectacles = Spectacle::whereDate('created_at', Carbon::today())->where('branch_id', Session::get('branch'))->get();
+        return view('backend.customer.spectacle-register', compact('spectacles'));
     }
 
     public function fetch(Request $request)
@@ -183,9 +189,10 @@ class CustomerController extends Controller
         $optometrists = $this->optometrists;
         $doctors = $this->doctors;
         $powers = $this->powers;
-        $registration = Registration::findOrFail(decrypt($id));
-        $customer = Customer::findOrFail($registration->customer_id);
-        $spectacle = Spectacle::where('registration_id', $registration->id)->first();
+        $spectacle = Spectacle::findOrFail(decrypt($id));
+        $registration = Registration::findOrFail($spectacle->registration_id);
+        $customer = Customer::findOrFail($spectacle->customer_id);
+
         $store_prescriptions = Spectacle::where('customer_id', $registration->customer_id)->selectRaw("CONCAT_WS(' / ', 'OID', order_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS oid, id")->get();
         $hospital_prescriptions = DB::connection('mysql1')->table('spectacles')->selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->where('medical_record_id', $customer->mrn)->get();
         /*if (!$spectacle) :

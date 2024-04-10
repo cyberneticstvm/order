@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\Patient;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\Spectacle;
 use App\Models\Transfer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -176,6 +177,14 @@ class PdfController extends Controller
         $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
         $pdf = PDF::loadView('/backend/pdf/prescription', compact('order', 'qrcode'));
         return $pdf->stream($order->invoice_number . '.pdf');
+    }
+
+    public function exportCustomerPrescription($id)
+    {
+        $spectacle = Spectacle::findOrFail(decrypt($id));
+        $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
+        $pdf = PDF::loadView('/backend/pdf/spectacle', compact('spectacle', 'qrcode'));
+        return $pdf->stream('spectacle.pdf');
     }
 
     public function NumberintoWords(float $number)

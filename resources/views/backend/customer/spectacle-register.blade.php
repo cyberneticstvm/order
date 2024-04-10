@@ -41,40 +41,19 @@
                                         <th>Customer ID</th>
                                         <th>Customer Name</th>
                                         <th>Contact Number</th>
-                                        <th>MRN</th>
                                         <th>Prescription</th>
-                                        <th>Created at</th>
-                                        <th>Status</th>
-                                        <th>Order</th>
+                                        <th>Print</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($registrations as $key => $reg)
+                                    @forelse($spectacles as $key => $spec)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $reg->customer->id }}</td>
-                                        <td>{{ $reg->customer->name }}</td>
-                                        <td>{{ $reg->customer->mobile }}</td>
-                                        <td>{{ ($reg->customer->mrn == '0') ? 'Direct' : $reg->customer->mrn }}</td>
-                                        @if($reg->spectacle):
-                                        <td></td>
-                                        @else
-                                        <td>
-                                            <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Create</button>
-                                            <ul class="dropdown-menu dropdown-block">
-                                                <li><a class="dropdown-item txt-dark" href="{{ route('customer.spectacle.edit', encrypt($reg->id)) }}">Prescription</a></li>
-                                            </ul>
-                                        </td>
-                                        @endif
-                                        <td>{{ $reg->created_at->format('d, M Y h:i a') }}</td>
-                                        <td>{!! $reg->status() !!}</td>
-                                        <td>
-                                            <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Create</button>
-                                            <ul class="dropdown-menu dropdown-block">
-                                                <li><a class="dropdown-item txt-dark" href="{{ route('store.order.create', ['id' => encrypt($reg->id), 'type' => '1']) }}">Spectacles</a></li>
-                                                <li><a class="dropdown-item txt-dark" href="{{ route('solution.order.create', ['id' => encrypt($reg->id), 'type' => '2']) }}">Solutions</a></li>
-                                            </ul>
-                                        </td>
+                                        <td>{{ $spec->customer->id }}</td>
+                                        <td>{{ $spec->customer->name }}</td>
+                                        <td>{{ $spec->customer->mobile }}</td>
+                                        <td class="text-center"><a href="{{ route('customer.order.prescription', encrypt($spec->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
+                                        <td class="text-center"><a href="{{ route('customer.spectacle.edit', encrypt($spec->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                     </tr>
                                     @empty
                                     @endforelse
