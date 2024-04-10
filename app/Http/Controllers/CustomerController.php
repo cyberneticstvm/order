@@ -191,7 +191,7 @@ class CustomerController extends Controller
         $powers = $this->powers;
         $registration = Registration::findOrFail(decrypt($id));
         $customer = Customer::findOrFail($registration->customer_id);
-        $spectacle = Spectacle::where('registation_id', $registration->id)->first();
+        $spectacle = Spectacle::where('registration_id', $registration->id)->first();
 
         $store_prescriptions = Spectacle::where('customer_id', $registration->customer_id)->selectRaw("CONCAT_WS(' / ', 'OID', order_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS oid, id")->get();
         $hospital_prescriptions = DB::connection('mysql1')->table('spectacles')->selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->where('medical_record_id', $customer->mrn)->get();
