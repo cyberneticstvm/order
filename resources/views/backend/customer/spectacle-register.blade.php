@@ -41,8 +41,8 @@
                                         <th>Customer ID</th>
                                         <th>Customer Name</th>
                                         <th>Contact Number</th>
-                                        <th>Prescription</th>
                                         <th>Print</th>
+                                        <th>Edit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
