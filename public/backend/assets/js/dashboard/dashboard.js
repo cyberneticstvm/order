@@ -107,10 +107,10 @@ $(function () {
             yaxis: {
                 min: 0,
                 //max: 20,
-                tickAmount: 5,
+                tickAmount: 1,
                 labels: {
                     formatter: function (val) {
-                        return val + "N";
+                        return val + "Nos";
                     },
                     style: {
                         fontSize: "12px",
