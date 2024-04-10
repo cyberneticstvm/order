@@ -65,7 +65,7 @@
                                         <th>Bill Total</th>
                                         <th>Advance</th>
                                         <th>Balance</th>
-                                        <th></th>
+                                        <th>Presc.</th>
                                         <th>Receipt</th>
                                         <th>Invoice</th>
                                         <th>Order Status</th>
