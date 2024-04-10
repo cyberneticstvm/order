@@ -172,9 +172,11 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        Customer::findOrFail(decrypt($id))->delete();
+        /*Customer::findOrFail(decrypt($id))->delete();*/
+        Registration::findOrFail(decrypt($id))->delete();
         return redirect()->route('customer.register')->with("success", "Customer deleted successfully!");
     }
+
 
     public function editSpectacle(string $id)
     {

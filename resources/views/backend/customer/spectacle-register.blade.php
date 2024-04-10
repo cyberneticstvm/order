@@ -5,7 +5,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Customer Register</h3>
+                    <h3>Specatcle Pescription Register</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
@@ -13,43 +13,9 @@
                                 <svg class="stroke-icon">
                                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg></a></li>
-                        <li class="breadcrumb-item">Customer</li>
-                        <li class="breadcrumb-item active">Customer Register</li>
+                        <li class="breadcrumb-item">Register</li>
+                        <li class="breadcrumb-item active">Spectacle Prescription</li>
                     </ol>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="card-wrapper">
-                            <form class="row g-3" method="post" action="{{ route('customer.fetch') }}">
-                                @csrf
-                                <div class="col-md-3">
-                                    <label class="form-label req">Source</label>
-                                    <div class="input-group">
-                                        {{ html()->select('source', array('hospital' => 'Medical Record Number', 'store' => 'Customer ID'), 'hospital')->class('form-control select2') }}
-                                    </div>
-                                    @error('type')
-                                    <small class="text-danger">{{ $errors->first('type') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label req">Search Term</label>
-                                    <div class="input-group">
-                                        {{ html()->number($name = 'search_term', $value = old('search_term'))->class('form-control')->placeholder('Medical Record Number / Customer ID') }}
-                                        <button class="btn btn-outline-warning btn-submit" id="button-addon2" type="submit">Fetch</button>
-                                    </div>
-                                    @error('search_term')
-                                    <small class="text-danger">{{ $errors->first('search_term') }}</small>
-                                    @enderror
-                                </div>
-                            </form>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -62,15 +28,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col">
-                                <h5>Customer Register</h5><span>Customer Management</span>
-                            </div>
-                            <div class="col text-end">
-                                <div class="btn-group">
-                                    <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Create New</button>
-                                    <ul class="dropdown-menu dropdown-block">
-                                        <li><a class="dropdown-item txt-dark" href="{{ route('customer.create', ['id' => encrypt(0), 'source' => 'direct']) }}">Customer</a></li>
-                                    </ul>
-                                </div>
+                                <h5>Spectacle Prescription</h5><span>Register</span>
                             </div>
                         </div>
                     </div>
@@ -88,7 +46,6 @@
                                         <th>Created at</th>
                                         <th>Status</th>
                                         <th>Order</th>
-                                        <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -118,7 +75,6 @@
                                                 <li><a class="dropdown-item txt-dark" href="{{ route('solution.order.create', ['id' => encrypt($reg->id), 'type' => '2']) }}">Solutions</a></li>
                                             </ul>
                                         </td>
-                                        <td class="text-center"><a href="{{ route('customer.registration.delete', encrypt($reg->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
                                     </tr>
                                     @empty
                                     @endforelse
