@@ -94,6 +94,15 @@ function invoicenumber($oid)
     return DB::table('orders')->selectRaw("CONCAT_WS('/', 'INV', '$bcode', LPAD(IFNULL($oid, 1), 7, '0')) AS ino")->first();
 }
 
+function isFullyPaid($oid)
+{
+    $order = Order::findOrFail($oid);
+    $paid = Payment::where('order_id', $oid)->sum('amount');
+    if ($paid < $order->invoice_total)
+        return false;
+    return true;
+}
+
 function purchaseId($category)
 {
     $cat = substr(strtoupper($category), 0, 2);

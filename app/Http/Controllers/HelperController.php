@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderStatusNote;
 use App\Models\Patient;
+use App\Models\Payment;
 use App\Models\ProductDamage;
 use App\Models\Transfer;
 use Carbon\Carbon;
@@ -126,14 +127,18 @@ class HelperController extends Controller
         ]);
         $order = Order::findOrFail($id);
         if (!$order->invoice_number) :
-            $order->update(['order_status' => $request->order_status]);
-            if ($request->status_note) :
-                OrderStatusNote::create([
-                    'order_id' => $order->id,
-                    'order_status' => $request->order_status,
-                    'status_note' => $request->status_note,
-                    'created_by' => $request->user()->id,
-                ]);
+            if (!isFullyPaid($order->id)) :
+                return redirect()->back()->with("error", "Amount due.");
+            else :
+                $order->update(['order_status' => $request->order_status]);
+                if ($request->status_note) :
+                    OrderStatusNote::create([
+                        'order_id' => $order->id,
+                        'order_status' => $request->order_status,
+                        'status_note' => $request->status_note,
+                        'created_by' => $request->user()->id,
+                    ]);
+                endif;
             endif;
             return redirect()->route('search.order')->with("success", "Status updated successfully");
         else :

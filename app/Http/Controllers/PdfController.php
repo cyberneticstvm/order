@@ -132,12 +132,18 @@ class PdfController extends Controller
 
     public function generateInvoice(string $id)
     {
-        Order::findOrFail(decrypt($id))->update([
-            'invoice_number' => invoicenumber(decrypt($id))->ino,
-            'invoice_generated_by' => Auth::id(),
-            'invoice_generated_at' => Carbon::now(),
-            'order_status' => 'delivered',
-        ]);
+        $order = Order::findOrFail(decrypt($id));
+        if (!isFullyPaid($order->id)) :
+            return redirect()->back()->with("error", "Amount due.");
+        else :
+            $order->update([
+                'invoice_number' => invoicenumber(decrypt($id))->ino,
+                'invoice_generated_by' => Auth::id(),
+                'invoice_generated_at' => Carbon::now(),
+                'order_status' => 'delivered',
+            ]);
+
+        endif;
         return redirect()->back()->with("success", "Invoice generated successfully!");
     }
 
