@@ -107,7 +107,7 @@ $(function () {
             yaxis: {
                 min: 0,
                 //max: 20,
-                tickAmount: 1,
+                tickAmount: 3,
                 labels: {
                     formatter: function (val) {
                         return val + "Nos";
