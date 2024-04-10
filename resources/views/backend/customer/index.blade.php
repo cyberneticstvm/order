@@ -105,7 +105,7 @@
                                         <td>
                                             <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Create</button>
                                             <ul class="dropdown-menu dropdown-block">
-                                                <li><a class="dropdown-item txt-dark" href="{{ route('customer.spectacle.edit', encrypt($reg->id)) }}">Prescription</a></li>
+                                                <li><a class="dropdown-item txt-dark" href="{{ route('customer.spectacle.edit', ['id' => encrypt($reg->id), 'type' => 'registration']) }}">Prescription</a></li>
                                             </ul>
                                         </td>
                                         @endif

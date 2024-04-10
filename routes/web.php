@@ -524,7 +524,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/edit/{id}', 'update')->name('customer.update');
         Route::get('/delete/{id}', 'destroy')->name('customer.delete');
 
-        Route::get('/spectacle/edit/{id}', 'editSpectacle')->name('customer.spectacle.edit');
+        Route::get('/spectacle/edit/{id}/{type}', 'editSpectacle')->name('customer.spectacle.edit');
         Route::post('/spectacle/edit/{id}', 'updateSpectacle')->name('customer.spectacle.update');
 
         Route::get('/customer/registration/delete/{id}', 'destroy')->name('customer.registration.delete');

@@ -52,7 +52,7 @@
                                         <td>{{ $spec->customer->id }}</td>
                                         <td>{{ $spec->customer->name }}</td>
                                         <td>{{ $spec->customer->mobile }}</td>
-                                        <td class="text-center"><a href="{{ route('customer.order.prescription', encrypt($spec->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
+                                        <td class="text-center"><a href="{{ route('customer.order.prescription', ['id' => encrypt($spec->id), 'type' => 'spectacle']) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                         <td class="text-center"><a href="{{ route('customer.spectacle.edit', encrypt($spec->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                     </tr>
                                     @empty

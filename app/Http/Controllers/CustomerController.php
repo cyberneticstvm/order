@@ -184,14 +184,20 @@ class CustomerController extends Controller
     }
 
 
-    public function editSpectacle(string $id)
+    public function editSpectacle(string $id, string $type)
     {
         $optometrists = $this->optometrists;
         $doctors = $this->doctors;
         $powers = $this->powers;
-        $registration = Registration::findOrFail(decrypt($id));
-        $customer = Customer::findOrFail($registration->customer_id);
-        $spectacle = Spectacle::where('registration_id', $registration->id)->first();
+        if ($type == 'registration') :
+            $registration = Registration::findOrFail(decrypt($id));
+            $customer = Customer::findOrFail($registration->customer_id);
+            $spectacle = Spectacle::where('registration_id', $registration->id)->first();
+        else :
+            $spectacle = Spectacle::findOrFail(decrypt($id));
+            $registration = Registration::findOrFail($spectacle->registration_id);
+            $customer = Customer::findOrFail($spectacle->customer_id);
+        endif;
 
         $store_prescriptions = Spectacle::where('customer_id', $registration->customer_id)->selectRaw("CONCAT_WS(' / ', 'OID', order_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS oid, id")->get();
         $hospital_prescriptions = DB::connection('mysql1')->table('spectacles')->selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->where('medical_record_id', $customer->mrn)->get();
