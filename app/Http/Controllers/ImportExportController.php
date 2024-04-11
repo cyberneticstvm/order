@@ -39,12 +39,19 @@ class ImportExportController extends Controller
         $this->middleware(function ($request, $next) {
 
             $brs = Branch::selectRaw("0 as id, 'Main Branch' as name");
-            $this->branches = Branch::selectRaw("id, name")->union($brs)->when(Auth::user()->roles->first()->name != 'Administrator', function ($q) {
+            /*$this->branches = Branch::selectRaw("id, name")->union($brs)->when(Auth::user()->roles->first()->name != 'Administrator', function ($q) {
                 return $q->where('id', Session::get('branch'));
             })->orderBy('id')->pluck('name', 'id');
 
             $this->tobranches = Branch::selectRaw("id, name")->union($brs)->when(Auth::user()->roles->first()->name != 'Administrator', function ($q) {
                 return $q->where('id', Session::get('branch'));
+            })->orderBy('id')->pluck('name', 'id');*/
+            $this->branches = Branch::selectRaw("id, name")->where('id', Session::get('branch'))->when(in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO', 'Store Manager', 'Accounts']), function ($q) use ($brs) {
+                return $q->union($brs);
+            })->orderBy('id')->pluck('name', 'id');
+
+            $this->tobranches = Branch::selectRaw("id, name")->where('id', '<>', Session::get('branch'))->when(in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO', 'Store Manager', 'Accounts']), function ($q) use ($brs) {
+                return $q->union($brs);
             })->orderBy('id')->pluck('name', 'id');
 
             return $next($request);
