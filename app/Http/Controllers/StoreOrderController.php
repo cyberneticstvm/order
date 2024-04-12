@@ -308,9 +308,16 @@ class StoreOrderController extends Controller
                     ]);
                 endif;
                 if ($request->credit_used > 0) :
-                    CustomerAccount::where('category', 'order')->where('type', 'debit')->where('voucher_id', $id)->update([
+                    $caccount = CustomerAccount::where('category', 'order')->where('type', 'debit')->where('voucher_id', $order->id)->first();
+                    $caccount->forcedelete();
+                    CustomerAccount::insert([
+                        'customer_id' => $order->customer_id,
+                        'voucher_id' => $order->id,
+                        'type' => 'debit',
+                        'category' => 'order',
                         'amount' => $request->credit_used,
-                        'updated_by' => $request->user()->id,
+                        'remarks' => "Credit has been used against order ID" . $order->id,
+                        'created_at' => ($caccount?->created_at) ? $caccount?->created_at : Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ]);
                 endif;

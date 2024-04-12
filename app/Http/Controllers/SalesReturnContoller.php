@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\CustomerAccount;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Purchase;
@@ -49,7 +50,7 @@ class SalesReturnContoller extends Controller
         ]);
         try {
             DB::transaction(function () use ($request, $id) {
-                $order = Order::findOrFail($id);
+                     = Order::findOrFail($id);
                 $returns = [];
                 $tot = 0;
                 $input = $request->except(array('qty', 'oqty', 'odid', 'pid', 'amount'));
@@ -78,12 +79,16 @@ class SalesReturnContoller extends Controller
                     endif;
                 endforeach;
                 SalesReturnDetail::insert($returns);
-                /*Customer::create([
-                    'name' => $order->name,
-                    'mobile' => $order->mobile,
-                    'return_id' => $return->id,
-                    'credit' => $tot,
-                ]);*/
+                CustomerAccount::create([
+                    'customer_id' => $order->customer_id,
+                    'voucher_id' => $order->id,
+                    'type' => 'credit',
+                    'category' => 'order',
+                    'amount' => $tot,
+                    'remarks' => "Sales return against order ID". $order->id,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
