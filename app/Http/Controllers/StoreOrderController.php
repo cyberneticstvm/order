@@ -309,7 +309,7 @@ class StoreOrderController extends Controller
                 endif;
                 if ($request->credit_used > 0) :
                     $caccount = CustomerAccount::where('category', 'order')->where('type', 'debit')->where('voucher_id', $order->id)->first();
-                    $caccount->forcedelete();
+                    $caccount->delete();
                     CustomerAccount::insert([
                         'customer_id' => $order->customer_id,
                         'voucher_id' => $order->id,
