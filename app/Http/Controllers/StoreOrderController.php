@@ -317,8 +317,10 @@ class StoreOrderController extends Controller
                         'type' => 'debit',
                         'category' => 'order',
                         'amount' => $request->credit_used,
-                        'remarks' => "Credit has been used against order ID" . $order->id,
-                        'created_at' => ($caccount?->created_at) ? $caccount?->created_at : Carbon::now(),
+                        'remarks' => "Credit has been used against order ID " . $order->id,
+                        'created_at' => ($caccount?->created_at) ?? Carbon::now(),
+                        'created_by' => ($caccount?->created_by) ?? $request->user()->id,
+                        'updated_by' => $request->user()->id,
                         'updated_at' => Carbon::now(),
                     ]);
                 endif;
