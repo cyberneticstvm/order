@@ -41,7 +41,7 @@
                 <th class="border-0">Axis</th>
                 <th class="border-0">Add</th>
                 <th class="border-0">IPD</th>
-                <th class="border-0">Int.Add</th>
+                <th class="border-0">VA</th>
             </tr>
         </thead>
         <tbody>
@@ -54,7 +54,7 @@
                 <td class="border-0">{{ $item->axis }}</td>
                 <td class="border-0">{{ $item->add }}</td>
                 <td class="border-0">{{ $item->ipd }}</td>
-                <td class="border-0">{{ $item->int_add }}</td>
+                <td class="border-0">{{ $item->va }}</td>
             </tr>
             @endif
             @empty

@@ -111,9 +111,9 @@
             </a>
             {{
                 Menu::new()->addClass('sidebar-submenu')
-                ->linkIfCan('customer-list', route('customer.register'), 'Customer Register')
-                ->linkIfCan('customer-list', route('customer.spectacles'), 'Spectacle Register');
+                ->linkIfCan('customer-list', route('customer.register'), 'Customer Register');                
             }}
+            <!--linkIfCan('customer-list', route('customer.spectacles'), 'Spectacle Register');-->
         </li>
         @endif
         <li class="sidebar-main-title">
