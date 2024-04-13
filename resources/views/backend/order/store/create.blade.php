@@ -275,7 +275,7 @@
                                             <tfoot>
                                                 <tr>
                                                     <td colspan="2">
-                                                        {{ html()->text('int_add', $spectacle?->int_add ?? '')->class('w-100 border-0 text-center int_add')->maxlength(6)->placeholder('Int.Add') }}
+                                                        {{ html()->text('int_add', '')->class('w-100 border-0 text-center int_add')->maxlength(6)->placeholder('Int.Add') }}
                                                     </td>
                                                     <td>
                                                         {{ html()->text('a_size', '')->class('w-100 border-0 text-center a_size')->maxlength(2)->placeholder('A Size') }}
