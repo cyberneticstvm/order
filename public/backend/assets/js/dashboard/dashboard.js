@@ -110,7 +110,7 @@ $(function () {
                 tickAmount: 1,
                 labels: {
                     formatter: function (val) {
-                        return val + "";
+                        return val + "#";
                     },
                     style: {
                         fontSize: "12px",
