@@ -166,7 +166,7 @@
                                                     <th width="5%">ADD</th>
                                                     <th width="5%">VA</th>
                                                     <th width="5%">IPD</th>
-                                                    <th width="40%">Product</th>
+                                                    <th width="35%">Product</th>
                                                     <th width="5%">Qty</th>
                                                     <th>Price</th>
                                                     <th width="20%">Total</th>
