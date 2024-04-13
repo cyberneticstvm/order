@@ -50,8 +50,8 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="form-label">MRN</label>
-                                    {{ html()->text($name = 'mrn', $value = $patient?->mrn ?? 0)->class('form-control')->placeholder('MRN') }}
+                                    <label class="form-label">MRN / Cutomer ID</label>
+                                    {{ html()->text($name = 'mrn', $value = $patient?->mrn ? $patient?->mrn : $patient?->id)->class('form-control')->placeholder('MRN') }}
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Customer Name</label>
@@ -145,7 +145,15 @@
                                     {{ html()->text($name = 'company_name', $value = $patient?->company_name ?? old('company_name'))->class('form-control')->placeholder('Company Name') }}
                                 </div>
                                 <div class="row g-4 table-responsive">
-                                    <div class="col text-end">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Hospital Prescription</label>
+                                        {{ html()->select('hpresc', $hospital_prescriptions->pluck('mrn', 'id'), '')->class('form-control select2 changePresc')->attribute('data-source', 'hospital')->placeholder('Select') }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Store Prescription</label>
+                                        {{ html()->select('spresc', $store_prescriptions->pluck('oid', 'id'), '')->class('form-control select2 changePresc')->attribute('data-source', 'store')->placeholder('Select') }}
+                                    </div>
+                                    <div class="col-md-6 text-end">
                                         <div class="btn-group">
                                             <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Add New Row</button>
                                             <ul class="dropdown-menu dropdown-block">
@@ -166,7 +174,7 @@
                                                     <th width="5%">CYL</th>
                                                     <th width="5%">AXIS</th>
                                                     <th width="5%">ADD</th>
-                                                    <th>INT.ADD</th>
+                                                    <th width="5%">VA</th>
                                                     <th width="5%">IPD</th>
                                                     <th width="40%">Product</th>
                                                     <th width="5%">Qty</th>
@@ -185,21 +193,21 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->re_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 fSph') }}
+                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 fSph') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->re_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2 fCyl') }}
+                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2 fCyl') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->re_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2 fAxis') }}
+                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2 fAxis') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->re_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 fAdd') }}
+                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 fAdd') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('int_add[]', $powers?->where('name', 'intad')->pluck('value', 'value'), $spectacle?->re_int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2 fIntAd') }}
+                                                        {{ html()->text('va[]', '')->class('w-100 border-0 text-center fVa')->maxlength(6)->placeholder('VA') }}
                                                     </td>
-                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center fIpd" placeholder="IPD" value="{{ $spectacle?->re_pd ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center fIpd" placeholder="IPD" value="" maxlength="6" /></td>
                                                     <td>
                                                         {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctFirst')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens1')->placeholder('Select')->required() }}
                                                     </td>
@@ -217,21 +225,21 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->le_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 sSph')->attribute('id', 'sph1') }}
+                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 sSph')->attribute('id', 'sph1') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->le_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2 sCyl')->attribute('id', 'cyl1') }}
+                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2 sCyl')->attribute('id', 'cyl1') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->le_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2 sAxis')->attribute('id', 'axis1') }}
+                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2 sAxis')->attribute('id', 'axis1') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->le_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 sAdd')->attribute('id', 'add1') }}
+                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 sAdd')->attribute('id', 'add1') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('int_add[]', $powers?->where('name', 'intad')->pluck('value', 'value'), $spectacle?->le_int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2 sIntAd')->attribute('id', 'intadd1') }}
+                                                        {{ html()->text('va[]', '')->class('w-100 border-0 text-center sVa')->maxlength(6)->placeholder('VA') }}
                                                     </td>
-                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center sIpd" placeholder="IPD" value="{{ $spectacle?->le_pd ?? '' }}" maxlength="6" /></td>
+                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center sIpd" placeholder="IPD" value="" maxlength="6" /></td>
                                                     <td>
                                                         {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctSecond')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens2')->placeholder('Select')->required() }}
                                                     </td>
@@ -253,7 +261,7 @@
                                                             <input type="hidden" name="axis[]" />
                                                             <input type="hidden" name="add[]" />
                                                             <input type="hidden" name="ipd[]" />
-                                                            <input type="hidden" name="int_add[]" />
+                                                            <input type="hidden" name="va[]" />
                                                         </div>
                                                     </td>
                                                     <td>
@@ -266,7 +274,28 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <td colspan="11" class="text-end fw-bold border-0">
+                                                    <td colspan="2">
+                                                        {{ html()->text('int_add', $spectacle?->int_add ?? '')->class('w-100 border-0 text-center int_add')->maxlength(6)->placeholder('Int.Add') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->text('a_size', '')->class('w-100 border-0 text-center a_size')->maxlength(2)->placeholder('A Size') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->text('b_size', '')->class('w-100 border-0 text-center b_size')->maxlength(2)->placeholder('B Size') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->text('dbl', '')->class('w-100 border-0 text-center dbl')->maxlength(2)->placeholder('DBL') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->text('fh', '')->class('w-100 border-0 text-center fh')->maxlength(2)->placeholder('FH') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->text('ed', '')->class('w-100 border-0 text-center ed')->maxlength(2)->placeholder('ED') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->text('vd', '')->class('w-100 border-0 text-center vd')->maxlength(2)->placeholder('VD') }}
+                                                    </td>
+                                                    <td colspan="3" class="text-end fw-bold border-0">
                                                         Order Total
                                                         @error('order_total')
                                                         <br /><small class="text-danger">{{ $errors->first('order_total') }}</small>
@@ -275,7 +304,13 @@
                                                     <td class="border-0"><input type="text" name="order_total" class="text-end border-0 fw-bold w-100 subtotal readOnly" placeholder="0.00" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="11" class="text-end fw-bold border-0">Discount</td>
+                                                    <td colspan="2">
+                                                        {{ html()->text('w_angle', '')->class('w-100 border-0 text-center w_angle')->maxlength(6)->placeholder('W Angle') }}
+                                                    </td>
+                                                    <td colspan="6">
+                                                        {{ html()->text('special_lab_note', '')->class('w-100 border-0 text-center')->placeholder('Special Lab Note') }}
+                                                    </td>
+                                                    <td colspan="3" class="text-end fw-bold border-0">Discount</td>
                                                     <td class="text-end fw-bold border-0"><input type="number" name='discount' class="w-100 border-0 text-end discount" placeholder="0.00" step="any" /></td>
                                                 </tr>
                                                 <tr>

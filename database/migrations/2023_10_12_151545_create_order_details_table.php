@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('cyl', 7)->nullable();
             $table->string('axis', 7)->nullable();
             $table->string('add', 7)->nullable();
-            $table->string('dia', 7)->nullable();
+            $table->string('va', 7)->nullable();
             $table->string('ipd', 7)->nullable();
             $table->string('int_add', 7)->nullable();
             $table->enum('thickness', ['thin', 'maximum-thin', 'normal-thick', 'not-applicable'])->nullable();

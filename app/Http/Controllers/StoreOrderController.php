@@ -71,9 +71,13 @@ class StoreOrderController extends Controller
         $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();*/
         $registration = Registration::findOrFail(decrypt($id));
         $patient = Customer::findOrFail($registration->customer_id);
-        $spectacle = Spectacle::where('registration_id', $registration->id)->latest()->first();
+        //$spectacle = Spectacle::where('registration_id', $registration->id)->latest()->first();
         $powers = Power::all();
-        return view(($type == 1) ? 'backend.order.store.create' : 'backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'spectacle', 'powers', 'states', 'registration'));
+        $mrecord = DB::connection('mysql1')->table('patient_medical_records')->find($patient->mrn);
+        $mrns = DB::connection('mysql1')->table('patient_medical_records')->where('patient_id', $mrecord?->patient_id ?? 0)->pluck('id');
+        $hospital_prescriptions = DB::connection('mysql1')->table('spectacles')->selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->whereIn('medical_record_id', $mrns)->get();
+        $store_prescriptions = Order::where('customer_id', $patient->id)->selectRaw("CONCAT_WS(' / ', 'OID', id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS oid, id")->get();
+        return view(($type == 1) ? 'backend.order.store.create' : 'backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'powers', 'states', 'registration', 'hospital_prescriptions', 'store_prescriptions'));
     }
 
     public function fetch(Request $request)
@@ -113,96 +117,105 @@ class StoreOrderController extends Controller
         /*if (!settings()->allow_sales_at_zero_qty) :
             $status = checkOrderedProductsAvailability($request);
         endif;*/
-        try {
-            DB::transaction(function () use ($request) {
-                $sid = Order::where('branch_id', branch()->id)->selectRaw("IFNULL(MAX(order_sequence)+1, 1) AS sid")->value('sid');
-                $order = Order::create([
-                    'customer_id' => $request->customer_id,
-                    'order_sequence' => $sid,
-                    'order_date' => $request->order_date,
+        //try {
+        DB::transaction(function () use ($request) {
+            $sid = Order::where('branch_id', branch()->id)->selectRaw("IFNULL(MAX(order_sequence)+1, 1) AS sid")->value('sid');
+            $order = Order::create([
+                'customer_id' => $request->customer_id,
+                'order_sequence' => $sid,
+                'order_date' => $request->order_date,
+                'consultation_id' => $request->consultation_id,
+                'name' => $request->name,
+                'age' => $request->age,
+                'place' => $request->place,
+                'mobile' => $request->mobile,
+                'alt_mobile' => $request->alt_mobile,
+                'int_add' => $request->int_add,
+                'a_size' => $request->a_size,
+                'b_size' => $request->b_size,
+                'dbl' => $request->dbl,
+                'fh' => $request->fh,
+                'ed' => $request->ed,
+                'vd' => $request->vd,
+                'w_angle' => $request->w_angle,
+                'special_lab_note' => $request->special_lab_note,
+                'invoice_number' => NULL,
+                'category' => 'store',
+                'branch_id' => branch()->id,
+                'order_total' => $request->order_total,
+                'invoice_total' => $request->invoice_total,
+                'discount' => $request->discount,
+                'advance' => $request->advance,
+                'credit_used' => $request->credit_used,
+                'balance' => $request->balance - $request->credit_used,
+                'order_status' => $request->order_status,
+                'case_type' => $request->case_type,
+                'product_adviser' => $request->product_adviser,
+                'expected_delivery_date' => $request->expected_delivery_date,
+                'order_note' => $request->order_note,
+                'lab_note' => $request->lab_note,
+                'invoice_note' => $request->invoice_note,
+                'gstin' => $request->gstin,
+                'company_name' => $request->company_name,
+                'type' => $request->type,
+                'state' => $request->state,
+                'created_by' => $request->user()->id,
+                'updated_by' => $request->user()->id,
+            ]);
+            $data = [];
+            foreach ($request->product_id as $key => $item) :
+                $product = Product::findOrFail($item);
+                $data[] = [
+                    'order_id' => $order->id,
+                    'product_id' => $product->id,
+                    'qty' => $request->qty[$key],
+                    'unit_price' => $request->unit_price[$key],
+                    'total' => $request->total[$key],
+                    'tax_percentage' => $product->tax_percentage,
+                    'tax_amount' => $product->taxamount($request->total[$key]),
+                    'eye' => $request->eye[$key],
+                    'sph' => $request->sph[$key] ?? NULL,
+                    'cyl' => $request->cyl[$key] ?? NULL,
+                    'axis' => $request->axis[$key] ?? NULL,
+                    'add' => $request->add[$key] ?? NULL,
+                    'ipd' => $request->ipd[$key],
+                    'va' => $request->va[$key],
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ];
+            endforeach;
+            OrderDetail::insert($data);
+            if ($request->advance > 0) :
+                Payment::create([
                     'consultation_id' => $request->consultation_id,
-                    'name' => $request->name,
-                    'age' => $request->age,
-                    'place' => $request->place,
-                    'mobile' => $request->mobile,
-                    'alt_mobile' => $request->alt_mobile,
-                    'invoice_number' => NULL,
-                    'category' => 'store',
+                    'patient_id' => Consultation::find($request->consultation_id)?->patient_id,
+                    'order_id' => $order->id,
+                    'payment_type' => 'advance',
+                    'amount' => $request->advance,
+                    'payment_mode' => $request->payment_mode,
+                    'notes' => 'Advance received against order number ' . $order->ono(),
                     'branch_id' => branch()->id,
-                    'order_total' => $request->order_total,
-                    'invoice_total' => $request->invoice_total,
-                    'discount' => $request->discount,
-                    'advance' => $request->advance,
-                    'credit_used' => $request->credit_used,
-                    'balance' => $request->balance - $request->credit_used,
-                    'order_status' => $request->order_status,
-                    'case_type' => $request->case_type,
-                    'product_adviser' => $request->product_adviser,
-                    'expected_delivery_date' => $request->expected_delivery_date,
-                    'order_note' => $request->order_note,
-                    'lab_note' => $request->lab_note,
-                    'invoice_note' => $request->invoice_note,
-                    'gstin' => $request->gstin,
-                    'company_name' => $request->company_name,
-                    'type' => $request->type,
-                    'state' => $request->state,
                     'created_by' => $request->user()->id,
                     'updated_by' => $request->user()->id,
                 ]);
-                $data = [];
-                foreach ($request->product_id as $key => $item) :
-                    $product = Product::findOrFail($item);
-                    $data[] = [
-                        'order_id' => $order->id,
-                        'product_id' => $product->id,
-                        'qty' => $request->qty[$key],
-                        'unit_price' => $request->unit_price[$key],
-                        'total' => $request->total[$key],
-                        'tax_percentage' => $product->tax_percentage,
-                        'tax_amount' => $product->taxamount($request->total[$key]),
-                        'eye' => $request->eye[$key],
-                        'sph' => $request->sph[$key] ?? NULL,
-                        'cyl' => $request->cyl[$key] ?? NULL,
-                        'axis' => $request->axis[$key] ?? NULL,
-                        'add' => $request->add[$key] ?? NULL,
-                        'ipd' => $request->ipd[$key],
-                        'int_add' => $request->int_add[$key],
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ];
-                endforeach;
-                OrderDetail::insert($data);
-                if ($request->advance > 0) :
-                    Payment::create([
-                        'consultation_id' => $request->consultation_id,
-                        'patient_id' => Consultation::find($request->consultation_id)?->patient_id,
-                        'order_id' => $order->id,
-                        'payment_type' => 'advance',
-                        'amount' => $request->advance,
-                        'payment_mode' => $request->payment_mode,
-                        'notes' => 'Advance received against order number ' . $order->ono(),
-                        'branch_id' => branch()->id,
-                        'created_by' => $request->user()->id,
-                        'updated_by' => $request->user()->id,
-                    ]);
-                endif;
-                Registration::where('id', $request->registration_id)->update(['order_id' => $order->id]);
-                if ($request->credit_used > 0) :
-                    CustomerAccount::create([
-                        'customer_id' => $order->customer_id,
-                        'voucher_id' => $order->id,
-                        'type' => 'debit',
-                        'category' => 'order',
-                        'amount' => $request->credit_used,
-                        'remarks' => 'Credit used against order number' . $order->ono(),
-                        'created_by' => $request->user()->id,
-                        'updated_by' => $request->user()->id,
-                    ]);
-                endif;
-            });
-        } catch (Exception $e) {
-            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
-        }
+            endif;
+            Registration::where('id', $request->registration_id)->update(['order_id' => $order->id]);
+            if ($request->credit_used > 0) :
+                CustomerAccount::create([
+                    'customer_id' => $order->customer_id,
+                    'voucher_id' => $order->id,
+                    'type' => 'debit',
+                    'category' => 'order',
+                    'amount' => $request->credit_used,
+                    'remarks' => 'Credit used against order number' . $order->ono(),
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
+                ]);
+            endif;
+        });
+        //} catch (Exception $e) {
+        //return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        //}
         return redirect()->route('store.order')->with("success", "Order placed successfully!");
     }
 
@@ -256,6 +269,15 @@ class StoreOrderController extends Controller
                     'place' => $request->place,
                     'mobile' => $request->mobile,
                     'alt_mobile' => $request->alt_mobile,
+                    'int_add' => $request->int_add,
+                    'a_size' => $request->a_size,
+                    'b_size' => $request->b_size,
+                    'dbl' => $request->dbl,
+                    'fh' => $request->fh,
+                    'ed' => $request->ed,
+                    'vd' => $request->vd,
+                    'w_angle' => $request->w_angle,
+                    'special_lab_note' => $request->special_lab_note,
                     'order_total' => $request->order_total,
                     'invoice_total' => $request->invoice_total,
                     'discount' => $request->discount,
@@ -293,7 +315,7 @@ class StoreOrderController extends Controller
                         'axis' => $request->axis[$key] ?? NULL,
                         'add' => $request->add[$key] ?? NULL,
                         'ipd' => $request->ipd[$key] ?? NULL,
-                        'int_add' => $request->int_add[$key],
+                        'va' => $request->va[$key],
                         'created_at' => $order->created_at ?? Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];

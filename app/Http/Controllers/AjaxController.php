@@ -6,6 +6,7 @@ use App\Models\Consultation;
 use App\Models\IncomeExpense;
 use App\Models\Month;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\PatientProcedure;
 use App\Models\Payment;
 use App\Models\Power;
@@ -49,6 +50,30 @@ class AjaxController extends Controller
         $spectacle = Spectacle::find($val);
         if ($source == 'hospital') :
             $spectacle = DB::connection('mysql1')->table('spectacles')->selectRaw("re_dist_sph as re_sph, re_dist_cyl as re_cyl, re_dist_axis as re_axis, re_dist_add as re_add, re_dist_va as re_va, rpd as re_pd, lpd as le_pd, le_dist_sph as le_sph, le_dist_cyl as le_cyl, le_dist_axis as le_axis, le_dist_add as le_add, le_dist_va as le_va, re_int_add, le_int_add, '' as a_size, '' as b_size, '' as dbl, '' as fh, '' as ed, '' as vd, '' as w_angle, 0 as doctor, 0 as optometrist")->where('id', $val)->first();
+        else :
+            $order = Order::find($val);
+            $odetails = OrderDetail::where('order_id', $val)->get()->toArray();
+            $spectacle = [
+                're_sph' => $odetails[0]['sph'],
+                're_cyl' => $odetails[0]['cyl'],
+                're_axis' => $odetails[0]['axis'],
+                're_add' => $odetails[0]['add'],
+                're_va' => $odetails[0]['va'],
+                're_pd' => $odetails[0]['ipd'],
+                'le_sph' => $odetails[1]['sph'],
+                'le_cyl' => $odetails[1]['cyl'],
+                'le_axis' => $odetails[1]['axis'],
+                'le_add' => $odetails[1]['add'],
+                'le_va' => $odetails[1]['va'],
+                'le_pd' => $odetails[1]['ipd'],
+                'a_size' => $order->a_size,
+                'b_size' => $order->b_size,
+                'dbl' => $order->dbl,
+                'fh' => $order->fh,
+                'ed' => $order->ed,
+                'vd' => $order->vd,
+                'w_angle' => $order->w_angle,
+            ];
         endif;
         return response()->json($spectacle);
     }

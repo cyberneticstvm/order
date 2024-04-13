@@ -48,8 +48,8 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="form-label">MRN</label>
-                                    {{ html()->text($name = 'mrn', $value = $order->consultation_id)->class('form-control')->placeholder('MRN') }}
+                                    <label class="form-label">MRN / Customer ID</label>
+                                    {{ html()->text($name = 'mrn', $value = $order->consultation_id ? $order->consultation_id : $order->customer_id)->class('form-control')->placeholder('MRN') }}
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Customer Name</label>
@@ -164,7 +164,7 @@
                                                     <th width="5%">CYL</th>
                                                     <th width="5%">AXIS</th>
                                                     <th width="5%">ADD</th>
-                                                    <th>INT.ADD</th>
+                                                    <th width="5%">VA</th>
                                                     <th width="5%">IPD</th>
                                                     <th width="40%">Product</th>
                                                     <th width="5%">Qty</th>
@@ -208,7 +208,7 @@
                                                         {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $item->add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'add_'.$key) }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('int_add[]', $powers?->where('name', 'intad')->pluck('value', 'value'), $item->int_add ?? $powers?->where('name', 'intad')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'int_add_'.$key) }}
+                                                        {{ html()->text('va[]', $item->va ?? '')->class('w-100 border-0 text-center fVa')->maxlength(6)->placeholder('VA') }}
                                                     </td>
                                                     <td width="15%"><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" value="{{ $item->ipd ?? '' }}" maxlength="6" /></td>
                                                     @endif
@@ -220,7 +220,7 @@
                                                             <input type="hidden" name="axis[]" />
                                                             <input type="hidden" name="add[]" />
                                                             <input type="hidden" name="ipd[]" />
-                                                            <input type="hidden" name="int_add[]" />
+                                                            <input type="hidden" name="va[]" />
                                                         </div>
                                                     </td>
                                                     @endif
@@ -242,7 +242,28 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <td colspan="11" class="text-end fw-bold border-0">
+                                                    <td colspan="2">
+                                                        {{ html()->text('int_add', $order->int_add)->class('w-100 border-0 text-center')->maxlength(6)->placeholder('Int.Add') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->text('a_size', $order->a_size)->class('w-100 border-0 text-center')->maxlength(2)->placeholder('A Size') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->text('b_size', $order->b_size)->class('w-100 border-0 text-center')->maxlength(2)->placeholder('B Size') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->text('dbl', $order->dbl)->class('w-100 border-0 text-center')->maxlength(2)->placeholder('DBL') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->text('fh', $order->fh)->class('w-100 border-0 text-center')->maxlength(2)->placeholder('FH') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->text('ed', $order->ed)->class('w-100 border-0 text-center')->maxlength(2)->placeholder('ED') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->text('vd', $order->vd)->class('w-100 border-0 text-center')->maxlength(2)->placeholder('VD') }}
+                                                    </td>
+                                                    <td colspan="3" class="text-end fw-bold border-0">
                                                         Order Total
                                                         @error('order_total')
                                                         <br /><small class="text-danger">{{ $errors->first('order_total') }}</small>
@@ -251,7 +272,13 @@
                                                     <td class="border-0"><input type="text" name="order_total" class="text-end border-0 fw-bold w-100 subtotal readOnly" placeholder="0.00" value="{{ $order->order_total }}" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="11" class="text-end fw-bold border-0">Discount</td>
+                                                    <td colspan="2">
+                                                        {{ html()->text('w_angle', $order->w_angle)->class('w-100 border-0 text-center')->maxlength(6)->placeholder('W Angle') }}
+                                                    </td>
+                                                    <td colspan="6">
+                                                        {{ html()->text('special_lab_note', $order->special_lab_note)->class('w-100 border-0 text-center')->placeholder('Special Lab Note') }}
+                                                    </td>
+                                                    <td colspan="3" class="text-end fw-bold border-0">Discount</td>
                                                     <td class="text-end fw-bold border-0"><input type="number" name='discount' class="w-100 border-0 text-end discount" placeholder="0.00" step="any" value="{{ $order->discount }}" /></td>
                                                 </tr>
                                                 <tr>

@@ -66,7 +66,7 @@
                                         <th>Advance</th>
                                         <th>Balance</th>
                                         <th>Presc.</th>
-                                        <th>Receipt</th>
+                                        <th>Order</th>
                                         <th>Invoice</th>
                                         <th>Order Status</th>
                                         <th>Edit</th>

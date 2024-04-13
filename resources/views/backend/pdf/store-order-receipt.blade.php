@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col">
         <h4 class="text-center">ORDER DETAILS</h4>
-        <table class="table" width="100%" cellpadding="0" cellspacing="0">
+        <table class="table" width="100%" cellpadding="0" cellspacing="0" style="font-size: 10px;">
             <thead>
                 <tr>
                     <td width="20%" class="border-0">Customer Name</td>
@@ -34,7 +34,7 @@
         </table>
     </div>
     <hr style="border: 1px solid; color:red;">
-    <table class="border-0" width="100%" cellspacing="0" cellpadding="0">
+    <table class="border-0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 10px;">
         <thead>
             <tr>
                 <th class="border-0">SL No</th>
@@ -102,7 +102,7 @@
 <hr style="border: 1px dotted; color:blue;">
 <div class="row">
     <div class="col">
-        <table class="table" width="75%" cellpadding="0" cellspacing="0">
+        <table class="table" width="75%" cellpadding="0" cellspacing="0" style="font-size: 10px;">
             <thead>
                 <tr>
                     <td width="25%" class="no-border">C.Name / ID</td>
@@ -126,9 +126,10 @@
         </table>
     </div>
 </div>
+<div class="fw-bold txt">Special Lab Note: {{ $order->special_lab_note }}</div>
 <div class="row">
     <div class="col">
-        <table class="bordered" width="75%" cellspacing="0" cellpadding="0">
+        <table class="bordered" width="75%" cellspacing="0" cellpadding="0" style="font-size: 10px;">
             <thead>
                 <tr>
                     <th class="no-border">SL No</th>
@@ -154,7 +155,7 @@
 </div>
 <div class="row">
     <div class="col">
-        <table class="no-border" cellpadding="0" cellspacing="0" width="75%">
+        <table class="no-border" cellpadding="0" cellspacing="0" width="75%" style="font-size: 10px;">
             <thead>
                 <tr>
                     <th class="no-border"></th>
@@ -162,33 +163,33 @@
                     <th class="no-border">CYL</th>
                     <th class="no-border">AXIS</th>
                     <th class="no-border">ADD</th>
+                    <th class="no-border">VA</th>
                     <th class="no-border">IPD</th>
-                    <th class="no-border">FH</th>
-                    <th class="no-border">PRISM</th>
                 </tr>
                 @forelse($order->details->whereIn('eye', ['re', 'le']) as $key => $value)
-                <tr>
-                    <td class="no-border">{{ $value->eye }}</td>
+                @if($key < 2) <tr>
+                    <td class="no-border">{{ strtoupper($value->eye) }}</td>
                     <td class="no-border">{{ $value->sph }}</td>
                     <td class="no-border">{{ $value->cyl }}</td>
                     <td class="no-border">{{ $value->axis }}</td>
                     <td class="no-border">{{ $value->add }}</td>
+                    <td class="no-border">{{ $value->va }}</td>
                     <td class="no-border">{{ $value->ipd }}</td>
-                    <td class="no-border"></td>
-                    <td class="no-border"></td>
-                </tr>
-                @empty
-                @endforelse
+                    </tr>
+                    @endif
+                    @empty
+                    @endforelse
             </thead>
         </table>
     </div>
 </div>
-<div class="row">
-    <div class="col">
-        <p>Order Note / Comments: {{ $order->order_note }}</p>
-    </div>
-    <div class="col">
-        <p>Invoice Note: {{ $order->order_note }}</p>
-    </div>
+<div>
+    <p class="txt">A: {{ $order->a_size ?? 'Na' }}, B: {{ $order->b_size ?? 'Na' }}, DBL: {{ $order->dbl ?? 'Na' }}, FH: {{ $order->fh ?? 'Na' }}, VD: {{ $order->vd ?? 'Na' }}, ED: {{ $order->ed ?? 'Na' }}, W.Angle: {{ $order->w_angle ?? 'Na' }}</p>
+</div>
+<div class="txt">
+    Order Note / Comments: {{ $order->order_note }}
+</div>
+<div>
+    <p class="txt">Invoice Note: {{ $order->invoice_note }}</p>
 </div>
 @endsection

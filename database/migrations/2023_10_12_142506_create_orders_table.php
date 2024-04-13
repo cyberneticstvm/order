@@ -21,6 +21,15 @@ return new class extends Migration
             $table->string('place', 100)->nullable();
             $table->string('mobile', 10)->nullable();
             $table->string('alt_mobile', 10)->nullable();
+            $table->string('int_add', 7)->nullable();
+            $table->string('a_size', 3)->nullable();
+            $table->string('b_size', 3)->nullable();
+            $table->string('dbl', 3)->nullable();
+            $table->string('fh', 3)->nullable();
+            $table->string('ed', 3)->nullable();
+            $table->string('vd', 3)->nullable();
+            $table->string('w_angle', 3)->nullable();
+            $table->text('special_lab_note')->nullable();
             $table->string('invoice_number')->unique()->nullable();
             $table->dateTime('invoice_generated_at')->nullable();
             $table->unsignedBigInteger('invoice_generated_by')->nullable();

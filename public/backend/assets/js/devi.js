@@ -241,22 +241,23 @@ $(function () {
             type: 'GET',
             url: '/ajax/prescription/' + source + '/' + val,
             success: function (spectacle) {
-                $(".sre_sph").val(spectacle.re_sph);
-                $(".sre_cyl").val(spectacle.re_cyl);
-                $(".sre_axis").val(spectacle.re_axis);
-                $(".sre_add").val(spectacle.re_add);
-                $(".sre_va").val(spectacle.re_va);
-                $(".sre_pd").val(spectacle.re_pd);
-                $(".sre_int_add").val(spectacle.re_int_add);
+                $(".fSph").val(spectacle.re_sph);
+                $(".fCyl").val(spectacle.re_cyl);
+                $(".fAxis").val(spectacle.re_axis);
+                $(".fAdd").val(spectacle.re_add);
+                $(".fVa").val(spectacle.re_va);
+                $(".fIpd").val(spectacle.re_pd);
+                //$(".sre_int_add").val(spectacle.re_int_add);
 
-                $(".sle_sph").val(spectacle.le_sph);
-                $(".sle_cyl").val(spectacle.le_cyl);
-                $(".sle_axis").val(spectacle.le_axis);
-                $(".sle_add").val(spectacle.le_add);
-                $(".sle_va").val(spectacle.le_va);
-                $(".sle_pd").val(spectacle.le_pd);
-                $(".sle_int_add").val(spectacle.le_int_add);
+                $(".sSph").val(spectacle.le_sph);
+                $(".sCyl").val(spectacle.le_cyl);
+                $(".sAxis").val(spectacle.le_axis);
+                $(".sAdd").val(spectacle.le_add);
+                $(".sVa").val(spectacle.le_va);
+                $(".sIpd").val(spectacle.le_pd);
+                //$(".sle_int_add").val(spectacle.le_int_add);
 
+                $(".int_add").val(spectacle.re_int_add ?? spectacle.le_int_add);
                 $(".a_size").val(spectacle.a_size);
                 $(".b_size").val(spectacle.b_size);
                 $(".dbl").val(spectacle.dbl);
@@ -404,7 +405,7 @@ function addStoreOrderRow(category) {
                         for (let i = 0; i <= 1; i++) {
                             let eye = (i == 0) ? 'RE' : 'LE';
                             let oval = (i == 0) ? 're' : 'le';
-                            $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="border-0" name="eye[]"><option value="${oval}">${eye}</option></select></td><td><select name='sph[]' class="border-0 select2 selSph"></select></td><td><select name='cyl[]' class="border-0 select2 selCyl"></select></td><td><select name='axis[]' class="border-0 select2 selAxis"></select></td><td><select name='add[]' class="border-0 select2 selAdd"></select></td><td><select name='int_add[]' class="border-0 select2 selIntAdd"></select></td><td><input type="text" name='ipd[]' class="w-100 border-0 text-center ipd" placeholder="IPD" maxlength="6" /></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="lens" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
+                            $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="border-0" name="eye[]"><option value="${oval}">${eye}</option></select></td><td><select name='sph[]' class="border-0 select2 selSph"></select></td><td><select name='cyl[]' class="border-0 select2 selCyl"></select></td><td><select name='axis[]' class="border-0 select2 selAxis"></select></td><td><select name='add[]' class="border-0 select2 selAdd"></select></td><td><input type="text" name='va[]' class="w-100 border-0 text-center va" placeholder="VA" maxlength="6" /></td><td><input type="text" name='ipd[]' class="w-100 border-0 text-center ipd" placeholder="IPD" maxlength="6" /></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="lens" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
 
                             var xdata = $.map(res, function (obj) {
                                 obj.text = obj.name || obj.id;
@@ -460,7 +461,7 @@ function addStoreOrderRow(category) {
                                 data: adddata
                             });
 
-                            let intadd = (i == 0) ? $('.fIntAd').val() : $('.sIntAd').val()
+                            /*let intadd = (i == 0) ? $('.fIntAd').val() : $('.sIntAd').val()
                             var intaddata = $.map(power.intad, function (obj) {
                                 obj.text = obj.name || obj.id;
                                 obj.selected = (obj.name == intadd) ? true : false;
@@ -469,10 +470,12 @@ function addStoreOrderRow(category) {
                             $('.selIntAdd').last().select2({
                                 placeholder: 'Select',
                                 data: intaddata
-                            });
+                            });*/
 
                             let ipd = (i == 0) ? $('.fIpd').val() : $('.sIpd').val()
+                            let va = (i == 0) ? $('.fVa').val() : $('.sVa').val()
                             $(".ipd").last().val(ipd);
+                            $(".va").last().val(va);
                         }
                     },
                     error: function (err) {
