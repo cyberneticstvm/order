@@ -13,6 +13,21 @@
                 <h6 class="lan-1">General</h6>
             </div>
         </li>
+        <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
+            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                <svg class="stroke-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-social') }}"></use>
+                </svg>
+                <svg class="fill-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#fill-social') }}"></use>
+                </svg>
+                <span>Extras</span>
+            </a>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('lab-list', route('labs'), 'Lab Register');
+            }}
+        </li>
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -216,8 +231,7 @@
                 <li><a class="submenu-title" href="javascript:void(0)">Extras<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                     {{
                         Menu::new()->addClass('nav-sub-childmenu submenu-content')
-                        ->linkIfCan('collection-list', route('collections'), 'Extras')
-                        ->linkIfCan('lab-list', route('labs'), 'Labs');
+                        ->linkIfCan('collection-list', route('collections'), 'Extras');
                     }}
                 </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Frame<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
