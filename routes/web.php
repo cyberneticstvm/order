@@ -15,6 +15,7 @@ use App\Http\Controllers\HeadController;
 use App\Http\Controllers\HelperController;
 use App\Http\Controllers\ImportExportController;
 use App\Http\Controllers\IncomeExpenseController;
+use App\Http\Controllers\LabController;
 use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\PatientController;
@@ -551,6 +552,15 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/edit/{id}', 'edit')->name('voucher.edit');
         Route::post('/edit/{id}', 'update')->name('voucher.update');
         Route::get('/delete/{id}', 'destroy')->name('voucher.delete');
+    });
+
+    Route::prefix('/backend/lab')->controller(LabController::class)->group(function () {
+        Route::get('/', 'index')->name('labs');
+        Route::get('/create', 'create')->name('lab.create');
+        Route::post('/save', 'store')->name('lab.save');
+        Route::get('/edit/{id}', 'edit')->name('lab.edit');
+        Route::post('/edit/{id}', 'update')->name('lab.update');
+        Route::get('/delete/{id}', 'destroy')->name('lab.delete');
     });
 
     Route::prefix('/backend/settings')->controller(SettingController::class)->group(function () {

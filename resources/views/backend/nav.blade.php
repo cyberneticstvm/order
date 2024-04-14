@@ -216,7 +216,8 @@
                 <li><a class="submenu-title" href="javascript:void(0)">Extras<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                     {{
                         Menu::new()->addClass('nav-sub-childmenu submenu-content')
-                        ->linkIfCan('collection-list', route('collections'), 'Extras');
+                        ->linkIfCan('collection-list', route('collections'), 'Extras')
+                        ->linkIfCan('lab-list', route('labs'), 'Labs');
                     }}
                 </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Frame<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
