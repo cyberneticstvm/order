@@ -21,7 +21,7 @@
             @forelse($data as $key => $item)
             <tr>
                 <td>{{ $key + 1 }}</td>
-                <td>{{ $data[$key]['sph'] }}</td>
+                <td>{{ $data }}</td>
             </tr>
             @empty
             @endforelse

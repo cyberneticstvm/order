@@ -134,8 +134,9 @@ class LabController extends Controller
         if ($lab->type == 'own-lab') :
             LabOrder::insert($data);
         else :
-            dd($data1);
-            die;
+            foreach ($data1 as $key => $item) :
+                echo $item->sph;
+            endforeach;
         //Mail::to('vijoysasidharan@gmail.com')->cc('vijoysniit@gmail.com')->send(new SendOrderToLab($data1, $lab));
         endif;
         return redirect()->route('lab.assign.orders')->with("success", "Order assigned successfully");
