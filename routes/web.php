@@ -561,6 +561,11 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/edit/{id}', 'edit')->name('lab.edit');
         Route::post('/edit/{id}', 'update')->name('lab.update');
         Route::get('/delete/{id}', 'destroy')->name('lab.delete');
+
+        Route::get('/assign-orders', 'assignOrders')->name('lab.assign.orders');
+        Route::post('/assign-orders', 'assignOrdersSave')->name('lab.assign.orders.save');
+
+        Route::get('/lab-orders', 'labOrders')->name('lab.view.orders');
     });
 
     Route::prefix('/backend/settings')->controller(SettingController::class)->group(function () {

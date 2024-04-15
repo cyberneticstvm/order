@@ -1,0 +1,92 @@
+@extends("backend.base")
+@section("content")
+<div class="page-body">
+    <div class="container-fluid">
+        <div class="page-title">
+            <div class="row">
+                <div class="col-6">
+                    <h3>Assign Order to Lab</h3>
+                </div>
+                <div class="col-6">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
+                                </svg></a></li>
+                        <li class="breadcrumb-item">Orders</li>
+                        <li class="breadcrumb-item active">Assign Order to Lab</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid starts-->
+    {{ html()->form('POST', route('lab.assign.orders.save'))->attribute('name', 'labForm')->attribute('id', 'labForm')->open() }}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-3">
+                            <label class="form-label req">Lab</label>
+                            {{ html()->select('lab_id', $labs->pluck('name', 'id'), old('lab_id'))->class('form-control select2')->placeholder('Select') }}
+                            @error('lab_id')
+                            <small class="text-danger">{{ $errors->first('lab_id') }}</small>
+                            @enderror
+                        </div>
+                        <div class="table-responsive theme-scrollbar mt-5">
+                            <table class="table table-sm" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>SL No</th>
+                                        <th>Order ID</th>
+                                        <th>Branch</th>
+                                        <th>Customer Name</th>
+                                        <th>Product</th>
+                                        <th>Sph</th>
+                                        <th>Cyl</th>
+                                        <th>Axis</th>
+                                        <th>Add</th>
+                                        <th>va</th>
+                                        <th>pd</th>
+                                        <th>Eye</th>
+                                        <th>Select</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($orders as $key => $item)
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $item->order->ono() }}</td>
+                                        <td>{{ $item->order->branch->name }}</td>
+                                        <td>{{ $item->order->name }}</td>
+                                        <td>{{ $item->product->name }}</td>
+                                        <td>{{ $item->sph }}</td>
+                                        <td>{{ $item->cyl }}</td>
+                                        <td>{{ $item->axis }}</td>
+                                        <td>{{ $item->add }}</td>
+                                        <td>{{ $item->va }}</td>
+                                        <td>{{ $item->ipd }}</td>
+                                        <td class="fw-bold">{{ strtoupper($item->eye) }}</td>
+                                        <td class="text-center">
+                                            {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem chk_'.$item->id) }}
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-12 text-end mt-5">
+                            <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
+                            <button class="btn btn-submit btn-success" onclick="return validateLabOrderForm()" type="submit">Assign</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ html()->form()->close() }}
+    <!-- Container-fluid Ends-->
+</div>
+@endsection

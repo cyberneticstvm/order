@@ -270,6 +270,12 @@ $(function () {
             }
         });
     });
+
+    $(document).on("click", ".chkItem", function () {
+        if ($(this).is(":checked")) {
+            $(this).parent().parent().next().find(".chkItem").prop('checked', true)
+        }
+    })
 });
 
 function addMedicineRowForOrder(category, attribute) {

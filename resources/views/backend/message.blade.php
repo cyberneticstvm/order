@@ -106,6 +106,23 @@
         return true;
     }
 
+    function validateLabOrderForm() {
+        let frm = document.forms["labForm"];
+        if (frm['lab_id'].value == '') {
+            failed({
+                'error': 'Please select a Lab'
+            })
+            return false;
+        }
+        if (!$(".chkItem").is(":checked")) {
+            failed({
+                'error': 'Please select at least one order'
+            })
+            return false;
+        }
+        return true;
+    }
+
     $(document).on('click', '.dlt', function(e) {
         e.preventDefault();
         var link = $(this).attr("href");

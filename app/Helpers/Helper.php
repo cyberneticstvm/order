@@ -178,7 +178,7 @@ function deleteDocument($path, $url)
 
 function orderStatuses()
 {
-    return array('booked' => 'Booked', 'under-process' => 'Under Process', 'pending' => 'Pending', 'ready-for-delivery' => 'Ready For Delivery', 'delivered' => 'Billed / Delivered');
+    return array('booked' => 'Booked', 'sent-to-lab' => 'Sent to Lab', 'sent-to-branch' => 'Sent to Branch', 'ready-for-delivery' => 'Ready For Delivery', 'delivered' => 'Billed / Delivered');
 }
 
 function casetypes()
