@@ -135,7 +135,7 @@ class LabController extends Controller
             LabOrder::insert($data);
         else :
             foreach ($data1 as $key => $item) :
-                echo $item->sph;
+                echo $data1[$key]['sph'];
             endforeach;
         //Mail::to('vijoysasidharan@gmail.com')->cc('vijoysniit@gmail.com')->send(new SendOrderToLab($data1, $lab));
         endif;
