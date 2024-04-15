@@ -425,6 +425,6 @@ function getAvailableCredit($cid)
 
 function getFrameType($oid)
 {
-    $product = OrderDetail::where('order_id', $oid)->where('eye', 'frame')->first()->product_id;
-    return ProductSubcategory::where('id', Product::where('id', $product ?? 0)->first()->type_id)->first()->name;
+    $product = OrderDetail::where('order_id', $oid)->where('eye', 'frame')->first();
+    return ProductSubcategory::where('id', Product::where('id', $product?->product_id ?? 0)->first()->type_id)->first()->name;
 }
