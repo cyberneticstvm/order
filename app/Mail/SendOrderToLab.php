@@ -40,7 +40,7 @@ class SendOrderToLab extends Mailable
     {
         return new Content(
             view: 'backend.email.send-order-outside-lab',
-            with: ['data' => $this->data, 'lab' => $this->lab],
+            with: ['data' => collect($this->data), 'lab' => $this->lab],
         );
     }
 
