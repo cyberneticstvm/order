@@ -128,7 +128,13 @@ class LabController extends Controller
                 'updated_at' => Carbon::now(),
             ];
             $data1[] = collect([
+                'order_id' => $odetail->order->id,
                 'sph' => $odetail->sph,
+                'cyl' => $odetail->cyl,
+                'axis' => $odetail->axis,
+                'add' => $odetail->add,
+                'va' => $odetail->va,
+                'ipd' => $odetail->ipd,
             ]);
         endforeach;
         if ($lab->type == 'own-lab') :

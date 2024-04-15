@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    Dear {{ $lab->name }}
+    Dear {{ $lab->name }}<br /><br />
 
     Please see the below<br /><br />
 
@@ -14,14 +14,26 @@
         <thead>
             <tr>
                 <th>SL No</th>
+                <th>Order ID</th>
                 <th>SPH</th>
+                <th>CYL</th>
+                <th>AXIS</th>
+                <th>ADD</th>
+                <th>VA</th>
+                <th>IPD</th>
             </tr>
         </thead>
         <tbody>
             @forelse($data as $key => $item)
             <tr>
                 <td>{{ $key + 1 }}</td>
+                <td>{{ $data[$key]['order_id'] }}</td>
                 <td>{{ $data[$key]['sph'] }}</td>
+                <td>{{ $data[$key]['cyl'] }}</td>
+                <td>{{ $data[$key]['axis'] }}</td>
+                <td>{{ $data[$key]['add'] }}</td>
+                <td>{{ $data[$key]['va'] }}</td>
+                <td>{{ $data[$key]['ipd'] }}</td>
             </tr>
             @empty
             @endforelse
