@@ -79,7 +79,7 @@
                                         <td>{{ $item->order->fh }}</td>
                                         <td>{{ $item->order->ed }}</td>
                                         <td>{{ $item->order->special_lab_note }}</td>
-                                        <td>{{ $item->product->type->name }}</td>
+                                        <td>{{ getFrameType($item->order->id) }}</td>
                                         <td>{{ $item->order->name }}</td>
                                     </tr>
                                     @empty

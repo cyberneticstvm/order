@@ -19,6 +19,8 @@ use App\Models\PatientProcedure;
 use App\Models\PatientProcedureDetail;
 use App\Models\Payment;
 use App\Models\Procedure;
+use App\Models\Product;
+use App\Models\ProductSubcategory;
 use App\Models\Setting;
 use App\Models\Transfer;
 use App\Models\Voucher;
@@ -419,4 +421,10 @@ function getPercentage($amount, $total)
 function getAvailableCredit($cid)
 {
     return CustomerAccount::where('customer_id', $cid)->selectRaw("SUM(CASE WHEN type='credit' THEN amount ELSE 0 END) - SUM(CASE WHEN type='debit' THEN amount ELSE 0 END) AS cr")->value('cr') ?? 0;
+}
+
+function getFrameType($oid)
+{
+    $product = OrderDetail::where('order_id', $oid)->where('eye', 'frame')->first()->product_id;
+    return ProductSubcategory::where('id', Product::where('id', $product ?? 0)->first()->type_id)->first()->name;
 }
