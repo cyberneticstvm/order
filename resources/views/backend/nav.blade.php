@@ -25,7 +25,6 @@
             </a>
             {{
                 Menu::new()->addClass('sidebar-submenu')
-                ->linkIfCan('lab-list', route('labs'), 'Lab Register')
                 ->linkIfCan('lab-assign-orders', route('lab.assign.orders'), 'Assign Orders')
                 ->linkIfCan('lab-view-orders', route('lab.view.orders'), 'Lab Order Register');
             }}
