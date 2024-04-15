@@ -114,6 +114,7 @@ class LabController extends Controller
         ]);
         $lab = Branch::findOrFail($request->lab_id);
         $data = [];
+        $data1 = [];
         foreach ($request->chkItem as $key => $item) :
             $odetail = OrderDetail::findOrFail($item);
             $data[] = [
@@ -126,11 +127,16 @@ class LabController extends Controller
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ];
+            $data1[] = collect([
+                'sph' => $odetail->sph,
+            ]);
         endforeach;
         if ($lab->type == 'own-lab') :
             LabOrder::insert($data);
         else :
-            Mail::to('vijoysasidharan@gmail.com')->cc('vijoysniit@gmail.com')->send(new SendOrderToLab($data, $lab));
+            dd($data1);
+            die;
+        //Mail::to('vijoysasidharan@gmail.com')->cc('vijoysniit@gmail.com')->send(new SendOrderToLab($data1, $lab));
         endif;
         return redirect()->route('lab.assign.orders')->with("success", "Order assigned successfully");
     }
