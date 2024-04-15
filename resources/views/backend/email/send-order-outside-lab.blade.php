@@ -15,6 +15,7 @@
             <tr>
                 <th>SL No</th>
                 <th>Order ID</th>
+                <th>Eye</th>
                 <th>SPH</th>
                 <th>CYL</th>
                 <th>AXIS</th>
@@ -27,6 +28,7 @@
             @forelse($data as $key => $item)
             <tr>
                 <td>{{ $key + 1 }}</td>
+                <td>{{ strtoupper($data[$key]['eye']) }}</td>
                 <td>{{ $data[$key]['order_id'] }}</td>
                 <td>{{ $data[$key]['sph'] }}</td>
                 <td>{{ $data[$key]['cyl'] }}</td>

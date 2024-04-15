@@ -129,6 +129,7 @@ class LabController extends Controller
             ];
             $data1[] = collect([
                 'order_id' => $odetail->order->id,
+                'eye' => $odetail->eye,
                 'sph' => $odetail->sph,
                 'cyl' => $odetail->cyl,
                 'axis' => $odetail->axis,
