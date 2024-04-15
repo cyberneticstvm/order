@@ -95,6 +95,13 @@
                                     <small class="text-danger">{{ $errors->first('daily_expense_limit') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-3">
+                                    <label class="form-label req">Type</label>
+                                    {{ html()->select($name = 'type', array('own-lab' => 'Own Lab', 'outside-lab' => 'Outside Lab'), $value = $branch->type)->class('form-control')->placeholder(Select') }}
+                                    @error('type')
+                                    <small class="text-danger">{{ $errors->first('type') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                                     <button class="btn btn-submit btn-success" type="submit">Update</button>
