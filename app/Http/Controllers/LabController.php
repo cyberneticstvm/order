@@ -129,7 +129,7 @@ class LabController extends Controller
         if ($lab->type == 'own-lab') :
             LabOrder::insert($data);
         else :
-            Mail::to($lab->email)->cc()
+        //Mail::to($lab->email)->cc()
         endif;
         return redirect()->route('lab.assign.orders')->with("success", "Order assigned successfully");
     }
