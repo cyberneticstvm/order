@@ -39,38 +39,48 @@
                                 <thead>
                                     <tr>
                                         <th>SL No</th>
+                                        <th>Select</th>
                                         <th>Order ID</th>
-                                        <th>Branch</th>
-                                        <th>Customer Name</th>
+                                        <th>Eye</th>
                                         <th>Product</th>
                                         <th>Sph</th>
                                         <th>Cyl</th>
                                         <th>Axis</th>
                                         <th>Add</th>
-                                        <th>va</th>
                                         <th>pd</th>
-                                        <th>Eye</th>
-                                        <th>Select</th>
+                                        <th>A</th>
+                                        <th>B</th>
+                                        <th>DBL</th>
+                                        <th>FH</th>
+                                        <th>ED</th>
+                                        <th>Note</th>
+                                        <th>F.Type</th>
+                                        <th>Customer Name</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse($orders as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
+                                        <td class="text-center">
+                                            {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem chk_'.$item->id) }}
+                                        </td>
                                         <td>{{ $item->order->ono() }}</td>
-                                        <td>{{ $item->order->branch->name }}</td>
-                                        <td>{{ $item->order->name }}</td>
+                                        <td class="fw-bold">{{ strtoupper($item->eye) }}</td>
                                         <td>{{ $item->product->name }}</td>
                                         <td>{{ $item->sph }}</td>
                                         <td>{{ $item->cyl }}</td>
                                         <td>{{ $item->axis }}</td>
                                         <td>{{ $item->add }}</td>
-                                        <td>{{ $item->va }}</td>
                                         <td>{{ $item->ipd }}</td>
-                                        <td class="fw-bold">{{ strtoupper($item->eye) }}</td>
-                                        <td class="text-center">
-                                            {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem chk_'.$item->id) }}
-                                        </td>
+                                        <td>{{ $item->order->a_size }}</td>
+                                        <td>{{ $item->order->b_size }}</td>
+                                        <td>{{ $item->order->dbl }}</td>
+                                        <td>{{ $item->order->fh }}</td>
+                                        <td>{{ $item->order->ed }}</td>
+                                        <td>{{ $item->order->special_lab_note }}</td>
+                                        <td>{{ $item->product->type->name }}</td>
+                                        <td>{{ $item->order->name }}</td>
                                     </tr>
                                     @empty
                                     @endforelse
