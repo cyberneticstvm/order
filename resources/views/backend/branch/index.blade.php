@@ -46,6 +46,7 @@
                                         <th>GSTIN</th>
                                         <th>Target</th>
                                         <th>Exp. Limit</th>
+                                        <th>Type</th>
                                         <th>Status</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
@@ -62,6 +63,7 @@
                                         <td>{{ $item->gstin }}</td>
                                         <td>{{ $item->monthly_target }}</td>
                                         <td>{{ $item->daily_expense_limit }}</td>
+                                        <td>{{ $item->type }}</td>
                                         <td class="text-center">{!! $item->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('branch.edit', encrypt($item->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center"><a href="{{ route('branch.delete', encrypt($item->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
