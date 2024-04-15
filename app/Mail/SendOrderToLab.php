@@ -16,9 +16,11 @@ class SendOrderToLab extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public $data, $lab;
+    public function __construct($data, $lab)
     {
-        //
+        $this->data = $data;
+        $this->lab = $lab;
     }
 
     /**
@@ -27,7 +29,7 @@ class SendOrderToLab extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Send Order To Lab',
+            subject: 'Todays Lab Orders',
         );
     }
 
@@ -37,7 +39,8 @@ class SendOrderToLab extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'backend.email.send-order-outside-lab.blade',
+            with: ['data' => $this->data, 'lab' => $this->lab],
         );
     }
 

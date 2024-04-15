@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendOrderToLab;
 use App\Models\Branch;
 use App\Models\Lab;
 use App\Models\LabOrder;
@@ -129,7 +130,7 @@ class LabController extends Controller
         if ($lab->type == 'own-lab') :
             LabOrder::insert($data);
         else :
-        //Mail::to($lab->email)->cc()
+            Mail::to($lab->email)->cc('vijoysniit@gmail.com')->send(new SendOrderToLab($data, $lab));
         endif;
         return redirect()->route('lab.assign.orders')->with("success", "Order assigned successfully");
     }
