@@ -97,7 +97,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Type</label>
-                                    {{ html()->select($name = 'type', array('own-lab' => 'Own Lab', 'outside-lab' => 'Outside Lab'), $value = old('type'))->class('form-control')->placeholder('Select') }}
+                                    {{ html()->select($name = 'type', array('branch' => 'Branch', own-lab' => 'Own Lab', 'outside-lab' => 'Outside Lab'), $value = old('type'))->class('form-control')->placeholder('Select') }}
                                     @error('type')
                                     <small class="text-danger">{{ $errors->first('type') }}</small>
                                     @enderror
