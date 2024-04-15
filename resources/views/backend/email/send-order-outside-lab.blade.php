@@ -8,18 +8,20 @@
 <body>
     Dear {{ $lab->name }}
 
-    Please see the below<br />
+    Please see the below<br /><br />
 
     <table width="100%" cellspacing="0" cellpadding="0" border="1px solid gray">
         <thead>
             <tr>
                 <th>SL No</th>
+                <th>SPH</th>
             </tr>
         </thead>
         <tbody>
             @forelse($data as $key => $item)
             <tr>
                 <td>{{ $key + 1 }}</td>
+                <td>{{ $item->sph }}</td>
             </tr>
             @empty
             @endforelse
