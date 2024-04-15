@@ -10,6 +10,7 @@ use App\Models\OrderDetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class LabController extends Controller
@@ -111,24 +112,25 @@ class LabController extends Controller
             'lab_id' => 'required',
         ]);
         $lab = Branch::findOrFail($request->lab_id);
+        $data = [];
+        foreach ($request->chkItem as $key => $item) :
+            $odetail = OrderDetail::findOrFail($item);
+            $data[] = [
+                'order_id' => $odetail->order->id,
+                'order_detail_id' => $odetail->id,
+                'lab_id' => $request->lab_id,
+                'status' => 'sent-to-lab',
+                'created_by' => $request->user()->id,
+                'updated_by' => $request->user()->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ];
+        endforeach;
         if ($lab->type == 'own-lab') :
-            foreach ($request->chkItem as $key => $item) :
-                $odetail = OrderDetail::findOrFail($item);
-                $data[] = [
-                    'order_id' => $odetail->order->id,
-                    'order_detail_id' => $odetail->id,
-                    'lab_id' => $request->lab_id,
-                    'status' => 'sent-to-lab',
-                    'created_by' => $request->user()->id,
-                    'updated_by' => $request->user()->id,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ];
-            endforeach;
+            LabOrder::insert($data);
         else :
-        //
+            Mail::to($lab->email)->cc()
         endif;
-        LabOrder::insert($data);
         return redirect()->route('lab.assign.orders')->with("success", "Order assigned successfully");
     }
 
