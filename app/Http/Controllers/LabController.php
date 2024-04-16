@@ -25,7 +25,7 @@ class LabController extends Controller
         $this->middleware('permission:lab-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:lab-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:lab-delete', ['only' => ['destroy']]);
-        $this->middleware('permission:lab-assign-orders', ['only' => ['allOrders']]);
+        $this->middleware('permission:lab-assign-orders', ['only' => ['assignOrders', 'labOrders']]);
     }
 
     public function index()
@@ -103,7 +103,7 @@ class LabController extends Controller
         $orders = OrderDetail::leftJoin("lab_orders as lo", "lo.order_detail_id", "order_details.id")->selectRaw("order_details.*, lo.lab_id")->whereDate('order_details.created_at', Carbon::today())->whereIn('order_details.eye', ['re', 'le'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator')), function ($q) {
             return $q->leftJoin('orders', 'orders.id', 'order_details.order_id')->where('orders.branch_id', Session::get('branch'));
         })->whereNull("lo.lab_id")->get();
-        $labs = Branch::whereIn('type', ['own-lab', 'outside-lab'])->get();
+        $labs = Branch::whereIn('type', ['rx-lab', 'fitting-lab', 'stock-lab', 'outside-lab'])->get();
         return view('backend.lab.orders', compact('orders', 'labs'));
     }
 
@@ -146,10 +146,10 @@ class LabController extends Controller
                 'customer' => $odetail->order->name,
             ]);
         endforeach;
-        if ($lab->type == 'own-lab') :
-            LabOrder::insert($data);
-        else :
-            Mail::to('admin@enieco.com')->cc('vijoysasidharan@yahoo.com')->send(new SendOrderToLab($data1, $lab));
+        LabOrder::insert($data);
+        if ($lab->type == 'outside-lab') :
+            //Mail::to('info@deviopticians.com')->cc('cssumesh@yahoo.com')->send(new SendOrderToLab($data1, $lab));
+            Mail::to('mail@cybernetics.me')->cc('vijoysasidharan@yahoo.com')->send(new SendOrderToLab($data1, $lab));
         endif;
         return redirect()->route('lab.assign.orders')->with("success", "Order assigned successfully");
     }
@@ -159,5 +159,11 @@ class LabController extends Controller
         $orders = LabOrder::where('status', 'sent-to-lab')->when(!in_array(Auth::user()->roles->first()->name, array('Administrator')), function ($q) {
             return $q->where('lab_id', Session::get('branch'));
         })->get();
+        if (in_array(Auth::user()->roles->first()->name, array('Purchase Manager'))) :
+            $status = array('received_from_lab' => 'Received From Lab');
+        else :
+            $status = array('sent-to-branch' => 'Sent to Branch');
+        endif;
+        return view('backend.lab.lab-orders', compact('orders'));
     }
 }
