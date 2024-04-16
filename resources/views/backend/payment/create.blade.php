@@ -29,14 +29,14 @@
                             <div class="col-md-2">
                                 <h5 class="text-secondary">Patient Name: {{ $order->name ?? '' }}</h5>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <h5 class="text-secondary">Order Number: {{ $order?->ono() }}</h5>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <h5 class="text-warning">Total Amount: {{ $order->invoice_total }}</h5>
                             </div>
                             <div class="col-md-2">
-                                <h5 class="text-success">Paid Amount: {{ $order->payments->sum('amount') }}</h5>
+                                <h5 class="text-success">Paid Amount: {{ number_format($order->payments->sum('amount') + $order->credit_used, 2) }}</h5>
                             </div>
                             <div class="col-md-2">
                                 <h5 class="text-danger">Balance: {{ number_format($order->invoice_total - ($order->payments->sum('amount') + $order->credit_used), 2)  }}</h5>
