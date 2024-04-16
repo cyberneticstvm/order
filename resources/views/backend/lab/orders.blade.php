@@ -63,7 +63,7 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td class="text-center">
-                                            {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem chk_'.$item->id) }}
+                                            {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem chk_'.$item->id.' '.$item->eye) }}
                                         </td>
                                         <td>{{ $item->order->ono() }}</td>
                                         <td class="fw-bold">{{ strtoupper($item->eye) }}</td>

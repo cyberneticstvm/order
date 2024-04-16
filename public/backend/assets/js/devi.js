@@ -271,9 +271,9 @@ $(function () {
         });
     });
 
-    $(document).on("click", ".chkItem", function () {
+    $(document).on("click", ".re", function () {
         if ($(this).is(":checked")) {
-            $(this).parent().parent().next().find(".chkItem").prop('checked', true)
+            $(this).parent().parent().next().find(".le").prop('checked', true)
         }
     })
 });
