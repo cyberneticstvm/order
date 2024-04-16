@@ -59,7 +59,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse($invoices as $key => $item)
-                                    @if($item->invoice_total <= $item->payments->sum('amount'))
+                                    @if($item->invoice_total <= ($item->payments->sum('amount') + $item->credit_used))
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $item->name }}</td>
