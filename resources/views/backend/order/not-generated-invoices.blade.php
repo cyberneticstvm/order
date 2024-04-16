@@ -66,8 +66,8 @@
                                             <td>{{ $item->mobile }}</td>
                                             <td>{{ $item->branch->code }}/{{ $item->id }}</td>
                                             <td>{{ $item->invoice_total }}</td>
-                                            <td>{{ number_format($item->payments->sum('amount'), 2) }}</td>
-                                            <td>{{ number_format($item->invoice_total-$item->payments->sum('amount'), 2) }}</td>
+                                            <td>{{ number_format($item->payments->sum('amount') + $item->credit_used, 2) }}</td>
+                                            <td>{{ number_format($item->invoice_total-($item->payments->sum('amount') + $item->credit_used), 2) }}</td>
                                             <td>{{ ucfirst($item->order_status) }}</td>
                                             <td class="text-center"><a href="{{ route('store.order.invoice.generate', encrypt($item->id)) }}" class="proceed">Generate</a></td>
                                         </tr>
