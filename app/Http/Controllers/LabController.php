@@ -128,20 +128,28 @@ class LabController extends Controller
                 'updated_at' => Carbon::now(),
             ];
             $data1[] = collect([
-                'order_id' => $odetail->order->id,
+                'order_id' => $odetail->order->ono(),
                 'eye' => $odetail->eye,
+                'product' => $odetail->product->name,
                 'sph' => $odetail->sph,
                 'cyl' => $odetail->cyl,
                 'axis' => $odetail->axis,
                 'add' => $odetail->add,
-                'va' => $odetail->va,
                 'ipd' => $odetail->ipd,
+                'a_size' => $odetail->order->a_size,
+                'b_size' => $odetail->order->b_size,
+                'dbl' => $odetail->order->dbl,
+                'fh' => $odetail->order->fh,
+                'ed' => $odetail->order->ed,
+                'special_lab_note' => $odetail->order->special_lab_note,
+                'frame_type' => getFrameType($odetail->order->id),
+                'customer' => $odetail->order->name,
             ]);
         endforeach;
         if ($lab->type == 'own-lab') :
             LabOrder::insert($data);
         else :
-            Mail::to('info@deviopticians.com')->cc('cssumesh@yahoo.com')->send(new SendOrderToLab($data1, $lab));
+            Mail::to('admin@enieco.com')->cc('vijoysasidharan@yahoo.com')->send(new SendOrderToLab($data1, $lab));
         endif;
         return redirect()->route('lab.assign.orders')->with("success", "Order assigned successfully");
     }
