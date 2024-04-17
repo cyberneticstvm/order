@@ -437,5 +437,5 @@ function isPendingFromLab($oid)
     $orders = LabOrder::where('order_id', $oid)->whereIn('status', ['sent-to-lab', 'received-from-lab'])->get();
     if ($orders)
         return true;
-    return true;
+    return false;
 }
