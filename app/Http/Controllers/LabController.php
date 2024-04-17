@@ -148,8 +148,8 @@ class LabController extends Controller
         endforeach;
         LabOrder::insert($data);
         if ($lab->type == 'outside-lab') :
-            //Mail::to('info@deviopticians.com')->cc('cssumesh@yahoo.com')->send(new SendOrderToLab($data1, $lab));
-            Mail::to('mail@cybernetics.me')->cc('vijoysasidharan@yahoo.com')->send(new SendOrderToLab($data1, $lab));
+            Mail::to($lab->email)->cc('cssumesh@yahoo.com')->send(new SendOrderToLab($data1, $lab));
+        //Mail::to('mail@cybernetics.me')->cc('vijoysasidharan@yahoo.com')->send(new SendOrderToLab($data1, $lab));
         endif;
         return redirect()->route('lab.assign.orders')->with("success", "Order assigned successfully");
     }
