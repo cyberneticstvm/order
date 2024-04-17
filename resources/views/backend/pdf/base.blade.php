@@ -32,8 +32,10 @@
       margin: 0 auto !important;
     }
 
+    .bordered td,
+    .bordered th,
     .bordered {
-      border: 1px solid #262525;
+      border: 1px solid #e6e6e6;
     }
 
     .border-0 {
