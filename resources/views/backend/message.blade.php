@@ -131,6 +131,12 @@
             })
             return false;
         }
+        if (frm['status'].value == 'sent-to-lab' && frm['lab_id'].value == '') {
+            failed({
+                'error': 'Please select a Lab'
+            })
+            return false;
+        }
         if (!$(".chkItem").is(":checked")) {
             failed({
                 'error': 'Please select at least one Item'

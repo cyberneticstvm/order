@@ -162,11 +162,12 @@ class LabController extends Controller
         })->get();
 
         if (in_array(Auth::user()->roles->first()->name, array('Store Manager', 'Administrator'))) :
-            $status = array('received-from-lab' => 'Received From Lab', 'sent-to-branch' => 'Sent to Branch');
+            $status = array('received-from-lab' => 'Received From Lab', 'sent-to-branch' => 'Sent to Branch', 'sent-to-lab' => 'Sent to Lab');
         else :
-            $status = array('sent-to-branch' => 'Sent to Branch');
+            $status = array('sent-to-branch' => 'Sent to Branch', 'sent-to-lab' => 'Sent to Lab');
         endif;
-        return view('backend.lab.lab-orders', compact('orders', 'status'));
+        $labs = Branch::whereIn('type', ['rx-lab', 'fitting-lab', 'stock-lab', 'outside-lab'])->get();
+        return view('backend.lab.lab-orders', compact('orders', 'status', 'labs'));
     }
 
     public function labOrdersUpdateStatus(Request $request)
@@ -174,10 +175,18 @@ class LabController extends Controller
         $this->validate($request, [
             'status' => 'required',
         ]);
-        LabOrder::whereIn('id', $request->chkItem)->update([
-            'status' => $request->status,
-            'updated_by' => $request->user()->id,
-        ]);
+        if ($request->status == 'sent-to-lab') :
+            LabOrder::whereIn('id', $request->chkItem)->update([
+                'status' => $request->status,
+                'lab_id' => $request->lab_id,
+                'updated_by' => $request->user()->id,
+            ]);
+        else :
+            LabOrder::whereIn('id', $request->chkItem)->update([
+                'status' => $request->status,
+                'updated_by' => $request->user()->id,
+            ]);
+        endif;
         return redirect()->route('lab.view.orders')->with("success", "Status updated successfully");
     }
 
