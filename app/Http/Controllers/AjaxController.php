@@ -221,7 +221,7 @@ class AjaxController extends Controller
                     return $q->where('branch_id', $request->branch);
                 })->get();
                 $op = '<div class="drawer-header">
-                        <h6 class="drawer-title" id="drawer-3-title">Expense Detailed</h6></div><div class="drawer-body table-responsive">';
+                        <h6 class="drawer-title" id="drawer-3-title">Bank Transfer Detailed</h6></div><div class="drawer-body table-responsive">';
                 $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>Branch Name</th><th>Date</th><th>Notes</th><th>Amount</th></tr></thead><tbody>';
                 foreach ($data as $key => $item) :
                     $op .= "<tr>";
@@ -232,7 +232,7 @@ class AjaxController extends Controller
                     $op .= '<td class="text-end">' . number_format($item->amount, 2) . '</td>';
                     $op .= "</tr>";
                 endforeach;
-                $op .= '</tbody><tfoot><tr><td colspan="5" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('amount'), 2) . '</td></tr></tfoot></table>';
+                $op .= '</tbody><tfoot><tr><td colspan="6" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('amount'), 2) . '</td></tr></tfoot></table>';
                 $op .= '</div><div class="drawer-footer">Expense</div>';
                 break;
             default:
