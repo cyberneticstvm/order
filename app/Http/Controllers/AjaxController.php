@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankTransfer;
 use App\Models\Consultation;
 use App\Models\IncomeExpense;
 use App\Models\Month;
@@ -180,7 +181,7 @@ class AjaxController extends Controller
                 $op = '<div class="drawer-header">
                 <h6 class="drawer-title" id="drawer-3-title">Income Detailed</h6></div><div class="drawer-body table-responsive">';
                 $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>Branch Name</th><th>
-                Head<th>Date<th>Description</th><th>Amount</th></tr></thead><tbody>';
+                Head</th><th>Date</th><th>Description</th><th>Amount</th></tr></thead><tbody>';
                 foreach ($data as $key => $item) :
                     $op .= "<tr>";
                     $op .= '<td>' . $key + 1 . '</td>';
@@ -201,7 +202,7 @@ class AjaxController extends Controller
                 $op = '<div class="drawer-header">
                     <h6 class="drawer-title" id="drawer-3-title">Expense Detailed</h6></div><div class="drawer-body table-responsive">';
                 $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>Branch Name</th><th>
-                    Head<th>Date<th>Description</th><th>Amount</th></tr></thead><tbody>';
+                    Head</th><th>Date</th><th>Description</th><th>Amount</th></tr></thead><tbody>';
                 foreach ($data as $key => $item) :
                     $op .= "<tr>";
                     $op .= '<td>' . $key + 1 . '</td>';
@@ -209,6 +210,25 @@ class AjaxController extends Controller
                     $op .= '<td>' . $item->head->name . '</td>';
                     $op .= '<td>' . $item->created_at->format('d, M Y') . '</td>';
                     $op .= '<td>' . $item->description . '</td>';
+                    $op .= '<td class="text-end">' . number_format($item->amount, 2) . '</td>';
+                    $op .= "</tr>";
+                endforeach;
+                $op .= '</tbody><tfoot><tr><td colspan="5" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('amount'), 2) . '</td></tr></tfoot></table>';
+                $op .= '</div><div class="drawer-footer">Expense</div>';
+                break;
+            case 'bank':
+                $data = BankTransfer::whereBetween('created_at', [$fdate, $tdate])->where('amount', '>', 0)->when($request->branch > 0, function ($q) use ($request) {
+                    return $q->where('branch_id', $request->branch);
+                })->get();
+                $op = '<div class="drawer-header">
+                        <h6 class="drawer-title" id="drawer-3-title">Expense Detailed</h6></div><div class="drawer-body table-responsive">';
+                $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>Branch Name</th><th>Date</th><th>Notes</th><th>Amount</th></tr></thead><tbody>';
+                foreach ($data as $key => $item) :
+                    $op .= "<tr>";
+                    $op .= '<td>' . $key + 1 . '</td>';
+                    $op .= '<td>' . $item->branch->name . '</td>';
+                    $op .= '<td>' . $item->created_at->format('d, M Y') . '</td>';
+                    $op .= '<td>' . $item->notes . '</td>';
                     $op .= '<td class="text-end">' . number_format($item->amount, 2) . '</td>';
                     $op .= "</tr>";
                 endforeach;
