@@ -567,6 +567,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
 
         Route::get('/lab-orders', 'labOrders')->name('lab.view.orders');
         Route::post('/lab-orders', 'labOrdersUpdateStatus')->name('lab.order.update.status');
+        Route::get('/lab-orders/delete/{id}', 'delete')->name('lab.order.delete');
     });
 
     Route::prefix('/backend/settings')->controller(SettingController::class)->group(function () {

@@ -26,6 +26,7 @@ class LabController extends Controller
         $this->middleware('permission:lab-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:lab-delete', ['only' => ['destroy']]);
         $this->middleware('permission:lab-assign-orders', ['only' => ['assignOrders', 'labOrders']]);
+        $this->middleware('permission:lab-assigned-order-delete', ['only' => ['delete']]);
     }
 
     public function index()
@@ -156,11 +157,11 @@ class LabController extends Controller
 
     public function labOrders()
     {
-        $orders = LabOrder::whereIn('status', ['sent-to-lab', 'received-from-lab'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Purchase Manager')), function ($q) {
+        $orders = LabOrder::whereIn('status', ['sent-to-lab', 'received-from-lab'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager')), function ($q) {
             return $q->whereIn('order_id', Order::where('branch_id', Session::get('branch'))->pluck('id'));
         })->get();
 
-        if (in_array(Auth::user()->roles->first()->name, array('Purchase Manager', 'Administrator'))) :
+        if (in_array(Auth::user()->roles->first()->name, array('Store Manager', 'Administrator'))) :
             $status = array('received-from-lab' => 'Received From Lab', 'sent-to-branch' => 'Sent to Branch');
         else :
             $status = array('sent-to-branch' => 'Sent to Branch');
@@ -178,5 +179,11 @@ class LabController extends Controller
             'updated_by' => $request->user()->id,
         ]);
         return redirect()->route('lab.view.orders')->with("success", "Status updated successfully");
+    }
+
+    public function delete(string $id)
+    {
+        LabOrder::findOrFail(decrypt($id))->delete();
+        return redirect()->back()->with("success", "Status deleted successfully");
     }
 }
