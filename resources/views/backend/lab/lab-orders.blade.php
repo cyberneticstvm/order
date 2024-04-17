@@ -44,6 +44,7 @@
                                         <th>Eye</th>
                                         <th>Product</th>
                                         <th>Lab</th>
+                                        <th>Status</th>
                                         <th>Customer Name</th>
                                     </tr>
                                 </thead>
@@ -58,6 +59,7 @@
                                         <td class="fw-bold">{{ strtoupper($item->item->eye) }}</td>
                                         <td>{{ $item->item->product->name }}</td>
                                         <td>{{ $item->lab->name }}</td>
+                                        <td>{{ $item->status }}</td>
                                         <td>{{ $item->order->name }}</td>
                                     </tr>
                                     @empty
