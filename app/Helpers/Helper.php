@@ -12,6 +12,7 @@ use App\Models\CustomerAccount;
 use App\Models\Doctor;
 use App\Models\Head;
 use App\Models\IncomeExpense;
+use App\Models\LabOrder;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Patient;
@@ -429,4 +430,12 @@ function getFrameType($oid)
 {
     $product = OrderDetail::where('order_id', $oid)->where('eye', 'frame')->first();
     return ProductSubcategory::where('id', Product::where('id', $product?->product_id ?? 0)->first()?->type_id)->first()?->name;
+}
+
+function isPendingFromLab($oid)
+{
+    $orders = LabOrder::where('order_id', $oid)->whereIn('status', ['sent-to-lab', 'received-from-lab'])->get();
+    if ($orders)
+        return true;
+    return false;
 }

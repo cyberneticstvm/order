@@ -123,6 +123,23 @@
         return true;
     }
 
+    function validateLabStatusOrderForm() {
+        let frm = document.forms["labStatusForm"];
+        if (frm['status'].value == '') {
+            failed({
+                'error': 'Please select Status'
+            })
+            return false;
+        }
+        if (!$(".chkItem").is(":checked")) {
+            failed({
+                'error': 'Please select at least one Item'
+            })
+            return false;
+        }
+        return true;
+    }
+
     $(document).on('click', '.dlt', function(e) {
         e.preventDefault();
         var link = $(this).attr("href");

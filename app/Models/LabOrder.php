@@ -11,4 +11,19 @@ class LabOrder extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    public function lab()
+    {
+        return $this->belongsTo(Branch::class, 'lab_id', 'id');
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id', 'id');
+    }
+
+    public function item()
+    {
+        return $this->belongsTo(OrderDetail::class, 'order_detail_id', 'id');
+    }
 }

@@ -129,6 +129,8 @@ class HelperController extends Controller
         if (!$order->invoice_number) :
             if (!isFullyPaid($order->id, $request->order_status)) :
                 return redirect()->back()->with("error", "Amount due.");
+            elseif (isPendingFromLab($order->id)) :
+                return redirect()->back()->with("error", "One or more items pending from Lab");
             else :
                 $order->update(['order_status' => $request->order_status]);
                 if ($request->status_note) :

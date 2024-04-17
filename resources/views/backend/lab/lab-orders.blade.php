@@ -21,16 +21,17 @@
         </div>
     </div>
     <!-- Container-fluid starts-->
+    {{ html()->form('POST', route('lab.order.update.status'))->attribute('name', 'labStatusForm')->attribute('id', 'labStatusForm')->open() }}
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="col-md-3">
-                            <label class="form-label req">Lab</label>
-                            {{ html()->select('lab_id', $labs->pluck('name', 'id'), old('lab_id'))->class('form-control select2')->placeholder('Select') }}
-                            @error('lab_id')
-                            <small class="text-danger">{{ $errors->first('lab_id') }}</small>
+                            <label class="form-label req">Status</label>
+                            {{ html()->select('status', $status, old('status'))->class('form-control select2')->placeholder('Select') }}
+                            @error('status')
+                            <small class="text-danger">{{ $errors->first('status') }}</small>
                             @enderror
                         </div>
                         <div class="table-responsive theme-scrollbar mt-5">
@@ -42,18 +43,7 @@
                                         <th>Order ID</th>
                                         <th>Eye</th>
                                         <th>Product</th>
-                                        <th>Sph</th>
-                                        <th>Cyl</th>
-                                        <th>Axis</th>
-                                        <th>Add</th>
-                                        <th>pd</th>
-                                        <th>A</th>
-                                        <th>B</th>
-                                        <th>DBL</th>
-                                        <th>FH</th>
-                                        <th>ED</th>
-                                        <th>Note</th>
-                                        <th>F.Type</th>
+                                        <th>Lab</th>
                                         <th>Customer Name</th>
                                     </tr>
                                 </thead>
@@ -62,23 +52,12 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td class="text-center">
-                                            {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem chk_'.$item->id.' '.$item->eye) }}
+                                            {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem') }}
                                         </td>
                                         <td>{{ $item->order->ono() }}</td>
-                                        <td class="fw-bold">{{ strtoupper($item->eye) }}</td>
-                                        <td>{{ $item->product->name }}</td>
-                                        <td>{{ $item->sph }}</td>
-                                        <td>{{ $item->cyl }}</td>
-                                        <td>{{ $item->axis }}</td>
-                                        <td>{{ $item->add }}</td>
-                                        <td>{{ $item->ipd }}</td>
-                                        <td>{{ $item->order->a_size }}</td>
-                                        <td>{{ $item->order->b_size }}</td>
-                                        <td>{{ $item->order->dbl }}</td>
-                                        <td>{{ $item->order->fh }}</td>
-                                        <td>{{ $item->order->ed }}</td>
-                                        <td>{{ $item->order->special_lab_note }}</td>
-                                        <td>{{ getFrameType($item->order->id) }}</td>
+                                        <td class="fw-bold">{{ strtoupper($item->item->eye) }}</td>
+                                        <td>{{ $item->item->product->name }}</td>
+                                        <td>{{ $item->lab->name }}</td>
                                         <td>{{ $item->order->name }}</td>
                                     </tr>
                                     @empty
@@ -88,13 +67,14 @@
                         </div>
                         <div class="col-12 text-end mt-5">
                             <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
-                            <button class="btn btn-submit btn-success" onclick="return validateLabOrderForm()" type="submit">Assign</button>
+                            <button class="btn btn-submit btn-success" onclick="return validateLabStatusOrderForm()" type="submit">Update</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {{ html()->form()->close() }}
     <!-- Container-fluid Ends-->
 </div>
 @endsection
