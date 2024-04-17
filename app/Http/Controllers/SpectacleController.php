@@ -48,7 +48,8 @@ class SpectacleController extends Controller
         $optometrists = $this->optometrists;
         $doctors = $this->doctors;
         $powers = $this->powers;
-        return view('backend.spectacle.create', compact('registration', 'optometrists', 'doctors', 'powers'));
+        $spectacle = [];
+        return view('backend.spectacle.create', compact('registration', 'optometrists', 'doctors', 'powers', 'spectacle'));
     }
 
     /**
