@@ -105,6 +105,7 @@
                                             <ul class="dropdown-menu dropdown-block">
                                                 <li><a class="dropdown-item txt-dark" href="{{ route('store.order.create', ['id' => encrypt($reg->id), 'type' => '1']) }}">Spectacles</a></li>
                                                 <li><a class="dropdown-item txt-dark" href="{{ route('solution.order.create', ['id' => encrypt($reg->id), 'type' => '2']) }}">Solutions</a></li>
+                                                <li><a class="dropdown-item txt-dark" href="{{ route('spectacle.create', ['id' => encrypt($reg->id), 'type' => '0']) }}">Prescription</a></li>
                                             </ul>
                                         </td>
                                         <td class="text-center"><a href="{{ route('customer.registration.delete', encrypt($reg->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>

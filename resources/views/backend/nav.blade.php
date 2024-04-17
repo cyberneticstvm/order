@@ -114,7 +114,7 @@
             }}
         </li>
         @endif
-        @if(auth()->user()->can('customer-list') || auth()->user()->can('customer-create') || auth()->user()->can('customer-edit') || auth()->user()->can('customer-delete'))
+        @if(auth()->user()->can('customer-list') || auth()->user()->can('customer-create') || auth()->user()->can('customer-edit') || auth()->user()->can('customer-delete') || auth()->user()->can('spectacle-list'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -123,13 +123,13 @@
                 <svg class="fill-icon">
                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#customers') }}"></use>
                 </svg>
-                <span>Customer Management</span>
+                <span>Customer / Spectacle</span>
             </a>
             {{
                 Menu::new()->addClass('sidebar-submenu')
-                ->linkIfCan('customer-list', route('customer.register'), 'Customer Register');                
+                ->linkIfCan('customer-list', route('customer.register'), 'Customer Register')                
+                ->linkIfCan('spectacle-list', route('spectacles'), 'Spectacle Register');                
             }}
-            <!--linkIfCan('customer-list', route('customer.spectacles'), 'Spectacle Register');-->
         </li>
         @endif
         <li class="sidebar-main-title">

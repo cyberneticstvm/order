@@ -39,6 +39,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SalesReturnContoller;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SolutionOrderController;
+use App\Http\Controllers\SpectacleController;
 use App\Http\Controllers\StoreOrderController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransferFrameController;
@@ -515,9 +516,18 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/delete/{id}', 'destroy')->name('product.damage.delete');
     });
 
+    Route::prefix('/backend/spectacle')->controller(SpectacleController::class)->group(function () {
+        Route::get('/', 'index')->name('spectacles');
+        Route::get('/create/{id}/{type}', 'create')->name('spectacle.create');
+        Route::post('/create', 'store')->name('spectacle.save');
+        Route::get('/edit/{id}', 'edit')->name('spectacle.edit');
+        Route::post('/edit/{id}', 'update')->name('spectacle.update');
+        Route::get('/delete/{id}', 'destroy')->name('spectacle.delete');
+    });
+
     Route::prefix('/backend/customer')->controller(CustomerController::class)->group(function () {
         Route::get('/', 'index')->name('customer.register');
-        Route::get('/spectacles', 'spectacles')->name('customer.spectacles');
+        /*Route::get('/spectacles', 'spectacles')->name('customer.spectacles');*/
         Route::post('/', 'fetch')->name('customer.fetch');
         Route::get('/proceed', '')->name('customer.proceed');
         Route::get('/create/{id}/{source}', 'create')->name('customer.create');
@@ -526,8 +536,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/edit/{id}', 'update')->name('customer.update');
         Route::get('/delete/{id}', 'destroy')->name('customer.delete');
 
-        Route::get('/spectacle/edit/{id}/{type}', 'editSpectacle')->name('customer.spectacle.edit');
-        Route::post('/spectacle/edit/{id}', 'updateSpectacle')->name('customer.spectacle.update');
+        /*Route::get('/spectacle/edit/{id}/{type}', 'editSpectacle')->name('customer.spectacle.edit');
+        Route::post('/spectacle/edit/{id}', 'updateSpectacle')->name('customer.spectacle.update');*/
 
         Route::get('/customer/registration/delete/{id}', 'destroy')->name('customer.registration.delete');
     });
