@@ -232,8 +232,8 @@ class AjaxController extends Controller
                     $op .= '<td class="text-end">' . number_format($item->amount, 2) . '</td>';
                     $op .= "</tr>";
                 endforeach;
-                $op .= '</tbody><tfoot><tr><td colspan="6" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('amount'), 2) . '</td></tr></tfoot></table>';
-                $op .= '</div><div class="drawer-footer">Expense</div>';
+                $op .= '</tbody><tfoot><tr><td colspan="5" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('amount'), 2) . '</td></tr></tfoot></table>';
+                $op .= '</div><div class="drawer-footer">Bank Transfer</div>';
                 break;
             default:
                 $op = "No records found";
