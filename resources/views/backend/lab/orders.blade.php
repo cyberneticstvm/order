@@ -75,14 +75,14 @@
                                         <td>{{ $item->axis }}</td>
                                         <td>{{ $item->add }}</td>
                                         <td>{{ $item->ipd }}</td>
-                                        <td>{{ $item->order->a_size }}</td>
-                                        <td>{{ $item->order->b_size }}</td>
-                                        <td>{{ $item->order->dbl }}</td>
-                                        <td>{{ $item->order->fh }}</td>
-                                        <td>{{ $item->order->ed }}</td>
-                                        <td>{{ $item->order->special_lab_note }}</td>
+                                        <td>{{ $item->order?->a_size }}</td>
+                                        <td>{{ $item->order?->b_size }}</td>
+                                        <td>{{ $item->order?->dbl }}</td>
+                                        <td>{{ $item->order?->fh }}</td>
+                                        <td>{{ $item->order?->ed }}</td>
+                                        <td>{{ $item->order?->special_lab_note }}</td>
                                         <td>{{ getFrameType($item->order->id) }}</td>
-                                        <td>{{ $item->order->name }}</td>
+                                        <td>{{ $item->order?->name }}</td>
                                     </tr>
                                     @empty
                                     @endforelse
