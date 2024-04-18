@@ -251,7 +251,7 @@ class AjaxController extends Controller
                 $op .= "<tr><th>Special Lab Note</th><td>" . $order->special_lab_note . "</td></tr>";
                 $op .= "<tr><th><br></th><td></td></tr>";
                 foreach ($order->details as $key => $item) :
-                    $op .= "<tr><th>Product (" . strtoupper($item->eye) . ")</th><td>" . $item->product->name . "</td></tr>";
+                    $op .= "<tr><th>Product (" . strtoupper($item->eye) . ")</th><td>" . $item->product->name . "(" . $item->qty . ")</td></tr>";
                 endforeach;
                 $op .= "</tbody></table>";
                 $op .= '</div><div class="drawer-footer">Order Detail</div>';
