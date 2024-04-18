@@ -241,7 +241,14 @@ class AjaxController extends Controller
                         <h6 class="drawer-title" id="drawer-3-title">Order Detail</h6></div><div class="drawer-body table-responsive">';
                 $op .= "<table><tbody><tr>";
                 $op .= "<th>Order ID</th><td>" . $order->ono() . "</td></tr>";
+                $op .= "<th>Customer ID</th><td>" . $order->customer_id . "</td></tr>";
                 $op .= "<th>Branch</th><td>" . $order->branch->name . "</td></tr>";
+                $op .= "<th>Order Date</th><td>" . $order->created_at->format('d.M.Y h:i a') . "</td></tr>";
+                $op .= "<th>Exp.Del.Date</th><td>" . $order->expected_delivery_date->format('d.M.Y') . "</td></tr>";
+                $op .= "<th>Order Note</th><td>" . $order->order_note . "</td></tr>";
+                $op .= "<th>Invoice Note</th><td>" . $order->invoice_note . "</td></tr>";
+                $op .= "<th>Lab Note</th><td>" . $order->lab_note . "</td></tr>";
+                $op .= "<th>Special Lab Note</th><td>" . $order->special_lab_note . "</td></tr>";
                 $op .= "</tbody></table>";
                 $op .= '</div><div class="drawer-footer">Order Detail</div>';
                 break;
