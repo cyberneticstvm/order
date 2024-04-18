@@ -65,7 +65,7 @@
                                         <td class="text-center">
                                             {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem') }}
                                         </td>
-                                        <td>{{ $item->order->ono() }}</td>
+                                        <td><a href="javascript:void(0)" class="dayBook" data-from-date="" data-to-date="" data-type="order" data-mode="{{ $item->order->id }}" data-branch="" data-drawer="orderDrawer">{{ $item->order->ono() }}</a></td>
                                         <td class="fw-bold">{{ strtoupper($item->item->eye) }}</td>
                                         <td>{{ $item->item->product->name }}</td>
                                         <td>{{ $item->lab->name }}</td>
@@ -89,5 +89,8 @@
     </div>
     {{ html()->form()->close() }}
     <!-- Container-fluid Ends-->
+</div>
+<div class="drawer drawer-left slide" tabindex="-1" role="dialog" aria-labelledby="drawer-3-title" aria-hidden="true" id="orderDrawer">
+    <div class="drawer-content drawer-content-scrollable" role="document"></div>
 </div>
 @endsection

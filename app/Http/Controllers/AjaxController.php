@@ -235,6 +235,10 @@ class AjaxController extends Controller
                 $op .= '</tbody><tfoot><tr><td colspan="4" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('amount'), 2) . '</td></tr></tfoot></table>';
                 $op .= '</div><div class="drawer-footer">Bank Transfer</div>';
                 break;
+            case 'order':
+                $order = Order::findOrFail($request->mode);
+                $op = $order;
+                break;
             default:
                 $op = "No records found";
         endswitch;
