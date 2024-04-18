@@ -25,7 +25,8 @@ class LabController extends Controller
         $this->middleware('permission:lab-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:lab-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:lab-delete', ['only' => ['destroy']]);
-        $this->middleware('permission:lab-assign-orders', ['only' => ['assignOrders', 'labOrders']]);
+        $this->middleware('permission:lab-assign-orders', ['only' => ['assignOrders']]);
+        $this->middleware('permission:lab-assigned-orders', ['only' => ['labOrders']]);
         $this->middleware('permission:lab-assigned-order-delete', ['only' => ['delete']]);
     }
 
@@ -101,7 +102,7 @@ class LabController extends Controller
 
     public function assignOrders()
     {
-        $orders = OrderDetail::leftJoin("lab_orders as lo", "lo.order_detail_id", "order_details.id")->leftJoin('orders as o', 'o.id', 'order_details.order_id')->selectRaw("order_details.*, lo.lab_id")->whereIn('order_details.eye', ['re', 'le'])->when(in_array(Auth::user()->roles->first()->name, array('Administrator')), function ($q) {
+        $orders = OrderDetail::leftJoin("lab_orders as lo", "lo.order_detail_id", "order_details.id")->leftJoin('orders as o', 'o.id', 'order_details.order_id')->selectRaw("order_details.*, lo.lab_id")->whereIn('order_details.eye', ['re', 'le'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator')), function ($q) {
             return $q->where('o.branch_id', Session::get('branch'));
         })->whereNotIn('o.order_status', ['delivered', 'ready-for-delivery'])->whereNull('o.deleted_at')->whereNull("lo.lab_id")->get();
         $labs = Branch::whereIn('type', ['rx-lab', 'fitting-lab', 'stock-lab', 'outside-lab'])->get();

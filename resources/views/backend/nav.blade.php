@@ -26,7 +26,7 @@
             {{
                 Menu::new()->addClass('sidebar-submenu')
                 ->linkIfCan('lab-assign-orders', route('lab.assign.orders'), 'Assign Orders')
-                ->linkIfCan('lab-assign-orders', route('lab.view.orders'), 'Lab Order Register');
+                ->linkIfCan('lab-assigned-orders', route('lab.view.orders'), 'Assigned Orders');
             }}
         </li>
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
