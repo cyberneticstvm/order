@@ -237,7 +237,12 @@ class AjaxController extends Controller
                 break;
             case 'order':
                 $order = Order::findOrFail($request->mode);
-                $op = $order;
+                $op = '<div class="drawer-header">
+                        <h6 class="drawer-title" id="drawer-3-title">Order Detail</h6></div><div class="drawer-body table-responsive">';
+                $op .= "<table><tbody><tr>";
+                $op .= "<th>Order Number</th><td>{{ $order->ono() }}</td></tr>";
+                $op .= "</tbody></table>";
+                $op .= '</div><div class="drawer-footer">Order Detail</div>';
                 break;
             default:
                 $op = "No records found";
