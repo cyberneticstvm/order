@@ -76,7 +76,7 @@ class StoreOrderController extends Controller
         $mrecord = DB::connection('mysql1')->table('patient_medical_records')->find($patient->mrn);
         $mrns = DB::connection('mysql1')->table('patient_medical_records')->where('patient_id', $mrecord?->patient_id ?? 0)->pluck('id');
         $hospital_prescriptions = DB::connection('mysql1')->table('spectacles')->selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->whereIn('medical_record_id', $mrns)->get();
-        $store_prescriptions = Order::where('customer_id', $patient->id)->selectRaw("CONCAT_WS(' / ', 'OID', id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS oid, id")->get();
+        $store_prescriptions = Spectacle::where('customer_id', $patient->id)->selectRaw("CONCAT_WS(' / ', 'CID', customer_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS cid, id")->get();
         return view(($type == 1) ? 'backend.order.store.create' : 'backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'powers', 'states', 'registration', 'hospital_prescriptions', 'store_prescriptions'));
     }
 

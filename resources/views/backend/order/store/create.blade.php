@@ -151,7 +151,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label class="form-label">Store Prescription</label>
-                                        {{ html()->select('spresc', $store_prescriptions->pluck('oid', 'id'), '')->class('form-control select2 changePresc')->attribute('data-source', 'store')->placeholder('Select') }}
+                                        {{ html()->select('spresc', $store_prescriptions->pluck('cid', 'id'), '')->class('form-control select2 changePresc')->attribute('data-source', 'store')->placeholder('Select') }}
                                     </div>
                                     <div class="col-md-6 text-end">
                                         <div class="btn-group">
