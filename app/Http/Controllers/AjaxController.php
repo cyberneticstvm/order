@@ -239,18 +239,19 @@ class AjaxController extends Controller
                 $order = Order::findOrFail($request->mode);
                 $op = '<div class="drawer-header">
                         <h6 class="drawer-title" id="drawer-3-title">Order Detail</h6></div><div class="drawer-body table-responsive">';
-                $op .= "<table><tbody><tr>";
-                $op .= "<th>Order ID</th><td>" . $order->ono() . "</td></tr>";
-                $op .= "<th>Customer ID</th><td>" . $order->customer_id . "</td></tr>";
-                $op .= "<th>Branch</th><td>" . $order->branch->name . "</td></tr>";
-                $op .= "<th>Order Date</th><td>" . $order->created_at->format('d.M.Y h:i a') . "</td></tr>";
-                $op .= "<th>Exp.Del.Date</th><td>" . $order->expected_delivery_date->format('d.M.Y') . "</td></tr>";
-                $op .= "<th>Order Note</th><td>" . $order->order_note . "</td></tr>";
-                $op .= "<th>Invoice Note</th><td>" . $order->invoice_note . "</td></tr>";
-                $op .= "<th>Lab Note</th><td>" . $order->lab_note . "</td></tr>";
-                $op .= "<th>Special Lab Note</th><td>" . $order->special_lab_note . "</td></tr>";
+                $op .= "<table><tbody>";
+                $op .= "<tr><th>Order ID</th><td>" . $order->ono() . "</td></tr>";
+                $op .= "<tr><th>Customer ID</th><td>" . $order->customer_id . "</td></tr>";
+                $op .= "<tr><th>Branch</th><td>" . $order->branch->name . "</td></tr>";
+                $op .= "<tr><th>Order Date</th><td>" . $order->created_at->format('d.M.Y h:i a') . "</td></tr>";
+                $op .= "<tr><th>Exp.Del.Date</th><td>" . $order->expected_delivery_date->format('d.M.Y') . "</td></tr>";
+                $op .= "<tr><th>Order Note</th><td>" . $order->order_note . "</td></tr>";
+                $op .= "<tr><th>Invoice Note</th><td>" . $order->invoice_note . "</td></tr>";
+                $op .= "<tr><th>Lab Note</th><td>" . $order->lab_note . "</td></tr>";
+                $op .= "<tr><th>Special Lab Note</th><td>" . $order->special_lab_note . "</td></tr>";
+                $op .= "<tr><th></th><td></td></tr>";
                 foreach ($order->details as $key => $item) :
-                    $op .= "<th>Product</th><td>" . $item->product->name . "</td></tr>";
+                    $op .= "<tr><th>Product (" . strtoupper($item->eye) . ")</th><td>" . $item->product->name . "</td></tr>";
                 endforeach;
                 $op .= "</tbody></table>";
                 $op .= '</div><div class="drawer-footer">Order Detail</div>';
