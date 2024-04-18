@@ -80,7 +80,7 @@
                                     @forelse($payments as $key => $payment)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $payment->order->branch->code.'/'.$payment->order->id }}</td>
+                                        <td>{{ $payment->order?->ono() }}</td>
                                         <td>{{ $payment?->order?->name }}</td>
                                         <td>{{ $payment?->order?->consultation_id }}</td>
                                         <td>{{ $payment->paymentmode->name }}</td>
