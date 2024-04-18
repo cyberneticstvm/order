@@ -249,7 +249,7 @@ class AjaxController extends Controller
                 $op .= "<tr><th>Invoice Note</th><td>" . $order->invoice_note . "</td></tr>";
                 $op .= "<tr><th>Lab Note</th><td>" . $order->lab_note . "</td></tr>";
                 $op .= "<tr><th>Special Lab Note</th><td>" . $order->special_lab_note . "</td></tr>";
-                $op .= "<tr><th><br><br></th><td></td></tr>";
+                $op .= "<tr><th><br></th><td></td></tr>";
                 foreach ($order->details as $key => $item) :
                     $op .= "<tr><th>Product (" . strtoupper($item->eye) . ")</th><td>" . $item->product->name . "</td></tr>";
                 endforeach;
