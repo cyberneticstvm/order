@@ -67,7 +67,7 @@
                                             {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem chk_'.$item->id.' '.$item->eye) }}
                                         </td>
                                         <td>{{ $item->created_at->format('d.M.Y h:i a') }}</td>
-                                        <td>{{ $item->order->ono() }}</td>
+                                        <td>{{ $item->order?->ono() }}</td>
                                         <td class="fw-bold">{{ strtoupper($item->eye) }}</td>
                                         <td>{{ $item->product->name }}</td>
                                         <td>{{ $item->sph }}</td>
