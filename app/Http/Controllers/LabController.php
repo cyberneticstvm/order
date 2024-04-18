@@ -101,7 +101,7 @@ class LabController extends Controller
 
     public function assignOrders()
     {
-        $orders = OrderDetail::leftJoin("lab_orders as lo", "lo.order_detail_id", "order_details.id")->leftJoin('orders o', 'o.id', 'order_details.order_id')->selectRaw("order_details.*, lo.lab_id")->whereIn('order_details.eye', ['re', 'le'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator')), function ($q) {
+        $orders = OrderDetail::leftJoin("lab_orders as lo", "lo.order_detail_id", "order_details.id")->leftJoin('orders as o', 'o.id', 'order_details.order_id')->selectRaw("order_details.*, lo.lab_id")->whereIn('order_details.eye', ['re', 'le'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator')), function ($q) {
             return $q->leftJoin('orders', 'orders.id', 'order_details.order_id')->where('orders.branch_id', Session::get('branch'));
         })->whereNotIn('order_status', ['delivered', 'ready-for-delivery'])->whereNull("lo.lab_id")->get();
         $labs = Branch::whereIn('type', ['rx-lab', 'fitting-lab', 'stock-lab', 'outside-lab'])->get();
