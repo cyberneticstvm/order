@@ -133,6 +133,7 @@ class LabController extends Controller
                 'order_id' => $odetail->order->ono(),
                 'eye' => $odetail->eye,
                 'product' => $odetail->product->name,
+                'qty' => $odetail->qty,
                 'sph' => $odetail->sph,
                 'cyl' => $odetail->cyl,
                 'axis' => $odetail->axis,

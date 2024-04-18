@@ -17,6 +17,7 @@
                 <th>Order ID</th>
                 <th>Eye</th>
                 <th>Product</th>
+                <th>Qty</th>
                 <th>SPH</th>
                 <th>CYL</th>
                 <th>AXIS</th>
@@ -39,6 +40,7 @@
                 <td>{{ $data[$key]['order_id'] }}</td>
                 <td>{{ strtoupper($data[$key]['eye']) }}</td>
                 <td>{{ $data[$key]['product'] }}</td>
+                <td>{{ $data[$key]['qty'] }}</td>
                 <td>{{ $data[$key]['sph'] }}</td>
                 <td>{{ $data[$key]['cyl'] }}</td>
                 <td>{{ $data[$key]['axis'] }}</td>
