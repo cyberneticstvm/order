@@ -49,7 +49,7 @@
                                 <div class="col-md-3">
                                     <label class="form-label req">Criteria</label>
                                     <div class="input-group">
-                                        {{ html()->select('criteria', array('all' => 'All', 'zero' => 'Balance Qty Equal Zero', 'plus' => 'Balance Qty > Zero', 'minus' => 'Balance Qty < Zero'), $inputs[2])->class('form-control select2') }}
+                                        {{ html()->select('criteria', array('all' => 'All', 'zero' => 'Balance Qty = 0', 'plus' => 'Balance Qty > 0', 'minus' => 'Balance Qty < 0'), $inputs[2])->class('form-control select2') }}
                                     </div>
                                     @error('criteria')
                                     <small class="text-danger">{{ $errors->first('criteria') }}</small>
