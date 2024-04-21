@@ -109,7 +109,7 @@ class SettingController extends Controller
                 foreach ($request->pid as $key => $item) :
                     if ($request->balance[$key] != $request->qty[$key]) :
                         if ($request->qty[$key] == 0) :
-                            $qty = ($request->balance[$key] > 0) ? $request->balance[$key] * -1 : 0;
+                            $qty = ($request->balance[$key] != 0) ? $request->balance[$key] * -1 : 0;
                         elseif ($request->qty[$key] > 0) :
                             $qty = $request->qty[$key] - ($request->balance[$key]);
                         elseif ($request->qty[$key] < 0) :
