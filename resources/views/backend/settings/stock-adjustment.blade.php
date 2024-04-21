@@ -111,7 +111,7 @@
                         </div>
                         <div class="col-12 text-end mt-5">
                             <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
-                            <button class="btn btn-submit btn-success" onclick="return validateStockOrderForm()" type="submit">Update</button>
+                            <button class="btn btn-submit btn-success" type="submit">Update</button>
                         </div>
                     </div>
                 </div>
