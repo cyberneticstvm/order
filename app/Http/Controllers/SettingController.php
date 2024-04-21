@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Closing;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class SettingController extends Controller
@@ -15,7 +17,7 @@ class SettingController extends Controller
     function __construct()
     {
         $this->middleware('permission:setting-account-adjustment', ['only' => ['accountSetting', 'accountSettingUpdate']]);
-        $this->middleware('permission:setting-stock-adjustment', ['only' => ['stockAdjustmentSetting', 'stockAdjustmentSettingFetch']]);
+        $this->middleware('permission:setting-stock-adjustment', ['only' => ['stockAdjustmentSetting', 'stockAdjustmentSettingFetch', 'stockAdjustmentSettingUpdate']]);
 
         $this->middleware(function ($request, $next) {
             $brs = Branch::selectRaw("0 as id, 'All / Main Branch' as name");
@@ -78,5 +80,22 @@ class SettingController extends Controller
         $branches = $this->branches;
         $inputs = array($request->branch, $request->category);
         return view('backend.settings.stock-adjustment', compact('data', 'branches', 'inputs'));
+    }
+
+    public function stockAdjustmentSettingUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'branch_id' => 'required',
+            'product_category' => 'required',
+        ]);
+        try {
+            DB::transaction(function () use ($request) {
+                dd($request);
+                die;
+            });
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage());
+        }
+        return redirect()->back()->with("success", "Stock updated successfully");
     }
 }

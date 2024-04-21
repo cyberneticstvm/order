@@ -146,6 +146,17 @@
         return true;
     }
 
+    function validateStockOrderForm() {
+        let frm = document.forms["stockForm"];
+        if (!$(".chk").is(":checked")) {
+            failed({
+                'error': 'Please select at least one Item'
+            })
+            return false;
+        }
+        return true;
+    }
+
     $(document).on('click', '.dlt', function(e) {
         e.preventDefault();
         var link = $(this).attr("href");

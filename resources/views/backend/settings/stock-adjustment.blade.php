@@ -57,6 +57,9 @@
             </div>
         </div>
     </div>
+    {{ html()->form('POST', route('setting.stock.adjustment.update'))->attribute('name', 'stockForm')->attribute('id', 'stockForm')->open() }}
+    <input type="hidden" name="branch_id" value="{{ $inputs[0] }}" />
+    <input type="hidden" name="product_category" value="{{ $inputs[1] }}" />
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -109,10 +112,15 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="col-12 text-end mt-5">
+                            <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
+                            <button class="btn btn-submit btn-success" onclick="return validateStockOrderForm()" type="submit">Update</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {{ html()->form()->close() }}
 </div>
 @endsection
