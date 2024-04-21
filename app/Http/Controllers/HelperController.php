@@ -8,10 +8,13 @@ use App\Models\Order;
 use App\Models\OrderStatusNote;
 use App\Models\Patient;
 use App\Models\Payment;
+use App\Models\Product;
 use App\Models\ProductDamage;
 use App\Models\Transfer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class HelperController extends Controller
@@ -25,6 +28,35 @@ class HelperController extends Controller
         $this->middleware('permission:product-damage-transfer-update', ['only' => ['pendingDamageTransferEdit', 'pendingDamageTransferUpdate']]);
         $this->middleware('permission:search-order', ['only' => ['searchOrder', 'searchOrderFetch']]);
         $this->middleware('permission:search-customer', ['only' => ['searchCustomer', 'searchCustomerFetch']]);
+    }
+
+    public function transferProductBulk(string $category, $branch)
+    {
+        DB::transaction(function () use ($category, $branch) {
+            $products = Product::where('category', $category)->get();
+            $transfer = Transfer::create([
+                'transfer_number' => transferId($category)->tid,
+                'category' => $category,
+                'transfer_date' => Carbon::today(),
+                'from_branch_id' => 1000, // If branch id 1000, then treat as stock adjustment entry
+                'to_branch_id' => $branch,
+                'transfer_note' => "Stock Adjustment Entry",
+                'transfer_status' => 1,
+                'created_by' => Auth::id(),
+                'updated_by' => Auth::id(),
+            ]);
+            $data = [];
+            foreach ($products as $key => $item) :
+                $data[] = [
+                    'transfer_id' => $transfer->id,
+                    'product_id' => $item->id,
+                    'qty' => 0,
+                    'batch_number' => NULL,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ];
+            endforeach;
+        });
     }
 
     public function closingBalance()
