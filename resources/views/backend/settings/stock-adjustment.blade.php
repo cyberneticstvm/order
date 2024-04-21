@@ -63,7 +63,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive theme-scrollbar">
-                            <table class="display" style="width:100%">
+                            <table class="table display table-bordered" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>SL No</th>
