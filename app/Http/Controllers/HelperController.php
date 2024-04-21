@@ -59,6 +59,7 @@ class HelperController extends Controller
             endforeach;
             TransferDetails::insert($data);
         });
+        echo "success";
     }
 
     public function closingBalance()
