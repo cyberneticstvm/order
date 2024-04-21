@@ -96,8 +96,8 @@ class SettingController extends Controller
                 $data = [];
                 $qty = 0;
                 $transfer = Transfer::create([
-                    'transfer_number' => transferId($request->category)->tid,
-                    'category' => $request->category,
+                    'transfer_number' => transferId($request->product_category)->tid,
+                    'category' => $request->product_category,
                     'transfer_date' => Carbon::today(),
                     'from_branch_id' => 1000, // If branch id 1000, then treat as stock adjustment entry
                     'to_branch_id' => $request->branch_id,
