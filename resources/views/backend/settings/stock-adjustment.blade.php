@@ -74,6 +74,8 @@
                                         <th>Returned</th>
                                         <th>Damaged</th>
                                         <th>Balance</th>
+                                        <th>Select</th>
+                                        <th>Value</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -87,6 +89,8 @@
                                         <td>{{ $item->returnedQty }} </td>
                                         <td>{{ $item->damagedQty }}</td>
                                         <td>{{ $item->balanceQty }} </td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
                                     @empty
                                     @endforelse
