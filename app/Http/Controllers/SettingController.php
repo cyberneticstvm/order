@@ -15,7 +15,7 @@ class SettingController extends Controller
     function __construct()
     {
         $this->middleware('permission:setting-account-adjustment', ['only' => ['accountSetting', 'accountSettingUpdate']]);
-        $this->middleware('permission:setting-stock-adjustment', ['only' => ['stockAdjustmentSetting']]);
+        $this->middleware('permission:setting-stock-adjustment', ['only' => ['stockAdjustmentSetting', 'stockAdjustmentSettingFetch']]);
 
         $this->middleware(function ($request, $next) {
             $brs = Branch::selectRaw("0 as id, 'All / Main Branch' as name");
