@@ -5,13 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Branch;
 use App\Models\Closing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class SettingController extends Controller
 {
+    protected $branches;
+
     function __construct()
     {
         $this->middleware('permission:setting-account-adjustment', ['only' => ['accountSetting', 'accountSettingUpdate']]);
+        $this->middleware('permission:setting-stock-adjustment', ['only' => ['stockAdjustmentSetting']]);
+
+        $this->middleware(function ($request, $next) {
+            $brs = Branch::selectRaw("0 as id, 'All / Main Branch' as name");
+            $this->branches = Branch::selectRaw("id, name")->when(in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO']), function ($q) use ($brs) {
+                return $q->union($brs);
+            })->when(!in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO', 'Store Manager', 'Accounts']), function ($q) {
+                return $q->where('id', Session::get('branch'));
+            })->orderBy('id')->pluck('name', 'id');
+            return $next($request);
+        });
     }
 
     public function accountSetting()
@@ -48,5 +62,21 @@ class SettingController extends Controller
             Closing::where("branch", $request->branch)->where('date', '>=', $request->date)->decrement('closing_balance', $request->amount);
         endif;
         return redirect()->back()->with('success', 'Record updated successfully');
+    }
+
+    public function stockAdjustmentSetting()
+    {
+        $branches = $this->branches;
+        $inputs = array('0', 'frame');
+        $data = [];
+        return view('backend.settings.stock-adjustment', compact('branches', 'inputs', 'data'));
+    }
+
+    public function stockAdjustmentSettingFetch(Request $request)
+    {
+        $data = getInventory($request->branch, 0, $request->category);
+        $branches = $this->branches;
+        $inputs = array($request->branch, $request->category);
+        return view('backend.settings.stock-adjustment', compact('data', 'branches', 'inputs'));
     }
 }

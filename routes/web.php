@@ -581,8 +581,11 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
     });
 
     Route::prefix('/backend/settings')->controller(SettingController::class)->group(function () {
-        Route::get('/', 'accountSetting')->name('account.setting');
+        Route::get('/account', 'accountSetting')->name('account.setting');
         Route::get('/fetch', 'accountSettingFetch')->name('account.setting.fetch');
         Route::post('/update', 'accountSettingUpdate')->name('account.setting.update');
+
+        Route::get('/stock', 'stockAdjustmentSetting')->name('setting.stock.adjustment');
+        Route::get('/fetch', 'stockAdjustmentSettingFetch')->name('setting.stock.adjustment.fetch');
     });
 });
