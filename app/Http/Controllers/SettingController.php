@@ -99,7 +99,7 @@ class SettingController extends Controller
                     'transfer_number' => transferId($request->category)->tid,
                     'category' => $request->category,
                     'transfer_date' => Carbon::today(),
-                    'from_branch_id' => -1,
+                    'from_branch_id' => 1000, // If branch id 1000, then treat as stock adjustment entry
                     'to_branch_id' => $request->branch_id,
                     'transfer_note' => "Stock Adjustment Entry",
                     'transfer_status' => 1,
