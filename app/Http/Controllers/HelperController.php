@@ -11,6 +11,7 @@ use App\Models\Payment;
 use App\Models\Product;
 use App\Models\ProductDamage;
 use App\Models\Transfer;
+use App\Models\TransferDetails;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,6 +57,7 @@ class HelperController extends Controller
                     'updated_at' => Carbon::now(),
                 ];
             endforeach;
+            TransferDetails::insert($data);
         });
     }
 
