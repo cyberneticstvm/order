@@ -97,11 +97,11 @@
                                         <td>{{ $item->transferredQty }}</td>
                                         <td>{{ $item->returnedQty }} </td>
                                         <td>{{ $item->damagedQty }}</td>
-                                        <td>
-                                            {{ html()->text('balance[]', $item->balanceQty)->class('form-control bal')->attribute('readonly', 'true') }}
+                                        <td class="text-center">
+                                            {{ html()->text('balance[]', $item->balanceQty)->class('form-control text-center bal')->attribute('readonly', 'true') }}
                                         </td>
-                                        <td>
-                                            {{ html()->number('qty[]', $item->balanceQty)->class('form-control qty') }}
+                                        <td class="text-center">
+                                            {{ html()->number('qty[]', $item->balanceQty, $min=0, '', $step='1')->class('form-control text-center qty') }}
                                         </td>
                                     </tr>
                                     @empty

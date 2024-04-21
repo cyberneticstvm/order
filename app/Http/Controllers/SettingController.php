@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Closing;
+use App\Models\Transfer;
+use App\Models\TransferDetails;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -90,8 +93,39 @@ class SettingController extends Controller
         ]);
         try {
             DB::transaction(function () use ($request) {
-                dd($request);
-                die;
+                $data = [];
+                $qty = 0;
+                $transfer = Transfer::create([
+                    'transfer_number' => transferId($request->category)->tid,
+                    'category' => $request->category,
+                    'transfer_date' => Carbon::today(),
+                    'from_branch_id' => -1,
+                    'to_branch_id' => $request->branch_id,
+                    'transfer_note' => "Stock Adjustment Entry",
+                    'transfer_status' => 1,
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
+                ]);
+                foreach ($request->pid as $key => $item) :
+                    if ($request->balance[$key] != $request->qty[$key]) :
+                        if ($request->qty[$key] == 0) :
+                            $qty = ($request->balance[$key] > 0) ? $request->balance[$key] * -1 : 0;
+                        elseif ($request->qty[$key] > 0) :
+                            $qty = $request->qty[$key] - ($request->balance[$key]);
+                        elseif ($request->qty[$key] < 0) :
+                            $qty = $request->balance[$key] - ($request->qty[$key]);
+                        endif;
+                        $data[] = [
+                            'transfer_id' => $transfer->id,
+                            'product_id' => $item,
+                            'qty' => $qty,
+                            'batch_number' => NULL,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                        ];
+                    endif;
+                endforeach;
+                TransferDetails::insert($data);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage());
