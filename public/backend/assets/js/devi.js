@@ -279,9 +279,11 @@ $(function () {
 
     $(document).on("click", ".chkAll", function () {
         if ($(this).is(":checked")) {
-            $(".chk").prop("checked", true);
+            $(".qty").val('0');
         } else {
-            $(".chk").prop("checked", false);
+            $(".bal").each(function () {
+                $(this).parent().parent().find(".qty").val($(this).val());
+            });
         }
     });
 });

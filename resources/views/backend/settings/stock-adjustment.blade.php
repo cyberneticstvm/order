@@ -78,10 +78,10 @@
                                         <th>Returned</th>
                                         <th>Damaged</th>
                                         <th>Balance</th>
-                                        <th class="text-center">Select<br />
+                                        <th class="text-center">
+                                            Clear All<br />
                                             {{ html()->checkbox('chkAll')->class("chkAll") }}
                                         </th>
-                                        <th>Update Value</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -98,13 +98,10 @@
                                         <td>{{ $item->returnedQty }} </td>
                                         <td>{{ $item->damagedQty }}</td>
                                         <td>
-                                            {{ html()->text('balance[]', $item->balanceQty)->class('form-control')->attribute('readonly', 'true') }}
-                                        </td>
-                                        <td class="text-center">
-                                            {{ html()->checkbox('chk[]')->class("chk") }}
+                                            {{ html()->text('balance[]', $item->balanceQty)->class('form-control bal')->attribute('readonly', 'true') }}
                                         </td>
                                         <td>
-                                            {{ html()->number('qty[]', '0')->class('form-control') }}
+                                            {{ html()->number('qty[]', $item->balanceQty)->class('form-control qty') }}
                                         </td>
                                     </tr>
                                     @empty
