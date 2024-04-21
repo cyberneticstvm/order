@@ -77,7 +77,7 @@
                                         <th class="text-center">Select<br />
                                             {{ html()->checkbox('chkAll')->class("chkAll") }}
                                         </th>
-                                        <th>Value</th>
+                                        <th>Update Value</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -94,7 +94,9 @@
                                         <td class="text-center">
                                             {{ html()->checkbox('chk[]')->class("chk") }}
                                         </td>
-                                        <td></td>
+                                        <td>
+                                            {{ html()->number('qty[]', '0')->class('form-control') }}
+                                        </td>
                                     </tr>
                                     @empty
                                     @endforelse
