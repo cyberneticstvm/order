@@ -275,7 +275,15 @@ $(function () {
         if ($(this).is(":checked")) {
             $(this).parent().parent().next().find(".le").prop('checked', true)
         }
-    })
+    });
+
+    $(document).on("click", ".chkAll", function () {
+        if ($(this).is(":checked")) {
+            $(".chk").prop("checked", true);
+        } else {
+            $(".chk").prop("checked", false);
+        }
+    });
 });
 
 function addMedicineRowForOrder(category, attribute) {

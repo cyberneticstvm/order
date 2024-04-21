@@ -74,7 +74,9 @@
                                         <th>Returned</th>
                                         <th>Damaged</th>
                                         <th>Balance</th>
-                                        <th>Select</th>
+                                        <th class="text-center">Select<br />
+                                            {{ html()->checkbox('chkAll')->class("chkAll") }}
+                                        </th>
                                         <th>Value</th>
                                     </tr>
                                 </thead>
@@ -89,7 +91,9 @@
                                         <td>{{ $item->returnedQty }} </td>
                                         <td>{{ $item->damagedQty }}</td>
                                         <td>{{ $item->balanceQty }} </td>
-                                        <td></td>
+                                        <td class="text-center">
+                                            {{ html()->checkbox('chk[]')->class("chk") }}
+                                        </td>
                                         <td></td>
                                     </tr>
                                     @empty
