@@ -72,7 +72,7 @@ class SettingController extends Controller
     public function stockAdjustmentSetting()
     {
         $branches = $this->branches;
-        $inputs = array('0', 'frame');
+        $inputs = array('0', 'frame', 'all');
         $data = [];
         return view('backend.settings.stock-adjustment', compact('branches', 'inputs', 'data'));
     }
@@ -81,7 +81,16 @@ class SettingController extends Controller
     {
         $data = getInventory($request->branch, 0, $request->category);
         $branches = $this->branches;
-        $inputs = array($request->branch, $request->category);
+        $inputs = array($request->branch, $request->category, $request->criteria);
+        if ($request->criteria == 'zero') :
+            $data = $data->where('balanceQty', 0);
+        endif;
+        if ($request->criteria == 'minus') :
+            $data = $data->where('balanceQty', '<', 0);
+        endif;
+        if ($request->criteria == 'plus') :
+            $data = $data->where('balanceQty', '>', 0);
+        endif;
         return view('backend.settings.stock-adjustment', compact('data', 'branches', 'inputs'));
     }
 
