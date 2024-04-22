@@ -68,6 +68,7 @@
                                     <tr>
                                         <th>SL No</th>
                                         <th>Product Name</th>
+                                        <th>PID</th>
                                         <th>Order</th>
                                         <th>Transfer In</th>
                                         <th>Transfer Out</th>
@@ -81,6 +82,7 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->product_name }}</td>
+                                        <td>{{ $item->product_id }}</td>
                                         <td>{{ $item->soldQty }}</td>
                                         <td>{{ $item->purchasedQty }}</td>
                                         <td>{{ $item->transferredQty }}</td>
