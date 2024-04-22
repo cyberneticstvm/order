@@ -93,8 +93,8 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="7">Total</td>
-                                        <td>{{ $data->sum('balanceQty') }}</td>
+                                        <td colspan="7" class="fw-bold text-right">Total</td>
+                                        <td class="fw-bold text-right">{{ $data->sum('balanceQty') }}</td>
                                     </tr>
                                 </tfoot>
                             </table>
