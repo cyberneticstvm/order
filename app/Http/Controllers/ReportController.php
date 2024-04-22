@@ -73,7 +73,7 @@ class ReportController extends Controller
     public function stockStatus()
     {
         $branches = $this->branches;
-        $data = [];
+        $data = collect();
         $inputs = array('0', 'frame');
         return view('backend.report.stock', compact('branches', 'data', 'inputs'));
     }
