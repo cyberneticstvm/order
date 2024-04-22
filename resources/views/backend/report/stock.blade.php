@@ -70,6 +70,7 @@
                                         <th>Product Name</th>
                                         <th>PID</th>
                                         <th>Booked</th>
+                                        <th>Billed</th>
                                         <th>Transfer In</th>
                                         <th>Transfer Out</th>
                                         <th>Returned</th>
@@ -84,6 +85,7 @@
                                         <td>{{ $item->product_name }}</td>
                                         <td>{{ $item->product_id }}</td>
                                         <td>{{ $item->soldQty }}</td>
+                                        <td>{{ $item->billedQty }}</td>
                                         <td>{{ $item->purchasedQty }}</td>
                                         <td>{{ $item->transferredQty }}</td>
                                         <td>{{ $item->returnedQty }} </td>
