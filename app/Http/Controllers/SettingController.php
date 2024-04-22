@@ -79,6 +79,7 @@ class SettingController extends Controller
 
     public function stockAdjustmentSettingFetch(Request $request)
     {
+        $data = "";
         $data = getInventory($request->branch, 0, $request->category);
         $branches = $this->branches;
         $inputs = array($request->branch, $request->category, $request->criteria);
