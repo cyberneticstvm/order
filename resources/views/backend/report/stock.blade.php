@@ -91,6 +91,12 @@
                                     @empty
                                     @endforelse
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="7">Total</td>
+                                        <td>{{ $data->sum('balanceQty') }}</td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
