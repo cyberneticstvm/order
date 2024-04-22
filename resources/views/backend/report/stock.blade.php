@@ -93,7 +93,12 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="7" class="fw-bold text-end">Total</td>
+                                        <td colspan="2" class="fw-bold text-end">Total</td>
+                                        <td class="fw-bold text-right">{{ $data->sum('soldQty') }}</td>
+                                        <td class="fw-bold text-right">{{ $data->sum('purchasedQty') }}</td>
+                                        <td class="fw-bold text-right">{{ $data->sum('transferredQty') }}</td>
+                                        <td class="fw-bold text-right">{{ $data->sum('returnedQty') }}</td>
+                                        <td class="fw-bold text-right">{{ $data->sum('damagedQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('balanceQty') }}</td>
                                     </tr>
                                 </tfoot>
