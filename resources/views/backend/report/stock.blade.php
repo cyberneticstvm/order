@@ -95,7 +95,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="3" class="fw-bold text-end">Total</td>
+                                        <td colspan="4" class="fw-bold text-end">Total</td>
                                         <td class="fw-bold text-right">{{ $data->sum('soldQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('purchasedQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('transferredQty') }}</td>
