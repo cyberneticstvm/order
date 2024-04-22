@@ -69,7 +69,7 @@
                                         <th>SL No</th>
                                         <th>Product Name</th>
                                         <th>PID</th>
-                                        <th>Order</th>
+                                        <th>Booked</th>
                                         <th>Transfer In</th>
                                         <th>Transfer Out</th>
                                         <th>Returned</th>
