@@ -251,7 +251,7 @@ class AjaxController extends Controller
                 $op .= "<tr><th>Special Lab Note</th><td>" . $order->special_lab_note . "</td></tr>";
                 $op .= "<tr><th><br></th><td></td></tr>";
                 $op .= "</tbody></table>";
-                $op .= "</table></thead><th>Eye</th><th>Product</th><th>Qty</th><th>Sph</th><th>Cyl</th><th>Axis</th><th>Add</th><th>pd</th></thead><tbody>";
+                $op .= "<table class='table table-bordered'><thead><th>Eye</th><th>Product</th><th>Qty</th><th>Sph</th><th>Cyl</th><th>Axis</th><th>Add</th><th>pd</th></thead><tbody>";
                 foreach ($order->details as $key => $item) :
                     $op .= "<tr><td>" . strtoupper($item->eye) . "</td><td>" . $item->product->name . "</td><td>" . $item->qty . "</td><td>" . $item->sph . "</td><td>" . $item->cyl . "</td><td>" . $item->axis . "</td><td>" . $item->add . "</td><td>" . $item->ipd . "</td></tr>";
                 endforeach;
