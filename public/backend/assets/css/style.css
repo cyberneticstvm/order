@@ -50893,3 +50893,7 @@ select,
 .powerbox td {
   font-size: 12px !important;
 }
+
+.fSph {
+  pointer-events: none;
+}
