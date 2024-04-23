@@ -10,7 +10,7 @@ $(function () {
         /*allowClear: true*/
     });
 
-    $(".fSph").focus(function () {
+    $(".fSph").hover(function () {
         $(this).css('cursor', 'not-allowed');
     });
 
