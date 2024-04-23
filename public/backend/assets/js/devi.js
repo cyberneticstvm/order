@@ -10,7 +10,7 @@ $(function () {
         /*allowClear: true*/
     });
 
-    $(document).on("change", ".fSph", function (e) {
+    $(document).on("change", ".fSph, .fCyl, .fAxis, .fAdd, .sSph, .sCyl, .sAxis, .sAdd", function (e) {
         $(this).val('0.00')
         $(this).select2();
     });

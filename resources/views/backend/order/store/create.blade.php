@@ -205,9 +205,9 @@
                                                         {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 fAdd') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->text('va[]', '')->class('w-100 border-0 text-center fVa')->maxlength(6)->placeholder('VA') }}
+                                                        {{ html()->text('va[]', '')->class('w-100 border-0 text-center fVa')->maxlength(6)->attribute('readonly', 'true')->placeholder('VA') }}
                                                     </td>
-                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center fIpd" placeholder="IPD" value="" maxlength="6" /></td>
+                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center fIpd" placeholder="IPD" value="" maxlength="6" readonly /></td>
                                                     <td>
                                                         {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctFirst')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens1')->placeholder('Select')->required() }}
                                                     </td>
@@ -237,9 +237,9 @@
                                                         {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 sAdd')->attribute('id', 'add1') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->text('va[]', '')->class('w-100 border-0 text-center sVa')->maxlength(6)->placeholder('VA') }}
+                                                        {{ html()->text('va[]', '')->class('w-100 border-0 text-center sVa')->maxlength(6)->attribute('readonly', 'true')->placeholder('VA') }}
                                                     </td>
-                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center sIpd" placeholder="IPD" value="" maxlength="6" /></td>
+                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center sIpd" placeholder="IPD" value="" maxlength="6" readonly /></td>
                                                     <td>
                                                         {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctSecond')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens2')->placeholder('Select')->required() }}
                                                     </td>
