@@ -10,7 +10,7 @@ $(function () {
         /*allowClear: true*/
     });
 
-    $(".fSph").hover(function () {
+    $(".powerbox.fSph").hover(function () {
         alert('fg')
         $(this).css('cursor', 'not-allowed');
     });
