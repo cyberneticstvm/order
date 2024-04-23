@@ -10,7 +10,7 @@ $(function () {
         /*allowClear: true*/
     });
 
-    $(".fSph").select2("readonly", true);
+    $(".fSph").attr("readonly", true);
 
     $("#branchSelector").modal('show');
 
