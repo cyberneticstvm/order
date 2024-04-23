@@ -11,7 +11,9 @@ $(function () {
     });
 
     $(document).on("change", ".fSph", function (e) {
-        $(this).val(0)
+        e.preventDefault();
+        $(this).select2();
+        return false;
     });
 
     $("#branchSelector").modal('show');
