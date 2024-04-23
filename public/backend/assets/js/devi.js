@@ -10,9 +10,9 @@ $(function () {
         /*allowClear: true*/
     });
 
-    $(".powerbox.fSph").hover(function () {
-        alert('fg')
-        $(this).css('cursor', 'not-allowed');
+    $(".fSph").change(function (e) {
+        e.preventDefault();
+        return false;
     });
 
     $("#branchSelector").modal('show');
