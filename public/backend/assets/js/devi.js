@@ -11,6 +11,7 @@ $(function () {
     });
 
     $(".fSph").hover(function () {
+        alert('fg')
         $(this).css('cursor', 'not-allowed');
     });
 
