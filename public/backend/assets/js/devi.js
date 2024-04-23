@@ -10,8 +10,6 @@ $(function () {
         /*allowClear: true*/
     });
 
-    $(".fSph").attr("readonly", true);
-
     $("#branchSelector").modal('show');
 
     $('[data-bs-toggle="tooltip"]').tooltip();
