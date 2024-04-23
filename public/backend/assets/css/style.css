@@ -50895,5 +50895,5 @@ select,
 }
 
 .fSph {
-  pointer-events: none;
+  cursor: hand !important;
 }
