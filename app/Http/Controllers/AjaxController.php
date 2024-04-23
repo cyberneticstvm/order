@@ -242,6 +242,7 @@ class AjaxController extends Controller
                 $op .= "<table><tbody>";
                 $op .= "<tr><th>Order ID</th><td>" . $order->ono() . "</td></tr>";
                 $op .= "<tr><th>Customer ID</th><td>" . $order->customer_id . "</td></tr>";
+                $op .= "<tr><th>Customer Name</th><td>" . $order->name . "</td></tr>";
                 $op .= "<tr><th>Branch</th><td>" . $order->branch->name . "</td></tr>";
                 $op .= "<tr><th>Order Date</th><td>" . $order->created_at->format('d.M.Y h:i a') . "</td></tr>";
                 $op .= "<tr><th>Exp.Del.Date</th><td>" . $order->expected_delivery_date->format('d.M.Y') . "</td></tr>";
