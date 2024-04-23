@@ -70,7 +70,6 @@
                                         <th>Product Name</th>
                                         <th>PID</th>
                                         <th>Booked</th>
-                                        <th>Billed</th>
                                         <th>Transfer In</th>
                                         <th>Transfer Out</th>
                                         <th>Returned</th>
@@ -85,7 +84,6 @@
                                         <td>{{ $item->product_name }}</td>
                                         <td>{{ $item->product_id }}</td>
                                         <td>{{ $item->soldQty }}</td>
-                                        <td>{{ $item->billedQty }}</td>
                                         <td>{{ $item->purchasedQty }}</td>
                                         <td>{{ $item->transferredQty }}</td>
                                         <td>{{ $item->returnedQty }} </td>
@@ -99,7 +97,6 @@
                                     <tr>
                                         <td colspan="3" class="fw-bold text-end">Total</td>
                                         <td class="fw-bold text-right">{{ $data->sum('soldQty') }}</td>
-                                        <td class="fw-bold text-right">{{ $data->sum('billedQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('purchasedQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('transferredQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('returnedQty') }}</td>
