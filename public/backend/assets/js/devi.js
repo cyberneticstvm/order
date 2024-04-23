@@ -10,6 +10,10 @@ $(function () {
         /*allowClear: true*/
     });
 
+    $(".fSph").focus(function () {
+        $(this).css('cursor', 'not-allowed');
+    });
+
     $("#branchSelector").modal('show');
 
     $('[data-bs-toggle="tooltip"]').tooltip();

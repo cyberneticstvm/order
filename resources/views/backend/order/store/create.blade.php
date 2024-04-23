@@ -193,7 +193,7 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 fSph')->attribute('readonly', 'true') }}
+                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 fSph') }}
                                                     </td>
                                                     <td>
                                                         {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2 fCyl') }}
