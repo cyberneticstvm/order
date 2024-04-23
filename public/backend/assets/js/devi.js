@@ -10,7 +10,8 @@ $(function () {
         /*allowClear: true*/
     });
 
-    $(".fSph").change(function (e) {
+    $(document).on("change", ".fSph", function (e) {
+        alert('sdfsddf')
         e.preventDefault();
         return false;
     });
