@@ -11,7 +11,7 @@ $(function () {
     });
 
     $(document).on("change", ".fSph", function (e) {
-        $(this).val(0)
+        $(this).val('0.00')
         $(this).select2();
     });
 
