@@ -125,6 +125,7 @@ class StoreOrderController extends Controller
                 'order_sequence' => $sid,
                 'order_date' => $request->order_date,
                 'consultation_id' => $request->consultation_id,
+                'registration_id' => $request->registration_id,
                 'name' => $request->name,
                 'age' => $request->age,
                 'place' => $request->place,

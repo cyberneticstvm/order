@@ -63,6 +63,9 @@
                                         <td>{{ $spec->created_at->format('d.M.Y h:i a') }}</td>
                                         <td class="text-center"><a href="{{ route('customer.order.prescription', encrypt($spec->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                         <td>{!! $spec->status() !!}</td>
+                                        @if($spec->hasOrder($spec->registration_id))
+                                        <td></td>
+                                        @else
                                         <td class="text-center">
                                             <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Create</button>
                                             <ul class="dropdown-menu dropdown-block">
@@ -70,6 +73,7 @@
                                                 <li><a class="dropdown-item txt-dark" href="{{ route('solution.order.create', ['id' => encrypt($spec->registration_id), 'type' => '2']) }}">Solutions</a></li>
                                             </ul>
                                         </td>
+                                        @endif
                                         <td class="text-center"><a href="{{ route('spectacle.edit', encrypt($spec->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center"><a href="{{ route('spectacle.delete', encrypt($spec->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
                                     </tr>

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->bigInteger('order_sequence')->nullable();
             $table->date('order_date')->nullable();
             $table->unsignedBigInteger('consultation_id')->comment('0 if outside order')->nullable();
+            $table->unsignedBigInteger('registration_id')->nullable();
             $table->string('name', 55)->comment('Customer Name only applicable if outside order')->nullable();
             $table->integer('age')->nullable();
             $table->string('place', 100)->nullable();

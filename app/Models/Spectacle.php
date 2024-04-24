@@ -39,4 +39,9 @@ class Spectacle extends Model
     {
         return $this->belongsTo(Branch::class, 'branch_id', 'id');
     }
+
+    public function hasOrder($reg_id)
+    {
+        return Order::where('registration_id', $reg_id)->first();
+    }
 }
