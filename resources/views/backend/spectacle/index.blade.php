@@ -58,7 +58,7 @@
                                         <td>{{ $spec->customer->name }}</td>
                                         <td>{{ $spec->customer->mobile }}</td>
                                         <td>{{ $spec->doctor?->name }}</td>
-                                        <td>{{ $spec->optometrist?->name }}</td>
+                                        <td>{{ $spec->optometrists?->name }}</td>
                                         <td>{{ $spec->created_at->format('d.M.Y h:i a') }}</td>
                                         <td class="text-center"><a href="{{ route('customer.order.prescription', encrypt($spec->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                         <td>{!! $spec->status() !!}</td>
