@@ -43,6 +43,7 @@
                                         <th>Contact Number</th>
                                         <th>Doctor</th>
                                         <th>Optometrist</th>
+                                        <th>Branch</th>
                                         <th>Time</th>
                                         <th>Print</th>
                                         <th>Status</th>
@@ -60,6 +61,7 @@
                                         <td>{{ $spec->customer->mobile }}</td>
                                         <td>{{ $spec->doctors?->name }}</td>
                                         <td>{{ $spec->optometrists?->name }}</td>
+                                        <td>{{ $spec->branch->name }}</td>
                                         <td>{{ $spec->created_at->format('d.M.Y h:i a') }}</td>
                                         <td class="text-center"><a href="{{ route('customer.order.prescription', encrypt($spec->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                         <td>{!! $spec->status() !!}</td>
