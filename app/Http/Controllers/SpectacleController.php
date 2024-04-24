@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Power;
 use App\Models\Registration;
 use App\Models\Spectacle;
@@ -9,6 +10,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class SpectacleController extends Controller
@@ -49,11 +51,14 @@ class SpectacleController extends Controller
     public function create(string $id, string $type)
     {
         $registration = Registration::findOrFail(decrypt($id));
+        $customer = Customer::findOrFail($registration->customer_id);
         $optometrists = $this->optometrists;
         $doctors = $this->doctors;
         $powers = $this->powers;
         $spectacle = [];
-        return view('backend.spectacle.create', compact('registration', 'optometrists', 'doctors', 'powers', 'spectacle'));
+        $mrns = DB::connection('mysql1')->table('patient_medical_records')->where('patient_id', $customer->mrn ?? 0)->pluck('id');
+        $hospital_prescriptions = DB::connection('mysql1')->table('spectacles')->selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->whereIn('medical_record_id', $mrns)->get();
+        return view('backend.spectacle.create', compact('registration', 'optometrists', 'doctors', 'powers', 'spectacle', 'hospital_prescriptions'));
     }
 
     /**
@@ -65,7 +70,7 @@ class SpectacleController extends Controller
             'customer_id' => 'required',
             'registration_id' => 'required',
         ]);
-        $input = $request->all();
+        $input = $request->except(array('spectacle_id'));
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
         $input['branch_id'] = Session::get('branch');

@@ -69,11 +69,7 @@
                                         <td></td>
                                         @else
                                         <td class="text-center">
-                                            <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Create</button>
-                                            <ul class="dropdown-menu dropdown-block">
-                                                <li><a class="dropdown-item txt-dark" href="{{ route('store.order.create', ['id' => encrypt($spec->registration_id), 'type' => '1']) }}">Spectacles</a></li>
-                                                <li><a class="dropdown-item txt-dark" href="{{ route('solution.order.create', ['id' => encrypt($spec->registration_id), 'type' => '2']) }}">Solutions</a></li>
-                                            </ul>
+                                            <a class="dropdown-item txt-info" href="{{ route('store.order.create', ['id' => encrypt($spec->registration_id), 'type' => '1']) }}">Create</a>
                                         </td>
                                         @endif
                                         <td class="text-center"><a href="{{ route('spectacle.edit', encrypt($spec->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>

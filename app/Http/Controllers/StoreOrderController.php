@@ -65,19 +65,12 @@ class StoreOrderController extends Controller
         $pmodes = $this->pmodes;
         $padvisers = $this->padvisers;
         $states = State::all();
-        /*$consultation = Consultation::with('patient')->find(decrypt($id));
-        $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', decrypt($id))->first();
-        $spectacle = DB::connection('mysql1')->table('spectacles')->where('medical_record_id', decrypt($id))->first();
-        $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();*/
         $registration = Registration::findOrFail(decrypt($id));
         $patient = Customer::findOrFail($registration->customer_id);
-        //$spectacle = Spectacle::where('registration_id', $registration->id)->latest()->first();
+        $spectacle = Spectacle::where('registration_id', $registration->id)->latest()->first();
         $powers = Power::all();
-        $mrecord = DB::connection('mysql1')->table('patient_medical_records')->find($patient->mrn);
-        $mrns = DB::connection('mysql1')->table('patient_medical_records')->where('patient_id', $mrecord?->patient_id ?? 0)->pluck('id');
-        $hospital_prescriptions = DB::connection('mysql1')->table('spectacles')->selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->whereIn('medical_record_id', $mrns)->get();
         $store_prescriptions = Spectacle::where('customer_id', $patient->id)->selectRaw("CONCAT_WS(' / ', 'CID', customer_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS cid, id")->get();
-        return view(($type == 1) ? 'backend.order.store.create' : 'backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'powers', 'states', 'registration', 'hospital_prescriptions', 'store_prescriptions'));
+        return view(($type == 1) ? 'backend.order.store.create' : 'backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'powers', 'states', 'registration', 'store_prescriptions', 'spectacle'));
     }
 
     public function fetch(Request $request)
@@ -126,6 +119,7 @@ class StoreOrderController extends Controller
                 'order_date' => $request->order_date,
                 'consultation_id' => $request->consultation_id,
                 'registration_id' => $request->registration_id,
+                'spectacle_id' => $request->spectacle_id,
                 'name' => $request->name,
                 'age' => $request->age,
                 'place' => $request->place,
@@ -237,10 +231,10 @@ class StoreOrderController extends Controller
         $products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['lens', 'frame', 'service'])->orderBy('name')->get();
         $pmodes = $this->pmodes;
         $padvisers = $this->padvisers;
-
+        $store_prescriptions = Spectacle::where('customer_id', $order->customer_id)->selectRaw("CONCAT_WS(' / ', 'CID', customer_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS cid, id")->get();
         $powers = Power::all();
         $states = State::all();
-        return view('backend.order.store.edit', compact('products', 'pmodes', 'padvisers', 'order', 'powers', 'states'));
+        return view('backend.order.store.edit', compact('products', 'pmodes', 'padvisers', 'order', 'powers', 'states', 'store_prescriptions'));
     }
 
     /**
@@ -264,6 +258,7 @@ class StoreOrderController extends Controller
             DB::transaction(function () use ($request, $id) {
                 $order = Order::findOrFail($id);
                 Order::findOrFail($id)->update([
+                    'spectacle_id' => $request->spectacle_id,
                     'order_date' => $request->order_date,
                     'name' => $request->name,
                     'age' => $request->age,

@@ -146,14 +146,10 @@
                                 </div>
                                 <div class="row g-4 table-responsive">
                                     <div class="col-md-3">
-                                        <label class="form-label">Hospital Prescription</label>
-                                        {{ html()->select('hpresc', $hospital_prescriptions->pluck('mrn', 'id'), '')->class('form-control select2 changePresc')->attribute('data-source', 'hospital')->placeholder('Select') }}
-                                    </div>
-                                    <div class="col-md-3">
                                         <label class="form-label">Store Prescription</label>
-                                        {{ html()->select('spresc', $store_prescriptions->pluck('cid', 'id'), '')->class('form-control select2 changePresc')->attribute('data-source', 'store')->placeholder('Select') }}
+                                        {{ html()->select('spectacle_id', $store_prescriptions->pluck('cid', 'id'), $spectacle->id)->class('form-control select2 changePresc')->attribute('data-source', 'store')->placeholder('Select') }}
                                     </div>
-                                    <div class="col-md-6 text-end">
+                                    <div class="col-md-9 text-end">
                                         <div class="btn-group">
                                             <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Add New Row</button>
                                             <ul class="dropdown-menu dropdown-block">
@@ -193,21 +189,21 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 fSph') }}
+                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->re_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 fSph') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2 fCyl') }}
+                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->re_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2 fCyl') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2 fAxis') }}
+                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->re_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2 fAxis') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 fAdd') }}
+                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->re_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 fAdd') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->text('va[]', '')->class('w-100 border-0 text-center fVa')->maxlength(6)->attribute('readonly', 'true')->placeholder('VA') }}
+                                                        {{ html()->text('va[]', $spectacle?->re_va ?? '')->class('w-100 border-0 text-center fVa')->maxlength(6)->attribute('readonly', 'true')->placeholder('VA') }}
                                                     </td>
-                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center fIpd" placeholder="IPD" value="" maxlength="6" readonly /></td>
+                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center fIpd" placeholder="IPD" value="{{ $spectacle?->rpd ?? '' }}" maxlength="6" readonly /></td>
                                                     <td>
                                                         {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctFirst')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens1')->placeholder('Select')->required() }}
                                                     </td>
@@ -225,21 +221,21 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 sSph')->attribute('id', 'sph1') }}
+                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->le_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 sSph')->attribute('id', 'sph1') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2 sCyl')->attribute('id', 'cyl1') }}
+                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->le_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2 sCyl')->attribute('id', 'cyl1') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2 sAxis')->attribute('id', 'axis1') }}
+                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->le_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2 sAxis')->attribute('id', 'axis1') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 sAdd')->attribute('id', 'add1') }}
+                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->le_add ?? $spectacle?->le_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 sAdd')->attribute('id', 'add1') }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->text('va[]', '')->class('w-100 border-0 text-center sVa')->maxlength(6)->attribute('readonly', 'true')->placeholder('VA') }}
+                                                        {{ html()->text('va[]', $spectacle?->le_va ?? '')->class('w-100 border-0 text-center sVa')->maxlength(6)->attribute('readonly', 'true')->placeholder('VA') }}
                                                     </td>
-                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center sIpd" placeholder="IPD" value="" maxlength="6" readonly /></td>
+                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center sIpd" placeholder="IPD" value="{{ $spectacle?->lpd ?? '' }}" maxlength="6" readonly /></td>
                                                     <td>
                                                         {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctSecond')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens2')->placeholder('Select')->required() }}
                                                     </td>

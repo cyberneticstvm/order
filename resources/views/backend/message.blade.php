@@ -86,7 +86,7 @@
             let c = confirm("Expected delivery date and order date are same. proceed?")
             if (!c) return false
         }
-        if (frm['hpresc'].value == '' && frm['spresc'].value == '') {
+        if (frm['spectacle_id'].value == '') {
             let c = confirm("You haven't entered any prescription details. proceed?")
             if (!c) return false
         }

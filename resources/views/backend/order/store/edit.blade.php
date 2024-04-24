@@ -143,7 +143,11 @@
                                     {{ html()->text($name = 'company_name', $value = $order->company_name)->class('form-control')->placeholder('Company Name') }}
                                 </div>
                                 <div class="row g-4 table-responsive">
-                                    <div class="col text-end">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Store Prescription</label>
+                                        {{ html()->select('spectacle_id', $store_prescriptions->pluck('cid', 'id'), $order->spectacle_id)->class('form-control select2 changePresc')->attribute('data-source', 'store')->placeholder('Select') }}
+                                    </div>
+                                    <div class="col-md-6 text-end">
                                         <div class="btn-group">
                                             <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Add New Row</button>
                                             <ul class="dropdown-menu dropdown-block">
@@ -196,21 +200,47 @@
                                                     @if(in_array($item->eye, ['re', 'le', 'both']))
 
                                                     <td>
-                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $item->sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'sph_'.$key) }}
+                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $item->sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2')->if($key==0, function($el){
+                                                            return $el->attribute('class', 'fSph');
+                                                        })->if($key==1, function($el){
+                                                            return $el->attribute('class', 'sSph');
+                                                        })->attribute('id', 'sph_'.$key) }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $item->cyl ??  $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'cyl_'.$key) }}
+                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $item->cyl ??  $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2')->if($key==0, function($el){
+                                                            return $el->attribute('class', 'fCyl');
+                                                        })->if($key==1, function($el){
+                                                            return $el->attribute('class', 'sCyl');
+                                                        })->attribute('id', 'cyl_'.$key) }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $item->axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'axis_'.$key) }}
+                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $item->axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2')->if($key==0, function($el){
+                                                            return $el->attribute('class', 'fAxis');
+                                                        })->if($key==1, function($el){
+                                                            return $el->attribute('class', 'sAxis');
+                                                        })->attribute('id', 'axis_'.$key) }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $item->add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2')->attribute('id', 'add_'.$key) }}
+                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $item->add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2')->if($key==0, function($el){
+                                                            return $el->attribute('class', 'fAdd');
+                                                        })->if($key==1, function($el){
+                                                            return $el->attribute('class', 'sAdd');
+                                                        })->attribute('id', 'add_'.$key) }}
                                                     </td>
                                                     <td>
-                                                        {{ html()->text('va[]', $item->va ?? '')->class('w-100 border-0 text-center fVa')->maxlength(6)->placeholder('VA') }}
+                                                        {{ html()->text('va[]', $item->va ?? '')->class('w-100 border-0 text-center')->if($key==0, function($el){
+                                                            return $el->attribute('class', 'fVa');
+                                                        })->if($key==1, function($el){
+                                                            return $el->attribute('class', 'sVa');
+                                                        })->maxlength(6)->placeholder('VA') }}
                                                     </td>
-                                                    <td width="15%"><input type="text" name='ipd[]' class="w-100 border-0 text-center" placeholder="IPD" value="{{ $item->ipd ?? '' }}" maxlength="6" /></td>
+                                                    <td width="15%">
+                                                        {{ html()->text('ipd[]', $item->ipd ?? '')->class('w-100 border-0 text-center')->if($key==0, function($el){
+                                                            return $el->attribute('class', 'fIpd');
+                                                        })->if($key==1, function($el){
+                                                            return $el->attribute('class', 'sIpd');
+                                                        })->maxlength(6)->placeholder('VA') }}
+                                                    </td>
                                                     @endif
                                                     @if(in_array($item->eye, ['frame', 'service']))
                                                     <td colspan="6">
