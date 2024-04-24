@@ -8,6 +8,7 @@ use App\Models\Spectacle;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class SpectacleController extends Controller
@@ -36,7 +37,9 @@ class SpectacleController extends Controller
 
     public function index()
     {
-        $spectacles = Spectacle::whereDate('created_at', Carbon::today())->withTrashed()->latest()->get();
+        $spectacles = Spectacle::whereDate('created_at', Carbon::today())->when(!in_array(Auth::user()->roles->first()->name, ['Administrator']), function ($q) {
+            return $q->where('branch_id', Session::get('branch'));
+        })->withTrashed()->latest()->get();
         return view('backend.spectacle.index', compact('spectacles'));
     }
 
