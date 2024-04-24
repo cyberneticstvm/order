@@ -22,12 +22,12 @@ class Spectacle extends Model
 
     public function optometrists()
     {
-        return $this->belongsTo(User::class, 'id', 'optometrist');
+        return $this->belongsTo(User::class, 'optometrist', 'id');
     }
 
-    public function doctor()
+    public function doctors()
     {
-        return $this->belongsTo(User::class, 'id', 'doctor');
+        return $this->belongsTo(User::class, 'doctor', 'id');
     }
 
     public function customer()
