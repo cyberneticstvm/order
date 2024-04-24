@@ -66,7 +66,7 @@ class StoreOrderController extends Controller
         $padvisers = $this->padvisers;
         $states = State::all();
         $registration = Registration::findOrFail(decrypt($id));
-        $patient = Customer::findOrFail($registration->customer_id);
+        $patient = Customer::find($registration->customer_id);
         $spectacle = Spectacle::where('registration_id', $registration->id)->latest()->first();
         $powers = Power::all();
         $store_prescriptions = Spectacle::where('customer_id', $patient->id)->selectRaw("CONCAT_WS(' / ', 'CID', customer_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS cid, id")->get();
