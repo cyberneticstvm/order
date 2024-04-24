@@ -129,7 +129,7 @@
 <div class="fw-bold txt">Special Lab Note: {{ $order->special_lab_note }}</div>
 <div class="row">
     <div class="col">
-        <table class="bordered" width="75%" cellspacing="0" cellpadding="0" style="font-size: 10px;">
+        <table class="bordered" width="50%" cellspacing="0" cellpadding="0" style="font-size: 10px;">
             <thead>
                 <tr>
                     <th class="no-border">SL No</th>
