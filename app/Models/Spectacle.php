@@ -42,6 +42,6 @@ class Spectacle extends Model
 
     public function hasOrder($reg_id)
     {
-        return Order::where('registration_id', $reg_id)->first();
+        return (Order::where('registration_id', $reg_id)->first()) ? true : false;
     }
 }
