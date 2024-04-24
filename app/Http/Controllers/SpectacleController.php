@@ -56,7 +56,8 @@ class SpectacleController extends Controller
         $doctors = $this->doctors;
         $powers = $this->powers;
         $spectacle = [];
-        $mrns = DB::connection('mysql1')->table('patient_medical_records')->where('patient_id', $customer->mrn ?? 0)->pluck('id');
+        $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', $customer->mrn)->first();
+        $mrns = DB::connection('mysql1')->table('patient_medical_records')->where('patient_id', $mrecord->patient_id ?? 0)->pluck('id');
         $hospital_prescriptions = DB::connection('mysql1')->table('spectacles')->selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->whereIn('medical_record_id', $mrns)->get();
         return view('backend.spectacle.create', compact('registration', 'optometrists', 'doctors', 'powers', 'spectacle', 'hospital_prescriptions'));
     }
