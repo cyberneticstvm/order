@@ -6,6 +6,7 @@ use App\Models\Power;
 use App\Models\Registration;
 use App\Models\Spectacle;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -35,7 +36,7 @@ class SpectacleController extends Controller
 
     public function index()
     {
-        $spectacles = Spectacle::withTrashed()->latest()->get();
+        $spectacles = Spectacle::whereDate('created_at', Carbon::today())->withTrashed()->latest()->get();
         return view('backend.spectacle.index', compact('spectacles'));
     }
 
