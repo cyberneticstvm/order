@@ -34,7 +34,7 @@ class ProductLensExport implements FromCollection, WithMapping, WithHeadings, Sh
                 'item_material' => $data->material,
                 'item_coating' => $data->coating?->name,
                 'item_type' => $data->type?->name,
-                'item_manufacturer' => $data->manufacturer->name,
+                'item_manufacturer' => $data->manufacturer?->name,
                 'item_mrp' => $data->mrp,
                 'item_sp' => $data->selling_price,
                 'item_tax' => $data->tax_percentage,
