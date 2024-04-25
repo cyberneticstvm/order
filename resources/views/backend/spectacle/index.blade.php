@@ -69,7 +69,7 @@
                                         <td></td>
                                         @else
                                         <td class="text-center">
-                                            <a class="dropdown-item txt-info" href="{{ route('store.order.create', ['id' => encrypt($spec->registration_id), 'type' => '1']) }}">Create</a>
+                                            <a class="btn btn-sm btn-info" href="{{ route('store.order.create', ['id' => encrypt($spec->registration_id), 'type' => '1']) }}">Create</a>
                                         </td>
                                         @endif
                                         <td class="text-center"><a href="{{ route('spectacle.edit', encrypt($spec->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>

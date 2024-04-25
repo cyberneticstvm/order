@@ -95,18 +95,18 @@
                                     <small class="text-danger">{{ $errors->first('daily_expense_limit') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="form-label req">Type</label>
-                                    {{ html()->select($name = 'type', array('branch' => 'Branch', 'rx-lab' => 'Rx Lab', 'fitting-lab' => 'Fitting Lab', 'stock-lab' => 'Stock Lab', 'outside-lab' => 'Outside Lab'), $value = old('type'))->class('form-control')->placeholder('Select') }}
-                                    @error('type')
-                                    <small class="text-danger">{{ $errors->first('type') }}</small>
-                                    @enderror
-                                </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Discount Percentage</label>
                                     {{ html()->number($name = 'discount_limit_percentage', $value = old('discount_limit_percentage'), $min='0', $max='100', $step='1')->class('form-control')->placeholder('0') }}
                                     @error('discount_limit_percentage')
                                     <small class="text-danger">{{ $errors->first('discount_limit_percentage') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label req">Type</label>
+                                    {{ html()->select($name = 'type', array('branch' => 'Branch', 'rx-lab' => 'Rx Lab', 'fitting-lab' => 'Fitting Lab', 'stock-lab' => 'Stock Lab', 'outside-lab' => 'Outside Lab'), $value = old('type'))->class('form-control')->placeholder('Select') }}
+                                    @error('type')
+                                    <small class="text-danger">{{ $errors->first('type') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-12 text-end">
