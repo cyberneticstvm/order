@@ -147,7 +147,7 @@
                                 <div class="row g-4 table-responsive">
                                     <div class="col-md-3">
                                         <label class="form-label">Store Prescription</label>
-                                        {{ html()->select('spectacle_id', $store_prescriptions->pluck('cid', 'id'), $spectacle->id)->class('form-control select2 changePresc')->attribute('data-source', 'store')->placeholder('Select') }}
+                                        {{ html()->select('spectacle_id', $store_prescriptions->pluck('cid', 'id'), $spectacle?->id)->class('form-control select2 changePresc')->attribute('data-source', 'store')->placeholder('Select') }}
                                     </div>
                                     <div class="col-md-9 text-end">
                                         <div class="btn-group">
