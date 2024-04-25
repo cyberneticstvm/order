@@ -102,6 +102,13 @@
                                     <small class="text-danger">{{ $errors->first('type') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-2">
+                                    <label class="form-label req">Discount Percentage</label>
+                                    {{ html()->number($name = 'discount_limit_percentage', $branch->discount_limit_percentage, $min='0', $max='100', $step='1')->class('form-control')->placeholder('0') }}
+                                    @error('discount_limit_percentage')
+                                    <small class="text-danger">{{ $errors->first('discount_limit_percentage') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                                     <button class="btn btn-submit btn-success" type="submit">Update</button>
