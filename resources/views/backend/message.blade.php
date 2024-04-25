@@ -76,6 +76,10 @@
 
     function validateOrderForm() {
         let frm = document.forms["orderForm"];
+        let disc_per = parseInt(frm['disc_per'].value);
+        let disc = parseFloat(frm['discount'].value);
+        let ord_tot = parseFloat(frm['order_total'].value);
+        let disc_allowed = parseFloat((ord_tot * disc_per) / 100);
         if (frm['advance'].value > 0 && frm['payment_mode'].value == '') {
             failed({
                 'error': 'Please select advance payment mode!'
@@ -85,6 +89,12 @@
         if (frm['order_date'].value == frm['expected_delivery_date'].value) {
             let c = confirm("Expected delivery date and order date are same. proceed?")
             if (!c) return false
+        }
+        if (parseFloat(disc) > parseFloat(disc_allowed)) {
+            failed({
+                'error': 'Discount amount is greater than allowed'
+            })
+            return false;
         }
         if (frm['spectacle_id'].value == '') {
             let c = confirm("You haven't entered any prescription details. proceed?")

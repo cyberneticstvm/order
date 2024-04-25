@@ -42,6 +42,7 @@
                                 <input type="hidden" name="consultation_id" value="{{ $patient?->mrn ?? 0 }}" />
                                 <input type="hidden" name="registration_id" value="{{ $registration?->id ?? 0 }}" />
                                 <input type="hidden" name="customer_id" id="customer_id" value="{{ $patient?->id ?? 0 }}" />
+                                <input type="hidden" name="disc_per" value="{{ branch()->discount_limit_percentage }}" />
                                 <div class="col-md-2">
                                     <label class="form-label req">Order Date</label>
                                     {{ html()->date($name = 'order_date', $value = date('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}
