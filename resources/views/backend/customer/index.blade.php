@@ -86,7 +86,9 @@
                                         <th>MRN</th>
                                         <th>Created at</th>
                                         <th>Status</th>
-                                        <th>Order</th>
+                                        <th>Solution</th>
+                                        <th>Frame</th>
+                                        <th>Prescription</th>
                                         <th>Delete</th>
                                     </tr>
                                 </thead>
@@ -100,13 +102,9 @@
                                         <td>{{ ($reg->customer->mrn == '0') ? 'Direct' : $reg->customer->mrn }}</td>
                                         <td>{{ $reg->created_at->format('d, M Y h:i a') }}</td>
                                         <td>{!! $reg->status() !!}</td>
-                                        <td>
-                                            <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Create</button>
-                                            <ul class="dropdown-menu dropdown-block">
-                                                <li><a class="dropdown-item txt-dark" href="{{ route('solution.order.create', ['id' => encrypt($reg->id), 'type' => '2']) }}">Solutions</a></li>
-                                                <li><a class="dropdown-item txt-dark" href="{{ route('spectacle.create', ['id' => encrypt($reg->id), 'type' => '0']) }}">Prescription</a></li>
-                                            </ul>
-                                        </td>
+                                        <td><a class="btn btn-info" href="{{ route('solution.order.create', ['id' => encrypt($reg->id), 'type' => '2']) }}">Create</a></td>
+                                        <td><a class="btn btn-warning" href="{{ route('store.order.create', ['id' => encrypt($reg->id), 'type' => '1']) }}">Create</a></td>
+                                        <td><a class="btn btn-primary" href="{{ route('spectacle.create', ['id' => encrypt($reg->id), 'type' => '0']) }}">Create</a></td>
                                         <td class="text-center"><a href="{{ route('customer.registration.delete', encrypt($reg->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
                                     </tr>
                                     @empty
