@@ -152,12 +152,14 @@ class AjaxController extends Controller
         $op = '<div class="drawer-header">
                 <h6 class="drawer-title" id="drawer-3-title">Frame Detailed</h6></div><div class="drawer-body table-responsive">';
         $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>Product Name</th><th>Product Code</th></tr></thead><tbody>';
-        foreach ($order->details->where('eye', 'frame') as $key => $item) :
-            $op .= "<tr>";
-            $op .= '<td>' . $key + 1 . '</td>';
-            $op .= '<td>' . $item->product?->name . '</td>';
-            $op .= '<td>' . $item->product?->code . '</td>';
-            $op .= "</tr>";
+        foreach ($order as $key1 => $ord) :
+            foreach ($ord->details->where('eye', 'frame') as $key => $item) :
+                $op .= "<tr>";
+                $op .= '<td>' . $key + 1 . '</td>';
+                $op .= '<td>' . $item->product?->name . '</td>';
+                $op .= '<td>' . $item->product?->code . '</td>';
+                $op .= "</tr>";
+            endforeach;
         endforeach;
         $op .= '</tbody></table>';
         $op .= '</div><div class="drawer-footer">Frame</div>';
