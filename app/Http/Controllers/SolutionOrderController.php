@@ -16,6 +16,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -163,6 +164,18 @@ class SolutionOrderController extends Controller
                         'updated_by' => $request->user()->id,
                     ]);
                 endif;
+                if ($request->advance > $request->invoice_total) :
+                    CustomerAccount::create([
+                        'customer_id' => $order->customer_id,
+                        'voucher_id' => $order->id,
+                        'type' => 'credit',
+                        'category' => 'order',
+                        'amount' => $request->advance - $request->invoice_total,
+                        'remarks' => 'Excess amount credited against order number' . $order->ono(),
+                        'created_by' => $request->user()->id,
+                        'updated_by' => $request->user()->id,
+                    ]);
+                endif;
                 Registration::where('id', $request->registration_id)->update(['order_id' => $order->id]);
             });
         } catch (Exception $e) {
@@ -271,6 +284,21 @@ class SolutionOrderController extends Controller
                         'updated_at' => Carbon::now(),
                     ]);
                 endif;
+                if ($request->advance > $request->invoice_total) :
+                    $caccount = CustomerAccount::where('category', 'order')->where('type', 'credit')->where('voucher_id', $order->id)->first();
+                    if ($caccount)
+                        $caccount->forcedelete();
+                    CustomerAccount::create([
+                        'customer_id' => $order->customer_id,
+                        'voucher_id' => $order->id,
+                        'type' => 'credit',
+                        'category' => 'order',
+                        'amount' => $request->advance - $request->invoice_total,
+                        'remarks' => 'Excess amount credited against order number' . $order->ono(),
+                        'created_by' => $request->user()->id,
+                        'updated_by' => $request->user()->id,
+                    ]);
+                endif;
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
@@ -283,7 +311,22 @@ class SolutionOrderController extends Controller
      */
     public function destroy(string $id)
     {
-        Order::findOrFail(decrypt($id))->delete();
+        $order = Order::findOrFail(decrypt($id));
+        $order->delete();
+        $credit = Payment::where('order_id', decrypt($id))->sum('amount');
+        Payment::where('order_id', decrypt($id))->delete();
+        if ($credit > 0) :
+            CustomerAccount::create([
+                'customer_id' => $order->customer_id,
+                'voucher_id' => $order->id,
+                'type' => 'credit',
+                'category' => 'order',
+                'amount' => $credit,
+                'remarks' => 'Cancelled amount credited against order number' . $order->ono(),
+                'created_by' => Auth::id(),
+                'updated_by' => Auth::id(),
+            ]);
+        endif;
         return redirect()->back()->with('success', 'Order has been deleted successfully!');
     }
 }
