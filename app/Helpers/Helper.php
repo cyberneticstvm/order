@@ -251,6 +251,9 @@ function getDayBook($fdate, $tdate, $branch)
     $voucher_paid_total_card = getVoucherTotal($from_date, $to_date, $branch, $type = 'payment', $mode = [2]);
     $voucher_paid_total_upi = getVoucherTotal($from_date, $to_date, $branch, $type = 'payment', $mode = [3]);
     $voucher_paid_total_other = getVoucherTotal($from_date, $to_date, $branch, $type = 'payment', $mode = [5, 6, 7]);
+    $advance_total = getOrderPayments($from_date, $to_date, $branch, $mode = ['advance']);
+    $advance_after_order_total = getOrderPayments($from_date, $to_date, $branch, $mode = ['advance1']);
+    $receipts_order_total = getOrderPayments($from_date, $to_date, $branch, $mode = ['partial', 'balance']);
     return json_encode([
         'order_total' => $order_total,
         'paid_total' => $paid_total,
@@ -279,7 +282,17 @@ function getDayBook($fdate, $tdate, $branch)
         'voucher_paid_total_other' => $voucher_paid_total_other,
         'voucher_receipt_total' => $voucher_income_total_cash + $voucher_income_total_bank + $voucher_income_total_card + $voucher_income_total_upi + $voucher_income_total_other,
         'voucher_payment_total' => $voucher_paid_total_cash + $voucher_paid_total_bank + $voucher_paid_total_card + $voucher_paid_total_upi + $voucher_paid_total_other,
+        'advance_total' => $advance_total,
+        'advance_after_order_total' => $advance_after_order_total,
+        'receipts_order_total' => $receipts_order_total,
     ]);
+}
+
+function getOrderPayments($from_date, $to_date, $branch, $mode)
+{
+    return Payment::whereBetween('created_at', [$from_date, $to_date])->whereIn('payment_type', $mode)->when($branch > 0, function ($q) use ($branch) {
+        return $q->where('branch_id', $branch);
+    })->sum('amount');
 }
 
 function getVoucherTotal($from_date, $to_date, $branch, $type, $mode)
