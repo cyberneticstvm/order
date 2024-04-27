@@ -78,7 +78,7 @@
                                     <tr>
                                         <th>SL No</th>
                                         <th>Order No.</th>
-                                        <th>Invoice Number</th>
+                                        <th>Frame</th>
                                         <th>Branch</th>
                                         <th>Customer Name</th>
                                         <th>MRN</th>
@@ -97,7 +97,7 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->ono() }}</td>
-                                        <td>{{ $item->invoice_number }}</td>
+                                        <td>{{ $item->details->where('eye', 'frame')->sum('qty') }}</td>
                                         <td>{{ $item->branch?->name }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->consultation_id }}</td>
