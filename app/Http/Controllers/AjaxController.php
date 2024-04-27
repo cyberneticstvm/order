@@ -161,9 +161,9 @@ class AjaxController extends Controller
                 foreach ($data as $key => $item) :
                     $op .= "<tr>";
                     $op .= '<td>' . $key + 1 . '</td>';
-                    $op .= '<td>' . $item->order->name . '</td>';
+                    $op .= '<td>' . $item->order?->name . '</td>';
                     $op .= '<td>' . $item->created_at->format('d, M Y') . '</td>';
-                    $op .= '<td>' . $item->order->branch->code . '/' . $item->order_id . '</td>';
+                    $op .= '<td>' . $item->order?->branch?->code . '/' . $item->order_id . '</td>';
                     $op .= '<td class="text-end">' . number_format($item->amount, 2) . '</td>';
                     $op .= "</tr>";
                 endforeach;

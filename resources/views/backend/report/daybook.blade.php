@@ -118,6 +118,15 @@
                                     </tr>
                                     <tr>
                                         <td>
+                                            Order Split up
+                                        </td>
+                                        <td class="text-center text-secondary">Advance:<br /> <a href="">0.00</a> </td>
+                                        <td colspan="2" class="text-center text-secondary">Advance After Order:<br /> <a href="">0.00</a> </td>
+                                        <td class="text-center text-secondary">Receipts:<br /> <a href="">0.00</a> </td>
+                                        <td colspan="3"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
                                             Other Income
                                         </td>
                                         <td class="text-end">
