@@ -98,7 +98,7 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->ono() }}</td>
-                                        <td class="text-center"><a class="fw-bold" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ ($item->details->where('eye', 'frame')->sum('qty')) ? $item->details?->where('eye', 'frame')->first()?->product?->name : '' }}" data-bs-original-title="{{ ($item->details->where('eye', 'frame')->sum('qty')) ? $item->details?->where('eye', 'frame')->first()?->product?->name : '' }}">{{ $item->details->where('eye', 'frame')->sum('qty') }}</a></td>
+                                        <td class="text-center"><a class="fw-bold" title="{{ ($item->details->where('eye', 'frame')->sum('qty')) ? $item->details?->where('eye', 'frame')->first()?->product?->name : '' }}">{{ $item->details->where('eye', 'frame')->sum('qty') }}</a></td>
                                         <td>{{ $item->branch?->name }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->consultation_id }}</td>
