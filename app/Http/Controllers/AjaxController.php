@@ -155,7 +155,7 @@ class AjaxController extends Controller
         foreach ($order as $key1 => $ord) :
             foreach ($ord->details->where('eye', 'frame') as $key => $item) :
                 $op .= "<tr>";
-                $op .= '<td>' . $key + 1 . '</td>';
+                $op .= '<td>' . $key1 + 1 . '</td>';
                 $op .= '<td>' . $item->product?->name . '</td>';
                 $op .= '<td>' . $item->product?->code . '</td>';
                 $op .= "</tr>";
