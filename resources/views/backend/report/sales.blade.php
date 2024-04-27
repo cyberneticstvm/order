@@ -93,11 +93,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php($tot=0)
                                     @forelse($sales as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->ono() }}</td>
-                                        <td>{{ $item->details->where('eye', 'frame')->sum('qty') }}</td>
+                                        <td class="text-center"><a href="">{{ $item->details->where('eye', 'frame')->sum('qty') }}</a></td>
                                         <td>{{ $item->branch?->name }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->consultation_id }}</td>
@@ -110,12 +111,15 @@
                                         <td class="text-end">{{ number_format($item->invoice_total - $item->payments->sum('amount'), 2) }}</td>
                                         <td class="text-end">{{ number_format($item->invoice_total, 2) }}</td>
                                     </tr>
+                                    @php($tot += $item->details->where('eye', 'frame')->sum('qty'))
                                     @empty
                                     @endforelse
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="13" class="text-end">Total</th>
+                                        <th colspan="2" class="text-end">Total</th>
+                                        <th class="text-end">{{ $tot }}</th>
+                                        <th colspan="10"></th>
                                         <th class="text-end">{{ ($sales) ? number_format($sales->sum('invoice_total'), 2) : '0.00' }}</th>
                                     </tr>
                                 </tfoot>
