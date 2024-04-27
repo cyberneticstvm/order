@@ -170,6 +170,33 @@ class AjaxController extends Controller
                 $op .= '</tbody><tfoot><tr><td colspan="4" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('amount'), 2) . '</td></tr></tfoot></table>';
                 $op .= '</div><div class="drawer-footer">Daybook</div>';
                 break;
+            case 'advance':
+                //$data = getOrderDetailed($request->from_date, $request->to_date, $request->branch);
+                $data = Payment::whereBetween('created_at', [$fdate, $tdate])->where('amount', '>', 0)->when($request->branch > 0, function ($q) use ($request) {
+                    return $q->where('branch_id', $request->branch);
+                })->when(in_array($request->mode, array('advance')), function ($q) use ($request) {
+                    return $q->whereIn('payment_type', ['advance']);
+                })->when(in_array($request->mode, array('advance1')), function ($q) use ($request) {
+                    return $q->whereIn('payment_type', ['advance1']);
+                })->when(in_array($request->mode, array('other')), function ($q) use ($request) {
+                    return $q->whereIn('payment_type', ['partial', 'balance']);
+                })->get();
+                $op = '<div class="drawer-header">
+                    <h6 class="drawer-title" id="drawer-3-title">Advance & Receipts Detailed</h6></div><div class="drawer-body table-responsive">';
+                $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>Customer Name</th><th>
+                    Date<th>Order ID</th><th>Amount</th></tr></thead><tbody>';
+                foreach ($data as $key => $item) :
+                    $op .= "<tr>";
+                    $op .= '<td>' . $key + 1 . '</td>';
+                    $op .= '<td>' . $item->order?->name . '</td>';
+                    $op .= '<td>' . $item->created_at->format('d, M Y') . '</td>';
+                    $op .= '<td>' . $item->order?->branch?->code . '/' . $item->order_id . '</td>';
+                    $op .= '<td class="text-end">' . number_format($item->amount, 2) . '</td>';
+                    $op .= "</tr>";
+                endforeach;
+                $op .= '</tbody><tfoot><tr><td colspan="4" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('amount'), 2) . '</td></tr></tfoot></table>';
+                $op .= '</div><div class="drawer-footer">Advance & Receipts</div>';
+                break;
             case 'income':
                 $data = IncomeExpense::whereBetween('created_at', [$fdate, $tdate])->where('amount', '>', 0)->where('category', 'income')->when($request->branch > 0, function ($q) use ($request) {
                     return $q->where('branch_id', $request->branch);
