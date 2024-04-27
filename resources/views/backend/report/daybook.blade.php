@@ -121,7 +121,7 @@
                                             Order Split up
                                         </td>
                                         <td class="text-center text-secondary">Advance:<br /> <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="advance" data-mode="advance" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->advance_total, 2) }}</a> </td>
-                                        <td colspan="2" class="text-center text-secondary">Advance After Order:<br /> <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="advance" data-mode="advance1" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->advance_after_order_total, 2) }}</a> </td>
+                                        <td colspan="2" class="text-center text-secondary">Advance via Receipts:<br /> <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="advance" data-mode="advance1" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->advance_after_order_total, 2) }}</a> </td>
                                         <td class="text-center text-secondary">Receipts:<br /> <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="advance" data-mode="other" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->receipts_order_total, 2) }}</a> </td>
                                         <td colspan="3"></td>
                                     </tr>
