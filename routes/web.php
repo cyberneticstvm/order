@@ -106,6 +106,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/product/type/{category}/{attribute}', 'getProductTypes')->name('ajax.product.type');
         Route::get('/product/by/type/{type}', 'getProductsByType')->name('ajax.product.type.get');
         Route::get('/daybook/details', 'getDaybookDetailed')->name('ajax.daybook.detailed');
+        Route::get('/frame/details', 'getFrameDetailed')->name('ajax.frame.detailed');
 
         Route::get('/payment/details/{consultation}', 'getPaymentDetailsByConsultation')->name('ajax.payment.by.consultation');
 

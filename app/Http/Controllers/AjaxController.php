@@ -139,6 +139,31 @@ class AjaxController extends Controller
         echo $op;
     }
 
+    public function getFrameDetailed(Request $request)
+    {
+        $op = "";
+        $fdate = Carbon::parse($request->from_date)->startOfDay();
+        $tdate = Carbon::parse($request->to_date)->endOfDay();
+        $order = Order::whereBetween('created_at', [$fdate, $tdate])->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('branch_id', $request->branch);
+        })->when($request->status, function ($q) use ($request) {
+            return $q->where('order_status', $request->status);
+        })->get();
+        $op = '<div class="drawer-header">
+                <h6 class="drawer-title" id="drawer-3-title">Frame Detailed</h6></div><div class="drawer-body table-responsive">';
+        $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>Product Name</th><th>Product Code</th></tr></thead><tbody>';
+        foreach ($order->details->where('eye', 'frame') as $key => $item) :
+            $op .= "<tr>";
+            $op .= '<td>' . $key + 1 . '</td>';
+            $op .= '<td>' . $item->product?->name . '</td>';
+            $op .= '<td>' . $item->product?->code . '</td>';
+            $op .= "</tr>";
+        endforeach;
+        $op .= '</tbody></table>';
+        $op .= '</div><div class="drawer-footer">Frame</div>';
+        echo $op;
+    }
+
     public function getDaybookDetailed(Request $request)
     {
         $op = "";

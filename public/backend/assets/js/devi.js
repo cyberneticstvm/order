@@ -204,6 +204,26 @@ $(function () {
         });
     });
 
+    $(document).on("click", ".frameCount", function () {
+        var drawer = $(this).data('drawer');
+        var fdate = $(this).data('from-date');
+        var tdate = $(this).data('to-date');
+        var branch = $(this).data('branch');
+        var status = $(this).data('status');
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/frame/details/',
+            data: { 'from_date': fdate, 'to_date': tdate, 'branch': branch, 'status': status },
+            success: function (res) {
+                $("#" + drawer).drawer('toggle');
+                $("#" + drawer).find(".drawer-content").html(res);
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        });
+    });
+
     $(document).on("keyup", ".retqty", function () {
         let dis = $(this); let qty = parseInt(dis.val()); let price = parseFloat(dis.parent().parent().find(".retval").text().replace(/\,/g, ''));
         dis.parent().parent().find(".custacc").val((parseFloat(qty * price) > 0) ? parseFloat(qty * price).toFixed(2) : 0.00);
