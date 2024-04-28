@@ -70,7 +70,7 @@
                                         <td>{{ $item->item?->product?->name }}</td>
                                         <td>{{ $item->lab->name }}</td>
                                         <td>{{ $item->status }}</td>
-                                        <td>{{ $item->order?->name }}</td>
+                                        <td>{{ $item->order->name }}</td>
                                         <td class="text-center"><a href="{{ route('lab.order.delete', encrypt($item->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
                                     </tr>
                                     @empty

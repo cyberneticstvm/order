@@ -384,21 +384,26 @@ class StoreOrderController extends Controller
     public function destroy(string $id)
     {
         $order = Order::findOrFail(decrypt($id));
-        $order->delete();
-        $credit = Payment::where('order_id', decrypt($id))->sum('amount');
-        Payment::where('order_id', decrypt($id))->delete();
-        if ($credit > 0) :
-            CustomerAccount::create([
-                'customer_id' => $order->customer_id,
-                'voucher_id' => $order->id,
-                'type' => 'credit',
-                'category' => 'order',
-                'amount' => $credit,
-                'remarks' => 'Cancelled amount credited against order number' . $order->ono(),
-                'created_by' => Auth::id(),
-                'updated_by' => Auth::id(),
-            ]);
+        if (LabOrder::where('order_id', $order->id)->exists()) :
+            return redirect()->back()->with('error', 'Order has already been assigned to Lab!');
+        else :
+            $order->delete();
+            $credit = Payment::where('order_id', decrypt($id))->sum('amount');
+            Payment::where('order_id', decrypt($id))->delete();
+            LabOrder::where('order_id', $order->id)->delete();
+            if ($credit > 0) :
+                CustomerAccount::create([
+                    'customer_id' => $order->customer_id,
+                    'voucher_id' => $order->id,
+                    'type' => 'credit',
+                    'category' => 'order',
+                    'amount' => $credit,
+                    'remarks' => 'Cancelled amount credited against order number' . $order->ono(),
+                    'created_by' => Auth::id(),
+                    'updated_by' => Auth::id(),
+                ]);
+            endif;
+            return redirect()->back()->with('success', 'Order has been deleted successfully!');
         endif;
-        return redirect()->back()->with('success', 'Order has been deleted successfully!');
     }
 }
