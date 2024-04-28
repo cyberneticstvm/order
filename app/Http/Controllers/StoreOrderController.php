@@ -390,7 +390,7 @@ class StoreOrderController extends Controller
             $order->delete();
             $credit = Payment::where('order_id', decrypt($id))->sum('amount');
             Payment::where('order_id', decrypt($id))->delete();
-            LabOrder::where('order_id', $order->id)->delete();
+            //LabOrder::where('order_id', $order->id)->delete();
             if ($credit > 0) :
                 CustomerAccount::create([
                     'customer_id' => $order->customer_id,
