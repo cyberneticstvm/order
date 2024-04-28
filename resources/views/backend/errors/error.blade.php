@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-12">
                                 <h5 class="text-danger">{{ $exception->getMessage() }}</h5>
                             </div>
                         </div>
