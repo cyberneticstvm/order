@@ -2,9 +2,9 @@
 
 namespace App\Exceptions;
 
+use ErrorException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -74,7 +74,7 @@ class Handler extends ExceptionHandler
         if ($e instanceof ModelNotFoundException) {
             return redirect()->back()->with('error', 'Requested record not found / deleted!');
         }
-        if ($e instanceof HttpException) {
+        if ($e instanceof ErrorException) {
             return redirect()->back()->with('error', 'Requested record not found / deleted!');
         }
         return parent::render($request, $e);
