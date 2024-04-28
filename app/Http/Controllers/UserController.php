@@ -41,6 +41,7 @@ class UserController extends Controller
             'password' => 'required',
         ]);
         if (Auth::attempt($cred, $request->remember)) :
+            Session::put('userAgent', $request->userAgent());
             return redirect()->route('dashboard')->withSuccess(Auth::user()->name . " logged in successfully!");
         endif;
         return redirect()->route('login')
