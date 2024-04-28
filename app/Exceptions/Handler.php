@@ -30,13 +30,11 @@ class Handler extends ExceptionHandler
 
         $this->renderable(function ($request, Exception $exception) {
             if ($this->isHttpException($exception)) {
-                if ($exception->getStatusCode() == 500) {
-                    return response()->view('errors.' . '500', ['exception' => $e], 500);
-                }
+                return response()->view('errors.' . $exception->getStatusCode(), ['exception' => $e], $exception->getStatusCode());
             }
             return parent::render($request, $exception);
         });
-        $this->renderable(function ($request, Exception $exception) {
+        /*$this->renderable(function ($request, Exception $exception) {
             if ($this->isHttpException($exception)) {
                 if ($exception->getStatusCode() == 404) {
                     return response()->view('errors.' . '404', ['exception' => $e], 404);
@@ -67,10 +65,11 @@ class Handler extends ExceptionHandler
                 }
             }
             return parent::render($request, $exception);
-        });
+        });*/
     }
 
-    public function render($request, Throwable $e){
+    public function render($request, Throwable $e)
+    {
         if ($e instanceof ModelNotFoundException) {
             return redirect()->back()->with('error', 'Requested record not found / deleted!');
         }
