@@ -103,7 +103,7 @@ class UserController extends Controller
 
     public function logout(Request $request)
     {
-        LoginLog::where('id', $request->user()->id)->where('session_id', $request->user()->session_id)->update([
+        LoginLog::where('user_id', $request->user()->id)->where('session_id', $request->user()->session_id)->update([
             'logged_out' => Carbon::now(),
         ]);
         User::where('id', $request->user()->id)->update(['session_id' => null]);
