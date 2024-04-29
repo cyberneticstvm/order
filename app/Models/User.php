@@ -60,6 +60,6 @@ class User extends Authenticatable
     }
     public function mobAccess()
     {
-        return ($this->mobile_access) ? "<span class='badge badge-success'>Active</span>" : "<span class='badge badge-danger'>Restricted</span>";
+        return ($this->mobile_access) ? "<span class='badge badge-success'>Yes</span>" : "<span class='badge badge-danger'>No</span>";
     }
 }
