@@ -60,13 +60,6 @@
                                     <small class="text-danger">{{ $errors->first('mobile') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label req">Branch <small>(Multiple selection enabled)</small></label>
-                                    {{ html()->select($name = 'branches[]', $value = branches()->pluck('name', 'id'), $user->branches->pluck('branch_id'))->class('form-control select2')->multiple() }}
-                                    @error('branches')
-                                    <small class="text-danger">{{ $errors->first('branches') }}</small>
-                                    @enderror
-                                </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Role</label>
                                     {{ html()->select($name = 'roles', $value = $roles, $userRole)->class('form-control select2')->placeholder('Select Role') }}
@@ -86,6 +79,13 @@
                                     {{ html()->select($name = 'mobile_access', $value = array('0' => 'Restrict', '1' => 'Allow'), $user->mobile_access)->class('form-control select2')->placeholder('Select') }}
                                     @error('mobile_access')
                                     <small class="text-danger">{{ $errors->first('mobile_access') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label req">Branch <small>(Multiple selection enabled)</small></label>
+                                    {{ html()->select($name = 'branches[]', $value = branches()->pluck('name', 'id'), $user->branches->pluck('branch_id'))->class('form-control select2')->multiple() }}
+                                    @error('branches')
+                                    <small class="text-danger">{{ $errors->first('branches') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-12 text-end">

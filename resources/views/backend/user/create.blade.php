@@ -60,13 +60,6 @@
                                     <small class="text-danger">{{ $errors->first('mobile') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label req">Branch <small>(Multiple selection enabled)</small></label>
-                                    {{ html()->select($name = 'branches[]', $value = $branches, NULL)->class('form-control select2')->multiple() }}
-                                    @error('branches')
-                                    <small class="text-danger">{{ $errors->first('branches') }}</small>
-                                    @enderror
-                                </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Role</label>
                                     {{ html()->select($name = 'roles', $value = $roles, NULL)->class('form-control select2')->placeholder('Select Role') }}
@@ -93,6 +86,13 @@
                                     {{ html()->select($name = 'mobile_access', $value = array('0' => 'Restrict', '1' => 'Allow'), 0)->class('form-control select2')->placeholder('Select') }}
                                     @error('mobile_access')
                                     <small class="text-danger">{{ $errors->first('mobile_access') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label req">Branch <small>(Multiple selection enabled)</small></label>
+                                    {{ html()->select($name = 'branches[]', $value = $branches, NULL)->class('form-control select2')->multiple() }}
+                                    @error('branches')
+                                    <small class="text-danger">{{ $errors->first('branches') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-12 text-end">

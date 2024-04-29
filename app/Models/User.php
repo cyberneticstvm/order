@@ -58,4 +58,8 @@ class User extends Authenticatable
     {
         return ($this->deleted_at) ? "<span class='badge badge-danger'>Deleted</span>" : "<span class='badge badge-success'>Active</span>";
     }
+    public function mobAccess()
+    {
+        return ($this->mobile_access) ? "<span class='badge badge-success'>Active</span>" : "<span class='badge badge-danger'>Restricted</span>";
+    }
 }
