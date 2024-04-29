@@ -48,7 +48,6 @@
                                         <th>Axis</th>
                                         <th>Add</th>
                                         <th>Product</th>
-                                        <th>pd</th>
                                         <th>A</th>
                                         <th>B</th>
                                         <th>DBL</th>
@@ -72,15 +71,14 @@
                                         <td>{{ $item->cyl }}</td>
                                         <td>{{ $item->axis }}</td>
                                         <td>{{ $item->add }}</td>
-                                        <td>{{ strtolower($item->product->name) }}</td>
-                                        <td>{{ $item->ipd }}</td>
+                                        <td>{{ $item->product->name }}</td>
                                         <td>{{ $item->order?->a_size }}</td>
                                         <td>{{ $item->order?->b_size }}</td>
                                         <td>{{ $item->order?->dbl }}</td>
                                         <td>{{ $item->order?->fh }}</td>
                                         <td>{{ $item->order?->ed }}</td>
                                         <td>{{ getFrameType($item->order?->id ?? 0) }}</td>
-                                        <td>{{ strtolower($item->order?->name) }}</td>
+                                        <td>{{ $item->order?->name }}</td>
                                     </tr>
                                     @empty
                                     @endforelse

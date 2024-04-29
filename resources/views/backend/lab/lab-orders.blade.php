@@ -75,10 +75,10 @@
                                         <td>{{ $item->item?->cyl }}</td>
                                         <td>{{ $item->item?->axis }}</td>
                                         <td>{{ $item->item?->add }}</td>
-                                        <td>{{ strtolower($item->item?->product?->name) }}</td>
+                                        <td>{{ $item->item?->product?->name }}</td>
                                         <td>{{ $item->lab->name }}</td>
                                         <td>{{ $item->status }}</td>
-                                        <td>{{ strtolower($item->order?->name) }}</td>
+                                        <td>{{ $item->order?->name }}</td>
                                         <!--<td class="text-center"><a href="{{ route('lab.order.delete', encrypt($item->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>-->
                                     </tr>
                                     @empty
