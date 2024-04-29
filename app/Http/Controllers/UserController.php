@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use App\Models\LoginLog;
 use App\Models\Order;
 use App\Models\Patient;
 use App\Models\User;
@@ -46,10 +47,34 @@ class UserController extends Controller
                 Auth::logout();
                 return redirect()->route('login')->with("error", "Mobile access has been restricted for this login");
             endif;
+            $this->loginLog($request);
             return redirect()->route('dashboard')->withSuccess(Auth::user()->name . " logged in successfully!");
         endif;
         return redirect()->route('login')
             ->withError('Invalid Credentials!')->withInput($request->all());
+    }
+
+    public function loginLog($request)
+    {
+        $sid = Str::random(25);
+        $ip = ($request->ip() == '127.0.0.1') ? '59.89.235.2' : $request->ip();
+        $data = file_get_contents("https://ipinfo.io/$ip?token=38fa67afac8600");
+        $obj = json_decode($data);
+        $coordinates = explode(",", $obj->loc);
+        User::where('id', Auth::id())->update(['session_id' => $sid]);
+        LoginLog::create([
+            'user_id' => Auth::id(),
+            'session_id' => $sid,
+            'ip' => $request->ip(),
+            'city_name' => $obj->city,
+            'region_name' => $obj->region,
+            'country_name' => $obj->country,
+            'zip_code' => $obj->postal,
+            'device' => Str::contains($request->userAgent(), ['iPhone', 'Android']) ? 'Mobile' : 'Computer',
+            'latitude' => $coordinates[0],
+            'longitude' => $coordinates[1],
+            'logged_in' => Carbon::now()
+        ]);
     }
 
     public function dashboard()
@@ -78,6 +103,10 @@ class UserController extends Controller
 
     public function logout(Request $request)
     {
+        LoginLog::where('id', $request->user()->id)->where('session_id', $request->user()->session_id)->update([
+            'logged_out' => Carbon::now(),
+        ]);
+        User::where('id', $request->user()->id)->update(['session_id' => null]);
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

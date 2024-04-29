@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->unsignedBigInteger('doctor_id')->nullable();
             $table->boolean('mobile_access')->default(0);
+            $table->string('session_id', 25)->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
