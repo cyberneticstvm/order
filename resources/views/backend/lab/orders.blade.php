@@ -80,7 +80,7 @@
                                         <td>{{ $item->order?->fh }}</td>
                                         <td>{{ $item->order?->ed }}</td>
                                         <td>{{ getFrameType($item->order?->id ?? 0) }}</td>
-                                        <td>{{ $item->order?->name }}</td>
+                                        <td>{{ strtolower($item->order?->name) }}</td>
                                     </tr>
                                     @empty
                                     @endforelse
