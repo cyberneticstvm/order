@@ -458,10 +458,10 @@ function addStoreOrderRow(category) {
                                 data: xdata
                             });
                             let sph = (i == 0) ? $('.fSph').val() : $('.sSph').val()
+                            console.log(power.sph)
                             var sphdata = $.map(power.sph, function (obj) {
                                 obj.text = obj.name || obj.id;
                                 obj.selected = (obj.name == sph) ? true : false;
-                                console.log(obj.id)
                                 return obj;
                             });
 
