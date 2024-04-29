@@ -43,18 +43,17 @@
                                         <th>Date</th>
                                         <th>Order ID</th>
                                         <th>Eye</th>
-                                        <th>Product</th>
                                         <th>Sph</th>
                                         <th>Cyl</th>
                                         <th>Axis</th>
                                         <th>Add</th>
+                                        <th>Product</th>
                                         <th>pd</th>
                                         <th>A</th>
                                         <th>B</th>
                                         <th>DBL</th>
                                         <th>FH</th>
                                         <th>ED</th>
-                                        <th>Note</th>
                                         <th>F.Type</th>
                                         <th>Customer Name</th>
                                     </tr>
@@ -66,21 +65,20 @@
                                         <td class="text-center">
                                             {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem chk_'.$item->id.' '.$item->eye) }}
                                         </td>
-                                        <td>{{ $item->created_at->format('d.M.Y h:i a') }}</td>
+                                        <td>{{ $item->created_at->format('d.M.Y') }}</td>
                                         <td><a href="javascript:void(0)" class="dayBook" data-from-date="" data-to-date="" data-type="order" data-mode="{{ $item->order->id }}" data-branch="" data-drawer="orderDrawer">{{ $item->order?->ono() }}</a></td>
                                         <td class="fw-bold">{{ strtoupper($item->eye) }}</td>
-                                        <td>{{ $item->product->name }}</td>
                                         <td>{{ $item->sph }}</td>
                                         <td>{{ $item->cyl }}</td>
                                         <td>{{ $item->axis }}</td>
                                         <td>{{ $item->add }}</td>
+                                        <td>{{ strtolower($item->product->name) }}</td>
                                         <td>{{ $item->ipd }}</td>
                                         <td>{{ $item->order?->a_size }}</td>
                                         <td>{{ $item->order?->b_size }}</td>
                                         <td>{{ $item->order?->dbl }}</td>
                                         <td>{{ $item->order?->fh }}</td>
                                         <td>{{ $item->order?->ed }}</td>
-                                        <td>{{ $item->order?->special_lab_note }}</td>
                                         <td>{{ getFrameType($item->order?->id ?? 0) }}</td>
                                         <td>{{ $item->order?->name }}</td>
                                     </tr>
