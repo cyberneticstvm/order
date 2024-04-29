@@ -561,6 +561,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/sales', 'fetchSales')->name('report.sales.fetch');
         Route::get('/stock/status', 'stockStatus')->name('report.stock.status');
         Route::post('/stock/status', 'fetchStockStatus')->name('report.stock.status.fetch');
+        Route::get('/login', 'loginLog')->name('report.login.log');
+        Route::post('/login', 'fetchLoginLog')->name('report.login.log.fetch');
     });
 
     Route::prefix('/backend/voucher')->controller(VoucherController::class)->group(function () {

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Consultation;
+use App\Models\LoginLog;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +22,7 @@ class ReportController extends Controller
         $this->middleware('permission:report-daybook', ['only' => ['daybook', 'fetchDayBook']]);
         $this->middleware('permission:report-sales', ['only' => ['sales', 'fetchSales']]);
         $this->middleware('permission:report-stock-status', ['only' => ['stockStatus', 'fetchStockStatus']]);
+        $this->middleware('permission:report-login-log', ['only' => ['loginLog', 'fetchLoginLog']]);
 
         $this->middleware(function ($request, $next) {
             $brs = Branch::selectRaw("0 as id, 'All / Main Branch' as name");
@@ -84,5 +87,23 @@ class ReportController extends Controller
         $branches = $this->branches;
         $inputs = array($request->branch, $request->category);
         return view('backend.report.stock', compact('data', 'branches', 'inputs'));
+    }
+
+    public function loginLog()
+    {
+        $inputs = [date('Y-m-d'), date('Y-m-d'), Auth::id()];
+        $users = User::pluck('name', 'id');
+        $data = LoginLog::whereDate('created_at', Carbon::today())->get();
+        return view('backend.report.login-log', compact('data', 'inputs', 'users'));
+    }
+
+    public function fetchLoginLog(Request $request)
+    {
+        $inputs = [$request->from_date, $request->to_date, $request->user];
+        $users = User::pluck('name', 'id');
+        $data = LoginLog::whereBetween('created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->from_date)->endOfDay()])->when($request->user > 0, function ($q) use ($request) {
+            return $q->where('user_id', $request->user);
+        })->get();
+        return view('backend.report.login-log', compact('data', 'inputs', 'users'));
     }
 }
