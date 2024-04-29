@@ -443,6 +443,7 @@ function addStoreOrderRow(category) {
                     url: '/ajax/power/',
                     dataType: 'json',
                     success: function (power) {
+                        console.log(power)
                         for (let i = 0; i <= 1; i++) {
                             let eye = (i == 0) ? 'RE' : 'LE';
                             let oval = (i == 0) ? 're' : 'le';
@@ -457,11 +458,10 @@ function addStoreOrderRow(category) {
                                 placeholder: 'Select',
                                 data: xdata
                             });
-                            let sph = (i == 0) ? $('.fSph').val() : $('.sSph').val()
 
+                            let sph = (i == 0) ? $('.fSph').val() : $('.sSph').val()
                             var sphdata = $.map(power.sph, function (obj) {
-                                //console.log(obj)
-                                obj.text = obj.name || obj.name;
+                                obj.text = obj.name;
                                 obj.selected = (obj.name == sph) ? true : false;
                                 return obj;
                             });
