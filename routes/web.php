@@ -197,6 +197,9 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/edit/{id}', 'edit')->name('user.edit');
         Route::post('/edit/{id}', 'update')->name('user.update');
         Route::get('/delete/{id}', 'destroy')->name('user.delete');
+
+        Route::get('/change/pwd', 'changePwd')->name('user.change.pwd');
+        Route::post('/change/pwd', 'updatePwd')->name('user.change.pwd.update');
     });
 
     Route::prefix('/backend/role')->controller(RoleController::class)->group(function () {

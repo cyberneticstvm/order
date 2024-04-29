@@ -79,8 +79,7 @@
                 </div>
               </div>
               <ul class="profile-dropdown onhover-show-div">
-                <li><a href="#"><i data-feather="user"></i><span>Account </span></a></li>
-                <li><a href="#"><i data-feather="settings"></i><span>Settings</span></a></li>
+                <li><a href="{{ route('user.change.pwd') }}"><i data-feather="user"></i><span>Account</span></a></li>
                 <li><a href="{{ route('logout') }}"><i data-feather="log-out"> </i><span>Log out</span></a></li>
               </ul>
             </li>

@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 use DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -201,5 +201,22 @@ class UserController extends Controller
         User::findOrFail(decrypt($id))->delete();
         return redirect()->route('users')
             ->with('success', 'User deleted successfully');
+    }
+
+    public function changePwd()
+    {
+        return view('backend.user.change-pwd');
+    }
+
+    public function updatePwd(Request $request)
+    {
+        $this->validate($request, [
+            'password' => 'required|confirmed',
+        ]);
+        User::findOrFail($request->user()->id)->update([
+            'password' => Hash::make($request->password),
+        ]);
+        return redirect()->back()
+            ->with('success', 'Password has been updated successfully');
     }
 }
