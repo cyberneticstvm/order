@@ -449,7 +449,7 @@ function addStoreOrderRow(category) {
                             $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="border-0" name="eye[]"><option value="${oval}">${eye}</option></select></td><td><select name='sph[]' class="border-0 select2 selSph"></select></td><td><select name='cyl[]' class="border-0 select2 selCyl"></select></td><td><select name='axis[]' class="border-0 select2 selAxis"></select></td><td><select name='add[]' class="border-0 select2 selAdd"></select></td><td><input type="text" name='va[]' class="w-100 border-0 text-center va" placeholder="VA" maxlength="6" /></td><td><input type="text" name='ipd[]' class="w-100 border-0 text-center ipd" placeholder="IPD" maxlength="6" /></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="lens" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
 
                             var xdata = $.map(res, function (obj) {
-                                obj.text = obj.name || obj.id;
+                                obj.text = obj.name || obj.name;
                                 return obj;
                             });
                             //$('.selPdct').last().select2().empty();                      
@@ -459,7 +459,7 @@ function addStoreOrderRow(category) {
                             });
                             let sph = (i == 0) ? $('.fSph').val() : $('.sSph').val()
                             var sphdata = $.map(power.sph, function (obj) {
-                                obj.text = obj.name || obj.id;
+                                obj.text = obj.name || obj.name;
                                 obj.selected = (obj.name == sph) ? true : false;
                                 return obj;
                             });
@@ -471,7 +471,7 @@ function addStoreOrderRow(category) {
 
                             let cyl = (i == 0) ? $('.fCyl').val() : $('.sCyl').val()
                             var cyldata = $.map(power.cyl, function (obj) {
-                                obj.text = obj.name || obj.id;
+                                obj.text = obj.name || obj.name;
                                 obj.selected = (obj.name == cyl) ? true : false;
                                 return obj;
                             });
@@ -482,7 +482,7 @@ function addStoreOrderRow(category) {
 
                             let axis = (i == 0) ? $('.fAxis').val() : $('.sAxis').val()
                             var axisdata = $.map(power.axis, function (obj) {
-                                obj.text = obj.name || obj.id;
+                                obj.text = obj.name || obj.name;
                                 obj.selected = (obj.name == axis) ? true : false;
                                 return obj;
                             });
@@ -493,7 +493,7 @@ function addStoreOrderRow(category) {
 
                             let add = (i == 0) ? $('.fAdd').val() : $('.sAdd').val()
                             var adddata = $.map(power.add, function (obj) {
-                                obj.text = obj.name || obj.id;
+                                obj.text = obj.name || obj.name;
                                 obj.selected = obj.selected = (obj.name == add) ? true : false;
                                 return obj;
                             });
