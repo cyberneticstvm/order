@@ -44,7 +44,7 @@
                             </div>
                         </div>
                         <div class="table-responsive theme-scrollbar mt-5">
-                            <table class="table table-sm" style="width:100%">
+                            <table class="table table-sm" style="width:100%" id="dataTable">
                                 <thead>
                                     <tr>
                                         <th>SL No</th>
