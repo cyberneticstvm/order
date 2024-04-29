@@ -91,7 +91,7 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/closingbalance', [HelperController::class, 'closingBalance'])->name('closing.balance');
 });
 
-Route::middleware(['web', 'auth', 'branch', 'mobile'])->group(function () {
+Route::middleware(['web', 'auth', 'branch'])->group(function () {
 
     Route::prefix('/backend')->controller(HelperController::class)->group(function () {
         Route::get('/transfer/product/{category}/{branch}', 'transferProductBulk')->name('transfer.product.bulk');
