@@ -43,8 +43,8 @@ class UserController extends Controller
         ]);
         if (Auth::attempt($cred, $request->remember)) :
             Session::put('userAgent', $request->userAgent());
-            if (Str::contains($request->userAgent(), ['iPhone', 'Android']) && !Auth::user()->mobile_access)
-                return redirect()->route('logout')->with("error", "Mobile access has been restricted for this login");
+            //if (Str::contains($request->userAgent(), ['iPhone', 'Android']) && !Auth::user()->mobile_access)
+            //return redirect()->route('logout')->with("error", "Mobile access has been restricted for this login");
             return redirect()->route('dashboard')->withSuccess(Auth::user()->name . " logged in successfully!");
         endif;
         return redirect()->route('login')
