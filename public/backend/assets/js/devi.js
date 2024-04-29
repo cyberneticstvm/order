@@ -459,11 +459,12 @@ function addStoreOrderRow(category) {
                             });
                             let sph = (i == 0) ? $('.fSph').val() : $('.sSph').val()
                             var sphdata = $.map(power.sph, function (obj) {
-                                obj.text = obj.name || obj.name;
+                                obj.text = obj.name || obj.id;
                                 obj.selected = (obj.name == sph) ? true : false;
+                                console.log(obj.id)
                                 return obj;
                             });
-                            console.log(sphdata)
+
                             $('.selSph').last().select2({
                                 placeholder: 'Select',
                                 data: sphdata,
