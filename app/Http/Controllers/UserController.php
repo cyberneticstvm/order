@@ -15,6 +15,7 @@ use Illuminate\Support\Arr;
 use Hash;
 use DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -42,6 +43,8 @@ class UserController extends Controller
         ]);
         if (Auth::attempt($cred, $request->remember)) :
             Session::put('userAgent', $request->userAgent());
+            if (Str::contains($request->userAgent(), ['iPhone', 'Android']) && !Auth::user()->mobile_access)
+                return redirect()->route('logout')->with("error", "Mobile access has been restricted for this login");
             return redirect()->route('dashboard')->withSuccess(Auth::user()->name . " logged in successfully!");
         endif;
         return redirect()->route('login')
@@ -110,6 +113,7 @@ class UserController extends Controller
             'password' => 'required|confirmed',
             'roles' => 'required',
             'branches' => 'required',
+            'mobile_access' => 'required',
         ]);
 
         $input = $request->all();
@@ -160,6 +164,7 @@ class UserController extends Controller
             'mobile' => 'required|numeric|digits:10',
             'roles' => 'required',
             'branches' => 'required',
+            'mobile_access' => 'required',
         ]);
 
         $input = $request->all();

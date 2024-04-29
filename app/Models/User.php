@@ -26,6 +26,7 @@ class User extends Authenticatable
         'mobile',
         'email',
         'password',
+        'mobile_access',
     ];
 
     /**
@@ -48,11 +49,13 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function branches(){
+    public function branches()
+    {
         return $this->hasMany(UserBranch::class, 'user_id', 'id');
     }
 
-    public function status(){
+    public function status()
+    {
         return ($this->deleted_at) ? "<span class='badge badge-danger'>Deleted</span>" : "<span class='badge badge-success'>Active</span>";
     }
 }
