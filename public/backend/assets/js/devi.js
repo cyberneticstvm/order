@@ -443,7 +443,6 @@ function addStoreOrderRow(category) {
                     url: '/ajax/power/',
                     dataType: 'json',
                     success: function (power) {
-                        console.log(power)
                         for (let i = 0; i <= 1; i++) {
                             let eye = (i == 0) ? 'RE' : 'LE';
                             let oval = (i == 0) ? 're' : 'le';
@@ -462,6 +461,7 @@ function addStoreOrderRow(category) {
                             let sph = (i == 0) ? $('.fSph').val() : $('.sSph').val()
                             var sphdata = $.map(power.sph, function (obj) {
                                 obj.text = obj.name;
+                                obj.id = obj.name;
                                 obj.selected = (obj.name == sph) ? true : false;
                                 return obj;
                             });
@@ -473,7 +473,8 @@ function addStoreOrderRow(category) {
 
                             let cyl = (i == 0) ? $('.fCyl').val() : $('.sCyl').val()
                             var cyldata = $.map(power.cyl, function (obj) {
-                                obj.text = obj.name || obj.text;
+                                obj.text = obj.name;
+                                obj.id = obj.name;
                                 obj.selected = (obj.name == cyl) ? true : false;
                                 return obj;
                             });
@@ -484,7 +485,8 @@ function addStoreOrderRow(category) {
 
                             let axis = (i == 0) ? $('.fAxis').val() : $('.sAxis').val()
                             var axisdata = $.map(power.axis, function (obj) {
-                                obj.text = obj.name || obj.text;
+                                obj.text = obj.name;
+                                obj.id = obj.name;
                                 obj.selected = (obj.name == axis) ? true : false;
                                 return obj;
                             });
@@ -495,7 +497,8 @@ function addStoreOrderRow(category) {
 
                             let add = (i == 0) ? $('.fAdd').val() : $('.sAdd').val()
                             var adddata = $.map(power.add, function (obj) {
-                                obj.text = obj.name || obj.text;
+                                obj.text = obj.name;
+                                obj.id = obj.name;
                                 obj.selected = obj.selected = (obj.name == add) ? true : false;
                                 return obj;
                             });
@@ -506,7 +509,8 @@ function addStoreOrderRow(category) {
 
                             /*let intadd = (i == 0) ? $('.fIntAd').val() : $('.sIntAd').val()
                             var intaddata = $.map(power.intad, function (obj) {
-                                obj.text = obj.name || obj.text;
+                                obj.text = obj.name;
+                                obj.id = obj.name;
                                 obj.selected = (obj.name == intadd) ? true : false;
                                 return obj;
                             });

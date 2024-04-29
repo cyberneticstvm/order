@@ -109,7 +109,7 @@ class AjaxController extends Controller
 
     public function powers()
     {
-        $sph = Power::where('name', 'sph')->selectRaw("value as name, value as id")->get();
+        $sph = Power::where('name', 'sph')->selectRaw("value as name")->get();
         $cyl = Power::where('name', 'cyl')->selectRaw("value as name")->get();
         $axis = Power::where('name', 'axis')->selectRaw("value as name")->get();
         $add = Power::where('name', 'add')->selectRaw("value as name")->get();
