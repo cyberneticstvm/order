@@ -103,7 +103,7 @@ class ReportController extends Controller
         $users = User::pluck('name', 'id');
         $data = LoginLog::whereBetween('created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->from_date)->endOfDay()])->when($request->user > 0, function ($q) use ($request) {
             return $q->where('user_id', $request->user);
-        })->get();
+        })->orderByDesc('id')->get();
         return view('backend.report.login-log', compact('data', 'inputs', 'users'));
     }
 }
