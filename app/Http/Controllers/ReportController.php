@@ -91,7 +91,7 @@ class ReportController extends Controller
 
     public function loginLog()
     {
-        $inputs = [date('Y-m-d'), date('Y-m-d'), Auth::id()];
+        $inputs = [date('Y-m-d'), date('Y-m-d'), '0'];
         $users = User::pluck('name', 'id');
         $data = LoginLog::whereDate('created_at', Carbon::today())->get();
         return view('backend.report.login-log', compact('data', 'inputs', 'users'));
