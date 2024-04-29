@@ -51,6 +51,10 @@
                                         <th>Select</th>
                                         <th>Order ID</th>
                                         <th>Eye</th>
+                                        <th>Sph</th>
+                                        <th>Cyl</th>
+                                        <th>Axis</th>
+                                        <th>Add</th>
                                         <th>Product</th>
                                         <th>Lab</th>
                                         <th>Status</th>
@@ -67,6 +71,10 @@
                                         </td>
                                         <td><a href="javascript:void(0)" class="dayBook" data-from-date="" data-to-date="" data-type="order" data-mode="{{ $item->order?->id }}" data-branch="" data-drawer="orderDrawer">{{ $item->order?->ono() }}</a></td>
                                         <td class="fw-bold">{{ strtoupper($item->item?->eye) }}</td>
+                                        <td>{{ $item->item?->sph }}</td>
+                                        <td>{{ $item->item?->cyl }}</td>
+                                        <td>{{ $item->item?->axis }}</td>
+                                        <td>{{ $item->item?->add }}</td>
                                         <td>{{ $item->item?->product?->name }}</td>
                                         <td>{{ $item->lab->name }}</td>
                                         <td>{{ $item->status }}</td>
