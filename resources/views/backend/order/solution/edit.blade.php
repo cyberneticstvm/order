@@ -41,6 +41,7 @@
                                 @csrf
                                 <input type="hidden" name="consultation_id" value="{{ $mrecord?->id ?? 0 }}" />
                                 <input type="hidden" name="disc_per" value="{{ branch()->discount_limit_percentage }}" />
+                                <input type="hidden" name="customer_id" id="customer_id" value="{{ $order?->customer_id ?? 0 }}" />
                                 <div class="col-md-2">
                                     <label class="form-label req">Order Date</label>
                                     {{ html()->date($name = 'order_date', $value = $order->order_date?->format('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}
