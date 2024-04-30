@@ -110,13 +110,13 @@ class SalesReturnContoller extends Controller
     {
         DB::transaction(function () use ($id) {
             $return = SalesReturn::findOrFail(decrypt($id));
-            $return->delete();
-            CustomerAccount::where('voucher_id', $return->order_id)->where('type', 'credit')->where('category', 'order')->delete();
             $details = SalesReturnDetail::where('return_id', $return->id)->get();
             foreach ($details as $key => $item) :
                 OrderDetail::where('order_id', $return->order_id)->where('product_id', $item->product_id)->update(['return' => NULL, 'returned_qty' => NULL]);
             endforeach;
+            $return->delete();
             SalesReturnDetail::where('return_id', $return->id)->delete();
+            CustomerAccount::where('voucher_id', $return->order_id)->where('type', 'credit')->where('category', 'order')->delete();
         });
         return redirect()->back()->with("success", "Return deleted successfully");
     }
