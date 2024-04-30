@@ -37,7 +37,7 @@
                     </div>
                     <div class="card-body">
                         <div class="card-wrapper">
-                            <form class="row g-3" method="post" action="{{ route('solution.order.save') }}" name="orderForm">
+                            <form class="row g-3" method="post" action="{{ route('solution.order.save') }}" name="orderForm" id="orderForm">
                                 @csrf
                                 <input type="hidden" name="consultation_id" value="{{ $patient?->mrn ?? 0 }}" />
                                 <input type="hidden" name="customer_id" id="customer_id" value="{{ $patient?->id ?? 0 }}" />

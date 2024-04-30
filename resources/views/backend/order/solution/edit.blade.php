@@ -37,7 +37,7 @@
                     </div>
                     <div class="card-body">
                         <div class="card-wrapper">
-                            <form class="row g-3" method="post" action="{{ route('solution.order.update', $order->id) }}" name="orderForm">
+                            <form class="row g-3" method="post" action="{{ route('solution.order.update', $order->id) }}" name="orderForm" id="orderForm">
                                 @csrf
                                 <input type="hidden" name="consultation_id" value="{{ $mrecord?->id ?? 0 }}" />
                                 <input type="hidden" name="disc_per" value="{{ branch()->discount_limit_percentage }}" />
