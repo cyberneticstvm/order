@@ -247,6 +247,7 @@
                     {{
                         Menu::new()->addClass('nav-sub-childmenu submenu-content')
                         ->linkIfCan('product-lens-list', route('product.lens'), 'Lens Register')
+                        ->linkIfCan('product-lens-price-list', route('product.lens.price.list'), 'Lens Price List')
                         ->linkIfCan('purchase-lens-list', route('lens.purchase'), 'Lens Purchase')
                         ->linkIfCan('lens-transfer-list', route('lens.transfer'), 'Lens Transfer');
                     }}

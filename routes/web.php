@@ -347,6 +347,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/edit/{id}', 'edit')->name('product.lens.edit');
         Route::post('/edit/{id}', 'update')->name('product.lens.update');
         Route::get('/delete/{id}', 'destroy')->name('product.lens.delete');
+
+        Route::get('/price/list', 'lensPriceList')->name('product.lens.price.list');
     });
 
     Route::prefix('/backend/product/frame')->controller(ProductFrameController::class)->group(function () {

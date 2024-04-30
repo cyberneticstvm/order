@@ -20,10 +20,17 @@ class ProductLensController extends Controller
         $this->middleware('permission:product-lens-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:product-lens-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:product-lens-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:product-lens-price-list', ['only' => ['lensPriceList']]);
 
         $this->products = Product::withTrashed()->where('category', 'lens')->orderBy('name')->get();
         $this->ptypes = ProductSubcategory::where('category', 'lens')->get();
         $this->manufacturers = Manufaturer::orderBy('name')->pluck('name', 'id');
+    }
+
+    public function lensPriceList()
+    {
+        $products = $this->products;
+        return view('backend.product.lens.price-list', compact('products'));
     }
 
     public function index()
