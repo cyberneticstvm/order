@@ -76,7 +76,7 @@ class PaymentController extends Controller
         try {
             $tot = Order::findOrFail($request->order_id);
             $paid = Payment::where('order_id', $request->order_id)->sum('amount');
-            $due = $tot->invoice_total - $paid;
+            $due = $tot->balance - $paid;
             if ($request->payment_type == 'balance' && ($due != $request->amount)) :
                 throw new Exception("Balance amount should be " . $due);
             endif;
