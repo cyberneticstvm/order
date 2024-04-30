@@ -223,7 +223,7 @@
                                                     <td colspan="2" class="border-0"><input type="hidden" class="border-0 text-success fw-bold avCr" name="available_credit" value="{{ getAvailableCredit($patient?->id ?? 0) }}" readonly /></td>
                                                     <td colspan="2" class="text-end fw-bold border-0">Credit Used</td>
                                                     <td class="border-0">
-                                                        {{ html()->number('credit_used', '', '', '', '')->class('text-end border-0 fw-bold w-100')->if(getAvailableCredit($patient?->id ?? 0) <= 0, function($el){
+                                                        {{ html()->number('credit_used', '', '', '', $step = 'any')->class('text-end border-0 fw-bold w-100')->if(getAvailableCredit($patient?->id ?? 0) <= 0, function($el){
                                                             return $el->attribute('readonly', 'true');
                                                         })->placeholder('0.00') }}
                                                     </td>
