@@ -40,8 +40,12 @@ class SalesReturnContoller extends Controller
     public function list($id)
     {
         $order = Order::findOrFail(decrypt($id));
-        $data = OrderDetail::where('order_id', $order->id)->whereNull('return')->orWhere('return', 0)->get();
-        return view('backend.order.return.items', compact('data', 'order'));
+        if ($order->invoice_number) :
+            $data = OrderDetail::where('order_id', $order->id)->whereNull('return')->orWhere('return', 0)->get();
+            return view('backend.order.return.items', compact('data', 'order'));
+        else :
+            return redirect()->back()->with("error", "Cannot proceed with return since the invoice has yet to be generated.");
+        endif;
     }
     public function store(Request $request, string $id)
     {
