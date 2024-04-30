@@ -63,6 +63,8 @@
                                         <th>Customer Name</th>
                                         <th>Order Date</th>
                                         <th>Return Date</th>
+                                        <th>Status</th>
+                                        <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -76,6 +78,8 @@
                                         <td>{{ $item->order->name }}</td>
                                         <td>{{ $item->order->created_at->format('d, M Y') }}</td>
                                         <td>{{ $item->created_at->format('d, M Y') }}</td>
+                                        <td>{!! $item->status() !!}</td>
+                                        <td class="text-center"><a href="{{ route('sales.return.delete', encrypt($item->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
                                     </tr>
                                     @empty
                                     @endforelse

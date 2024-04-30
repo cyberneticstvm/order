@@ -513,6 +513,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/list/{id}', 'list')->name('sales.return.list');
         Route::post('/list/save/{id}', 'store')->name('sales.return.list.save');
         Route::get('/list/detail/{id}', 'show')->name('sales.return.list.detail');
+        Route::get('/delete/{id}', 'destroy')->name('sales.return.delete');
     });
 
     Route::prefix('/backend/product/damage')->controller(ProductDamageController::class)->group(function () {
