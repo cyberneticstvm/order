@@ -159,7 +159,9 @@ class LabController extends Controller
 
     public function labOrders()
     {
-        $orders = LabOrder::whereIn('status', ['sent-to-lab', 'received-from-lab'])->where('lab_id', Session::get('branch'))->get();
+        $orders = LabOrder::whereIn('status', ['sent-to-lab', 'received-from-lab'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager', 'CEO')), function ($q) {
+            return $q->where('lab_id', Session::get('branch'));
+        })->get();
         /*when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager')), function ($q) {
             return $q->where('lab_id', Session::get('branch'));
         })->*/
