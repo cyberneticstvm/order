@@ -40,7 +40,7 @@
                             <form class="row g-3" method="post" action="{{ route('solution.order.save') }}" name="orderForm">
                                 @csrf
                                 <input type="hidden" name="consultation_id" value="{{ $patient?->mrn ?? 0 }}" />
-                                <input type="hidden" name="customer_id" value="{{ $patient?->id ?? 0 }}" />
+                                <input type="hidden" name="customer_id" id="customer_id" value="{{ $patient?->id ?? 0 }}" />
                                 <input type="hidden" name="registration_id" value="{{ $registration?->id ?? 0 }}" />
                                 <input type="hidden" name="disc_per" value="{{ branch()->discount_limit_percentage }}" />
                                 <div class="col-md-2">
