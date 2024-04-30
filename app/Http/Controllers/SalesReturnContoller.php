@@ -26,7 +26,7 @@ class SalesReturnContoller extends Controller
     }
     public function index()
     {
-        $data = SalesReturn::all();
+        $data = SalesReturn::latest()->get();
         return view('backend.order.return.index', compact('data'));
     }
     public function fetch(Request $request)
