@@ -36,6 +36,7 @@
                                 @enderror
                             </div>
                             <div class="col-md-9 text-end">
+                                <label class="form-label">&nbsp;</label>
                                 <button class="btn btn-submit btn-success" onclick="return validateLabOrderForm()" type="submit">Assign</button>
                             </div>
                         </div>
