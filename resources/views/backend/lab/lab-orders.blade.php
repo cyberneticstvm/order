@@ -42,6 +42,9 @@
                                 <small class="text-danger">{{ $errors->first('lab_id') }}</small>
                                 @enderror
                             </div>
+                            <div class="col-md-6 text-end">
+                                <button class="btn btn-submit btn-success" onclick="return validateLabStatusOrderForm()" type="submit">Update</button>
+                            </div>
                         </div>
                         <div class="table-responsive theme-scrollbar mt-5">
                             <table class="table table-sm" style="width:100%" id="dataTable">
