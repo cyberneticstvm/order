@@ -84,7 +84,7 @@ class UserController extends Controller
         $dvals = array('0' => '0.00', '1' => '0.00');
         if (Session::has('branch')) :
             $dvals[0] = Branch::findOrFail(Session::get('branch'))->monthly_target;
-            $dvals[1] = Order::where('branch_id', Session::get('branch'))->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->where('order_status', 'delivered')->sum('invoice_total');
+            $dvals[1] = Order::where('branch_id', Session::get('branch'))->whereBetween('invoice_generated_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->where('order_status', 'delivered')->sum('invoice_total');
         endif;
         return view('backend.dashboard', compact('branches', 'patients', 'dvals'));
     }
