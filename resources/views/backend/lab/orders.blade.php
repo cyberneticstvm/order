@@ -27,15 +27,17 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="col-md-10">
-                            <label class="form-label req">Lab</label>
-                            {{ html()->select('lab_id', $labs->pluck('name', 'id'), old('lab_id'))->class('form-control select2')->placeholder('Select') }}
-                            @error('lab_id')
-                            <small class="text-danger">{{ $errors->first('lab_id') }}</small>
-                            @enderror
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-submit btn-success" onclick="return validateLabOrderForm()" type="submit">Assign</button>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label req">Lab</label>
+                                {{ html()->select('lab_id', $labs->pluck('name', 'id'), old('lab_id'))->class('form-control select2')->placeholder('Select') }}
+                                @error('lab_id')
+                                <small class="text-danger">{{ $errors->first('lab_id') }}</small>
+                                @enderror
+                            </div>
+                            <div class="col-md-9 text-end">
+                                <button class="btn btn-submit btn-success" onclick="return validateLabOrderForm()" type="submit">Assign</button>
+                            </div>
                         </div>
                         <div class="table-responsive theme-scrollbar mt-5">
                             <table class="table table-sm" style="width:100%" id="dataTable">
