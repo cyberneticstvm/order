@@ -72,6 +72,10 @@
             </tr>
             @endif
             <tr>
+                <td colspan="4" class="text-right border-0"><b>Toal After Discount</b></td>
+                <td class="text-right border-0"><b>{{ $order->balance ?? '0.00' }}</b></td>
+            </tr>
+            <tr>
                 <td colspan="4" class="text-right border-0"><b>Advance</b></td>
                 <td class="text-right border-0"><b>{{ ($order->advance + $advance) ? number_format($order->advance + $advance, 2) : '0.00' }}</b></td>
             </tr>
