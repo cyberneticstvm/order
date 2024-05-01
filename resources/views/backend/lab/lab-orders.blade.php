@@ -42,7 +42,8 @@
                                 <small class="text-danger">{{ $errors->first('lab_id') }}</small>
                                 @enderror
                             </div>
-                            <div class="col-md-6 text-end">
+                            <div class="col-md-3">
+                                <label class="form-label">&nbsp;</label>
                                 <button class="btn btn-submit btn-success" onclick="return validateLabStatusOrderForm()" type="submit">Update</button>
                             </div>
                         </div>
