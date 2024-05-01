@@ -73,7 +73,7 @@
             @endif
             <tr>
                 <td colspan="4" class="text-right border-0"><b>Toal After Discount</b></td>
-                <td class="text-right border-0"><b>{{ $order->balance ?? '0.00' }}</b></td>
+                <td class="text-right border-0"><b>{{ $order->invoice_total ?? '0.00' }}</b></td>
             </tr>
             <tr>
                 <td colspan="4" class="text-right border-0"><b>Advance</b></td>
