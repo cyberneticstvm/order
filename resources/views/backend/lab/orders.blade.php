@@ -36,8 +36,7 @@
                                 @enderror
                             </div>
                             <div class="col-md-9 text-end">
-                                <label class="form-label">&nbsp;</label>
-                                <button class="btn btn-submit btn-success" onclick="return validateLabOrderForm()" type="submit">Assign</button>
+                                <button class="btn btn-submit btn-success mt-1" onclick="return validateLabOrderForm()" type="submit">Assign</button>
                             </div>
                         </div>
                         <div class="table-responsive theme-scrollbar mt-5">
