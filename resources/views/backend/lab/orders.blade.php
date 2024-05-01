@@ -35,8 +35,8 @@
                                 <small class="text-danger">{{ $errors->first('lab_id') }}</small>
                                 @enderror
                             </div>
-                            <div class="col-md-9 text-end">
-                                <button class="btn btn-submit btn-success" onclick="return validateLabOrderForm()" type="submit">Assign</button>
+                            <div class="col-md-3">
+                                <button class="btn btn-submit btn-lg btn-success mt-4" onclick="return validateLabOrderForm()" type="submit">Assign</button>
                             </div>
                         </div>
                         <div class="table-responsive theme-scrollbar mt-5">
