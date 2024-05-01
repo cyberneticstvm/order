@@ -48,13 +48,13 @@
                                         <th>Axis</th>
                                         <th>Add</th>
                                         <th>Product</th>
-                                        <th>A</th>
+                                        <th>F.Type</th>
+                                        <!--<th>A</th>
                                         <th>B</th>
                                         <th>DBL</th>
                                         <th>FH</th>
-                                        <th>ED</th>
-                                        <th>F.Type</th>
-                                        <th>Customer Name</th>
+                                        <th>ED</th>                                        
+                                        <th>Customer Name</th>-->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -72,13 +72,13 @@
                                         <td>{{ $item->axis }}</td>
                                         <td>{{ $item->add }}</td>
                                         <td>{{ $item->product->name }}</td>
-                                        <td>{{ $item->order?->a_size }}</td>
+                                        <td>{{ getFrameType($item->order?->id ?? 0) }}</td>
+                                        <!--<td>{{ $item->order?->a_size }}</td>
                                         <td>{{ $item->order?->b_size }}</td>
                                         <td>{{ $item->order?->dbl }}</td>
                                         <td>{{ $item->order?->fh }}</td>
-                                        <td>{{ $item->order?->ed }}</td>
-                                        <td>{{ getFrameType($item->order?->id ?? 0) }}</td>
-                                        <td>{{ $item->order?->name }}</td>
+                                        <td>{{ $item->order?->ed }}</td>                                      
+                                        <td>{{ $item->order?->name }}</td>-->
                                     </tr>
                                     @empty
                                     @endforelse
