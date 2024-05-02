@@ -26,4 +26,9 @@ class LabOrder extends Model
     {
         return $this->belongsTo(OrderDetail::class, 'order_detail_id', 'id');
     }
+
+    public function mainBranch()
+    {
+        return ($this->lab_id == 0) ? "text-danger fw-bold" : "text-danger fw-bold";
+    }
 }
