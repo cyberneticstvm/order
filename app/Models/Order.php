@@ -51,6 +51,6 @@ class Order extends Model
 
     public function isEdited()
     {
-        return ($this->created_at != $this->updated_at) ? "text-danger fw-bold" : "text-danger fw-bold";
+        return ($this->created_at != $this->updated_at) ? "text-danger fw-bold" : "";
     }
 }
