@@ -51,6 +51,6 @@ class Order extends Model
 
     public function isEdited()
     {
-        return ($this->created_at != $this->updated_at) ? "style=background-color:red !important" : "style=background-color:red !important";
+        return ($this->created_at != $this->updated_at) ? "bg-warning" : "bg-warning";
     }
 }
