@@ -59,6 +59,7 @@
                                         <th>Axis</th>
                                         <th>Add</th>
                                         <th>Product</th>
+                                        <th>Qty</th>
                                         <th>Lab</th>
                                         <th>Status</th>
                                         <th>Customer Name</th>
@@ -79,6 +80,7 @@
                                         <td>{{ $item->item?->axis }}</td>
                                         <td>{{ $item->item?->add }}</td>
                                         <td>{{ $item->item?->product?->name }}</td>
+                                        <td>{{ $item->item?->qty }}</td>
                                         <td>{{ $item->lab->name }}</td>
                                         <td>{{ $item->status }}</td>
                                         <td>{{ $item->order?->name }}</td>

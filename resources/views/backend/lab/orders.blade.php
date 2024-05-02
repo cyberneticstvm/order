@@ -53,6 +53,7 @@
                                         <th>Axis</th>
                                         <th>Add</th>
                                         <th>Product</th>
+                                        <th>Qty</th>
                                         <th>F.Type</th>
                                         <!--<th>A</th>
                                         <th>B</th>
@@ -77,6 +78,7 @@
                                         <td>{{ $item->axis }}</td>
                                         <td>{{ $item->add }}</td>
                                         <td>{{ $item->product->name }}</td>
+                                        <td>{{ $item->qty }}</td>
                                         <td>{{ getFrameType($item->order?->id ?? 0) }}</td>
                                         <!--<td>{{ $item->order?->a_size }}</td>
                                         <td>{{ $item->order?->b_size }}</td>
