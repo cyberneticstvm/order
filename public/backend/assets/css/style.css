@@ -50894,6 +50894,6 @@ select,
   font-size: 12px !important;
 }
 
-.bg-edited {
-  background-color: orangered !important;
+table tbody .bg-edited {
+  background-color: orange !important;
 }
