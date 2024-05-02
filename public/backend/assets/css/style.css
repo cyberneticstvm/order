@@ -50894,6 +50894,6 @@ select,
   font-size: 12px !important;
 }
 
-table tbody .bg-edited {
+.bg-edited>td {
   background-color: orange !important;
 }
