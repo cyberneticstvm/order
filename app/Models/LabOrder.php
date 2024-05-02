@@ -29,6 +29,6 @@ class LabOrder extends Model
 
     public function mainBranch()
     {
-        return ($this->lab_id == 0) ? "text-danger fw-bold" : "text-danger fw-bold";
+        return ($this->lab_id == 0) ? "text-danger fw-bold" : "";
     }
 }
