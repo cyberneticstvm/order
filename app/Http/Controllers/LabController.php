@@ -172,7 +172,7 @@ class LabController extends Controller
             $status = array('sent-to-branch' => 'Sent to Branch', 'sent-to-lab' => 'Sent to Lab');
         endif;
         $br = Branch::selectRaw("0 as id, 'Main Branch' as name");
-        $labs = Branch::whereIn('type', ['rx-lab', 'fitting-lab', 'stock-lab', 'outside-lab'])->union($br)->get();
+        $labs = Branch::whereIn('type', ['rx-lab', 'fitting-lab', 'stock-lab', 'outside-lab'])->selectRaw("id, name")->union($br)->get();
         return view('backend.lab.lab-orders', compact('orders', 'status', 'labs'));
     }
 
