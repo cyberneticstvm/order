@@ -51,6 +51,6 @@ class Order extends Model
 
     public function isEdited()
     {
-        return ($this->created_at != $this->updated_at) ? "bg-warning" : "asd";
+        return ($this->created_at != $this->updated_at) ? "bg-edited" : "bg-edited";
     }
 }
