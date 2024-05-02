@@ -48,4 +48,9 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'product_adviser', 'id');
     }
+
+    public function isEdited()
+    {
+        return ($this->created_at != $this->updated_at) ? "bg-warning" : "";
+    }
 }
