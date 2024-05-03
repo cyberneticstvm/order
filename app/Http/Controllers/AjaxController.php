@@ -309,7 +309,7 @@ class AjaxController extends Controller
                 $op .= "</tbody></table>";
                 $op .= "<table class='table table-bordered'><thead><th>Eye</th><th>Product</th><th>Qty</th><th>Sph</th><th>Cyl</th><th>Axis</th><th>Add</th><th>pd</th><th>Price</th></thead><tbody>";
                 foreach ($order->details as $key => $item) :
-                    $op .= "<tr><td>" . strtoupper($item->eye) . "</td><td>" . $item->product->name . "</td><td>" . $item->qty . "</td><td>" . $item->sph . "</td><td>" . $item->cyl . "</td><td>" . $item->axis . "</td><td>" . $item->add . "</td><td>" . $item->ipd . "</td><td>" . $item->price . "</td></tr>";
+                    $op .= "<tr><td>" . strtoupper($item->eye) . "</td><td>" . $item->product->name . "</td><td>" . $item->qty . "</td><td>" . $item->sph . "</td><td>" . $item->cyl . "</td><td>" . $item->axis . "</td><td>" . $item->add . "</td><td>" . $item->ipd . "</td><td>" . $item->unit_price . "</td></tr>";
                 endforeach;
                 $op .= "</tbody></table>";
                 $op .= '</div><div class="drawer-footer">Order Detail</div>';
