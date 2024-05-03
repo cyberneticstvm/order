@@ -141,7 +141,7 @@ class SolutionOrderController extends Controller
                 if ($request->advance > 0) :
                     Payment::create([
                         'consultation_id' => $request->consultation_id,
-                        'patient_id' => Consultation::find($request->consultation_id)?->patient_id,
+                        'patient_id' => $request->customer_id,
                         'order_id' => $order->id,
                         'payment_type' => 'advance',
                         'amount' => $request->advance,
@@ -270,12 +270,29 @@ class SolutionOrderController extends Controller
                 endforeach;
                 OrderDetail::insert($data);
                 if ($request->advance > 0) :
-                    Payment::where('order_id', $id)->where('payment_type', 'advance')->update([
+                    /*Payment::where('order_id', $id)->where('payment_type', 'advance')->update([
                         'amount' => $request->advance,
                         'payment_mode' => $request->payment_mode,
                         'updated_by' => $request->user()->id,
                         'updated_at' => Carbon::now(),
-                    ]);
+                    ]);*/
+                    Payment::updateOrCreate(
+                        ['order_id' => $id, 'payment_type' => 'advance'],
+                        [
+                            'consultation_id' => $order->consultation_id,
+                            'patient_id' => $order->customer_id,
+                            'order_id' => $id,
+                            'amount' => $request->advance,
+                            'payment_mode' => $request->payment_mode,
+                            'payment_type' => 'advance',
+                            'notes' => 'Advance received against order number ' . $order->ono(),
+                            'branch_id' => branch()->id,
+                            'created_by' => $order->created_by,
+                            'updated_by' => $request->user()->id,
+                            'created_at' => $order->created_at,
+                            'updated_at' => Carbon::now(),
+                        ]
+                    );
                 endif;
                 if ($request->credit_used > 0) :
                     CustomerAccount::where('category', 'order')->where('type', 'debit')->where('voucher_id', $id)->update([
