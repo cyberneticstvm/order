@@ -312,6 +312,7 @@ class AjaxController extends Controller
                     $op .= "<tr><td>" . strtoupper($item->eye) . "</td><td>" . $item->product->name . "</td><td>" . $item->qty . "</td><td>" . $item->sph . "</td><td>" . $item->cyl . "</td><td>" . $item->axis . "</td><td>" . $item->add . "</td><td>" . $item->ipd . "</td><td>" . $item->unit_price . "</td></tr>";
                 endforeach;
                 $op .= "</tbody></table>";
+                $op .= "<h5>Order History</h5>";
                 $op .= "<table class='table table-bordered'><thead><th>Action</th><th>Performed at</th><th>Performed by</th></thead><tbody>";
                 foreach ($order->history as $key => $item) :
                     $op .= "<tr><td>" . $item->action . "</td><td>" . $item->created_at->format('d.M.Y h:i a') . "</td><td>" . $item->user->name . "</td></tr>";
