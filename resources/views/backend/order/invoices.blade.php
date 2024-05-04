@@ -64,8 +64,8 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->mobile }}</td>
-                                        <td>{{ $item->branch->code }}/{{ $item->id }}</td>
-                                        <td>{{ $item->invoice_number }}</td>
+                                        <td>{{ $item->ono() }}</td>
+                                        <td>{{ $item->ino() }}</td>
                                         <td>{{ $item->invoice_total }}</td>
                                         <td>{{ number_format($item->payments->sum('amount'), 2) }}</td>
                                         <td>{{ number_format($item->invoice_total-$item->payments->sum('amount'), 2) }}</td>
