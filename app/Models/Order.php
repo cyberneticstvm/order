@@ -21,7 +21,12 @@ class Order extends Model
 
     public function ono()
     {
-        return $this->branch->code . '/' . $this->id;
+        return 'ORD/' . $this->branch->code . '/' . $this->id;
+    }
+
+    public function ino()
+    {
+        return ($this->invoice_number) ? 'INV/' . $this->branch->code . '/' . $this->order_sequence : '';
     }
 
     public function consultation()

@@ -106,7 +106,7 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->customer_id }}</td>
-                                        <td>{{ $item->branch->code }}/{{ $item->id }}</td>
+                                        <td>{{ $item->ono() }}</td>
                                         <td>{{ $item->branch?->name }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->consultation_id }}</td>
