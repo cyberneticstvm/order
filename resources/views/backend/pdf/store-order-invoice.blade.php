@@ -14,7 +14,7 @@
         <table width=100%>
             <tr>
                 <td class="no-border" width="15%">Bill / Invoice No: </td>
-                <td class="no-border" width="35%">{{ $order->invoice_number }}</td>
+                <td class="no-border" width="35%">{{ $order->ino() }}</td>
                 <td class="no-border" width="20%">Bill / Invoice Date:</td>
                 <td class="no-border" width="30%"> {{ $order->invoice_generated_at?->format('d, M Y h:i a') }}</td>
             </tr>
