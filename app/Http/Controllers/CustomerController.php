@@ -109,6 +109,7 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -117,7 +118,10 @@ class CustomerController extends Controller
         $cid = $request->cid;
         try {
             if (Customer::where('mobile', $request->mobile)->exists()) :
-                return redirect()->back()->with("error", "Customer with provided mobile number has already been registered.")->withInput($request->all());
+                //return redirect()->back()->with("error", "Customer with provided mobile number has already been registered.")->withInput($request->all());
+                //$customers = Customer::where('mobile', $request->mobile)->withTrashed()->get();
+                $request->session()->put('cdata', $request->input());
+                return redirect()->route('customer.exists');
             else :
                 DB::transaction(function () use ($request, $cid) {
                     if ($request->cid == 0) :
@@ -143,15 +147,47 @@ class CustomerController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
-        return redirect()->route('customer.register')->with("success", "Prescription saved successfully!");
+        return redirect()->route('customer.register')->with("success", "Prescription registered successfully!");
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function existing()
     {
-        //
+        $data = Session::get('cdata');
+        $customers = Customer::where('mobile', $data['mobile'])->withTrashed()->get();
+        return view('backend.customer.existing', compact('customers'));
+    }
+
+    public function existingproceed(Request $request)
+    {
+        try {
+            $cid = $request->rad;
+            if ($cid != '') :
+                if ($cid == 0) :
+                    $data = Session::get('cdata');
+                    $customer = Customer::create([
+                        'name' => $data['name'],
+                        'age' => $data['age'],
+                        'address' => $data['address'],
+                        'mobile' => ($data['mobile']) ?? $this->mobile,
+                        'alt_mobile' => $data['alt_mobile'],
+                        'gstin' => $data['gstin'],
+                        'company_name' => $data['company_name'],
+                        'branch_id' => Session::get('branch'),
+                        'mrn' => $data['mrn'],
+                    ]);
+                    $cid = $customer->id;
+                endif;
+                Registration::create([
+                    'customer_id' => $cid,
+                    'branch_id' => Session::get('branch'),
+                ]);
+            else :
+                return redirect()->back()->with("error", "Please select a record");
+            endif;
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
+        return redirect()->route('customer.register')->with("success", "Customer Registered successfully!");
     }
 
     /**

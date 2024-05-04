@@ -537,6 +537,10 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
     });
 
     Route::prefix('/backend/customer')->controller(CustomerController::class)->group(function () {
+
+        Route::get('/existing', 'existing')->name('customer.exists');
+        Route::post('/existing', 'existingproceed')->name('customer.exists.proceed');
+
         Route::get('/', 'index')->name('customer.register');
         /*Route::get('/spectacles', 'spectacles')->name('customer.spectacles');*/
         Route::post('/', 'fetch')->name('customer.fetch');
