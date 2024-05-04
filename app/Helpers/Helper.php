@@ -15,6 +15,7 @@ use App\Models\IncomeExpense;
 use App\Models\LabOrder;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\OrderHistory;
 use App\Models\Patient;
 use App\Models\PatientProcedure;
 use App\Models\PatientProcedureDetail;
@@ -27,6 +28,7 @@ use App\Models\Transfer;
 use App\Models\Voucher;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -451,4 +453,13 @@ function isPendingFromLab($oid)
     if ($orders > 0)
         return true;
     return false;
+}
+
+function recordOrderEvent($oid, $action)
+{
+    OrderHistory::create([
+        'order_id' => $oid,
+        'action' => $action,
+        'performed_by' => Auth::id(),
+    ]);
 }

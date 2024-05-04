@@ -177,6 +177,7 @@ class SolutionOrderController extends Controller
                     ]);
                 endif;
                 Registration::where('id', $request->registration_id)->update(['order_id' => $order->id]);
+                recordOrderEvent($order->id, 'Order has been created');
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
@@ -316,6 +317,7 @@ class SolutionOrderController extends Controller
                         'updated_by' => $request->user()->id,
                     ]);
                 endif;
+                recordOrderEvent($order->id, 'Order has been edited');
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
@@ -343,6 +345,7 @@ class SolutionOrderController extends Controller
                 'created_by' => Auth::id(),
                 'updated_by' => Auth::id(),
             ]);
+            recordOrderEvent($order->id, 'Order has been deleted');
         endif;
         return redirect()->back()->with('success', 'Order has been deleted successfully!');
     }

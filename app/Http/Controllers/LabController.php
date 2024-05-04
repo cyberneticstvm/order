@@ -8,9 +8,11 @@ use App\Models\Lab;
 use App\Models\LabOrder;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\OrderHistory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
@@ -117,6 +119,7 @@ class LabController extends Controller
         $lab = Branch::findOrFail($request->lab_id);
         $data = [];
         $data1 = [];
+        $data2 = [];
         foreach ($request->chkItem as $key => $item) :
             $odetail = OrderDetail::findOrFail($item);
             $data[] = [
@@ -148,8 +151,18 @@ class LabController extends Controller
                 'frame_type' => getFrameType($odetail->order->id),
                 'customer' => $odetail->order->name,
             ]);
+            $data2[] = [
+                'order_id' => $odetail->order->id,
+                'action' => 'Order has been assigned to ' . Branch::find($request->lab_id)->name,
+                'performed_by' => $request->user()->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ];
         endforeach;
-        LabOrder::insert($data);
+        DB::transaction(function () use ($data, $data2) {
+            LabOrder::insert($data);
+            OrderHistory::insert($data2);
+        });
         if ($lab->type == 'outside-lab') :
             Mail::to($lab->email)->cc('cssumesh@yahoo.com')->send(new SendOrderToLab($data1, $lab));
         //Mail::to('mail@cybernetics.me')->cc('vijoysasidharan@yahoo.com')->send(new SendOrderToLab($data1, $lab));
@@ -181,18 +194,32 @@ class LabController extends Controller
         $this->validate($request, [
             'status' => 'required',
         ]);
-        if ($request->status == 'sent-to-lab') :
-            LabOrder::whereIn('id', $request->chkItem)->update([
-                'status' => $request->status,
-                'lab_id' => $request->lab_id,
-                'updated_by' => $request->user()->id,
-            ]);
-        else :
-            LabOrder::whereIn('id', $request->chkItem)->update([
-                'status' => $request->status,
-                'updated_by' => $request->user()->id,
-            ]);
-        endif;
+        DB::transaction(function () use ($request) {
+            $data = [];
+            if ($request->status == 'sent-to-lab') :
+                LabOrder::whereIn('id', $request->chkItem)->update([
+                    'status' => $request->status,
+                    'lab_id' => $request->lab_id,
+                    'updated_by' => $request->user()->id,
+                ]);
+            else :
+                LabOrder::whereIn('id', $request->chkItem)->update([
+                    'status' => $request->status,
+                    'updated_by' => $request->user()->id,
+                ]);
+            endif;
+            foreach ($request->chkItem as $key => $item) :
+                $odetail = OrderDetail::findOrFail($item);
+                $data[] = [
+                    'order_id' => $odetail->order->id,
+                    'action' => 'Order has been sent back to ' . Branch::find($request->lab_id)->name,
+                    'performed_by' => $request->user()->id,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ];
+            endforeach;
+            OrderHistory::insert($data);
+        });
         return redirect()->route('lab.view.orders')->with("success", "Status updated successfully");
     }
 

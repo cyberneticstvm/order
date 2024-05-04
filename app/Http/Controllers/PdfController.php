@@ -143,7 +143,7 @@ class PdfController extends Controller
                 'invoice_generated_at' => Carbon::now(),
                 'order_status' => 'delivered',
             ]);
-
+            recordOrderEvent($order->id, 'Invoice has been generated');
         endif;
         return redirect()->back()->with("success", "Invoice generated successfully!");
     }

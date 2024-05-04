@@ -220,6 +220,7 @@ class StoreOrderController extends Controller
                         'updated_by' => $request->user()->id,
                     ]);
                 endif;
+                recordOrderEvent($order->id, 'Order has been created');
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
@@ -388,6 +389,7 @@ class StoreOrderController extends Controller
                     ]);
                 endif;
                 LabOrder::where('order_id', $order->id)->delete();
+                recordOrderEvent($order->id, 'Order has been edited');
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
@@ -420,6 +422,7 @@ class StoreOrderController extends Controller
                     'updated_by' => Auth::id(),
                 ]);
             endif;
+            recordOrderEvent($order->id, 'Order has been deleted');
             return redirect()->back()->with('success', 'Order has been deleted successfully!');
         endif;
     }

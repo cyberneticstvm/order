@@ -103,7 +103,9 @@ class PaymentController extends Controller
                     'invoice_generated_at' => Carbon::now(),
                     'order_status' => 'delivered',
                 ]);
+                recordOrderEvent($request->order_id, 'Invoice has been generated');
             endif;
+            recordOrderEvent($request->order_id, 'Payment received');
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
@@ -145,6 +147,7 @@ class PaymentController extends Controller
             'notes' => $request->notes,
             'updated_by' => $request->user()->id,
         ]);
+        recordOrderEvent(Payment::findOrFail($id)->order_id, 'Payment has been edited');
         return redirect()->route('patient.payments')->with("success", "Payment updated successfully!");
     }
 

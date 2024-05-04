@@ -96,6 +96,7 @@ class SalesReturnContoller extends Controller
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]);
+                recordOrderEvent($order->id, 'Sales return recorded');
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
@@ -120,6 +121,7 @@ class SalesReturnContoller extends Controller
             $return->delete();
             SalesReturnDetail::where('return_id', $return->id)->delete();
             CustomerAccount::where('voucher_id', $return->order_id)->where('type', 'credit')->where('category', 'order')->delete();
+            recordOrderEvent($return->order_id, 'Sales return reversed or deleted');
         });
         return redirect()->back()->with("success", "Return deleted successfully");
     }
