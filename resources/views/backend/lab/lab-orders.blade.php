@@ -73,7 +73,7 @@
                                         <td class="text-center">
                                             {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem') }}
                                         </td>
-                                        <td><a href="javascript:void(0)" class="dayBook {{ $item->mainBranch() }}" data-from-date="" data-to-date="" data-type="order" data-mode="{{ $item->order?->id }}" data-branch="" data-drawer="orderDrawer">{{ $item->order?->ono() }}</a></td>
+                                        <td><a href="javascript:void(0)" class="dayBook" data-from-date="" data-to-date="" data-type="order" data-mode="{{ $item->order?->id }}" data-branch="" data-drawer="orderDrawer">{{ $item->order?->ono() }}</a></td>
                                         <td class="fw-bold">{{ strtoupper($item->item?->eye) }}</td>
                                         <td>{{ $item->item?->sph }}</td>
                                         <td>{{ $item->item?->cyl }}</td>
