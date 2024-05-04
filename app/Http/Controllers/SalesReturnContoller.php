@@ -12,6 +12,7 @@ use App\Models\SalesReturnDetail;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -26,7 +27,9 @@ class SalesReturnContoller extends Controller
     }
     public function index()
     {
-        $data = SalesReturn::whereDate('created_at', Carbon::today())->latest()->get();
+        $data = SalesReturn::whereDate('created_at', Carbon::today())->when(!in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO']), function ($q) {
+            return $q->where('returned_branch', Session::get('branch'));
+        })->latest()->get();
         return view('backend.order.return.index', compact('data'));
     }
     public function fetch(Request $request)
