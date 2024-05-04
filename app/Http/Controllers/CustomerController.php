@@ -119,7 +119,6 @@ class CustomerController extends Controller
         try {
             if (Customer::where('mobile', $request->mobile)->exists()) :
                 //return redirect()->back()->with("error", "Customer with provided mobile number has already been registered.")->withInput($request->all());
-                //$customers = Customer::where('mobile', $request->mobile)->withTrashed()->get();
                 $request->session()->put('cdata', $request->input());
                 return redirect()->route('customer.exists');
             else :
@@ -181,6 +180,7 @@ class CustomerController extends Controller
                     'customer_id' => $cid,
                     'branch_id' => Session::get('branch'),
                 ]);
+                Session::forget('cdata');
             else :
                 return redirect()->back()->with("error", "Please select a record");
             endif;
