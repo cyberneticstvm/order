@@ -116,26 +116,30 @@ class CustomerController extends Controller
         ]);
         $cid = $request->cid;
         try {
-            DB::transaction(function () use ($request, $cid) {
-                if ($request->cid == 0) :
-                    $customer = Customer::create([
-                        'name' => $request->name,
-                        'age' => $request->age,
-                        'address' => $request->address,
-                        'mobile' => ($request->mobile) ?? $this->mobile,
-                        'alt_mobile' => $request->alt_mobile,
-                        'gstin' => $request->gstin,
-                        'company_name' => $request->company_name,
+            if (Customer::where('mobile', $request->mobile)->exists()) :
+                return redirect()->back()->with("error", "Customer with provided mobile number has already been registered.")->withInput($request->all());
+            else :
+                DB::transaction(function () use ($request, $cid) {
+                    if ($request->cid == 0) :
+                        $customer = Customer::create([
+                            'name' => $request->name,
+                            'age' => $request->age,
+                            'address' => $request->address,
+                            'mobile' => ($request->mobile) ?? $this->mobile,
+                            'alt_mobile' => $request->alt_mobile,
+                            'gstin' => $request->gstin,
+                            'company_name' => $request->company_name,
+                            'branch_id' => Session::get('branch'),
+                            'mrn' => $request->mrn,
+                        ]);
+                        $cid = $customer->id;
+                    endif;
+                    Registration::create([
+                        'customer_id' => $cid,
                         'branch_id' => Session::get('branch'),
-                        'mrn' => $request->mrn,
                     ]);
-                    $cid = $customer->id;
-                endif;
-                $reg = Registration::create([
-                    'customer_id' => $cid,
-                    'branch_id' => Session::get('branch'),
-                ]);
-            });
+                });
+            endif;
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
