@@ -153,7 +153,7 @@ class LabController extends Controller
             ]);
             $data2[] = [
                 'order_id' => $odetail->order->id,
-                'action' => 'Order has been assigned to ' . Branch::find($request->lab_id)->name,
+                'action' => 'Order has been assigned to ' . Branch::find($request->lab_id)->name . ' - ' . strtoupper($odetail->eye),
                 'performed_by' => $request->user()->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -212,7 +212,7 @@ class LabController extends Controller
                 $odetail = OrderDetail::findOrFail($item);
                 $data[] = [
                     'order_id' => $odetail->order->id,
-                    'action' => 'Order has been sent back to ' . Branch::find($request->lab_id)->name,
+                    'action' => 'Order has been sent back to ' . Branch::find($request->lab_id)->name . ' - ' . strtoupper($odetail->eye),
                     'performed_by' => $request->user()->id,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
