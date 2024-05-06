@@ -31,6 +31,15 @@ class HelperController extends Controller
         $this->middleware('permission:search-customer', ['only' => ['searchCustomer', 'searchCustomerFetch']]);
     }
 
+    public function updateInvoiceNumber()
+    {
+        $orders = Order::where('order_status', 'delivered')->orderBy('invoice_generated_at', 'ASC')->get();
+        foreach ($orders as $key => $item) :
+            $ino = Order::where('branch_id', $item->branch_id)->selectRaw("IFNULL(MAX(order_sequence)+1, 1) AS sid")->value('sid');
+            Order::find($item->id)->update(['order_sequence' => $ino]);
+        endforeach;
+    }
+
     public function transferProductBulk(string $category, $branch)
     {
         DB::transaction(function () use ($category, $branch) {

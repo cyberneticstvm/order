@@ -85,6 +85,12 @@ Route::middleware(['web'])->group(function () {
     });
 });
 
+Route::middleware(['web', 'auth', 'branch'])->group(function () {
+    Route::prefix('/backend')->controller(HelperController::class)->group(function () {
+        Route::get('/update/invoice', 'updateInvoiceNumber')->name('update.invoice.number');
+    });
+});
+
 Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/backend/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
     Route::post('/user/branch/update', [UserController::class, 'updateBranch'])->name('user.branch.update');
