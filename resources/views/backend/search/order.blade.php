@@ -76,7 +76,7 @@
                                     @forelse($data as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $item->branch->code }}/{{ $item->id }}</td>
+                                        <td><a href="javascript:void(0)" class="dayBook" data-from-date="" data-to-date="" data-type="order" data-mode="{{ $order->id }}" data-branch="" data-drawer="orderDrawer">{{ $item->ono() }}</a></td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->customer_id }}</td>
                                         <td>{{ $item->mobile }}</td>
