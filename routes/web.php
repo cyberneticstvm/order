@@ -87,7 +87,7 @@ Route::middleware(['web'])->group(function () {
 
 Route::middleware(['web', 'auth', 'branch'])->group(function () {
     Route::prefix('/backend')->controller(HelperController::class)->group(function () {
-        Route::get('/update/invoice', 'updateInvoiceNumber')->name('update.invoice.number');
+        /*Route::get('/update/invoice', 'updateInvoiceNumber')->name('update.invoice.number');*/
     });
 });
 

@@ -171,7 +171,7 @@ class HelperController extends Controller
             'order_status' => 'required',
         ]);
         $order = Order::findOrFail($id);
-        if (!$order->invoice_number) :
+        if (!$order->order_sequence) :
             if (!isFullyPaid($order->id, $request->order_status)) :
                 return redirect()->back()->with("error", "Amount due.");
             //elseif (isPendingFromLab($order->id)) :
