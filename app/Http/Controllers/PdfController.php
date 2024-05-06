@@ -121,7 +121,7 @@ class PdfController extends Controller
 
     public function invoices()
     {
-        $invoices = Order::where('branch_id', Session::get('branch'))->WhereNotNull('invoice_number')->whereDate('invoice_generated_at', Carbon::today())->latest()->get();
+        $invoices = Order::where('branch_id', Session::get('branch'))->WhereNotNull('invoice_number')->whereDate('invoice_generated_at', Carbon::today())->orderByDesc('order_sequence')->get();
         return view('backend.order.invoices', compact('invoices'));
     }
 
