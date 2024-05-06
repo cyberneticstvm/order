@@ -188,6 +188,11 @@ function orderStatuses()
     return array('booked' => 'Booked', 'sent-to-lab' => 'Sent to Lab', 'sent-to-branch' => 'Sent to Branch', 'received_from_lab' => 'Received From Lab', 'ready-for-delivery' => 'Ready For Delivery', 'delivered' => 'Billed / Delivered');
 }
 
+function branchInvoiceNumber()
+{
+    return Order::where('branch_id', branch()->id)->selectRaw("IFNULL(MAX(order_sequence)+1, 1) AS sid")->value('sid');
+}
+
 function casetypes()
 {
     return array('box' => 'Box', 'rexine' => 'Rexine', 'other' => 'Other');

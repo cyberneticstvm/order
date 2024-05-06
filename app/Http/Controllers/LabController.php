@@ -209,7 +209,8 @@ class LabController extends Controller
                 ]);
             endif;
             foreach ($request->chkItem as $key => $item) :
-                $odetail = OrderDetail::findOrFail($item);
+                $lab = LabOrder::findOrFail($item);
+                $odetail = OrderDetail::findOrFail($lab->order_detail_id);
                 $data[] = [
                     'order_id' => $odetail->order->id,
                     'action' => 'Order has been sent back to ' . Branch::where('id', $odetail->order->branch_id)->first()->name . ' - ' . strtoupper($odetail->eye),
