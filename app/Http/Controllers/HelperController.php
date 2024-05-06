@@ -177,6 +177,9 @@ class HelperController extends Controller
                         'created_by' => $request->user()->id,
                     ]);
                 endif;
+                if (in_array($request->order_status, ['ready-for-delivery', 'delivered'])) :
+                    updateLabOrderStatus($order->id);
+                endif;
                 recordOrderEvent($order->id, 'Order status has been updated to ' . $request->order_status . ' with notes ' . $request->status_note);
             endif;
             return redirect()->route('search.order')->with("success", "Status updated successfully");

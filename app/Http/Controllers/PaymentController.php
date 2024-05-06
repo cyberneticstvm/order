@@ -104,6 +104,7 @@ class PaymentController extends Controller
                     'invoice_generated_at' => Carbon::now(),
                     'order_status' => 'delivered',
                 ]);
+                updateLabOrderStatus($request->order_id);
                 recordOrderEvent($request->order_id, 'Invoice has been generated');
             endif;
             recordOrderEvent($request->order_id, 'Payment received');

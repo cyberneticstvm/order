@@ -193,6 +193,12 @@ function branchInvoiceNumber()
     return Order::where('branch_id', branch()->id)->selectRaw("IFNULL(MAX(order_sequence)+1, 1) AS sid")->value('sid');
 }
 
+function updateLabOrderStatus($oid)
+{
+    LabOrder::where('order_id', $oid)->update('status', 'sent-to-branch');
+    recordOrderEvent($oid, "Order status has been changed to 'Sent to Branch' via Order Status Update form");
+}
+
 function casetypes()
 {
     return array('box' => 'Box', 'rexine' => 'Rexine', 'other' => 'Other');
