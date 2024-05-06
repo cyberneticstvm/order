@@ -53,7 +53,7 @@ class StoreOrderController extends Controller
     }
     public function index()
     {
-        $orders = Order::whereIn('category', ['store', 'solution'])->where('branch_id', Session::get('branch'))->whereDate('created_at', Carbon::today())->withTrashed()->latest()->get();
+        $orders = Order::whereIn('category', ['store', 'solution'])->where('branch_id', Session::get('branch'))->whereDate('created_at', Carbon::today())->withTrashed()->orderByDesc('order_sequence')->get();
         return view('backend.order.store.index', compact('orders'));
     }
 
