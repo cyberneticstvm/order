@@ -167,7 +167,8 @@ class HelperController extends Controller
             //elseif (isPendingFromLab($order->id)) :
             //return redirect()->back()->with("error", "One or more items pending from Lab");
             else :
-                $order->update(['order_status' => $request->order_status]);
+                $ino = ($request->order_status == 'delivered') ? branchInvoiceNumber() : NULL;
+                $order->update(['order_status' => $request->order_status, 'order_sequence' => $ino]);
                 if ($request->status_note) :
                     OrderStatusNote::create([
                         'order_id' => $order->id,

@@ -139,6 +139,7 @@ class PdfController extends Controller
         else :
             $order->update([
                 'invoice_number' => invoicenumber(decrypt($id))->ino,
+                'order_sequence' => branchInvoiceNumber(),
                 'invoice_generated_by' => Auth::id(),
                 'invoice_generated_at' => Carbon::now(),
                 'order_status' => 'delivered',
