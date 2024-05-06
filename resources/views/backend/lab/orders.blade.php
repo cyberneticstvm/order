@@ -77,7 +77,7 @@
                                         <td>{{ $item->cyl }}</td>
                                         <td>{{ $item->axis }}</td>
                                         <td>{{ $item->add }}</td>
-                                        <td class="{{ $item->order->isEdited() }}">{{ $item->product->name }}</td>
+                                        <td class="{{ $item->order->isEdited() }}">{{ $item->product->name ?? '' }}</td>
                                         <td>{{ $item->qty }}</td>
                                         <td>{{ getFrameType($item->order?->id ?? 0) }}</td>
                                         <!--<td>{{ $item->order?->a_size }}</td>
@@ -85,7 +85,7 @@
                                         <td>{{ $item->order?->dbl }}</td>
                                         <td>{{ $item->order?->fh }}</td>
                                         <td>{{ $item->order?->ed }}</td>                                      
-                                        <td>{{ $item->order?->name }}</td>-->
+                                        <td>{{ $item->order?->name ?? '' }}</td>-->
                                     </tr>
                                     @empty
                                     @endforelse
