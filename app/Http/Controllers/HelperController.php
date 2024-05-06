@@ -38,6 +38,7 @@ class HelperController extends Controller
             $ino = Order::where('branch_id', $item->branch_id)->selectRaw("IFNULL(MAX(order_sequence)+1, 1) AS sid")->value('sid');
             Order::find($item->id)->update(['order_sequence' => $ino]);
         endforeach;
+        echo "success";
     }
 
     public function transferProductBulk(string $category, $branch)
