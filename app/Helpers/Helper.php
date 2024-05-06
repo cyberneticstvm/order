@@ -196,7 +196,7 @@ function branchInvoiceNumber()
 function updateLabOrderStatus($oid)
 {
     LabOrder::where('order_id', $oid)->update('status', 'sent-to-branch');
-    recordOrderEvent($oid, "Order status has been changed to 'Sent to Branch' via Order Status Update form");
+    recordOrderEvent($oid, "Order status has been changed to 'Sent to Branch' via Order Status Update");
 }
 
 function casetypes()
