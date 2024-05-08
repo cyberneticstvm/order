@@ -15,8 +15,10 @@ use App\Models\Product;
 use App\Models\ProductSubcategory;
 use App\Models\PurchaseDetail;
 use App\Models\Spectacle;
+use App\Models\Transfer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -333,5 +335,17 @@ class AjaxController extends Controller
             $q->on('o.created_at', '<', DB::raw('LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH + INTERVAL 1 MONTH'))->where('o.branch_id', Session::get('branch'));
         })->select(DB::raw("LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH AS date, COUNT(o.id) AS order_count, CONCAT_WS('/', DATE_FORMAT(LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH, '%b'), DATE_FORMAT(LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH, '%y')) AS month"))->groupBy('date', 'months.id')->orderByDesc('date')->get();
         return json_encode($orders);
+    }
+
+    public function checkPendingTransfer()
+    {
+        $transfer = Transfer::when(!in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO']), function ($q) {
+            return $q->where('to_branch_id', Session::get('branch'));
+        });
+        if ($transfer->exists()) :
+            return response()->json([
+                'message' => "You have some pending transfers to accept. Please accept it asap.",
+            ]);
+        endif;
     }
 }

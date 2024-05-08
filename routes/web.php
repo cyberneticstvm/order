@@ -120,6 +120,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/get/availablecredit/{cid}', 'getAvailableCredit')->name('ajax.available.credit.get');
 
         Route::get('/prescription/{source}/{val}', 'getPrescription')->name('ajax.get.prescription');
+
+        Route::get('/check/pending/transfers', 'checkPendingTransfer')->name('ajax.check.pending.transfers');
     });
 
     Route::prefix('/backend')->controller(HelperController::class)->group(function () {

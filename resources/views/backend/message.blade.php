@@ -11,6 +11,8 @@
             $(this).find(".btn-submit").attr("disabled", true);
             $(this).find(".btn-submit").html("Loading...<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>");
         });
+
+        setInterval(checkPendingTransfer, 60000);
     });
 </script>
 <script>
@@ -71,6 +73,16 @@
             icon: 'error',
             title: msg.message,
             color: 'red'
+        });
+    }
+
+    function checkPendingTransfer() {
+        $.ajax({
+            url: '/ajax/check/pending/transfers',
+            type: 'get',
+            success: function(response) {
+                error(response);
+            }
         });
     }
 
