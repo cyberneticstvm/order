@@ -344,7 +344,7 @@ class AjaxController extends Controller
         });
         if ($transfer->exists()) :
             return response()->json([
-                'error' => "You have some pending transfers to accept. Please accept it asap.",
+                'message' => "You have some pending transfers to accept. Please accept it asap.",
             ]);
         endif;
     }

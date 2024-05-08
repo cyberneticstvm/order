@@ -76,12 +76,20 @@
         });
     }
 
+    function notify(msg) {
+        toast.fire({
+            icon: 'warning',
+            title: msg,
+            color: 'info'
+        });
+    }
+
     function checkPendingTransfer() {
         $.ajax({
             url: '/ajax/check/pending/transfers',
             type: 'get',
             success: function(response) {
-                failed(response);
+                notify(response.message);
             }
         });
     }
