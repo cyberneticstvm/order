@@ -342,10 +342,8 @@ class AjaxController extends Controller
         $transfer = Transfer::when(!in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO']), function ($q) {
             return $q->where('to_branch_id', Session::get('branch'));
         });
-        if ($transfer->exists()) :
-            return response()->json([
-                'message' => "You have some pending transfers to accept. Please accept it asap.",
-            ]);
-        endif;
+        return response()->json([
+            'message' => $transfer->exists() ? "You have some pending transfers to accept. Please accept it asap." : "",
+        ]);
     }
 }
