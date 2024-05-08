@@ -81,8 +81,7 @@
             url: '/ajax/check/pending/transfers',
             type: 'get',
             success: function(response) {
-                console.log(response)
-                error(response);
+                failed(response);
             }
         });
     }
