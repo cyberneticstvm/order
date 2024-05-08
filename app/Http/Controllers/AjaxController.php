@@ -337,13 +337,13 @@ class AjaxController extends Controller
         return json_encode($orders);
     }
 
-    public function checkPendingTransfer()
+    public function checkPendingTransfer(Request $request)
     {
         $transfer = Transfer::when(!in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO']), function ($q) {
             return $q->where('to_branch_id', Session::get('branch'));
         });
         return response()->json([
-            'message' => $transfer->exists() && Auth::user()->roles->hasPermissionTo('pending-transfer-list') ? "You have some pending transfers to accept. Please accept it asap." : "",
+            'message' => $transfer->exists() && $request->user()->hasPermissionTo('pending-transfer-list') ? "You have some pending transfers to accept. Please accept it asap." : "",
         ]);
     }
 }
