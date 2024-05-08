@@ -477,5 +477,5 @@ function recordOrderEvent($oid, $action)
 
 function getLastId($category)
 {
-    return DB::table('products')->selectRaw("IFNULL(MAX(CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(code, '-', -1), '-', 1) AS INTEGER))+1, 1) AS pid")->where('category', $category)->first()->pid;
+    return DB::table('products')->selectRaw("IFNULL(MAX(CAST(SUBSTR(code, 2) AS INTEGER)), 1) AS pid")->where('category', $category)->first()->pid;
 }
