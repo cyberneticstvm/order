@@ -474,3 +474,8 @@ function recordOrderEvent($oid, $action)
         'performed_by' => Auth::id(),
     ]);
 }
+
+function getLastId($category)
+{
+    return DB::table('products')->selectRaw("IFNULL(MAX(CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(code, '-', -1), '-', 1) AS INTEGER))+1, 1) AS pid")->where('category', $category)->first()->pid;
+}

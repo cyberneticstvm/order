@@ -42,7 +42,7 @@
                                     <a href="{{ asset('/backend/assets/docs/Lenses.xlsx') }}">Download Format</a>
                                 </div>
                                 <div class="col-md-12">
-                                    <p>Last Id is: </p>
+                                    <p>Last Id is: {{ getLastId('lens') }}</p>
                                 </div>
                             </form>
                         </div>
