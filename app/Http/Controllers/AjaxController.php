@@ -343,7 +343,7 @@ class AjaxController extends Controller
             return $q->where('to_branch_id', Session::get('branch'));
         });
         return response()->json([
-            'message' => $transfer->exists() ? "You have some pending transfers to accept. Please accept it asap." : "",
+            'message' => $transfer->exists() && Auth::user()->roles->hasPermissionTo('pending-transfer-list') ? "You have some pending transfers to accept. Please accept it asap." : "",
         ]);
     }
 }

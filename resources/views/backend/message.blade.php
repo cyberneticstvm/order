@@ -12,7 +12,7 @@
             $(this).find(".btn-submit").html("Loading...<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>");
         });
 
-        setInterval(checkPendingTransfer, 3600000);
+        setInterval(checkPendingTransfer, 60000);
     });
 </script>
 <script>
