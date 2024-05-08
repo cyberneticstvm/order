@@ -42,7 +42,7 @@
                                     <a href="{{ asset('/backend/assets/docs/Frames.xlsx') }}">Download Format</a>
                                 </div>
                                 <div class="col-md-12">
-                                    <h5 class="text-info">Last Id is: F{{ getLastId('frame') }}</h5>
+                                    <h5 class="text-info">Last Product Code is: F{{ getLastId('frame') }}</h5>
                                 </div>
                             </form>
                         </div>
