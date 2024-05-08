@@ -80,7 +80,7 @@
         toast.fire({
             icon: 'warning',
             title: msg,
-            color: 'info'
+            color: 'orange'
         });
     }
 
