@@ -89,7 +89,9 @@ class HelperController extends Controller
 
     public function pendingTransfer()
     {
-        $transfers = Transfer::where('to_branch_id', branch()->id)->where('transfer_status', 0)->latest()->get();
+        $transfers = Transfer::when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'CEO')), function ($q) {
+            return $q->where('to_branch_id', Session::get('branch'));
+        })->where('transfer_status', 0)->latest()->get();
         return view('backend.order.transfer.pending', compact('transfers'));
     }
 
