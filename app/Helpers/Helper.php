@@ -185,7 +185,7 @@ function orderStatuses()
 {
     // Sent to branch - recived item from fitting lab to branch directly
     // Received from lab - received item from stock/rx/outsource lab to Purchase Manager for further config and then Sent to branch
-    return array('booked' => 'Booked', 'sent-to-lab' => 'Sent to Lab', 'sent-to-branch' => 'Sent to Branch', 'received_from_lab' => 'Received From Lab', 'ready-for-delivery' => 'Ready For Delivery', 'delivered' => 'Billed / Delivered');
+    return array('booked' => 'Booked', 'sent-to-lab' => 'Sent to Lab', 'sent-to-branch' => 'Sent to Branch', 'received_from_lab' => 'Received From Lab', 'ready-for-delivery' => 'Ready For Delivery', 'delivered' => 'Billed / Delivered', 'cancelled' => 'Cancelled');
 }
 
 function branchInvoiceNumber()
@@ -478,4 +478,31 @@ function recordOrderEvent($oid, $action)
 function getLastId($category)
 {
     return DB::table('products')->selectRaw("IFNULL(MAX(CAST(SUBSTR(code, 2) AS INTEGER)), 1) AS pid")->where('category', $category)->first()->pid;
+}
+
+function cancelOrder($oid)
+{
+    $order = Order::findOrFail($oid);
+    if ($order->order_status == 'delivered') :
+        return redirect()->back()->with('error', 'Order has already been delivered!');
+    else :
+        DB::transaction(function () use ($order) {
+            $credit = Payment::where('order_id', $order->id)->sum('amount');
+            $order->delete();
+            Payment::where('order_id', $order->id)->delete();
+            if ($credit > 0) :
+                CustomerAccount::create([
+                    'customer_id' => $order->customer_id,
+                    'voucher_id' => $order->id,
+                    'type' => 'credit',
+                    'category' => 'order',
+                    'amount' => $credit,
+                    'remarks' => 'Cancelled amount credited against order number' . $order->ono(),
+                    'created_by' => Auth::id(),
+                    'updated_by' => Auth::id(),
+                ]);
+            endif;
+        });
+    endif;
+    recordOrderEvent($oid, 'Order has been deleted / cancelled');
 }

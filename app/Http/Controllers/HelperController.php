@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Consultation;
 use App\Models\Customer;
+use App\Models\CustomerAccount;
 use App\Models\Order;
 use App\Models\OrderStatusNote;
 use App\Models\Patient;
@@ -174,7 +175,9 @@ class HelperController extends Controller
         ]);
         $order = Order::findOrFail($id);
         if (!$order->order_sequence) :
-            if (!isFullyPaid($order->id, $request->order_status)) :
+            if ($request->order_status == 'cancelled') :
+                cancelOrder($order->id);
+            elseif (!isFullyPaid($order->id, $request->order_status)) :
                 return redirect()->back()->with("error", "Amount due.");
             //elseif (isPendingFromLab($order->id)) :
             //return redirect()->back()->with("error", "One or more items pending from Lab");

@@ -330,26 +330,7 @@ class SolutionOrderController extends Controller
     public function destroy(string $id)
     {
         $order = Order::findOrFail(decrypt($id));
-        if ($order->order_status == 'delivered') :
-            return redirect()->back()->with('error', 'Order has already been delivered!');
-        else :
-            $order->delete();
-            $credit = Payment::where('order_id', decrypt($id))->sum('amount');
-            Payment::where('order_id', decrypt($id))->delete();
-            if ($credit > 0) :
-                CustomerAccount::create([
-                    'customer_id' => $order->customer_id,
-                    'voucher_id' => $order->id,
-                    'type' => 'credit',
-                    'category' => 'order',
-                    'amount' => $credit,
-                    'remarks' => 'Cancelled amount credited against order number' . $order->ono(),
-                    'created_by' => Auth::id(),
-                    'updated_by' => Auth::id(),
-                ]);
-                recordOrderEvent($order->id, 'Order has been deleted');
-            endif;
-        endif;
+        cancelOrder($order->id);
         return redirect()->back()->with('success', 'Order has been deleted successfully!');
     }
 }
