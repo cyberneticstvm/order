@@ -108,7 +108,7 @@
                                         <td class="text-end">{{ number_format($item->discount, 2) }}</td>
                                         <td class="text-end">{{ number_format($item->credit_used, 2) }}</td>
                                         <td class="text-end">{{ number_format($item->payments->sum('amount'), 2) }}</td>
-                                        <td class="text-end">{{ number_format($item->invoice_total - $item->payments->sum('amount'), 2) }}</td>
+                                        <td class="text-end">{{ number_format($item->invoice_total - ($item->payments->sum('amount') + $item->credit_used), 2) }}</td>
                                         <td class="text-end">{{ number_format($item->invoice_total, 2) }}</td>
                                     </tr>
                                     @php($tot += $item->details->where('eye', 'frame')->sum('qty'))
