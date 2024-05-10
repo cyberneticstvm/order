@@ -404,6 +404,8 @@ class StoreOrderController extends Controller
         $order = Order::findOrFail(decrypt($id));
         if (LabOrder::where('order_id', $order->id)->exists()) :
             return redirect()->back()->with('error', 'Order has already been assigned to Lab!');
+        elseif ($order->order_status == 'delivered') :
+            return redirect()->back()->with('error', 'Order has already been delivered!');
         else :
             $order->delete();
             $credit = Payment::where('order_id', decrypt($id))->sum('amount');
