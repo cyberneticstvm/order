@@ -485,6 +485,8 @@ function cancelOrder($oid)
     $order = Order::findOrFail($oid);
     if ($order->order_status == 'delivered') :
         return redirect()->back()->with('error', 'Order has already been delivered!');
+    elseif (!in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO'])) :
+        return redirect()->back()->with('error', 'User not permitted to perform this action');
     else :
         DB::transaction(function () use ($order) {
             $credit = Payment::where('order_id', $order->id)->sum('amount');

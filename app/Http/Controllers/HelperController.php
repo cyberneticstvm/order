@@ -157,7 +157,7 @@ class HelperController extends Controller
             'search_term' => 'required',
         ]);
         $inputs = array($request->search_term);
-        $data = Order::where('id', $request->search_term)->orWhere('mobile', $request->search_term)->orWhere('alt_mobile', $request->search_term)->orWhere('name', 'LIKE', '%' . $request->search_term . '%')->get();
+        $data = Order::where('id', $request->search_term)->orWhere('mobile', $request->search_term)->orWhere('alt_mobile', $request->search_term)->orWhere('name', 'LIKE', '%' . $request->search_term . '%')->withTrashed()->get();
         return view('backend.search.order', compact('inputs', 'data'));
     }
 
