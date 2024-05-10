@@ -87,7 +87,11 @@
                                         <td class="text-center"><a href="{{ route('store.order.prescription', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                         <td class="text-center"><a href="{{ route('store.order.receipt', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                         <td class="text-center"><a href="{{ route('store.order.invoice', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
+                                        @if($item->deleted_at)
+                                        <td>{!! $order->status() !!}</td>
+                                        @else
                                         <td><a href="{{ route('order.status', encrypt($item->id)) }}">{{ $item->order_status }}</a></td>
+                                        @endif
                                         <td class="text-center"><a href="{{ route(($item->category == 'store') ? 'store.order.edit' : 'solution.order.edit', encrypt($item->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                     </tr>
                                     @empty
