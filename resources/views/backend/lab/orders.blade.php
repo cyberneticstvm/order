@@ -45,8 +45,8 @@
                                     <tr>
                                         <th>SL No</th>
                                         <th>Select</th>
+                                        <th>Notes</th>
                                         <th>Date</th>
-                                        <th>Lab Id</th>
                                         <th>Order ID</th>
                                         <th>Eye</th>
                                         <th>Sph</th>
@@ -71,8 +71,8 @@
                                         <td class="text-center">
                                             {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem chk_'.$item->id.' '.$item->eye) }}
                                         </td>
+                                        <td class="text-center"><a href=""><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="{{ ($item->lab_id == '0') ? 'text-warning' : ''  }}">{{ $item->created_at->format('d.M.Y') }}</td>
-                                        <td>{{ $item->lab_id }}</td>
                                         <td><a href="javascript:void(0)" class="dayBook {{ $item->order->isEdited() }}" data-from-date="" data-to-date="" data-type="order" data-mode="{{ $item->order->id }}" data-branch="" data-drawer="orderDrawer">{{ $item->order?->ono() }}</a></td>
                                         <td class="fw-bold">{{ strtoupper($item->eye) }}</td>
                                         <td>{{ $item->sph }}</td>
