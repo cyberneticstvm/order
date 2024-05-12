@@ -132,6 +132,7 @@ class SolutionOrderController extends Controller
                         'total' => $request->total[$key],
                         'tax_percentage' => $product->tax_percentage,
                         'tax_amount' => $product->taxamount($request->total[$key]),
+                        'eye' => 'solution',
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
@@ -264,6 +265,7 @@ class SolutionOrderController extends Controller
                         'total' => $request->total[$key],
                         'tax_percentage' => $product->tax_percentage,
                         'tax_amount' => $product->taxamount($request->total[$key]),
+                        'eye' => 'solution',
                         'created_at' => $order->created_at ?? Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
