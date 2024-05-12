@@ -362,4 +362,19 @@ class AjaxController extends Controller
         $op .= "</tbody></table>";
         echo $op;
     }
+
+    public function getBookedProductDetails(Request $request)
+    {
+        $orders = Order::with('details')->where('branch_id', $request->branch)->whereNotIn('order_status', ['delivered', 'cancelled'])->where('order_details.eye', 'frame')->get();
+        $op = "<table width='100%'><thead><tr><th>Notes</th><th>Created by</th><th>Created at</th></tr></thead><tbody>";
+        foreach ($orders as $key => $item) :
+            $op .= "<tr>";
+            $op .= "<td>" . $item->ono . "</td>";
+            $op .= "<td>" . $item->user->name . "</td>";
+            $op .= "<td>" . $item->created_at->format('d.M.Y h:i a') . "</td>";
+            $op .= "</tr>";
+        endforeach;
+        $op .= "</tbody></table>";
+        echo $op;
+    }
 }

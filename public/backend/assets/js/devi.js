@@ -190,7 +190,7 @@ $(function () {
         var cid = $(this).data('consultation-id');
         $.ajax({
             type: 'GET',
-            url: '/ajax/payment/details/' + cid,
+            url: '/ajax/payment/details' + cid,
             success: function (res) {
                 $("#" + drawer).drawer('toggle');
                 $("#" + drawer).find(".drawer-body").html(res);
@@ -210,7 +210,7 @@ $(function () {
         var mode = $(this).data('mode');
         $.ajax({
             type: 'GET',
-            url: '/ajax/daybook/details/',
+            url: '/ajax/daybook/details',
             data: { 'from_date': fdate, 'to_date': tdate, 'branch': branch, 'type': type, 'mode': mode },
             success: function (res) {
                 $("#" + drawer).drawer('toggle');
@@ -230,8 +230,26 @@ $(function () {
         var status = $(this).data('status');
         $.ajax({
             type: 'GET',
-            url: '/ajax/frame/details/',
+            url: '/ajax/frame/details',
             data: { 'from_date': fdate, 'to_date': tdate, 'branch': branch, 'status': status },
+            success: function (res) {
+                $("#" + drawer).drawer('toggle');
+                $("#" + drawer).find(".drawer-content").html(res);
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        });
+    });
+
+    $(document).on("click", ".bkdPdct", function () {
+        var drawer = $(this).data('drawer');
+        var branch = $(this).data('branch');
+        var category = $(this).data('category');
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/booked/product/details',
+            data: { 'branch': branch, 'category': category },
             success: function (res) {
                 $("#" + drawer).drawer('toggle');
                 $("#" + drawer).find(".drawer-content").html(res);

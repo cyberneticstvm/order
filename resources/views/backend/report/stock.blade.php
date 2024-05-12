@@ -98,7 +98,7 @@
                                 <tfoot>
                                     <tr>
                                         <td colspan="4" class="fw-bold text-end">Total</td>
-                                        <td class="fw-bold text-right">{{ $data->sum('soldQty') }}</td>
+                                        <td class="fw-bold text-right"><a href="javascript:void(0)" class="bkdPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="bookedPdctDrawer">{{ $data->sum('soldQty') }}</a></td>
                                         <td class="fw-bold text-right">{{ $data->sum('purchasedQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('transferredQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('returnedQty') }}</td>
@@ -113,5 +113,8 @@
             </div>
         </div>
     </div>
+</div>
+<div class="drawer drawer-left slide" tabindex="-1" role="dialog" aria-labelledby="drawer-3-title" aria-hidden="true" id="bookedPdctDrawer">
+    <div class="drawer-content drawer-content-scrollable" role="document"></div>
 </div>
 @endsection
