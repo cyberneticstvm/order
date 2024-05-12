@@ -122,7 +122,7 @@
                     {{ html()->textarea('notes')->class('form-control') }}
                 </div>
                 <div class="col mt-3 text-end">
-                    {{ html()->submit('Update')->class('form-control') }}
+                    {{ html()->submit('Update')->class('form-control btn-submit') }}
                 </div>
                 {{ html()->form()->close() }}
             </div>
