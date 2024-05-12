@@ -360,6 +360,6 @@ class AjaxController extends Controller
             $op .= "</tr>";
         endforeach;
         $op .= "</tbody></table>";
-        echo $op;
+        //echo $op;
     }
 }
