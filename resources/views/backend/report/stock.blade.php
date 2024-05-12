@@ -114,7 +114,7 @@
         </div>
     </div>
 </div>
-<div class="drawer drawer-left slide" tabindex="-1" role="dialog" aria-labelledby="drawer-3-title" aria-hidden="true" id="bookedPdctDrawer">
+<div class="drawer drawer-right slide" tabindex="-1" role="dialog" aria-labelledby="drawer-3-title" aria-hidden="true" id="bookedPdctDrawer">
     <div class="drawer-content drawer-content-scrollable" role="document"></div>
 </div>
 @endsection
