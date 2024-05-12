@@ -351,8 +351,15 @@ class AjaxController extends Controller
     public function getLabNote(string $oid)
     {
         $notes = LabOrderNote::where('order_id', $oid)->get();
-        return response()->json([
-            'notes' => $notes,
-        ]);
+        $op = "<table width='100%'><thead><tr><th>Notes</th><th>created by</th><th>Created at</th></tr></thead><tbody>";
+        foreach ($notes as $key => $item) :
+            $op .= "<tr>";
+            $op .= "<td>" . $item->notes . "</td>";
+            $op .= "<td>" . $item->user->name . "</td>";
+            $op .= "<td>" . $item->created_at->format('d.M.Y h:i a') . "</td>";
+            $op .= "</tr>";
+        endforeach;
+        $op .= "</tbody></table>";
+        echo $op;
     }
 }

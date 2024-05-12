@@ -175,6 +175,7 @@ $(function () {
             type: 'GET',
             url: '/ajax/lab/note/' + oid,
             success: function (res) {
+                $("#" + drawer).find(".oldNotes").html(res);
                 $("#" + drawer).drawer('toggle');
                 $("#" + drawer).find(".labOrderId").html(oid);
             },
