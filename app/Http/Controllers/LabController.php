@@ -203,10 +203,15 @@ class LabController extends Controller
                     'lab_id' => $request->lab_id,
                     'updated_by' => $request->user()->id,
                 ]);
-            else :
+            elseif ($request->status == 'sent-to-branch') :
                 LabOrder::whereIn('id', $request->chkItem)->update([
                     'status' => $request->status,
                     'lab_id' => $request->lab_id,
+                    'updated_by' => $request->user()->id,
+                ]);
+            else :
+                LabOrder::whereIn('id', $request->chkItem)->update([
+                    'status' => $request->status,
                     'updated_by' => $request->user()->id,
                 ]);
             endif;
