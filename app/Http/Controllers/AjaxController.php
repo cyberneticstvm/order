@@ -373,7 +373,7 @@ class AjaxController extends Controller
             $op .= "<td>" . $item->order?->ono() . "</td>";
             $op .= "<td>" . $item->product?->name . "</td>";
             $op .= "<td class='text-end'>" . $item->qty . "</td>";
-            $op .= "<td>" . $item->order_status . "</td>";
+            $op .= "<td>" . $item->order?->order_status . "</td>";
             $op .= "</tr>";
         endforeach;
         $op .= "</tr><td colspan='3' class='text-end'>Total</td><td class='text-end fw-bold'>" . $orders->sum('qty') . "</td><td></td></tr>";
