@@ -113,13 +113,13 @@
     <div class="drawer-content drawer-content-scrollable" role="document">
         <div class="container mt-5">
             <div class="row">
-                <div class="col">
+                <div class="col-12">
                     <h5>Order Note for <span class="labOrderId"></span></h5>
                 </div>
-                <div class="col oldNotes mt-3"></div>
+                <div class="col-12 oldNotes mt-3"></div>
                 {{ html()->form('POST', route('lab.note.update'))->open() }}
                 <input type="hidden" name="order_id" id="order_id" value="" />
-                <div class="col mt-3">
+                <div class="col-12 mt-3">
                     {{ html()->textarea('notes')->class('form-control')->attribute('rows', 5)->placeholder('Notes / Remarks') }}
                 </div>
                 <div class="col mt-3 text-end">
