@@ -111,10 +111,10 @@
 </div>
 <div class="drawer drawer-left slide" tabindex="-1" role="dialog" aria-labelledby="drawer-3-title" aria-hidden="true" id="labNoteDrawer">
     <div class="drawer-content drawer-content-scrollable" role="document">
-        <div class="container">
+        <div class="container mt-5">
             <div class="row">
                 <div class="col">
-                    <h5>Order Note <span class="labOrderId"></span></h5>
+                    <h5>Order Note for <span class="labOrderId"></span></h5>
                 </div>
             </div>
         </div>
