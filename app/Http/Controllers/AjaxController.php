@@ -369,7 +369,7 @@ class AjaxController extends Controller
         $op = "<table width='100%'><thead><tr><th>Order No</th><th>Created at</th></tr></thead><tbody>";
         foreach ($orders as $key => $item) :
             $op .= "<tr>";
-            $op .= "<td>" . $item->order->ono() . "</td>";
+            $op .= "<td>" . $item->order?->ono() . "</td>";
             $op .= "<td>" . $item->created_at->format('d.M.Y h:i a') . "</td>";
             $op .= "</tr>";
         endforeach;
