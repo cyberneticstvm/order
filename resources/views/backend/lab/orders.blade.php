@@ -114,7 +114,7 @@
         <div class="container mt-5">
             <div class="row">
                 <div class="col-12">
-                    <h5>Order Note for <span class="labOrderId"></span></h5>
+                    <h5>Order Notes for <span class="labOrderId"></span></h5>
                 </div>
                 <div class="col-12 oldNotes mt-3"></div>
                 {{ html()->form('POST', route('lab.note.update'))->open() }}
