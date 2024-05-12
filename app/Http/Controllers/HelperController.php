@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Consultation;
 use App\Models\Customer;
 use App\Models\CustomerAccount;
+use App\Models\LabOrderNote;
 use App\Models\Order;
 use App\Models\OrderStatusNote;
 use App\Models\Patient;
@@ -226,5 +227,11 @@ class HelperController extends Controller
             'order_id' => 'required',
             'notes' => 'required',
         ]);
+        LabOrderNote::create([
+            'order_id' => $request->order_id,
+            'notes' => $request->notes,
+            'created_by' => $request->user()->id,
+        ]);
+        return redirect()->route('lab.assign.orders')->with("success", "Order notes updated successfully.");
     }
 }
