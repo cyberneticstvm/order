@@ -175,7 +175,7 @@ class LabController extends Controller
     {
         $orders = LabOrder::whereIn('status', ['sent-to-lab', 'received-from-lab'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager', 'CEO')), function ($q) {
             return $q->where('lab_id', Session::get('branch'));
-        })->unique('order_detail_id');
+        })->get()->unique('order_detail_id');
         /*when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager')), function ($q) {
             return $q->where('lab_id', Session::get('branch'));
         })->*/
