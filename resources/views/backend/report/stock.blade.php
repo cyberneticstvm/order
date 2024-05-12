@@ -69,6 +69,7 @@
                                         <th>SL No</th>
                                         <th>Product Name</th>
                                         <th>PID</th>
+                                        <th>Code</th>
                                         <th>Booked</th>
                                         <th>Transfer In</th>
                                         <th>Transfer Out</th>
@@ -83,6 +84,7 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->product_name }}</td>
                                         <td>{{ $item->product_id }}</td>
+                                        <td>{{ $item->pcode }}</td>
                                         <td>{{ $item->soldQty }}</td>
                                         <td>{{ $item->purchasedQty }}</td>
                                         <td>{{ $item->transferredQty }}</td>
@@ -95,7 +97,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="3" class="fw-bold text-end">Total</td>
+                                        <td colspan="4" class="fw-bold text-end">Total</td>
                                         <td class="fw-bold text-right">{{ $data->sum('soldQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('purchasedQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('transferredQty') }}</td>
