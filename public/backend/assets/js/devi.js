@@ -167,6 +167,22 @@ $(function () {
         });
     });
 
+    $(document).on("click", ".labNote", function () {
+        var drawer = $(this).data('drawer');
+        var oid = $(this).data('oid');
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/lab/note/' + oid,
+            success: function (res) {
+                $("#" + drawer).drawer('toggle');
+                $("#" + drawer).find(".labOrderId").html(oid);
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        });
+    });
+
     $(document).on("click", ".paymentDetails", function () {
         var drawer = $(this).data('drawer');
         var cid = $(this).data('consultation-id');

@@ -122,6 +122,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/prescription/{source}/{val}', 'getPrescription')->name('ajax.get.prescription');
 
         Route::get('/check/pending/transfers', 'checkPendingTransfer')->name('ajax.check.pending.transfers');
+        Route::get('/lab/note/{oid}', 'getLabNote')->name('ajax.get.lab.note');
     });
 
     Route::prefix('/backend')->controller(HelperController::class)->group(function () {

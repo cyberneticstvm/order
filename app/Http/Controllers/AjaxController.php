@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BankTransfer;
 use App\Models\Consultation;
 use App\Models\IncomeExpense;
+use App\Models\LabOrderNote;
 use App\Models\Month;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -344,6 +345,14 @@ class AjaxController extends Controller
         });
         return response()->json([
             'message' => $transfer->exists() && $request->user()->hasPermissionTo('pending-transfer-list') ? "You have some pending transfers to accept. Please accept it asap." : "",
+        ]);
+    }
+
+    public function getLabNote(string $oid)
+    {
+        $notes = LabOrderNote::where('order_id', $oid)->get();
+        return response()->json([
+            'notes' => $notes,
         ]);
     }
 }
