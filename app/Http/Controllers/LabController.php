@@ -233,7 +233,7 @@ class LabController extends Controller
 
     public function delete(string $id)
     {
-        LabOrder::findOrFail(decrypt($id))->delete();
+        LabOrder::where('order_id', decrypt($id))->delete();
         return redirect()->back()->with("success", "Status deleted successfully");
     }
 }
