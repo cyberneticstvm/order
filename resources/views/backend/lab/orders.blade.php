@@ -119,10 +119,10 @@
                 <div class="col oldNotes mt-3"></div>
                 {{ html()->form('POST', route('lab.note.update'))->open() }}
                 <div class="col mt-3">
-                    {{ html()->textarea('notes')->class('form-control') }}
+                    {{ html()->textarea('notes')->class('form-control')->attribute('rows', 5)->placeholder('Notes / Remarks') }}
                 </div>
-                <div class="col mt-3 text-end">
-                    {{ html()->submit('Update')->class('form-control btn-submit') }}
+                <div class="col mt-3">
+                    {{ html()->submit('Update')->class('form-control btn-submit btn-primary') }}
                 </div>
                 {{ html()->form()->close() }}
             </div>
