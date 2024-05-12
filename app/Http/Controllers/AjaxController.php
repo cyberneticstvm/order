@@ -365,11 +365,11 @@ class AjaxController extends Controller
 
     public function getBookedProductDetails(Request $request)
     {
-        $orders = Order::with('details')->where('branch_id', $request->branch)->whereNotIn('order_status', ['delivered', 'cancelled'])->where('order_details.eye', 'frame')->get();
+        $orders = OrderDetail::leftJoin('orders as o', 'o.id', 'order_details.order_id')->where('o.branch_id', $request->branch)->selectRaw("order_details.*")->whereNotIn('o.order_status', ['delivered', 'cancelled'])->where('order_details.eye', 'frame')->get();
         $op = "<table width='100%'><thead><tr><th>Order No</th><th>Created at</th></tr></thead><tbody>";
         foreach ($orders as $key => $item) :
             $op .= "<tr>";
-            $op .= "<td>" . $item->ono() . "</td>";
+            $op .= "<td>" . $item->order->ono() . "</td>";
             $op .= "<td>" . $item->created_at->format('d.M.Y h:i a') . "</td>";
             $op .= "</tr>";
         endforeach;
