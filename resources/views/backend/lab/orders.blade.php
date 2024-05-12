@@ -116,6 +116,12 @@
                 <div class="col">
                     <h5>Order Note for <span class="labOrderId"></span></h5>
                 </div>
+                <div class="col oldNotes mt-3"></div>
+                {{ html()->form('POST', route('lab.note.update'))->open() }}
+                <div class="col mt-3">
+                    {{ html()->textarea('notes') }}
+                </div>
+                {{ html()->form()->close() }}
             </div>
         </div>
     </div>

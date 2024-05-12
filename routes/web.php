@@ -140,6 +140,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
 
         Route::get('/search/customer', 'searchCustomer')->name('search.customer');
         Route::post('/search/customer', 'searchCustomerFetch')->name('search.customer.fetch');
+
+        Route::post('/lab/note/update', 'updateLabNote')->name('lab.note.update');
     });
 
     Route::prefix('/backend/export')->controller(ImportExportController::class)->group(function () {
