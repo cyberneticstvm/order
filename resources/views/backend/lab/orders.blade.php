@@ -122,8 +122,8 @@
                 <div class="col mt-3">
                     {{ html()->textarea('notes')->class('form-control')->attribute('rows', 5)->placeholder('Notes / Remarks') }}
                 </div>
-                <div class="col mt-3">
-                    {{ html()->submit('Update')->class('btn btn-submit btn-info') }}
+                <div class="col mt-3 text-end">
+                    {{ html()->submit('Update')->class('btn btn-submit btn-primary') }}
                 </div>
                 {{ html()->form()->close() }}
             </div>
