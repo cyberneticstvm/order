@@ -123,7 +123,7 @@
                     {{ html()->textarea('notes')->class('form-control')->attribute('rows', 5)->placeholder('Notes / Remarks') }}
                 </div>
                 <div class="col mt-3">
-                    {{ html()->submit('Update')->class('form-control btn-submit btn-info') }}
+                    {{ html()->submit('Update')->class('btn btn-submit btn-info') }}
                 </div>
                 {{ html()->form()->close() }}
             </div>
