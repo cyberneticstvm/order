@@ -71,7 +71,7 @@
                                         <td class="text-center">
                                             {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem chk_'.$item->id.' '.$item->eye) }}
                                         </td>
-                                        <td class="text-center"><a href=""><i class="fa fa-edit text-primary fa-lg"></i></a></td>
+                                        <td class="text-center"><a href="javascript:void(0)" data-drawer="orderNoteDrawer"><i class="fa fa-edit text-primary fa-lg"></i></a></td>
                                         <td class="{{ ($item->lab_id == '0') ? 'text-warning' : ''  }}">{{ $item->created_at->format('d.M.Y') }}</td>
                                         <td><a href="javascript:void(0)" class="dayBook {{ $item->order->isEdited() }}" data-from-date="" data-to-date="" data-type="order" data-mode="{{ $item->order->id }}" data-branch="" data-drawer="orderDrawer">{{ $item->order?->ono() }}</a></td>
                                         <td class="fw-bold">{{ strtoupper($item->eye) }}</td>
@@ -108,5 +108,16 @@
 </div>
 <div class="drawer drawer-left slide" tabindex="-1" role="dialog" aria-labelledby="drawer-3-title" aria-hidden="true" id="orderDrawer">
     <div class="drawer-content drawer-content-scrollable" role="document"></div>
+</div>
+<div class="drawer drawer-left slide" tabindex="-1" role="dialog" aria-labelledby="drawer-3-title" aria-hidden="true" id="orderNoteDrawer">
+    <div class="drawer-content drawer-content-scrollable" role="document">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h5>Order Note</h5>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
