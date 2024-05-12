@@ -219,4 +219,12 @@ class HelperController extends Controller
         $data = Customer::where('id', $request->search_term)->orWhere('mobile', $request->search_term)->orWhere('alt_mobile', $request->search_term)->orWhere('name', 'LIKE', '%' . $request->search_term . '%')->get();
         return view('backend.search.customer', compact('inputs', 'data'));
     }
+
+    public function updateLabNote(Request $request)
+    {
+        $this->validate($request, [
+            'order_id' => 'required',
+            'notes' => 'required',
+        ]);
+    }
 }

@@ -118,11 +118,12 @@
                 </div>
                 <div class="col oldNotes mt-3"></div>
                 {{ html()->form('POST', route('lab.note.update'))->open() }}
+                <input type="hidden" name="order_id" id="order_id" value="" />
                 <div class="col mt-3">
                     {{ html()->textarea('notes')->class('form-control')->attribute('rows', 5)->placeholder('Notes / Remarks') }}
                 </div>
                 <div class="col mt-3">
-                    {{ html()->submit('Update')->class('form-control btn-submit btn-primary') }}
+                    {{ html()->submit('Update')->class('form-control btn-submit btn-info') }}
                 </div>
                 {{ html()->form()->close() }}
             </div>
