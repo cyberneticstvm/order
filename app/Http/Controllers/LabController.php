@@ -123,6 +123,7 @@ class LabController extends Controller
         $data2 = [];
         foreach ($request->chkItem as $key => $item) :
             $odetail = OrderDetail::findOrFail($item);
+            LabOrder::where('order_detail_id', $odetail->id)->delete();
             $data[] = [
                 'order_id' => $odetail->order->id,
                 'order_detail_id' => $odetail->id,
