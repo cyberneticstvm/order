@@ -50,7 +50,7 @@
                                     <label class="form-label req">File Upload</label>
                                     <div class="input-group">
                                         {{ html()->file($name = 'file')->class('form-control') }}
-                                        <button class="btn btn-outline-warning btn-submit" id="button-addon2" type="submit">Import</button>
+                                        <button class="btn btn-outline-warning btn-submit" id="button-addon2" type="submit">Compare</button>
                                     </div>
                                     @error('file')
                                     <small class="text-danger">{{ $errors->first('file') }}</small>
