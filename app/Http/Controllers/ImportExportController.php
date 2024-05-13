@@ -216,6 +216,8 @@ class ImportExportController extends Controller
                 $stock = StockCompareTemp::selectRaw("product_id, SUM(qty) AS qty")->groupBy('product_id')->get();
                 foreach ($stock as $key => $item) :
                     $current = getInventory($request->branch, $item->product_id, $request->category);
+                    dd($current);
+                    die;
                     if ($current->balanceQty != $item->qty) :
                         $product = Product::findOrFail($item->product_id);
                         $records[] = [
