@@ -223,7 +223,7 @@ class ImportExportController extends Controller
                             'product_code' => $product->code,
                             'stock_in_hand' => $current->sum('balanceQty'),
                             'uploaded_qty' => $item->qty,
-                            'difference' => ($item->qty > $current->sum('balanceQty')) ? $item->qty - $current->sum('balanceQty') : $current->sum('balanceQty') - $item->qty,
+                            'difference' => ($item->qty > $current->sum('balanceQty')) ? abs($item->qty) - abs($current->sum('balanceQty')) : abs($current->sum('balanceQty')) - abs($item->qty),
                         ];
                     endif;
                 endforeach;
