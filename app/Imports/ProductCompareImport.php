@@ -22,7 +22,7 @@ class ProductCompareImport implements WithStartRow, ToModel
 
     public function model(array $row)
     {
-        $product = Product::where('code', strval($row[2]))->where('category', $this->data->category)->first();
+        $product = Product::where('code', strval($row[0]))->where('category', $this->data->category)->first();
         if ($product) :
             StockCompareTemp::create([
                 'branch_id' => $this->data->branch,
@@ -34,9 +34,8 @@ class ProductCompareImport implements WithStartRow, ToModel
             ]);
         else :
             $this->pdct[] = [
-                'product_name' => $row[1],
-                'product_code' => $row[2],
-                'qty' => $row[3],
+                'product_code' => $row[0],
+                'qty' => $row[1],
                 'remarks' => 'Product not found',
             ];
         endif;
