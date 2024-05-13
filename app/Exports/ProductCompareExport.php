@@ -30,13 +30,14 @@ class ProductCompareExport implements FromCollection, WithMapping, WithHeadings,
                 'item_code' => $data['product_code'],
                 'stock_in_hand' => $data['stock_in_hand'],
                 'uploaded_qty' => $data['uploaded_qty'],
+                'difference' => $data['difference'],
             ];
         });
     }
 
     public function headings(): array
     {
-        return ['SL No', 'Product Name', 'Product Code', 'Stock in Hand', 'Uploaded Qty'];
+        return ['SL No', 'Product Name', 'Product Code', 'Stock in Hand', 'Uploaded Qty', 'Diff. Qty'];
     }
 
     public function map($data): array
@@ -46,6 +47,6 @@ class ProductCompareExport implements FromCollection, WithMapping, WithHeadings,
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->getStyle('A1:E1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:F1')->getFont()->setBold(true);
     }
 }
