@@ -217,12 +217,13 @@ class ImportExportController extends Controller
                 foreach ($stock as $key => $item) :
                     $current = getInventory($request->branch, $item->id, $request->category);
                     //if ($current->sum('balanceQty') != $item->qty) :
+                    $qty = $item->qty ?? $current->sum('balanceQty');
                     $records[] = [
                         'product_name' => $item->name,
                         'product_code' => $item->code,
                         'stock_in_hand' => $current->sum('balanceQty'),
-                        'uploaded_qty' => $item->qty,
-                        'difference' => ($item->qty > $current->sum('balanceQty')) ? abs($item->qty) - abs($current->sum('balanceQty')) : abs($current->sum('balanceQty')) - abs($item->qty),
+                        'uploaded_qty' => $qty,
+                        'difference' => ($qty > $current->sum('balanceQty')) ? abs($qty) - abs($current->sum('balanceQty')) : abs($current->sum('balanceQty')) - abs($qty),
                     ];
                 //endif;
                 endforeach;
