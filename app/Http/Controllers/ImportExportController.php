@@ -229,7 +229,7 @@ class ImportExportController extends Controller
                 endforeach;
                 if ($records) :
                     StockCompareTemp::query()->delete();
-                    return Excel::download(new ProductCompareExport($records), 'compare_difference.xlsx');
+                    return Excel::download(new ProductCompareExport(collect($records)), 'compare_difference.xlsx');
                 endif;
             endif;
         } catch (Exception $e) {
