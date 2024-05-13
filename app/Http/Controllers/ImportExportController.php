@@ -5,16 +5,20 @@ namespace App\Http\Controllers;
 use App\Exports\AppointmentExport;
 use App\Exports\CampPatientExport;
 use App\Exports\FailedProductsExport;
+use App\Exports\ProductCompareExport;
 use App\Exports\ProductFrameExport;
 use App\Exports\ProductLensExport;
 use App\Exports\ProductPharmacyExport;
 use App\Models\Branch;
 use App\Imports\FrameImport;
 use App\Imports\LensImport;
+use App\Imports\ProductCompareImport;
 use App\Imports\ProductLensPurchaseImport;
 use App\Imports\ProductPurchaseImport;
 use App\Imports\ProductTransferImport;
+use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\StockCompareTemp;
 use App\Models\Transfer;
 use Carbon\Carbon;
 use Exception;
@@ -35,6 +39,7 @@ class ImportExportController extends Controller
         $this->middleware('permission:import-new-frames', ['only' => ['importFrames', 'importFramesUpdate']]);
         $this->middleware('permission:import-new-lenses', ['only' => ['importLenses', 'importLensesUpdate']]);
         $this->middleware('permission:import-product-transfer', ['only' => ['importTransfer', 'importTransferUpdate']]);
+        $this->middleware('permission:stock-comparison', ['only' => ['stockComparison', 'stockComparisonUpdate']]);
 
         $this->middleware(function ($request, $next) {
 
@@ -185,6 +190,52 @@ class ImportExportController extends Controller
             return back()->with("error", $e->getMessage());
         }
         return back()->with("success", "Products Transferred Successfully");
+    }
+
+    public function stockComparison()
+    {
+        $branches = Branch::where('type', 'branch')->orderBy('name', 'ASC')->get();
+        return view('backend.extras.stock-compare', compact('branches'));
+    }
+
+    public function stockComparisonUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'required|mimes:xlsx',
+            'branch' => 'required',
+            'category' => 'required',
+        ]);
+        try {
+            $import = new ProductCompareImport($request);
+            Excel::import($import, $request->file('file')->store('temp'));
+            if ($import->pdct) :
+                Session::put('fdata', $import->pdct);
+                return redirect()->route('upload.failed')->with("warning", "Some products weren't uploaded. Please check the excel file for more info.");
+            else :
+                $records = [];
+                $stock = StockCompareTemp::selectRaw("product_id, SUM(qty) AS qty")->groupBy('product_id')->get();
+                foreach ($stock as $key => $item) :
+                    $current = getInventory($request->branch, $item->product_id, $request->category);
+                    if ($current->balanceQty != $item->qty) :
+                        $product = Product::findOrFail($item->product_id);
+                        $records[] = [
+                            'product_name' => $product->name,
+                            'product_code' => $product->code,
+                            'stock_in_hand' => $current->balanceQty,
+                            'uploaded_qty' => $item->qty,
+                            'difference' => $item->qty - $current->balanceQty,
+                        ];
+                    endif;
+                endforeach;
+                if ($records) :
+                    StockCompareTemp::query()->delete();
+                    return Excel::download(new ProductCompareExport($records), 'compare_difference.xlsx');
+                endif;
+            endif;
+        } catch (Exception $e) {
+            return back()->with("error", $e->getMessage());
+        }
+        return back()->with("success", "Products compared successfully and found no difference");
     }
 
     public function uploadFailed()

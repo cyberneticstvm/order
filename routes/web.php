@@ -167,6 +167,9 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/lenses', 'importLensesUpdate')->name('import.lenses.update');
         Route::get('/transfer', 'importTransfer')->name('import.transfer');
         Route::post('/transfer', 'importTransferUpdate')->name('import.transfer.update');
+
+        Route::get('/stock/comparison', 'stockComparison')->name('stock.comparison');
+        Route::post('/stock/comparison', 'stockComparisonUpdate')->name('stock.comparison.update');
     });
 
     Route::prefix('/backend/pdf')->controller(PdfController::class)->group(function () {
