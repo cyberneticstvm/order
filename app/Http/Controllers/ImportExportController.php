@@ -205,36 +205,36 @@ class ImportExportController extends Controller
             'branch' => 'required',
             'category' => 'required',
         ]);
-        //try {
-        $import = new ProductCompareImport($request);
-        Excel::import($import, $request->file('file')->store('temp'));
-        if ($import->pdct) :
-            Session::put('fdata', $import->pdct);
-            return redirect()->route('upload.failed')->with("warning", "Some products weren't uploaded. Please check the excel file for more info.");
-        else :
-            $records = [];
-            $stock = Product::leftJoin('stock_compare_temps as sct', 'products.id', 'sct.product_id')->selectRaw("sct.product_id, SUM(sct.qty) AS qty, products.id, products.name, products.code")->groupBy('sct.product_id', 'products.id', 'products.name', 'products.code')->get();
-            foreach ($stock as $key => $item) :
-                $current = getInventory($request->branch, $item->id, $request->category);
-                //if ($current->sum('balanceQty') != $item->qty) :
-                $qty = $item->qty ?? $current->sum('balanceQty');
-                $records[] = [
-                    'product_name' => $item->name,
-                    'product_code' => $item->code,
-                    'stock_in_hand' => $current->sum('balanceQty'),
-                    'uploaded_qty' => $qty,
-                    'difference' => ($qty > $current->sum('balanceQty')) ? abs($qty) - abs($current->sum('balanceQty')) : abs($current->sum('balanceQty')) - abs($qty),
-                ];
-            //endif;
-            endforeach;
-            if ($records) :
-                StockCompareTemp::query()->delete();
-                return Excel::download(new ProductCompareExport(collect($records)), 'compare_difference.xlsx');
+        try {
+            $import = new ProductCompareImport($request);
+            Excel::import($import, $request->file('file')->store('temp'));
+            if ($import->pdct) :
+                Session::put('fdata', $import->pdct);
+                return redirect()->route('upload.failed')->with("warning", "Some products weren't uploaded. Please check the excel file for more info.");
+            else :
+                $records = [];
+                $stock = Product::leftJoin('stock_compare_temps as sct', 'products.id', 'sct.product_id')->selectRaw("sct.product_id, SUM(sct.qty) AS qty, products.id, products.name, products.code")->groupBy('sct.product_id', 'products.id', 'products.name', 'products.code')->get();
+                foreach ($stock as $key => $item) :
+                    $current = getInventory($request->branch, $item->id, $request->category);
+                    //if ($current->sum('balanceQty') != $item->qty) :
+                    $qty = $item->qty ?? $current->sum('balanceQty');
+                    $records[] = [
+                        'product_name' => $item->name,
+                        'product_code' => $item->code,
+                        'stock_in_hand' => $current->sum('balanceQty'),
+                        'uploaded_qty' => $qty,
+                        'difference' => ($qty > $current->sum('balanceQty')) ? abs($qty) - abs($current->sum('balanceQty')) : abs($current->sum('balanceQty')) - abs($qty),
+                    ];
+                //endif;
+                endforeach;
+                if ($records) :
+                    StockCompareTemp::query()->delete();
+                    return Excel::download(new ProductCompareExport(collect($records)), 'compare_difference.xlsx');
+                endif;
             endif;
-        endif;
-        //} catch (Exception $e) {
-        return back()->with("error", $e->getMessage());
-        //}
+        } catch (Exception $e) {
+            return back()->with("error", $e->getMessage());
+        }
         return back()->with("success", "Products compared successfully and found no difference");
     }
 

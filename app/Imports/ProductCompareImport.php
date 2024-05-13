@@ -29,7 +29,7 @@ class ProductCompareImport implements WithStartRow, ToModel
                 'product_id' => $product->id,
                 'product_code' => $product->code,
                 'product_name' => $product->name,
-                'qty' => $row[3],
+                'qty' => $row[1],
                 'category' => $this->data->category,
             ]);
         else :
