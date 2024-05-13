@@ -26,11 +26,11 @@ class ProductCompareExport implements FromCollection, WithMapping, WithHeadings,
         return $this->data->map(function ($data, $key) {
             return [
                 'item_seral' => $key + 1,
-                'item_name' => $data->product_name,
-                'item_code' => $data->product_code,
-                'stock_in_hand' => $data->stock_in_hand,
-                'uploaded_qty' => $data->uploaded_qty,
-                'difference' => $data->difference,
+                'item_name' => $data['product_name'],
+                'item_code' => $data['product_code'],
+                'stock_in_hand' => $data['stock_in_hand'],
+                'uploaded_qty' => $data['uploaded_qty'],
+                'difference' => $data['difference'],
             ];
         });
     }
