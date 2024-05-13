@@ -216,16 +216,16 @@ class ImportExportController extends Controller
                 $stock = Product::leftJoin('stock_compare_temps as sct', 'products.id', 'sct.product_id')->where('products.category', $request->category)->selectRaw("sct.product_id, SUM(sct.qty) AS qty, products.id, products.name, products.code")->groupBy('sct.product_id', 'products.id', 'products.name', 'products.code')->orderBy('sct.id')->get();
                 foreach ($stock as $key => $item) :
                     $current = getInventory($request->branch, $item->id, $request->category);
-                    //if ($current->sum('balanceQty') != $item->qty) :
                     $qty = $item->qty ?? 0;
-                    $records[] = [
-                        'product_name' => $item->name,
-                        'product_code' => $item->code,
-                        'stock_in_hand' => $current->sum('balanceQty'),
-                        'uploaded_qty' => $qty,
-                        'difference' => ($qty > $current->sum('balanceQty')) ? abs($qty) - abs($current->sum('balanceQty')) : abs($current->sum('balanceQty')) - abs($qty),
-                    ];
-                //endif;
+                    if ($current->sum('balanceQty') != 0 || $qty != 0) :
+                        $records[] = [
+                            'product_name' => $item->name,
+                            'product_code' => $item->code,
+                            'stock_in_hand' => $current->sum('balanceQty'),
+                            'uploaded_qty' => $qty,
+                            'difference' => ($qty > $current->sum('balanceQty')) ? abs($qty) - abs($current->sum('balanceQty')) : abs($current->sum('balanceQty')) - abs($qty),
+                        ];
+                    endif;
                 endforeach;
                 if ($records) :
                     StockCompareTemp::query()->delete();
