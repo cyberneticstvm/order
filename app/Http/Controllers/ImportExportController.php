@@ -221,9 +221,9 @@ class ImportExportController extends Controller
                         $records[] = [
                             'product_name' => $product->name,
                             'product_code' => $product->code,
-                            'stock_in_hand' => $current->balanceQty,
+                            'stock_in_hand' => $current->sum('balanceQty'),
                             'uploaded_qty' => $item->qty,
-                            'difference' => $item->qty - $current->balanceQty,
+                            'difference' => $item->qty - $current->sum('balanceQty'),
                         ];
                     endif;
                 endforeach;
