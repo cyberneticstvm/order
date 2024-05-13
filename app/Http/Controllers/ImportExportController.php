@@ -213,7 +213,7 @@ class ImportExportController extends Controller
                 return redirect()->route('upload.failed')->with("warning", "Some products weren't uploaded. Please check the excel file for more info.");
             else :
                 $records = [];
-                $stock = Product::leftJoin('stock_compare_temps as sct', 'products.id', 'sct.product_id')->where('products.category', $request->category)->selectRaw("sct.product_id, SUM(sct.qty) AS qty, products.id, products.name, products.code")->groupBy('sct.product_id', 'products.id', 'products.name', 'products.code')->get();
+                $stock = Product::leftJoin('stock_compare_temps as sct', 'products.id', 'sct.product_id')->where('products.category', $request->category)->selectRaw("sct.product_id, SUM(sct.qty) AS qty, products.id, products.name, products.code")->groupBy('sct.product_id', 'products.id', 'products.name', 'products.code')->orderBy('sct.id')->get();
                 foreach ($stock as $key => $item) :
                     $current = getInventory($request->branch, $item->id, $request->category);
                     //if ($current->sum('balanceQty') != $item->qty) :
