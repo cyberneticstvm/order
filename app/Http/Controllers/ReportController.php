@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankTransfer;
 use App\Models\Branch;
 use App\Models\Consultation;
+use App\Models\Head;
+use App\Models\IncomeExpense;
 use App\Models\LoginLog;
 use App\Models\Order;
+use App\Models\Payment;
+use App\Models\PaymentMode;
 use App\Models\Product;
+use App\Models\ProductDamage;
+use App\Models\PurchaseDetail;
+use App\Models\SalesReturn;
+use App\Models\TransferDetails;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,7 +24,7 @@ use Illuminate\Support\Facades\Session;
 
 class ReportController extends Controller
 {
-    protected $branches;
+    protected $branches, $products;
 
     public function __construct()
     {
@@ -23,6 +32,12 @@ class ReportController extends Controller
         $this->middleware('permission:report-sales', ['only' => ['sales', 'fetchSales']]);
         $this->middleware('permission:report-stock-status', ['only' => ['stockStatus', 'fetchStockStatus']]);
         $this->middleware('permission:report-login-log', ['only' => ['loginLog', 'fetchLoginLog']]);
+        $this->middleware('permission:report-income-expense', ['only' => ['incomeExpense', 'fetchIncomeExpense']]);
+        $this->middleware('permission:report-bank-transfer', ['only' => ['bankTransfer', 'fetchBankTransfer']]);
+        $this->middleware('permission:report-product-damage', ['only' => ['productDamage', 'fetchProductDamage']]);
+        $this->middleware('permission:report-sales-return', ['only' => ['salesReturn', 'fetchSalesReturn']]);
+        $this->middleware('permission:report-product-transfer', ['only' => ['productTransfer', 'fetchProductTransfer']]);
+        $this->middleware('permission:report-purchase', ['only' => ['purchase', 'fetchPurchase']]);
 
         $this->middleware(function ($request, $next) {
             $brs = Branch::selectRaw("0 as id, 'All / Main Branch' as name");
@@ -31,6 +46,9 @@ class ReportController extends Controller
             })->when(!in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO', 'Store Manager', 'Accounts']), function ($q) {
                 return $q->where('id', Session::get('branch'));
             })->orderBy('id')->pluck('name', 'id');
+
+            $this->products = Product::selectRaw("id, CONCAT_WS('-', name, code) AS name")->pluck('name', 'id');
+
             return $next($request);
         });
     }
@@ -101,9 +119,162 @@ class ReportController extends Controller
     {
         $inputs = [$request->from_date, $request->to_date, $request->user];
         $users = User::pluck('name', 'id');
-        $data = LoginLog::whereBetween('created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->from_date)->endOfDay()])->when($request->user > 0, function ($q) use ($request) {
+        $data = LoginLog::whereBetween('created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->user > 0, function ($q) use ($request) {
             return $q->where('user_id', $request->user);
         })->orderByDesc('id')->get();
         return view('backend.report.login-log', compact('data', 'inputs', 'users'));
+    }
+
+    public function incomeExpense()
+    {
+        $inputs = [date('Y-m-d'), date('Y-m-d'), 0, 0, 0, Session::get('branch')];
+        $branches = $this->branches;
+        $pmodes = PaymentMode::pluck('name', 'id');
+        $heads = Head::pluck('name', 'id');
+        $data = collect();
+        return view('backend.report.income-expense', compact('data', 'inputs', 'branches', 'pmodes', 'heads'));
+    }
+
+    public function fetchIncomeExpense(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required',
+            'to_date' => 'required',
+        ]);
+        $inputs = [$request->from_date, $request->to_date, $request->type, $request->head, $request->pmode, $request->branch];
+        $branches = $this->branches;
+        $pmodes = PaymentMode::pluck('name', 'id');
+        $heads = Head::pluck('name', 'id');
+        $data = IncomeExpense::whereBetween('created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->type, function ($q) use ($request) {
+            return $q->where('category', $request->type);
+        })->when($request->head, function ($q) use ($request) {
+            return $q->where('head_id', $request->head);
+        })->when($request->pmode, function ($q) use ($request) {
+            return $q->where('payment_mode', $request->pmode);
+        })->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('branch_id', $request->branch);
+        })->orderByDesc('id')->get();
+        return view('backend.report.income-expense', compact('data', 'inputs', 'branches', 'pmodes', 'heads'));
+    }
+
+    public function bankTransfer()
+    {
+        $inputs = [date('Y-m-d'), date('Y-m-d'), Session::get('branch')];
+        $branches = $this->branches;
+        $data = collect();
+        return view('backend.report.bank-transfer', compact('data', 'inputs', 'branches'));
+    }
+
+    public function fetchBankTransfer(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required',
+            'to_date' => 'required',
+        ]);
+        $inputs = [$request->from_date, $request->to_date, $request->branch];
+        $branches = $this->branches;
+        $data = BankTransfer::whereBetween('created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('branch_id', $request->branch);
+        })->orderByDesc('id')->get();
+        return view('backend.report.bank-transfer', compact('data', 'inputs', 'branches'));
+    }
+
+    public function productDamage()
+    {
+        $inputs = [date('Y-m-d'), date('Y-m-d'), NULL, Session::get('branch')];
+        $branches = $this->branches;
+        $data = collect();
+        return view('backend.report.product-damage', compact('data', 'inputs', 'branches'));
+    }
+
+    public function fetchProductDamage(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required',
+            'to_date' => 'required',
+        ]);
+        $inputs = [$request->from_date, $request->to_date, $request->status, $request->branch];
+        $branches = $this->branches;
+        $data = ProductDamage::whereBetween('created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('from_branch', $request->branch);
+        })->when($request->status == 0, function ($q) use ($request) {
+            return $q->whereNull('approved_status');
+        })->when($request->status == 1, function ($q) use ($request) {
+            return $q->where('approved_status', 1);
+        })->orderByDesc('id')->get();
+        return view('backend.report.product-damage', compact('data', 'inputs', 'branches'));
+    }
+
+    public function salesReturn()
+    {
+        $inputs = [date('Y-m-d'), date('Y-m-d'), Session::get('branch')];
+        $branches = $this->branches;
+        $data = collect();
+        return view('backend.report.sales-return', compact('data', 'inputs', 'branches'));
+    }
+
+    public function fetchSalesReturn(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required',
+            'to_date' => 'required',
+        ]);
+        $inputs = [$request->from_date, $request->to_date, $request->branch];
+        $branches = $this->branches;
+        $data = SalesReturn::whereBetween('created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('returned_branch', $request->branch);
+        })->orderByDesc('id')->get();
+        return view('backend.report.sales-return', compact('data', 'inputs', 'branches'));
+    }
+
+    public function productTransfer()
+    {
+        $inputs = [date('Y-m-d'), date('Y-m-d'), 0, NULL, Session::get('branch')];
+        $products = $this->products;
+        $branches = $this->branches;
+        $data = collect();
+        return view('backend.report.product-transfer', compact('data', 'inputs', 'branches', 'products'));
+    }
+
+    public function fetchProductTransfer(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required',
+            'to_date' => 'required',
+        ]);
+        $inputs = [$request->from_date, $request->to_date, $request->product, $request->status, $request->branch];
+        $branches = $this->branches;
+        $products = $this->products;
+        $data = TransferDetails::leftJoin('transfers as t', 't.id', 'transfer_details.transfer_id')->whereBetween('t.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('t.to_branch_id', $request->branch);
+        })->when($request->product > 0, function ($q) use ($request) {
+            return $q->where('transfer_details.product_id', $request->product);
+        })->when($request->status != '', function ($q) use ($request) {
+            return $q->where('t.transfer_status', $request->status);
+        })->orderByDesc('transfer_details.id')->get();
+        return view('backend.report.product-transfer', compact('data', 'inputs', 'branches', 'products'));
+    }
+
+    public function purchase()
+    {
+        $inputs = [date('Y-m-d'), date('Y-m-d'), 0];
+        $data = collect();
+        $products = $this->products;
+
+        return view('backend.report.purchase', compact('data', 'inputs', 'products'));
+    }
+
+    public function fetchPurchase(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required',
+            'to_date' => 'required',
+        ]);
+        $inputs = [$request->from_date, $request->to_date, $request->product];
+        $products = $this->products;
+        $data = PurchaseDetail::leftJoin('purchases as p', 'p.id', 'purchase_details.purchase_id')->whereBetween('p.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->product > 0, function ($q) use ($request) {
+            return $q->where('purchase_details.product_id', $request->product);
+        })->orderByDesc('purchase_details.id')->get();
+        return view('backend.report.purchase', compact('data', 'inputs', 'products'));
     }
 }

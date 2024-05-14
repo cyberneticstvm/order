@@ -333,7 +333,13 @@
                 ->linkIfCan('report-daybook', route('report.daybook'), 'Daybook')
                 ->linkIfCan('report-sales', route('report.sales'), 'Sales')
                 ->linkIfCan('report-stock-status', route('report.stock.status'), 'Stock Status')
-                ->linkIfCan('report-login-log', route('report.login.log'), 'Login Log');
+                ->linkIfCan('report-login-log', route('report.login.log'), 'Login Log')
+                ->linkIfCan('report-income-expense', route('report.income.expense'), 'Income & Expenses')
+                ->linkIfCan('report-bank-transfer', route('report.bank.transfer'), 'Bank Transfer')
+                ->linkIfCan('report-product-damage', route('report.product.damage'), 'Product Damage')
+                ->linkIfCan('report-sales-return', route('report.sales.return'), 'Sales Return')
+                ->linkIfCan('report-product-transfer', route('report.product.transfer'), 'Product Transfer')
+                ->linkIfCan('report-purchase', route('report.purchase'), 'Purchases');
             }}
         </li>
         <li class="sidebar-main-title">

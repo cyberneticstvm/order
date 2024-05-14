@@ -5,7 +5,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Sales Return</h3>
+                    <h3>Product Transfer</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
@@ -14,7 +14,7 @@
                                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg></a></li>
                         <li class="breadcrumb-item">Reports</li>
-                        <li class="breadcrumb-item active">Sales Return</li>
+                        <li class="breadcrumb-item active">Product Transfer</li>
                     </ol>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-wrapper">
-                            <form class="row g-3" method="post" action="{{ route('report.sales.return.fetch') }}">
+                            <form class="row g-3" method="post" action="{{ route('report.product.transfer.fetch') }}">
                                 @csrf
                                 <div class="col-md-2">
                                     <label class="form-label req">From Date</label>
@@ -43,8 +43,16 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
+                                    <label class="form-label">Product</label>
+                                    {{ html()->select($name = 'product', $products, ($inputs[2]) ?? old('product'))->class('form-control select2')->placeholder('Select') }}
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Transfer Status</label>
+                                    {{ html()->select($name = 'status', array('' => 'All', '0' => 'Pending', '1' => 'Approved'), ($inputs[3]) ?? old('head'))->class('form-control select2')->placeholder('Select') }}
+                                </div>
+                                <div class="col-md-3">
                                     <label class="form-label">Branch</label>
-                                    {{ html()->select($name = 'branch', $branches, ($inputs[2]) ?? old('branch'))->class('form-control select2')->placeholder('Select') }}
+                                    {{ html()->select($name = 'branch', $branches, ($inputs[4]) ?? old('branch'))->class('form-control select2')->placeholder('Select') }}
                                 </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
@@ -68,23 +76,27 @@
                                     <tr>
                                         <th>SL No</th>
                                         <th>Date</th>
-                                        <th>Order ID</th>
-                                        <th>Ordered Branch</th>
-                                        <th>Returned Branch</th>
-                                        <th>Description</th>
-                                        <th>Ret. Amount</th>
+                                        <th>Transfer ID</th>
+                                        <th>From Branch</th>
+                                        <th>To Branch</th>
+                                        <th>Product</th>
+                                        <th>Qty</th>
+                                        <th>Transfer Note</th>
+                                        <th>Transfer Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse($data as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $item->order->ono() }}</td>
-                                        <td>{{ $item->created_at->format('d.M.Y') }}</td>
-                                        <td>{{ $item->orderBranch->name }}</td>
-                                        <td>{{ $item->returnBranch->name }}</td>
-                                        <td>{{ $item->comment }}</td>
-                                        <td class="text-end">{{ number_format($item->details->sum('returned_amount'), 2) }}</td>
+                                        <td>{{ $item->transfer?->created_at?->format('d.M.Y') }}</td>
+                                        <td>{{ $item->transfer?->transfer_number }}</td>
+                                        <td>{{ $item->transfer?->frombranch?->name ?? 'Main Branch' }}</td>
+                                        <td>{{ $item->transfer?->tobranch?->name ?? 'Main Branch' }}</td>
+                                        <td>{{ $item->product?->name }}</td>
+                                        <td>{{ $item->qty }}</td>
+                                        <td>{{ $item->transfer?->transfer_note }}</td>
+                                        <td>{{ ($item->transfer?->transfer_status == 1) ? 'Approved' : 'Pending' }}</td>
                                     </tr>
                                     @empty
                                     @endforelse

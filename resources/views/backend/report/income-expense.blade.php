@@ -5,7 +5,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Sales Return</h3>
+                    <h3>Income & Expenses</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
@@ -14,7 +14,7 @@
                                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg></a></li>
                         <li class="breadcrumb-item">Reports</li>
-                        <li class="breadcrumb-item active">Sales Return</li>
+                        <li class="breadcrumb-item active">Income & Expenses</li>
                     </ol>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-wrapper">
-                            <form class="row g-3" method="post" action="{{ route('report.sales.return.fetch') }}">
+                            <form class="row g-3" method="post" action="{{ route('report.income.expense.fetch') }}">
                                 @csrf
                                 <div class="col-md-2">
                                     <label class="form-label req">From Date</label>
@@ -43,8 +43,20 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
+                                    <label class="form-label">Type</label>
+                                    {{ html()->select($name = 'type', array('expense' => 'Expense', 'income' => 'Income'), ($inputs[2]) ?? old('head'))->class('form-control select2')->placeholder('Select') }}
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Head</label>
+                                    {{ html()->select($name = 'head', $heads, ($inputs[3]) ?? old('head'))->class('form-control select2')->placeholder('Select') }}
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Payment Mode</label>
+                                    {{ html()->select($name = 'pmode', $pmodes, ($inputs[4]) ?? old('pmode'))->class('form-control select2')->placeholder('Select') }}
+                                </div>
+                                <div class="col-md-3">
                                     <label class="form-label">Branch</label>
-                                    {{ html()->select($name = 'branch', $branches, ($inputs[2]) ?? old('branch'))->class('form-control select2')->placeholder('Select') }}
+                                    {{ html()->select($name = 'branch', $branches, ($inputs[4]) ?? old('branch'))->class('form-control select2')->placeholder('Select') }}
                                 </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
@@ -68,27 +80,35 @@
                                     <tr>
                                         <th>SL No</th>
                                         <th>Date</th>
-                                        <th>Order ID</th>
-                                        <th>Ordered Branch</th>
-                                        <th>Returned Branch</th>
+                                        <th>Branch</th>
+                                        <th>Type</th>
+                                        <th>Head</th>
                                         <th>Description</th>
-                                        <th>Ret. Amount</th>
+                                        <th>Payment Mode</th>
+                                        <th>Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse($data as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $item->order->ono() }}</td>
                                         <td>{{ $item->created_at->format('d.M.Y') }}</td>
-                                        <td>{{ $item->orderBranch->name }}</td>
-                                        <td>{{ $item->returnBranch->name }}</td>
-                                        <td>{{ $item->comment }}</td>
-                                        <td class="text-end">{{ number_format($item->details->sum('returned_amount'), 2) }}</td>
+                                        <td>{{ $item->branch?->name }}</td>
+                                        <td>{{ $item->category }}</td>
+                                        <td>{{ $item->head?->name }}</td>
+                                        <td>{{ $item->description }}</td>
+                                        <td>{{ $item->pmode?->name }}</td>
+                                        <td class="text-end">{{ $item->amount }}</td>
                                     </tr>
                                     @empty
                                     @endforelse
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="7" class="text-end fw-bold">Total</td>
+                                        <td class="text-end fw-bold">{{ number_format($data->sum('amount'), 2) }}</td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
