@@ -13,6 +13,7 @@ use App\Models\Doctor;
 use App\Models\Head;
 use App\Models\IncomeExpense;
 use App\Models\LabOrder;
+use App\Models\LabOrderNote;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\OrderHistory;
@@ -508,4 +509,9 @@ function cancelOrder($oid)
         });
     endif;
     recordOrderEvent($oid, 'Order has been deleted / cancelled');
+}
+
+function isOrderNote($oid)
+{
+    return (LabOrderNote::where('order_id', $oid)->exists()) ? 'text-success' : 'text-danger';
 }
