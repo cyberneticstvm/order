@@ -294,7 +294,7 @@ class AjaxController extends Controller
                 $op .= '</div><div class="drawer-footer">Bank Transfer</div>';
                 break;
             case 'order':
-                $order = Order::findOrFail($request->mode);
+                $order = Order::withTrashed()->where('id', $request->mode)->firstOrFail();
                 $op = '<div class="drawer-header">
                         <h6 class="drawer-title" id="drawer-3-title">Order Detail</h6></div><div class="drawer-body table-responsive">';
                 $op .= "<table><tbody>";
