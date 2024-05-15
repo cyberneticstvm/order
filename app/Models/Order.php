@@ -63,4 +63,9 @@ class Order extends Model
     {
         return ($this->created_at != $this->updated_at) ? "text-danger fw-bold" : "";
     }
+
+    public function labNotes()
+    {
+        return $this->hasMany(LabOrderNote::class, 'order_id', 'id');
+    }
 }

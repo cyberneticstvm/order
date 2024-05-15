@@ -493,6 +493,7 @@ function cancelOrder($oid)
         DB::transaction(function () use ($order) {
             $credit = Payment::where('order_id', $order->id)->sum('amount');
             $order->delete();
+            LabOrder::where('order_id', $order->id)->delete();
             Payment::where('order_id', $order->id)->delete();
             if ($credit > 0) :
                 CustomerAccount::create([

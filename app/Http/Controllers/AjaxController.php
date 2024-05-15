@@ -321,6 +321,12 @@ class AjaxController extends Controller
                     $op .= "<tr><td>" . $item->action . "</td><td>" . $item->created_at->format('d.M.Y h:i a') . "</td><td>" . $item->user->name . "</td></tr>";
                 endforeach;
                 $op .= "</tbody></table>";
+                $op .= "<h5 class='mt-3 mb-3'>Lab Order Notes</h5>";
+                $op .= "<table class='table table-bordered'><thead><th>Notes</th><th>Written by</th></thead><tbody>";
+                foreach ($order->labNotes as $key => $item) :
+                    $op .= "<tr><td>" . $item->notes . "</td><td>" . $item->user->name . "</td></tr>";
+                endforeach;
+                $op .= "</tbody></table>";
                 $op .= '</div><div class="drawer-footer">Order Detail</div>';
                 break;
             default:
