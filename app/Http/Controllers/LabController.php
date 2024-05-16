@@ -210,7 +210,7 @@ class LabController extends Controller
                     'lab_id' => ($request->lab_id) ?? NULL,
                     'updated_by' => $request->user()->id,
                 ]);*/
-                foreach ($request->status as $key => $item) :
+                foreach ($request->chkItem as $key => $item) :
                     $lab = LabOrder::findOrFail($item);
                     $lab->update([
                         'status' => $request->status,
@@ -229,7 +229,7 @@ class LabController extends Controller
                 $odetail = OrderDetail::findOrFail($lab->order_detail_id);
                 $data[] = [
                     'order_id' => $odetail->order->id,
-                    'action' => 'Order has been sent back to ' . Branch::where('id', $odetail->order->branch_id)->first()->name . ' - ' . strtoupper($odetail->eye),
+                    'action' => 'Order has been sent to ' . Branch::where('id', $odetail->order->branch_id)->first()->name . ' - ' . strtoupper($odetail->eye),
                     'performed_by' => $request->user()->id,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
