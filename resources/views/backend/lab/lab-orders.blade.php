@@ -69,12 +69,12 @@
                                 <tbody>
                                     @forelse($orders as $key => $item)
                                     <tr>
-                                        <td class="{{ isOrderNote($item->order?->id) }}">{{ $key + 1 }}</td>
+                                        <td class="">{{ $key + 1 }}</td>
                                         <td class=" text-center">
                                             {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem') }}
                                         </td>
                                         <td><a href="javascript:void(0)" class="dayBook {{ $item->order?->isEdited() }}" data-from-date="" data-to-date="" data-type="order" data-mode="{{ $item->order?->id }}" data-branch="" data-drawer="orderDrawer">{{ $item->order?->ono() }}</a></td>
-                                        <td class="fw-bold">{{ strtoupper($item->item?->eye) }}</td>
+                                        <td class="{{ isOrderNote($item->order?->id) }}">{{ strtoupper($item->item?->eye) }}</td>
                                         <td>{{ $item->item?->sph }}</td>
                                         <td>{{ $item->item?->cyl }}</td>
                                         <td>{{ $item->item?->axis }}</td>
