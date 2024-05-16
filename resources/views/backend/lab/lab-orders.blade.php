@@ -69,7 +69,7 @@
                                 <tbody>
                                     @forelse($orders as $key => $item)
                                     <tr>
-                                        <td class="{{ isOrderNote($item->order?->id)">{{ $key + 1 }}</td>
+                                        <td class="{{ isOrderNote($item->order?->id) }}">{{ $key + 1 }}</td>
                                         <td class=" text-center">
                                             {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem') }}
                                         </td>
