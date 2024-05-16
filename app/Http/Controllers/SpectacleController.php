@@ -30,7 +30,7 @@ class SpectacleController extends Controller
         $this->middleware(function ($request, $next) {
 
             //$this->optometrists = User::role('Optometrist')->pluck('name', 'id');
-            $this->optometrists = User::leftJoin('user_branches as ub', 'users.id', 'ub.user_id')->select('users.id', 'users.name')->where('ub.branch_id', Session::get('branch'))->role('Optometrist')->get();
+            $this->optometrists = User::leftJoin('user_branches as ub', 'users.id', 'ub.user_id')->select('users.id', 'users.name')->where('ub.branch_id', Session::get('branch'))->role('Optometrist')->pluck('name', 'id');
             $this->doctors = User::role('Doctor')->pluck('name', 'id');
             $this->powers = Power::all();
 
