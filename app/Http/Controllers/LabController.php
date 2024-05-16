@@ -227,9 +227,10 @@ class LabController extends Controller
             foreach ($request->chkItem as $key => $item) :
                 $lab = LabOrder::findOrFail($item);
                 $odetail = OrderDetail::findOrFail($lab->order_detail_id);
+                $action = ($request->status == 'sent-to-branch') ? 'Order has been sent back to ' . Branch::where('id', $odetail->order->branch_id)->first()->name . ' - ' . strtoupper($odetail->eye) : 'Order has transferred to ' . Branch::where('id', $lab->lab_id)->first()->name . ' - ' . strtoupper($odetail->eye);
                 $data[] = [
                     'order_id' => $odetail->order->id,
-                    'action' => 'Order has been sent to ' . Branch::where('id', $odetail->order->branch_id)->first()->name . ' - ' . strtoupper($odetail->eye),
+                    'action' => $action,
                     'performed_by' => $request->user()->id,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
