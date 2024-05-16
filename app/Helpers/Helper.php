@@ -514,5 +514,5 @@ function cancelOrder($oid)
 
 function isOrderNote($oid)
 {
-    return (LabOrderNote::where('order_id', $oid)->exists()) ? 'text-success' : 'text-primary';
+    return (LabOrderNote::where('order_id', $oid)->exists()) ? 'text-success fw-bold' : 'text-primary';
 }
