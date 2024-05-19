@@ -12,6 +12,7 @@ use App\Models\Patient;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Models\ProductDamage;
+use App\Models\Spectacle;
 use App\Models\Transfer;
 use App\Models\TransferDetails;
 use Carbon\Carbon;
@@ -31,6 +32,7 @@ class HelperController extends Controller
         $this->middleware('permission:product-damage-transfer-update', ['only' => ['pendingDamageTransferEdit', 'pendingDamageTransferUpdate']]);
         $this->middleware('permission:search-order', ['only' => ['searchOrder', 'searchOrderFetch']]);
         $this->middleware('permission:search-customer', ['only' => ['searchCustomer', 'searchCustomerFetch']]);
+        $this->middleware('permission:search-prescription', ['only' => ['searchPrescription', 'searchPrescriptionFetch']]);
     }
 
     public function updateInvoiceNumber()
@@ -167,6 +169,23 @@ class HelperController extends Controller
         $order = Order::findOrFail(decrypt($id));
         $notes = OrderStatusNote::where('order_id', $order->id)->latest()->get();
         return view('backend.order.status-update', compact('order', 'notes'));
+    }
+
+    public function searchPrescription()
+    {
+        $data = [];
+        $inputs = [];
+        return view('backend.search.prescription', compact('inputs', 'data'));
+    }
+
+    public function searchPrescriptionFetch(Request $request)
+    {
+        $this->validate($request, [
+            'search_term' => 'required',
+        ]);
+        $inputs = array($request->search_term);
+        $data = Spectacle::leftJoin('customers as c', 'c.id', 'spectacles.customer_id')->where('c.id', $request->search_term)->orWhere('c.mobile', $request->search_term)->orWhere('c.mrn', $request->search_term)->orWhere('c.name', 'LIKE', '%' . $request->search_term . '%')->withTrashed()->get();
+        return view('backend.search.prescription', compact('inputs', 'data'));
     }
 
     public function orderStatusUpdate(Request $request, string $id)

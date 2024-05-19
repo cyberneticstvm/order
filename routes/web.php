@@ -142,6 +142,9 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/search/customer', 'searchCustomer')->name('search.customer');
         Route::post('/search/customer', 'searchCustomerFetch')->name('search.customer.fetch');
 
+        Route::get('/search/prescription', 'searchPrescription')->name('search.prescription');
+        Route::post('/search/prescription', 'searchPrescriptionFetch')->name('search.prescription.fetch');
+
         Route::post('/lab/note/update', 'updateLabNote')->name('lab.note.update');
     });
 

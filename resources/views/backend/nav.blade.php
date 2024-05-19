@@ -72,7 +72,8 @@
             {{
                 Menu::new()->addClass('sidebar-submenu')
                 ->linkIfCan('search-order', route('search.order'), 'Order')
-                ->linkIfCan('search-customer', route('search.customer'), 'Customer');
+                ->linkIfCan('search-customer', route('search.customer'), 'Customer')
+                ->linkIfCan('search-prescription', route('search.prescription'), 'Prescription');
             }}
         </li>
         <li class="sidebar-main-title">
