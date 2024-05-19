@@ -184,7 +184,7 @@ class HelperController extends Controller
             'search_term' => 'required',
         ]);
         $inputs = array($request->search_term);
-        $data = Spectacle::leftJoin('customers as c', 'c.id', 'spectacles.customer_id')->where('c.id', $request->search_term)->orWhere('c.mobile', $request->search_term)->orWhere('c.mrn', $request->search_term)->orWhere('c.name', 'LIKE', '%' . $request->search_term . '%')->withTrashed()->get();
+        $data = Spectacle::leftJoin('customers as c', 'c.id', 'spectacles.customer_id')->selectRaw('spectacles.*')->where('c.id', $request->search_term)->orWhere('c.mobile', $request->search_term)->orWhere('c.mrn', $request->search_term)->orWhere('c.name', 'LIKE', '%' . $request->search_term . '%')->withTrashed()->get();
         return view('backend.search.prescription', compact('inputs', 'data'));
     }
 
