@@ -281,11 +281,9 @@ class ReportController extends Controller
 
     public function exportOrder()
     {
-        echo 'hai';
-        die;
-        /*$inputs = [date('Y-m-d'), date('Y-m-d'), 'delivered', branch()->id];
+        $inputs = [date('Y-m-d'), date('Y-m-d'), 'delivered', branch()->id];
         $branches = $this->branches;
         $sales = [];
-        return view('backend.report.order', compact('sales', 'inputs', 'branches'));*/
+        return view('backend.report.order', compact('sales', 'inputs', 'branches'));
     }
 }
