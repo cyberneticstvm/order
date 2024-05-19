@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\AppointmentExport;
 use App\Exports\CampPatientExport;
 use App\Exports\FailedProductsExport;
+use App\Exports\OrderExport;
 use App\Exports\ProductCompareExport;
 use App\Exports\ProductFrameExport;
 use App\Exports\ProductLensExport;
@@ -40,6 +41,7 @@ class ImportExportController extends Controller
         $this->middleware('permission:import-new-lenses', ['only' => ['importLenses', 'importLensesUpdate']]);
         $this->middleware('permission:import-product-transfer', ['only' => ['importTransfer', 'importTransferUpdate']]);
         $this->middleware('permission:stock-comparison', ['only' => ['stockComparison', 'stockComparisonUpdate']]);
+        //$this->middleware('permission:export-order-excel', ['only' => ['exportOrder']]);
 
         $this->middleware(function ($request, $next) {
 
@@ -248,5 +250,10 @@ class ImportExportController extends Controller
         $data = Session::get('fdata');
         Session::forget('fdata');
         return Excel::download(new FailedProductsExport($data), 'failed_upload.xlsx');
+    }
+
+    public function exportOrder(Request $request)
+    {
+        return Excel::download(new OrderExport($request), 'order.xlsx');
     }
 }
