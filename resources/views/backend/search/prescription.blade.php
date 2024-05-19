@@ -69,7 +69,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($data as $key => $item)
+                                    @forelse($data as $key => $spec)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $spec->customer->id }}</td>
