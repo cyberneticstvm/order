@@ -33,7 +33,7 @@
                     <td>{{ $item->created_at->format('d.M.Y') }}</td>
                     <td class="text-end">{{ $item->advance }}</td>
                     <td class="text-end">{{ $item->balance }}</td>
-                    <td class="text-end">{{ $item->payments->sum('amount') }}</td>
+                    <td class="text-end">{{ number_format($item->payments->sum('amount') + $item->credit_used, 2) }}</td>
                     <td class="text-end">{{ $item->invoice_total }}</td>
                 </tr>
                 @empty
@@ -41,7 +41,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="6" class="text-end">Total</th>
+                    <th colspan="7" class="text-end">Total</th>
                     <th class="text-end">{{ ($sales) ? number_format($sales->sum('invoice_total'), 2) : '0.00' }}</th>
                 </tr>
             </tfoot>
