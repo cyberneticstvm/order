@@ -603,7 +603,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/product/transfer', 'fetchProductTransfer')->name('report.product.transfer.fetch');
         Route::get('/purchase', 'purchase')->name('report.purchase');
         Route::post('/purchase', 'fetchPurchase')->name('report.purchase.fetch');
-        Route::get('/order/export', 'fetchSales')->name('report.order.fetch');
+        Route::get('/order/export', 'exportOrder')->name('order.export');
     });
 
     Route::prefix('/backend/voucher')->controller(VoucherController::class)->group(function () {
