@@ -108,7 +108,6 @@
                                         <td>{{ $item->ono() }}</td>
                                         <td>{{ $item->ino() }}</td>
                                         <td>{{ $item->branch?->name }}</td>
-                                        <td>{{ $item->name }}</td>
                                         <td>{{ $item->created_at->format('d/M/Y h:i a') }}</td>
                                         <td>{{ ucfirst($item->order_status) }}</td>
                                         <td class="text-end">{{ number_format($item->payments->sum('amount'), 2) }}</td>
