@@ -31,7 +31,7 @@ class OrderExport implements FromCollection, WithMapping, WithHeadings, ShouldAu
             return $q->where('branch_id', $request->branch);
         })->when($request->status != 'all', function ($q) use ($request) {
             return $q->where('order_status', $request->status);
-        })->orderByDesc('created_at')->get();
+        })->orderBy('order_sequence')->get();
 
         return $sales->map(function ($data, $key) {
             return [
