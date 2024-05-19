@@ -355,12 +355,12 @@
                                                 </td>
                                                 <td>
                                                     {{
-                                                        html()->text('rpd', $spectacle?->rpd ?? '')->class('form-control border-0 text-center sIpd')->placeholder('RPD')
+                                                        html()->text('rpd', $spectacle?->rpd ?? '')->class('form-control border-0 text-center fIpd')->placeholder('RPD')
                                                     }}
                                                 </td>
                                                 <td>
                                                     {{
-                                                        html()->text('lpd', $spectacle?->lpd ?? '')->class('form-control border-0 text-center')->placeholder('LPD')
+                                                        html()->text('lpd', $spectacle?->lpd ?? '')->class('form-control border-0 text-center sIpd')->placeholder('LPD')
                                                     }}
                                                 </td>
                                             </tr>
