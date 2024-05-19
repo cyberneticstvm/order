@@ -89,7 +89,7 @@ class ReportController extends Controller
         })->when($request->order_status != 'all', function ($q) use ($request) {
             return $q->where('order_status', $request->order_status);
         })->orderBy('order_sequence', 'ASC')->get();
-        return view(($request->redirect == 'sales') ? 'backend.report.sales' : 'backend.report.order', compact('sales', 'inputs', 'branches'));
+        return view(($request->redir == 'sales') ? 'backend.report.sales' : 'backend.report.order', compact('sales', 'inputs', 'branches'));
     }
 
     public function stockStatus()

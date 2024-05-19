@@ -28,7 +28,7 @@
                         <div class="card-wrapper">
                             <form class="row g-3" method="post" action="{{ route('report.sales.fetch') }}">
                                 @csrf
-                                <input type="hidden" name="redirect" value="order" />
+                                <input type="hidden" name="redir" value="order" />
                                 <div class="col-md-2">
                                     <label class="form-label req">From Date</label>
                                     {{ html()->date($name = 'from_date', $value = ($inputs[0]) ?? date('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}
