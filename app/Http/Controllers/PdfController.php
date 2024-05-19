@@ -189,6 +189,18 @@ class PdfController extends Controller
         return $pdf->stream('spectacle.pdf');
     }
 
+    public function exportOrder(Request $request)
+    {
+        $sales = Order::whereBetween(($request->status != 'delivered') ? 'order_date' : 'invoice_generated_at', [Carbon::parse($request->fdate)->startOfDay(), Carbon::parse($request->tdate)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('branch_id', $request->branch);
+        })->when($request->status != 'all', function ($q) use ($request) {
+            return $q->where('order_status', $request->status);
+        })->orderBy('order_sequence', 'ASC')->get();
+        $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
+        $pdf = PDF::loadView('/backend/pdf/order', compact('sales', 'qrcode', 'request'));
+        return $pdf->stream('order.pdf');
+    }
+
     public function NumberintoWords(float $number)
     {
         $number_after_decimal = round($number - ($num = floor($number)), 2) * 100;

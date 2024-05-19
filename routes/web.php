@@ -196,6 +196,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/product/transfer/{id}', 'exportProductTransfer')->name('pdf.product.transfer');
         Route::get('/order/prescription/{id}', 'exportOrderPrescription')->name('store.order.prescription');
         Route::get('/customer/prescription/{id}', 'exportCustomerPrescription')->name('customer.order.prescription');
+        Route::get('/order/{fdate}/{tdate}/{status}/{branch}', 'exportOrder')->name('export.order.pdf');
     });
 
     Route::prefix('/backend/bank/transfer')->controller(BankTransferController::class)->group(function () {

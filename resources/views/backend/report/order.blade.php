@@ -78,7 +78,7 @@
                                 <div class="btn-group">
                                     <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Export</button>
                                     <ul class="dropdown-menu dropdown-block">
-                                        <li><a class="dropdown-item txt-dark" href="{{ route('export.order', ['fdate' => $inputs[0], 'tdate' => $inputs[1], 'status' => $inputs[2], 'branch' => $inputs[3]]) }}" target="_blank"><i class="icofont icofont-file-pdf txt-danger fw-bold"></i> Pdf</a></li>
+                                        <li><a class="dropdown-item txt-dark" href="{{ route('export.order.pdf', ['fdate' => $inputs[0], 'tdate' => $inputs[1], 'status' => $inputs[2], 'branch' => $inputs[3]]) }}" target="_blank"><i class="icofont icofont-file-pdf txt-danger fw-bold"></i> Pdf</a></li>
                                         <li><a class="dropdown-item" href="{{ route('export.order', ['fdate' => $inputs[0], 'tdate' => $inputs[1], 'status' => $inputs[2], 'branch' => $inputs[3]]) }}" target="_blank"><i class="icofont icofont-file-excel txt-success fw-bold"></i> Excel</a></li>
                                     </ul>
                                 </div>
