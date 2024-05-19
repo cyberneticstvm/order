@@ -283,6 +283,8 @@ class ReportController extends Controller
         $inputs = [date('Y-m-d'), date('Y-m-d'), 'delivered', branch()->id];
         $branches = $this->branches;
         $sales = [];
+        dd($inputs);
+        die;
         return view('backend.report.order', compact('sales', 'inputs', 'branches'));
     }
 }
