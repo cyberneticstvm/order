@@ -599,7 +599,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/product/transfer', 'fetchProductTransfer')->name('report.product.transfer.fetch');
         Route::get('/purchase', 'purchase')->name('report.purchase');
         Route::post('/purchase', 'fetchPurchase')->name('report.purchase.fetch');
-        Route::post('/order/export', 'exportOrder')->name('order.export.pdf.excel');
+        Route::post('/order/export', 'exportOrders')->name('order.export.pdf.excel');
     });
 
     Route::prefix('/backend/voucher')->controller(VoucherController::class)->group(function () {

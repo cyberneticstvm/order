@@ -278,7 +278,7 @@ class ReportController extends Controller
         return view('backend.report.purchase', compact('data', 'inputs', 'products'));
     }
 
-    public function exportOrder()
+    public function exportOrders()
     {
         $inputs = [date('Y-m-d'), date('Y-m-d'), 'delivered', branch()->id];
         $branches = $this->branches;
