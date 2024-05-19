@@ -154,7 +154,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/product/solution', 'exportProductFrame')->name('export.product.solution');
         Route::get('/product/accessory', 'exportProductFrame')->name('export.product.accessory');
 
-        Route::post('/order/{fdate}/{tdate}/{status}/{branch}', 'exportOrder')->name('export.order');
+        //Route::post('/order/{fdate}/{tdate}/{status}/{branch}', 'exportOrder')->name('export.order');
     });
 
     Route::prefix('/backend/import')->controller(ImportExportController::class)->group(function () {
