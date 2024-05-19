@@ -21,7 +21,7 @@
                     <th>Advance</th>
                     <th>Balance</th>
                     <th>Paid</th>
-                    <th>Order/Invoice Amount</th>
+                    <th>Bill Total</th>
                 </tr>
             </thead>
             <tbody>
