@@ -27,10 +27,10 @@ class OrderExport implements FromCollection, WithMapping, WithHeadings, ShouldAu
     public function collection()
     {
         $request = $this->request;
-        $sales = Order::whereBetween(($request->order_status != 'delivered') ? 'order_date' : 'invoice_generated_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+        $sales = Order::whereBetween(($request->status != 'delivered') ? 'order_date' : 'invoice_generated_at', [Carbon::parse($request->fdate)->startOfDay(), Carbon::parse($request->tdate)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('branch_id', $request->branch);
-        })->when($request->order_status != 'all', function ($q) use ($request) {
-            return $q->where('order_status', $request->order_status);
+        })->when($request->status != 'all', function ($q) use ($request) {
+            return $q->where('order_status', $request->status);
         })->orderByDesc('created_at')->get();
 
         return $sales->map(function ($data, $key) {

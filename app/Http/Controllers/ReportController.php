@@ -277,4 +277,12 @@ class ReportController extends Controller
         })->orderByDesc('purchase_details.id')->get();
         return view('backend.report.purchase', compact('data', 'inputs', 'products'));
     }
+
+    public function exportOrder()
+    {
+        $inputs = [date('Y-m-d'), date('Y-m-d'), 'booked', branch()->id];
+        $branches = $this->branches;
+        $sales = [];
+        return view('backend.report.order', compact('sales', 'inputs', 'branches'));
+    }
 }
