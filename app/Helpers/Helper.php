@@ -516,3 +516,14 @@ function isOrderNote($oid)
 {
     return (LabOrderNote::where('order_id', $oid)->exists()) ? 'text-success fw-bold' : 'text-primary';
 }
+
+function isProductChanged($oid, $products)
+{
+    $details = OrderDetail::where('order_id', $oid)->whereNull('return')->whereNull('returned_qty')->get();
+    $ret = false;
+    foreach ($details as $key => $item) :
+        if (!in_array($item->product_id, $products))
+            $ret = true;
+    endforeach;
+    return $ret;
+}
