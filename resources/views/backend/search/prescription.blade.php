@@ -57,6 +57,7 @@
                                 <thead>
                                     <tr>
                                         <th>SL No</th>
+                                        <th>Presc. ID</th>
                                         <th>Customer ID</th>
                                         <th>Customer Name</th>
                                         <th>Contact Number</th>
@@ -72,6 +73,7 @@
                                     @forelse($data as $key => $spec)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
+                                        <td>{{ $spec->id }}</td>
                                         <td>{{ $spec->customer->id }}</td>
                                         <td>{{ $spec->customer->name }}</td>
                                         <td>{{ $spec->customer->mobile }}</td>
