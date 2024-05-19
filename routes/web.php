@@ -597,8 +597,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/bank/transfer', 'fetchBankTransfer')->name('report.bank.transfer.fetch');
         Route::get('/product/damage', 'productDamage')->name('report.product.damage');
         Route::post('/product/damage', 'fetchProductDamage')->name('report.product.damage.fetch');
-        Route::get('/sales/return', 'salesReturn')->name('report.sales.return');
-        Route::post('/sales/return', 'fetchSalesReturn')->name('report.sales.return.fetch');
+        Route::get('/sreturn', 'salesReturn')->name('report.sales.return');
+        Route::post('/sreturn', 'fetchSalesReturn')->name('report.sales.return.fetch');
         Route::get('/product/transfer', 'productTransfer')->name('report.product.transfer');
         Route::post('/product/transfer', 'fetchProductTransfer')->name('report.product.transfer.fetch');
         Route::get('/purchase', 'purchase')->name('report.purchase');
