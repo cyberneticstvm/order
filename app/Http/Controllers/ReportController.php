@@ -38,6 +38,7 @@ class ReportController extends Controller
         $this->middleware('permission:report-sales-return', ['only' => ['salesReturn', 'fetchSalesReturn']]);
         $this->middleware('permission:report-product-transfer', ['only' => ['productTransfer', 'fetchProductTransfer']]);
         $this->middleware('permission:report-purchase', ['only' => ['purchase', 'fetchPurchase']]);
+        $this->middleware('permission:export-order', ['only' => ['exportOrder']]);
 
         $this->middleware(function ($request, $next) {
             $brs = Branch::selectRaw("0 as id, 'All / Main Branch' as name");
@@ -278,13 +279,13 @@ class ReportController extends Controller
         return view('backend.report.purchase', compact('data', 'inputs', 'products'));
     }
 
-    public function exportOrders()
+    public function exportOrder()
     {
         echo 'hai';
         die;
-        $inputs = [date('Y-m-d'), date('Y-m-d'), 'delivered', branch()->id];
+        /*$inputs = [date('Y-m-d'), date('Y-m-d'), 'delivered', branch()->id];
         $branches = $this->branches;
         $sales = [];
-        return view('backend.report.order', compact('sales', 'inputs', 'branches'));
+        return view('backend.report.order', compact('sales', 'inputs', 'branches'));*/
     }
 }
