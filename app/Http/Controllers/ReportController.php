@@ -280,7 +280,7 @@ class ReportController extends Controller
 
     public function exportOrder()
     {
-        $inputs = [date('Y-m-d'), date('Y-m-d'), 'booked', branch()->id];
+        $inputs = [date('Y-m-d'), date('Y-m-d'), 'delivered', branch()->id];
         $branches = $this->branches;
         $sales = [];
         return view('backend.report.order', compact('sales', 'inputs', 'branches'));
