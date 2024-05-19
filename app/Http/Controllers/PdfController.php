@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Branch;
 use App\Models\Camp;
 use App\Models\CampPatient;
 use App\Models\Consultation;
 use App\Models\MedicalRecord;
 use App\Models\Order;
-use App\Models\Patient;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Spectacle;
@@ -196,8 +196,9 @@ class PdfController extends Controller
         })->when($request->status != 'all', function ($q) use ($request) {
             return $q->where('order_status', $request->status);
         })->orderBy('order_sequence', 'ASC')->get();
+        $branch = Branch::find($request->branch);
         $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
-        $pdf = PDF::loadView('/backend/pdf/order', compact('sales', 'qrcode', 'request'));
+        $pdf = PDF::loadView('/backend/pdf/order', compact('sales', 'qrcode', 'request', 'branch'));
         return $pdf->stream('order.pdf');
     }
 

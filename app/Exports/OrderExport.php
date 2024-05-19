@@ -50,7 +50,7 @@ class OrderExport implements FromCollection, WithMapping, WithHeadings, ShouldAu
 
     public function headings(): array
     {
-        return ['SL No', 'Order No.', 'Bill No.', 'Branch', 'Order Date', 'Order Status', 'Advance', 'Balance', 'Order Total'];
+        return ['SL No', 'Order No.', 'Bill No.', 'Branch', 'Order Date', 'Order Status', 'Advance', 'Balance', 'Order/Invoice Amount'];
     }
 
     public function map($data): array
