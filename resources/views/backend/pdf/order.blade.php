@@ -7,7 +7,7 @@
 </div>
 <div class="row">
     <div class="col">
-        <h4 class="text-center">Date: {{ $request->fdate->format('d.M.Y') }} to {{ $request->tdate->format('d.M.Y') }}</h4>
+        <h4 class="text-center">Date: {{ $request->fdate }} to {{ $request->tdate }}</h4>
         <p class="text-center">Branch: {{ $branch->name }}, Status: {{ $request->status }}</p>
     </div>
     <div class="col">
