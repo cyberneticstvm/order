@@ -280,11 +280,11 @@ class ReportController extends Controller
 
     public function exportOrders()
     {
+        echo 'hai';
+        die;
         $inputs = [date('Y-m-d'), date('Y-m-d'), 'delivered', branch()->id];
         $branches = $this->branches;
         $sales = [];
-        dd($inputs);
-        die;
         return view('backend.report.order', compact('sales', 'inputs', 'branches'));
     }
 }
