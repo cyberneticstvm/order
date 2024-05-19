@@ -604,6 +604,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/purchase', 'purchase')->name('report.purchase');
         Route::post('/purchase', 'fetchPurchase')->name('report.purchase.fetch');
         Route::get('/order', 'exportOrder')->name('order.export');
+        Route::post('/order', 'fetchSales')->name('order.export.fetch');
     });
 
     Route::prefix('/backend/voucher')->controller(VoucherController::class)->group(function () {
