@@ -20,6 +20,7 @@
                     <th>Order Date</th>
                     <th>Advance</th>
                     <th>Balance</th>
+                    <th>Paid</th>
                     <th>Order/Invoice Amount</th>
                 </tr>
             </thead>
@@ -32,6 +33,7 @@
                     <td>{{ $item->created_at->format('d.M.Y') }}</td>
                     <td class="text-end">{{ $item->advance }}</td>
                     <td class="text-end">{{ $item->balance }}</td>
+                    <td class="text-end">{{ $item->payments->sum('amount') }}</td>
                     <td class="text-end">{{ $item->invoice_total }}</td>
                 </tr>
                 @empty
