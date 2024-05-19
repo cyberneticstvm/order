@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-wrapper">
-                            <form class="row g-3" method="post" action="{{ route('report.sales.fetch') }}">
+                            <form class="row g-3" method="post" action="{{ route('report.order.fetch') }}">
                                 @csrf
                                 <input type="hidden" name="redirect" value="order" />
                                 <div class="col-md-2">
