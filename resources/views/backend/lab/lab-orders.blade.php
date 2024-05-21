@@ -52,6 +52,7 @@
                                     <tr>
                                         <th>SL No</th>
                                         <th>Select</th>
+                                        <th>Notes</th>
                                         <th>Order ID</th>
                                         <th>Eye</th>
                                         <th>Sph</th>
@@ -73,6 +74,7 @@
                                         <td class=" text-center">
                                             {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem') }}
                                         </td>
+                                        <td class="text-center"><a href="javascript:void(0)" class="labNote" data-drawer="labNoteDrawer" data-oid="{{ $item->order_id }}"><i class="fa fa-edit {{ isOrderNote($item->order?->id) }} fa-lg"></i></a></td>
                                         <td><a href="javascript:void(0)" class="dayBook {{ $item->order?->isEdited() }}" data-from-date="" data-to-date="" data-type="order" data-mode="{{ $item->order?->id }}" data-branch="" data-drawer="orderDrawer">{{ $item->order?->ono() }}</a></td>
                                         <td class="{{ isOrderNote($item->order?->id) }}">{{ strtoupper($item->item?->eye) }}</td>
                                         <td>{{ $item->item?->sph }}</td>
@@ -105,5 +107,26 @@
 </div>
 <div class="drawer drawer-left slide" tabindex="-1" role="dialog" aria-labelledby="drawer-3-title" aria-hidden="true" id="orderDrawer">
     <div class="drawer-content drawer-content-scrollable" role="document"></div>
+</div>
+<div class="drawer drawer-left slide" tabindex="-1" role="dialog" aria-labelledby="drawer-3-title" aria-hidden="true" id="labNoteDrawer">
+    <div class="drawer-content drawer-content-scrollable" role="document">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-12">
+                    <h5>Order Notes for <span class="labOrderId"></span></h5>
+                </div>
+                <div class="col-12 oldNotes mt-3"></div>
+                {{ html()->form('POST', route('lab.note.update'))->open() }}
+                <input type="hidden" name="order_id" id="order_id" value="" />
+                <div class="col-12 mt-3">
+                    {{ html()->textarea('notes')->class('form-control')->attribute('rows', 5)->placeholder('Notes / Remarks') }}
+                </div>
+                <div class="col mt-3 text-end">
+                    {{ html()->submit('Update')->class('btn btn-submit btn-primary') }}
+                </div>
+                {{ html()->form()->close() }}
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
