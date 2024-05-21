@@ -184,10 +184,10 @@ class LabController extends Controller
         if (in_array(Auth::user()->roles->first()->name, array('Store Manager', 'Administrator'))) :
             $status = array('received-from-lab' => 'Received From Lab', 'sent-to-branch' => 'Sent to Branch', 'sent-to-lab' => 'Sent to Lab');
         else :
-            $status = array('sent-to-branch' => 'Sent to Branch', 'sent-to-lab' => 'Sent to Lab');
+            $status = array('sent-to-branch' => 'Sent to Origin Branch', 'sent-to-lab' => 'Sent to Lab', 'sent-to-main-branch' => 'Sent to Main Branch');
         endif;
-        $br = Branch::selectRaw("0 as id, 'Main Branch' as name");
-        $labs = Branch::whereIn('type', ['rx-lab', 'fitting-lab', 'stock-lab', 'outside-lab'])->selectRaw("id, name")->union($br)->get();
+        //$br = Branch::selectRaw("0 as id, 'Main Branch' as name");
+        $labs = Branch::whereIn('type', ['rx-lab', 'fitting-lab', 'stock-lab', 'outside-lab'])->selectRaw("id, name")->get();
         return view('backend.lab.lab-orders', compact('orders', 'status', 'labs'));
     }
 
@@ -204,7 +204,7 @@ class LabController extends Controller
                     'lab_id' => $request->lab_id,
                     'updated_by' => $request->user()->id,
                 ]);
-            elseif ($request->status == 'sent-to-branch') :
+            elseif ($request->status == 'sent-to-branch' || $request->status == 'sent-to-main-branch') :
                 /*LabOrder::whereIn('id', $request->chkItem)->update([
                     'status' => $request->status,
                     'lab_id' => ($request->lab_id) ?? NULL,
@@ -214,7 +214,7 @@ class LabController extends Controller
                     $lab = LabOrder::findOrFail($item);
                     $lab->update([
                         'status' => $request->status,
-                        'lab_id' => ($request->lab_id) ?? $lab->getOriginal('lab_id'),
+                        'lab_id' => ($request->status == 'sent-to-main-branch') ? 0 : $lab->getOriginal('lab_id'),
                         'updated_by' => $request->user()->id,
                     ]);
                 endforeach;
