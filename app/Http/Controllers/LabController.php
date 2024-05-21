@@ -182,7 +182,7 @@ class LabController extends Controller
         })->*/
 
         if (in_array(Auth::user()->roles->first()->name, array('Store Manager', 'Administrator'))) :
-            $status = array('received-from-lab' => 'Received From Lab', 'sent-to-branch' => 'Sent to Branch', 'sent-to-lab' => 'Sent to Lab');
+            $status = array('received-from-lab' => 'Received From Lab', 'sent-to-branch' => 'Sent to Branch', 'sent-to-lab' => 'Sent to Lab', 'sent-to-main-branch' => 'Sent to Main Branch');
         else :
             $status = array('sent-to-branch' => 'Sent to Origin Branch', 'sent-to-lab' => 'Sent to Lab', 'sent-to-main-branch' => 'Sent to Main Branch');
         endif;
