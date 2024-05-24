@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">Transfer Status</label>
-                                    {{ html()->select($name = 'status', array('' => 'All', '0' => 'Pending', '1' => 'Approved'), ($inputs[3]) ?? old('status'))->class('form-control select2')->placeholder('Select') }}
+                                    {{ html()->select($name = 'status', array('all' => 'All', '0' => 'Pending', '1' => 'Approved'), ($inputs[3]) ?? old('status'))->class('form-control select2')->placeholder('Select') }}
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Approved By</label>

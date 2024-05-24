@@ -231,7 +231,7 @@ class ReportController extends Controller
 
     public function productTransfer()
     {
-        $inputs = [date('Y-m-d'), date('Y-m-d'), 0, NULL, Session::get('branch'), 0, 'all'];
+        $inputs = [date('Y-m-d'), date('Y-m-d'), 0, NULL, Session::get('branch'), 'all', 'all'];
         $products = $this->products;
         $branches = $this->branches;
         $users = User::pluck('name', 'id');
@@ -260,15 +260,13 @@ class ReportController extends Controller
             return $q->where('transfers.to_branch_id', $request->branch);
         })->when($request->product > 0, function ($q) use ($request) {
             return $q->where('td.product_id', $request->product);
-        })->when($request->status != '', function ($q) use ($request) {
+        })->when($request->status != 'all', function ($q) use ($request) {
             return $q->where('transfers.transfer_status', $request->status);
         })->when($request->product_type != 'all', function ($q) use ($request) {
             return $q->where('transfers.category', $request->product_type);
         })->when($request->approved_by > 0, function ($q) use ($request) {
             return $q->where('transfers.accepted_by', $request->approved_by);
         })->orderByDesc('transfers.created_at')->get()->unique('td.transfer_id');
-        dd($data);
-        die;
         return view('backend.report.product-transfer', compact('data', 'inputs', 'branches', 'products', 'users'));
     }
 
