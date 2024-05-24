@@ -42,13 +42,21 @@
                                     <small class="text-danger">{{ $errors->first('to_date') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Product Type</label>
+                                    {{ html()->select($name = 'product_type', array('all' => 'All', 'frame' => 'Frame', 'lens' => 'Lens'), ($inputs[6]) ?? old('product_type'))->class('form-control select2')->placeholder('Select') }}
+                                </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Product</label>
                                     {{ html()->select($name = 'product', $products, ($inputs[2]) ?? old('product'))->class('form-control select2')->placeholder('Select') }}
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">Transfer Status</label>
-                                    {{ html()->select($name = 'status', array('' => 'All', '0' => 'Pending', '1' => 'Approved'), ($inputs[3]) ?? old('head'))->class('form-control select2')->placeholder('Select') }}
+                                    {{ html()->select($name = 'status', array('' => 'All', '0' => 'Pending', '1' => 'Approved'), ($inputs[3]) ?? old('status'))->class('form-control select2')->placeholder('Select') }}
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Approved By</label>
+                                    {{ html()->select($name = 'approved_by', $users, ($inputs[5]) ?? old('approved_by'))->class('form-control select2')->placeholder('Select') }}
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Branch</label>
@@ -79,8 +87,6 @@
                                         <th>Transfer ID</th>
                                         <th>From Branch</th>
                                         <th>To Branch</th>
-                                        <th>Product</th>
-                                        <th>Qty</th>
                                         <th>Transfer Note</th>
                                         <th>Transfer Status</th>
                                     </tr>
@@ -89,14 +95,12 @@
                                     @forelse($data as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $item->transfer?->created_at?->format('d.M.Y') }}</td>
-                                        <td>{{ $item->transfer?->transfer_number }}</td>
-                                        <td>{{ $item->transfer?->frombranch?->name ?? 'Main Branch' }}</td>
-                                        <td>{{ $item->transfer?->tobranch?->name ?? 'Main Branch' }}</td>
-                                        <td>{{ $item->product?->name }}</td>
-                                        <td>{{ $item->qty }}</td>
-                                        <td>{{ $item->transfer?->transfer_note }}</td>
-                                        <td>{{ ($item->transfer?->transfer_status == 1) ? 'Approved' : 'Pending' }}</td>
+                                        <td>{{ $item->created_at?->format('d.M.Y') }}</td>
+                                        <td>{{ $item->transfer_number }}</td>
+                                        <td>{{ $item->frombranch?->name ?? 'Main Branch' }}</td>
+                                        <td>{{ $item->tobranch?->name ?? 'Main Branch' }}</td>
+                                        <td>{{ $item->->transfer_note }}</td>
+                                        <td>{{ ($item->transfer_status == 1) ? 'Approved' : 'Pending' }}</td>
                                     </tr>
                                     @empty
                                     @endforelse

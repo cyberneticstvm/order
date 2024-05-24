@@ -15,6 +15,7 @@ use App\Models\Product;
 use App\Models\ProductDamage;
 use App\Models\PurchaseDetail;
 use App\Models\SalesReturn;
+use App\Models\Transfer;
 use App\Models\TransferDetails;
 use App\Models\User;
 use Carbon\Carbon;
@@ -230,11 +231,12 @@ class ReportController extends Controller
 
     public function productTransfer()
     {
-        $inputs = [date('Y-m-d'), date('Y-m-d'), 0, NULL, Session::get('branch')];
+        $inputs = [date('Y-m-d'), date('Y-m-d'), 0, NULL, Session::get('branch'), 0, 0];
         $products = $this->products;
         $branches = $this->branches;
+        $users = User::pluck('name', 'id');
         $data = collect();
-        return view('backend.report.product-transfer', compact('data', 'inputs', 'branches', 'products'));
+        return view('backend.report.product-transfer', compact('data', 'inputs', 'branches', 'products', 'users'));
     }
 
     public function fetchProductTransfer(Request $request)
@@ -243,17 +245,29 @@ class ReportController extends Controller
             'from_date' => 'required',
             'to_date' => 'required',
         ]);
-        $inputs = [$request->from_date, $request->to_date, $request->product, $request->status, $request->branch];
+        $inputs = [$request->from_date, $request->to_date, $request->product, $request->status, $request->branch, $request->approved_by, $request->product_type];
         $branches = $this->branches;
         $products = $this->products;
-        $data = TransferDetails::leftJoin('transfers as t', 't.id', 'transfer_details.transfer_id')->whereBetween('t.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+        $users = User::pluck('name', 'id');
+        /*$data = TransferDetails::leftJoin('transfers as t', 't.id', 'transfer_details.transfer_id')->whereBetween('t.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('t.to_branch_id', $request->branch);
         })->when($request->product > 0, function ($q) use ($request) {
             return $q->where('transfer_details.product_id', $request->product);
         })->when($request->status != '', function ($q) use ($request) {
             return $q->where('t.transfer_status', $request->status);
-        })->orderByDesc('transfer_details.id')->get();
-        return view('backend.report.product-transfer', compact('data', 'inputs', 'branches', 'products'));
+        })->orderByDesc('transfer_details.id')->get();*/
+        $data = Transfer::leftJoin('transfer_details as td', 'td.transfer_id', 'transfers.id')->whereBetween('transfers.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('transfers.to_branch_id', $request->branch);
+        })->when($request->product > 0, function ($q) use ($request) {
+            return $q->where('td.product_id', $request->product);
+        })->when($request->status != '', function ($q) use ($request) {
+            return $q->where('transfers.transfer_status', $request->status);
+        })->when($request->product_type != 'all', function ($q) use ($request) {
+            return $q->where('transfers.category', $request->product_type);
+        })->when($request->approved_by > 0, function ($q) use ($request) {
+            return $q->where('transfers.accepted_by', $request->product_type);
+        })->orderByDesc('transfers.created_at')->get();
+        return view('backend.report.product-transfer', compact('data', 'inputs', 'branches', 'products', 'users'));
     }
 
     public function purchase()
