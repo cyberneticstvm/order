@@ -266,7 +266,7 @@ class ReportController extends Controller
             return $q->where('transfers.category', $request->product_type);
         })->when($request->approved_by > 0, function ($q) use ($request) {
             return $q->where('transfers.accepted_by', $request->approved_by);
-        })->orderByDesc('transfers.created_at')->get();
+        })->orderByDesc('transfers.created_at')->get()->unique('transfers.transfer_number');
         return view('backend.report.product-transfer', compact('data', 'inputs', 'branches', 'products', 'users'));
     }
 
