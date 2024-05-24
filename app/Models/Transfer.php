@@ -12,7 +12,7 @@ class Transfer extends Model
 
     protected $guarded = [];
 
-    protected $casts = ['transfer_date' => 'datetime'];
+    protected $casts = ['transfer_date' => 'datetime', 'accepted_at' => 'datetime'];
 
     public function status()
     {
@@ -37,5 +37,10 @@ class Transfer extends Model
     public function tobranch()
     {
         return $this->belongsTo(Branch::class, 'to_branch_id', 'id');
+    }
+
+    public function approvedBy()
+    {
+        return $this->belongsTo(User::class, 'accepted_by', 'id');
     }
 }

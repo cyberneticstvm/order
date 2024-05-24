@@ -89,6 +89,9 @@
                                         <th>To Branch</th>
                                         <th>Transfer Note</th>
                                         <th>Transfer Status</th>
+                                        <th>Approved By</th>
+                                        <th>Approved At</th>
+                                        <th>Pdf</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -101,6 +104,9 @@
                                         <td>{{ $item->tobranch?->name ?? 'Main Branch' }}</td>
                                         <td>{{ $item->transfer_note }}</td>
                                         <td>{{ ($item->transfer_status == 1) ? 'Approved' : 'Pending' }}</td>
+                                        <td>{{ $item->approvedBy?->name }}</td>
+                                        <td>{{ $item->accepted_at?->format('d.M.Y h:i a') }}</td>
+                                        <td class="text-center"><a href="{{ route('pdf.product.transfer', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                     </tr>
                                     @empty
                                     @endforelse
