@@ -228,7 +228,18 @@ class LabController extends Controller
             foreach ($request->chkItem as $key => $item) :
                 $lab = LabOrder::findOrFail($item);
                 $odetail = OrderDetail::findOrFail($lab->order_detail_id);
-                $action = ($request->status == 'sent-to-branch') ? 'Order has been sent back to ' . Branch::where('id', ($request->lab_id == 0) ? $request->lab_id : $odetail->order->branch_id)->first()?->name ?? 'Main Branch' . ' - ' . strtoupper($odetail->eye) : 'Order has transferred to ' . Branch::where('id', ($request->lab_id) ?? $lab->getOriginal('lab_id'))->first()?->name ?? 'Main Branch' . ' - ' . strtoupper($odetail->eye);
+                $action = "";
+                $lname = Branch::where('id', ($request->lab_id == 0) ? $request->lab_id : $odetail->order->branch_id)->first()?->name ?? 'Main Branch';
+                if ($request->status == 'sent-to-branch') :
+                    $action = 'Order has been sent back to ' . $lname . ' - ' . strtoupper($odetail->eye);
+                endif;
+                if ($request->status == 'sent-to-lab') :
+                    $action  = 'Order has transferred to ' . Branch::where('id', ($request->lab_id) ?? $lab->getOriginal('lab_id'))->first()?->name ?? 'Main Branch' . ' - ' . strtoupper($odetail->eye);
+                endif;
+                if ($request->status == 'received-from-lab') :
+                    $action  = "Order has received from lab ($lname) " . strtoupper($odetail->eye);
+                endif;
+                /*$action = ($request->status == 'sent-to-branch') ? 'Order has been sent back to ' . Branch::where('id', ($request->lab_id == 0) ? $request->lab_id : $odetail->order->branch_id)->first()?->name ?? 'Main Branch' . ' - ' . strtoupper($odetail->eye) : 'Order has transferred to ' . Branch::where('id', ($request->lab_id) ?? $lab->getOriginal('lab_id'))->first()?->name ?? 'Main Branch' . ' - ' . strtoupper($odetail->eye);*/
                 $data[] = [
                     'order_id' => $odetail->order->id,
                     'action' => $action,
@@ -256,7 +267,48 @@ class LabController extends Controller
 
     public function receivedFromLabUpdate(Request $request)
     {
-        //
+        $this->validate($request, [
+            'status' => 'required',
+        ]);
+        DB::transaction(function () use ($request) {
+            $data = [];
+            if ($request->status == 'sent-to-lab') :
+                LabOrder::whereIn('id', $request->chkItem)->update([
+                    'status' => $request->status,
+                    'lab_id' => $request->lab_id,
+                    'updated_by' => $request->user()->id,
+                ]);
+            elseif ($request->status == 'sent-to-main-branch') :
+                foreach ($request->chkItem as $key => $item) :
+                    $lab = LabOrder::findOrFail($item);
+                    $lab->update([
+                        'status' => $request->status,
+                        'lab_id' => 0,
+                        'updated_by' => $request->user()->id,
+                    ]);
+                endforeach;
+            endif;
+            foreach ($request->chkItem as $key => $item) :
+                $lab = LabOrder::findOrFail($item);
+                $odetail = OrderDetail::findOrFail($lab->order_detail_id);
+                $action = "";
+                if ($request->status == 'sent-to-lab' && $request->lab_id) :
+                    $action = 'Order has transferred to ' . Branch::where('id', ($request->lab_id) ?? $lab->getOriginal('lab_id'))->first()?->name ?? 'Main Branch' . ' - ' . strtoupper($odetail->eye);
+                endif;
+                if ($request->status == 'sent-to-main-branch') :
+                    $action = 'Order has transferred to Main Branch' . ' - ' . strtoupper($odetail->eye);
+                endif;
+                $data[] = [
+                    'order_id' => $odetail->order->id,
+                    'action' => $action,
+                    'performed_by' => $request->user()->id,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ];
+            endforeach;
+            OrderHistory::insert($data);
+        });
+        return redirect()->back()->with("success", "Status updated successfully");
     }
 
     public function delete(string $id)
