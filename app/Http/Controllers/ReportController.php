@@ -256,7 +256,7 @@ class ReportController extends Controller
         })->when($request->status != '', function ($q) use ($request) {
             return $q->where('t.transfer_status', $request->status);
         })->orderByDesc('transfer_details.id')->get();*/
-        $data = Transfer::leftJoin('transfer_details as td', 'td.transfer_id', 'transfers.id')->selectRaw("transfers.*")->whereBetween('transfers.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+        $data = Transfer::leftJoin('transfer_details as td', 'td.transfer_id', 'transfers.id')->whereBetween('transfers.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('transfers.to_branch_id', $request->branch);
         })->when($request->product > 0, function ($q) use ($request) {
             return $q->where('td.product_id', $request->product);
@@ -266,7 +266,7 @@ class ReportController extends Controller
             return $q->where('transfers.category', $request->product_type);
         })->when($request->approved_by > 0, function ($q) use ($request) {
             return $q->where('transfers.accepted_by', $request->approved_by);
-        })->groupBy('transfers.id', 'transfers.transfer_number', 'transfers.from_branch_id', 'transfers.to_branch_id')->orderByDesc('transfers.created_at')->get();
+        })->orderByDesc('transfers.created_at')->get()->unique('transfers.id');
         return view('backend.report.product-transfer', compact('data', 'inputs', 'branches', 'products', 'users'));
     }
 
