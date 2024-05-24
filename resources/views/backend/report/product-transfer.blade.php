@@ -99,7 +99,7 @@
                                         <td>{{ $item->transfer_number }}</td>
                                         <td>{{ $item->frombranch?->name ?? 'Main Branch' }}</td>
                                         <td>{{ $item->tobranch?->name ?? 'Main Branch' }}</td>
-                                        <td>{{ $item->->transfer_note }}</td>
+                                        <td>{{ $item->transfer_note }}</td>
                                         <td>{{ ($item->transfer_status == 1) ? 'Approved' : 'Pending' }}</td>
                                     </tr>
                                     @empty
