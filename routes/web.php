@@ -629,6 +629,10 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
 
         Route::get('/lab-orders', 'labOrders')->name('lab.view.orders');
         Route::post('/lab-orders', 'labOrdersUpdateStatus')->name('lab.order.update.status');
+
+        Route::get('/received-from-lab', 'receivedFromLab')->name('received.from.lab.orders');
+        Route::post('/received-from-lab', 'receivedFromLabUpdate')->name('received.from.lab.orders.update');
+
         Route::get('/lab-orders/delete/{id}', 'delete')->name('lab.order.delete');
     });
 

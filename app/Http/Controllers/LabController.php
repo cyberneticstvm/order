@@ -29,6 +29,7 @@ class LabController extends Controller
         $this->middleware('permission:lab-delete', ['only' => ['destroy']]);
         $this->middleware('permission:lab-assign-orders', ['only' => ['assignOrders']]);
         $this->middleware('permission:lab-assigned-orders', ['only' => ['labOrders']]);
+        $this->middleware('permission:received-from-lab-orders', ['only' => ['receivedFromLab', 'receivedFromLabUpdate']]);
         $this->middleware('permission:lab-assigned-order-delete', ['only' => ['delete']]);
     }
 
@@ -174,7 +175,7 @@ class LabController extends Controller
 
     public function labOrders()
     {
-        $orders = LabOrder::whereIn('status', ['sent-to-lab', 'received-from-lab'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager', 'CEO')), function ($q) {
+        $orders = LabOrder::whereIn('status', ['sent-to-lab'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager', 'CEO')), function ($q) {
             return $q->where('lab_id', Session::get('branch'));
         })->get()->unique('order_detail_id');
         /*when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager')), function ($q) {
@@ -239,6 +240,23 @@ class LabController extends Controller
             OrderHistory::insert($data);
         });
         return redirect()->route('lab.view.orders')->with("success", "Status updated successfully");
+    }
+
+    public function receivedFromLab()
+    {
+        $orders = LabOrder::whereIn('status', ['received-from-lab'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager', 'CEO')), function ($q) {
+            return $q->where('lab_id', Session::get('branch'));
+        })->get()->unique('order_detail_id');
+
+        $status = array('sent-to-lab' => 'Sent to Lab', 'sent-to-main-branch' => 'Sent to Main Branch');
+
+        $labs = Branch::whereIn('type', ['stock-lab'])->selectRaw("id, name")->get();
+        return view('backend.lab.received-from-lab', compact('orders', 'status', 'labs'));
+    }
+
+    public function receivedFromLabUpdate(Request $request)
+    {
+        //
     }
 
     public function delete(string $id)
