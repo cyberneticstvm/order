@@ -96,6 +96,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php($sum=0)
                                     @forelse($data as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
@@ -107,12 +108,20 @@
                                         <td>{{ ($item->transfer_status == 1) ? 'Approved' : 'Pending' }}</td>
                                         <td>{{ $item->approvedBy?->name }}</td>
                                         <td>{{ $item->accepted_at?->format('d.M.Y h:i a') }}</td>
-                                        <td class="text-center">{{ $item->details?->sum('qty') }}</td>
+                                        <td class="text-end">{{ $item->details?->sum('qty') }}</td>
                                         <td class="text-center"><a href="{{ route('pdf.product.transfer', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                     </tr>
+                                    @php($sum += $item->details?->sum('qty'))
                                     @empty
                                     @endforelse
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="9" class="text-end fw-bold">Total</td>
+                                        <td class="text-end fw-bold">{{ $sum }}</td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
