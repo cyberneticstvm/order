@@ -272,7 +272,7 @@ class LabController extends Controller
         ]);
         DB::transaction(function () use ($request) {
             $data = [];
-            if ($request->status == 'sent-to-lab') :
+            if ($request->status == 'sent-to-lab' && $request->lab_id) :
                 LabOrder::whereIn('id', $request->chkItem)->update([
                     'status' => $request->status,
                     'lab_id' => $request->lab_id,
