@@ -231,7 +231,7 @@ class ReportController extends Controller
 
     public function productTransfer()
     {
-        $inputs = [date('Y-m-d'), date('Y-m-d'), 0, NULL, Session::get('branch'), 0, 0];
+        $inputs = [date('Y-m-d'), date('Y-m-d'), 0, NULL, Session::get('branch'), 0, 'all'];
         $products = $this->products;
         $branches = $this->branches;
         $users = User::pluck('name', 'id');
