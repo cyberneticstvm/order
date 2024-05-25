@@ -189,7 +189,7 @@ class LabController extends Controller
             $status = array('received-from-lab' => 'Received From Lab', 'sent-to-branch' => 'Sent to Branch', 'sent-to-lab' => 'Sent to Lab', 'sent-to-main-branch' => 'Sent to Main Branch', 'job-completed' => 'Job Completed', 'job-under-process' => 'Job Under Process');
             $labs = Branch::whereIn('type', ['rx-lab', 'fitting-lab', 'stock-lab', 'outside-lab'])->selectRaw("id, name")->get();
         else :
-            $status = array('sent-to-branch' => 'Sent to Origin Branch', 'sent-to-main-branch' => 'Sent to Main Branch', 'job-completed' => 'Job Completed', 'job-under-process' => 'Job Under Process');
+            $status = array('sent-to-branch' => 'Sent to Origin Branch', 'sent-to-main-branch' => 'Sent to Main Branch', 'job-completed' => 'Job Completed', 'job-under-process' => 'Job Under Process', 'sent-to-lab' => 'Sent to Lab');
             $labs = (Branch::where('id', Session::get('branch'))->first()->type == 'rx-lab') ? Branch::whereIn('type', ['fitting-lab', 'stock-lab'])->selectRaw("id, name")->get() : collect();
         endif;
         //$br = Branch::selectRaw("0 as id, 'Main Branch' as name");
