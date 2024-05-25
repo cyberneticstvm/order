@@ -175,7 +175,7 @@ class LabController extends Controller
 
     public function labOrders()
     {
-        $orders = LabOrder::whereIn('status', ['sent-to-lab'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager', 'CEO')), function ($q) {
+        $orders = LabOrder::whereIn('status', ['sent-to-lab', 'job-completed', 'job-under-process'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager', 'CEO')), function ($q) {
             return $q->where('lab_id', Session::get('branch'));
         })->get()->unique('order_detail_id');
         /*when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager')), function ($q) {
@@ -205,6 +205,11 @@ class LabController extends Controller
                 LabOrder::whereIn('id', $request->chkItem)->update([
                     'status' => $request->status,
                     'lab_id' => $request->lab_id,
+                    'updated_by' => $request->user()->id,
+                ]);
+            elseif ($request->status == 'job-completed' || $request->status == 'job-under-process') :
+                LabOrder::whereIn('id', $request->chkItem)->update([
+                    'status' => $request->status,
                     'updated_by' => $request->user()->id,
                 ]);
             elseif ($request->status == 'sent-to-branch' || $request->status == 'sent-to-main-branch') :
@@ -240,6 +245,9 @@ class LabController extends Controller
                 endif;
                 if ($request->status == 'received-from-lab') :
                     $action  = "Order has received from lab ($lname) " . strtoupper($odetail->eye);
+                endif;
+                if ($request->status == 'job-completed' || $request->status == 'job-under-process') :
+                    $action = "Order marked as " . $request->status . ' - ' . strtoupper($odetail->eye);
                 endif;
                 /*$action = ($request->status == 'sent-to-branch') ? 'Order has been sent back to ' . Branch::where('id', ($request->lab_id == 0) ? $request->lab_id : $odetail->order->branch_id)->first()?->name ?? 'Main Branch' . ' - ' . strtoupper($odetail->eye) : 'Order has transferred to ' . Branch::where('id', ($request->lab_id) ?? $lab->getOriginal('lab_id'))->first()?->name ?? 'Main Branch' . ' - ' . strtoupper($odetail->eye);*/
                 $data[] = [
