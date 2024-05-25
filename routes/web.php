@@ -633,6 +633,10 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/received-from-lab', 'receivedFromLab')->name('received.from.lab.orders');
         Route::post('/received-from-lab', 'receivedFromLabUpdate')->name('received.from.lab.orders.update');
 
+        Route::get('/job/completed', 'jobCompletedOrders')->name('job.completed.lab.orders');
+        Route::get('/job/underprocess', 'underProcessOrders')->name('under.process.lab.orders');
+        Route::get('/job/mainbranch', 'mainBranchOrders')->name('main.branch.lab.orders');
+
         Route::get('/lab-orders/delete/{id}', 'delete')->name('lab.order.delete');
     });
 

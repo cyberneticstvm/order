@@ -28,6 +28,9 @@
                 ->linkIfCan('lab-assign-orders', route('lab.assign.orders'), 'Assign Orders')
                 ->linkIfCan('lab-assigned-orders', route('lab.view.orders'), 'Assigned Orders')
                 ->linkIfCan('received-from-lab-orders', route('received.from.lab.orders'), 'Received From Lab')
+                ->linkIfCan('job-completed-orders', route('job.completed.lab.orders'), 'Job Completed')
+                ->linkIfCan('under-process-orders', route('under.process.lab.orders'), 'Under Process')
+                ->linkIfCan('main-branch-orders', route('main.branch.lab.orders'), 'Main Branch')
                 ->linkIfCan('received-from-lab-orders', route('stock.comparison'), 'Stock Comparison');
             }}
         </li>

@@ -30,6 +30,9 @@ class LabController extends Controller
         $this->middleware('permission:lab-assign-orders', ['only' => ['assignOrders']]);
         $this->middleware('permission:lab-assigned-orders', ['only' => ['labOrders']]);
         $this->middleware('permission:received-from-lab-orders', ['only' => ['receivedFromLab']]);
+        $this->middleware('permission:lab-job-completed-orders', ['only' => ['jobCompletedOrders']]);
+        $this->middleware('permission:lab-under-process-orders', ['only' => ['underProcessOrders']]);
+        $this->middleware('permission:lab-main-branch-orders', ['only' => ['mainBranchOrders']]);
         $this->middleware('permission:lab-assigned-order-delete', ['only' => ['delete']]);
     }
 
@@ -319,6 +322,30 @@ class LabController extends Controller
             OrderHistory::insert($data);
         });
         return redirect()->back()->with("success", "Status updated successfully");
+    }
+
+    public function jobCompletedOrders()
+    {
+        $orders = LabOrder::whereIn('status', ['job-completed'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager', 'CEO')), function ($q) {
+            return $q->where('lab_id', Session::get('branch'));
+        })->get()->unique('order_detail_id');
+        return view('backend.lab.job-completed', compact('orders'));
+    }
+
+    public function underProcessOrders()
+    {
+        $orders = LabOrder::whereIn('status', ['job-under-process'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager', 'CEO')), function ($q) {
+            return $q->where('lab_id', Session::get('branch'));
+        })->get()->unique('order_detail_id');
+        return view('backend.lab.under-process', compact('orders'));
+    }
+
+    public function mainBranchOrders()
+    {
+        $orders = LabOrder::whereIn('status', ['sent-to-main-branch'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager', 'CEO')), function ($q) {
+            return $q->where('lab_id', Session::get('branch'));
+        })->get()->unique('order_detail_id');
+        return view('backend.lab.mainbranch', compact('orders'));
     }
 
     public function delete(string $id)
