@@ -29,7 +29,7 @@ class LabController extends Controller
         $this->middleware('permission:lab-delete', ['only' => ['destroy']]);
         $this->middleware('permission:lab-assign-orders', ['only' => ['assignOrders']]);
         $this->middleware('permission:lab-assigned-orders', ['only' => ['labOrders']]);
-        $this->middleware('permission:received-from-lab-orders', ['only' => ['receivedFromLab', 'receivedFromLabUpdate']]);
+        $this->middleware('permission:received-from-lab-orders', ['only' => ['receivedFromLab']]);
         $this->middleware('permission:lab-assigned-order-delete', ['only' => ['delete']]);
     }
 
