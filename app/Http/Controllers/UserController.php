@@ -43,7 +43,7 @@ class UserController extends Controller
             'password' => 'required',
         ]);
         if (Auth::attempt($cred, $request->remember)) :
-            if (Str::contains($request->userAgent(), ['iPhone', 'Android']) && !Auth::user()->mobile_access) :
+            if (Str::contains($request->userAgent(), ['iPhone', 'Android', 'Linux', 'Macintosh']) && !Auth::user()->mobile_access) :
                 Auth::logout();
                 return redirect()->route('login')->with("error", "Mobile access has been restricted for this login");
             endif;

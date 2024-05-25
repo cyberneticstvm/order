@@ -231,9 +231,12 @@ class LabController extends Controller
                 $lab = LabOrder::findOrFail($item);
                 $odetail = OrderDetail::findOrFail($lab->order_detail_id);
                 $action = "";
-                $lname = Branch::where('id', ($request->lab_id == 0) ? $request->lab_id : $odetail->order->branch_id)->first()?->name ?? 'Main Branch';
+                $lname = Branch::where('id', ($request->status == 'sent-to-main-branch') ? 0 : $odetail->order->branch_id)->first()?->name ?? 'Main Branch';
                 if ($request->status == 'sent-to-branch') :
                     $action = 'Order has been sent back to ' . $lname . ' - ' . strtoupper($odetail->eye);
+                endif;
+                if ($request->status == 'sent-to-main-branch') :
+                    $action = 'Order has been sent to Main Brnach - ' . strtoupper($odetail->eye);
                 endif;
                 if ($request->status == 'sent-to-lab') :
                     $action  = 'Order has transferred to ' . Branch::where('id', ($request->lab_id) ?? $lab->getOriginal('lab_id'))->first()?->name ?? 'Main Branch' . ' - ' . strtoupper($odetail->eye);
