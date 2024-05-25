@@ -199,7 +199,7 @@ class LabController extends Controller
         $this->validate($request, [
             'status' => 'required',
         ]);
-        DB::transaction(function () use ($request) {
+        /*DB::transaction(function () use ($request) {
             $data = [];
             if ($request->status == 'sent-to-lab') :
                 LabOrder::whereIn('id', $request->chkItem)->update([
@@ -213,11 +213,6 @@ class LabController extends Controller
                     'updated_by' => $request->user()->id,
                 ]);
             elseif ($request->status == 'sent-to-branch' || $request->status == 'sent-to-main-branch') :
-                /*LabOrder::whereIn('id', $request->chkItem)->update([
-                    'status' => $request->status,
-                    'lab_id' => ($request->lab_id) ?? NULL,
-                    'updated_by' => $request->user()->id,
-                ]);*/
                 foreach ($request->chkItem as $key => $item) :
                     $lab = LabOrder::findOrFail($item);
                     $lab->update([
@@ -249,7 +244,6 @@ class LabController extends Controller
                 if ($request->status == 'job-completed' || $request->status == 'job-under-process') :
                     $action = "Order marked as " . $request->status . ' - ' . strtoupper($odetail->eye);
                 endif;
-                /*$action = ($request->status == 'sent-to-branch') ? 'Order has been sent back to ' . Branch::where('id', ($request->lab_id == 0) ? $request->lab_id : $odetail->order->branch_id)->first()?->name ?? 'Main Branch' . ' - ' . strtoupper($odetail->eye) : 'Order has transferred to ' . Branch::where('id', ($request->lab_id) ?? $lab->getOriginal('lab_id'))->first()?->name ?? 'Main Branch' . ' - ' . strtoupper($odetail->eye);*/
                 $data[] = [
                     'order_id' => $odetail->order->id,
                     'action' => $action,
@@ -259,7 +253,7 @@ class LabController extends Controller
                 ];
             endforeach;
             OrderHistory::insert($data);
-        });
+        });*/
         return redirect()->route('lab.view.orders')->with("success", "Status updated successfully");
     }
 
