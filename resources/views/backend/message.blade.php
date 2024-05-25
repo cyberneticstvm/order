@@ -179,7 +179,10 @@
             return false;
         }
         let c = confirm("Are you sure want to proceed?")
-        if (c) return true;
+        if (!c) {
+            return false;
+        }
+        return true;
     }
 
     function validateStockOrderForm() {
