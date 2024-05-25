@@ -186,7 +186,7 @@ function orderStatuses()
 {
     // Sent to branch - recived item from fitting lab to branch directly
     // Received from lab - received item from stock/rx/outsource lab to Purchase Manager for further config and then Sent to branch
-    return array('booked' => 'Booked', 'sent-to-lab' => 'Sent to Lab', 'sent-to-branch' => 'Sent to Branch', 'sent-to-main-branch' => 'Sent to Main Branch', 'received_from_lab' => 'Received From Lab', 'ready-for-delivery' => 'Ready For Delivery', 'delivered' => 'Billed / Delivered', 'cancelled' => 'Cancelled');
+    return array('booked' => 'Booked', 'sent-to-lab' => 'Sent to Lab', 'sent-to-branch' => 'Sent to Branch', 'sent-to-main-branch' => 'Sent to Main Branch', 'received_from_lab' => 'Received From Lab', 'ready-for-delivery' => 'Ready For Delivery', 'delivered' => 'Billed / Delivered', 'cancelled' => 'Cancelled', 'job-completed' => 'Job Completed', 'job-under-process' => 'Job Under Process');
 }
 
 function branchInvoiceNumber()

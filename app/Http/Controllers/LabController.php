@@ -182,13 +182,15 @@ class LabController extends Controller
             return $q->where('lab_id', Session::get('branch'));
         })->*/
 
-        if (in_array(Auth::user()->roles->first()->name, array('Store Manager', 'Administrator'))) :
-            $status = array('received-from-lab' => 'Received From Lab', 'sent-to-branch' => 'Sent to Branch', 'sent-to-lab' => 'Sent to Lab', 'sent-to-main-branch' => 'Sent to Main Branch');
+        if (in_array(Auth::user()->roles->first()->name, array('Store Manager', 'Administrator', 'CEO'))) :
+            $status = array('received-from-lab' => 'Received From Lab', 'sent-to-branch' => 'Sent to Branch', 'sent-to-lab' => 'Sent to Lab', 'sent-to-main-branch' => 'Sent to Main Branch', 'job-completed' => 'Job Completed', 'job-under-process' => 'Job Under Process');
+            $labs = Branch::whereIn('type', ['rx-lab', 'fitting-lab', 'stock-lab', 'outside-lab'])->selectRaw("id, name")->get();
         else :
-            $status = array('sent-to-branch' => 'Sent to Origin Branch', 'sent-to-lab' => 'Sent to Lab', 'sent-to-main-branch' => 'Sent to Main Branch');
+            $status = array('sent-to-branch' => 'Sent to Origin Branch', 'sent-to-main-branch' => 'Sent to Main Branch', 'job-completed' => 'Job Completed', 'job-under-process' => 'Job Under Process');
+            $labs = collect();
         endif;
         //$br = Branch::selectRaw("0 as id, 'Main Branch' as name");
-        $labs = Branch::whereIn('type', ['rx-lab', 'fitting-lab', 'stock-lab', 'outside-lab'])->selectRaw("id, name")->get();
+
         return view('backend.lab.lab-orders', compact('orders', 'status', 'labs'));
     }
 
