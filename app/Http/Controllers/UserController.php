@@ -48,6 +48,7 @@ class UserController extends Controller
                 return redirect()->route('login')->with("error", "Mobile access has been restricted for this login");
             endif;
             $this->loginLog($request);
+            Session::put('uagent', $request->userAgent());
             return redirect()->route('dashboard')->withSuccess(Auth::user()->name . " logged in successfully!");
         endif;
         return redirect()->route('login')
@@ -86,7 +87,8 @@ class UserController extends Controller
             $dvals[0] = Branch::findOrFail(Session::get('branch'))->monthly_target;
             $dvals[1] = Order::where('branch_id', Session::get('branch'))->whereBetween('invoice_generated_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->where('order_status', 'delivered')->sum('invoice_total');
         endif;
-        return view('backend.dashboard', compact('branches', 'patients', 'dvals'));
+        $uagent = Session::get('uagent');
+        return view('backend.dashboard', compact('branches', 'patients', 'dvals', 'uagent'));
     }
 
     public function updateBranch(Request $request)
