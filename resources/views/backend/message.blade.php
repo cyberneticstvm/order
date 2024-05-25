@@ -178,7 +178,8 @@
             })
             return false;
         }
-        isConfirmed(frm.attr("action"));
+        let c = confirm("Are you sure want to proceed?")
+        if (c) return true;
     }
 
     function validateStockOrderForm() {
