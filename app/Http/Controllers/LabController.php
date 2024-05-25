@@ -199,7 +199,7 @@ class LabController extends Controller
         $this->validate($request, [
             'status' => 'required',
         ]);
-        /*DB::transaction(function () use ($request) {
+        DB::transaction(function () use ($request) {
             $data = [];
             if ($request->status == 'sent-to-lab') :
                 LabOrder::whereIn('id', $request->chkItem)->update([
@@ -253,7 +253,7 @@ class LabController extends Controller
                 ];
             endforeach;
             OrderHistory::insert($data);
-        });*/
+        });
         return redirect()->route('lab.view.orders')->with("success", "Status updated successfully");
     }
 
