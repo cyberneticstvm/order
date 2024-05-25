@@ -259,9 +259,9 @@ class LabController extends Controller
             return $q->where('lab_id', Session::get('branch'));
         })->get()->unique('order_detail_id');
 
-        $status = array('sent-to-lab' => 'Sent to Lab', 'sent-to-main-branch' => 'Sent to Main Branch');
+        $status = array('sent-to-branch' => 'Sent to Branch', 'sent-to-lab' => 'Sent to Lab', 'sent-to-main-branch' => 'Sent to Main Branch');
 
-        $labs = Branch::whereIn('type', ['stock-lab'])->selectRaw("id, name")->get();
+        $labs = Branch::whereIn('type', ['stock-lab', 'fitting-lab'])->selectRaw("id, name")->get();
         return view('backend.lab.received-from-lab', compact('orders', 'status', 'labs'));
     }
 
@@ -278,12 +278,12 @@ class LabController extends Controller
                     'lab_id' => $request->lab_id,
                     'updated_by' => $request->user()->id,
                 ]);
-            elseif ($request->status == 'sent-to-main-branch') :
+            elseif ($request->status == 'sent-to-branch' || $request->status == 'sent-to-main-branch') :
                 foreach ($request->chkItem as $key => $item) :
                     $lab = LabOrder::findOrFail($item);
                     $lab->update([
                         'status' => $request->status,
-                        'lab_id' => 0,
+                        'lab_id' => ($request->status == 'sent-to-main-branch') ? 0 : $lab->getOriginal('lab_id'),
                         'updated_by' => $request->user()->id,
                     ]);
                 endforeach;
@@ -297,6 +297,9 @@ class LabController extends Controller
                 endif;
                 if ($request->status == 'sent-to-main-branch') :
                     $action = 'Order has transferred to Main Branch' . ' - ' . strtoupper($odetail->eye);
+                endif;
+                if ($request->status == 'sent-to-branch') :
+                    $action = 'Order has been sent back to Branch' . strtoupper($odetail->eye);
                 endif;
                 $data[] = [
                     'order_id' => $odetail->order->id,
