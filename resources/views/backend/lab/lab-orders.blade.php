@@ -43,7 +43,7 @@
                                 @enderror
                             </div>
                             <div class="col-md-3">
-                                <button class="btn btn-submit btn-lg btn-success mt-4" onclick="return validateLabStatusOrderForm()" type="submit">Update</button>
+                                <button class="btn btn-submit btn-lg btn-success mt-4" onclick="validateLabStatusOrderForm()" type="submit">Update</button>
                             </div>
                         </div>
                         <div class="table-responsive theme-scrollbar mt-5">
