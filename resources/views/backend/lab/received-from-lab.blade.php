@@ -61,7 +61,6 @@
                                         <th>Add</th>
                                         <th>Product</th>
                                         <th>Qty</th>
-                                        <th>Lab</th>
                                         <th>Status</th>
                                         <th>Customer Name</th>
                                         <th>Delete</th>
@@ -83,7 +82,6 @@
                                         <td>{{ $item->item?->add }}</td>
                                         <td class="{{ $item->order?->isEdited() }}">{{ $item->item?->product?->name ?? '' }}</td>
                                         <td>{{ $item->item?->qty }}</td>
-                                        <td class="{{ $item->mainBranch() }}">{{ $item->lab?->name ?? 'Main Branch' }}</td>
                                         <td>{{ $item->status }}</td>
                                         <td>{{ $item->order?->name ?? '' }}</td>
                                         <td class="text-center"><a href="{{ route('lab.order.delete', encrypt($item->order?->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
