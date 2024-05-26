@@ -79,7 +79,7 @@
                                         <td>{{ $item->cyl }}</td>
                                         <td>{{ $item->axis }}</td>
                                         <td>{{ $item->add }}</td>
-                                        <td class="{{ $item->order->isEdited() }}">{{ $item->product->name ?? '' }}</td>
+                                        <td class="{{ $item->order?->isEdited() }}">{{ $item->product->name ?? '' }}</td>
                                         <td>{{ $item->qty }}</td>
                                         <td>{{ getFrameType($item->order?->id ?? 0) }}</td>
                                         <!--<td>{{ $item->order?->a_size }}</td>
