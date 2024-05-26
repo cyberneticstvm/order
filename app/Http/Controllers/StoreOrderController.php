@@ -334,8 +334,6 @@ class StoreOrderController extends Controller
                         'updated_at' => Carbon::now(),
                     ];
                 endforeach;
-                dd($data);
-                die;
                 OrderDetail::insert($data);
                 if ($request->advance > 0) :
                     /*Payment::where('order_id', $id)->where('payment_type', 'advance')->update([
