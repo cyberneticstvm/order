@@ -238,6 +238,7 @@ class LabController extends Controller
                 $odetail = OrderDetail::findOrFail($lab->order_detail_id);
                 $action = "";
                 $lname = Branch::where('id', ($request->status == 'sent-to-main-branch') ? 0 : $odetail->order->branch_id)->first()?->name ?? 'Main Branch';
+                $lname1 = Branch::where('id', $lab->lab_id)->first()?->name ?? 'Main Branch';
                 if ($request->status == 'sent-to-branch') :
                     $action = 'Order has been sent back to ' . $lname . ' - ' . strtoupper($odetail->eye);
                 endif;
@@ -248,7 +249,7 @@ class LabController extends Controller
                     $action  = 'Order has transferred to ' . Branch::where('id', ($request->lab_id) ?? $lab->getOriginal('lab_id'))->first()?->name ?? 'Main Branch' . ' - ' . strtoupper($odetail->eye);
                 endif;
                 if ($request->status == 'received-from-lab') :
-                    $action  = "Order has received from ($lname) " . strtoupper($odetail->eye);
+                    $action  = "Order has received from ($lname1) " . strtoupper($odetail->eye);
                 endif;
                 if ($request->status == 'job-completed' || $request->status == 'job-under-process') :
                     $action = "Order marked as " . $request->status . ' - ' . strtoupper($odetail->eye);
