@@ -27,6 +27,25 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label req">Status</label>
+                                {{ html()->select('status', $status, old('status'))->class('form-control select2')->placeholder('Select') }}
+                                @error('status')
+                                <small class="text-danger">{{ $errors->first('status') }}</small>
+                                @enderror
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Lab</label>
+                                {{ html()->select('lab_id', $labs->pluck('name', 'id'), old('lab_id'))->class('form-control select2')->placeholder('Select') }}
+                                @error('lab_id')
+                                <small class="text-danger">{{ $errors->first('lab_id') }}</small>
+                                @enderror
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-submit btn-lg btn-success mt-4" onclick="return validateLabStatusOrderForm()" type="submit">Update</button>
+                            </div>
+                        </div>
                         <div class="table-responsive theme-scrollbar mt-5">
                             <table class="table table-sm" style="width:100%" id="dataTable">
                                 <thead>
@@ -71,6 +90,10 @@
                                     @endforelse
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="col-12 text-end mt-5">
+                            <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
+                            <button class="btn btn-submit btn-success" onclick="return validateLabStatusOrderForm()" type="submit">Update</button>
                         </div>
                     </div>
                 </div>
