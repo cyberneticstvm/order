@@ -334,7 +334,7 @@ class StoreOrderController extends Controller
                         'updated_at' => Carbon::now(),
                     ];
                 endforeach;
-                dd($data);
+                dd($request);
                 die;
                 OrderDetail::insert($data);
                 if ($request->advance > 0) :
