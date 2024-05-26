@@ -181,70 +181,70 @@
                                             </thead>
                                             <tbody class="powerbox">
                                                 <tr>
-                                                    <inputy type='hidden' name='fitting[]' value="0">
-                                                        <td class="text-center">
-                                                            <a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a>
-                                                        </td>
-                                                        <td>
-                                                            <select class="border-0" name="eye[]">
-                                                                <option value="re">RE</option>
-                                                            </select>
-                                                        </td>
-                                                        <td>
-                                                            {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->re_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 fSph') }}
-                                                        </td>
-                                                        <td>
-                                                            {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->re_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2 fCyl') }}
-                                                        </td>
-                                                        <td>
-                                                            {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->re_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2 fAxis') }}
-                                                        </td>
-                                                        <td>
-                                                            {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->re_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 fAdd') }}
-                                                        </td>
-                                                        <td>
-                                                            {{ html()->text('va[]', $spectacle?->re_va ?? '')->class('w-100 border-0 text-center fVa')->maxlength(6)->attribute('readonly', 'true')->placeholder('VA') }}
-                                                        </td>
-                                                        <td><input type="text" name='ipd[]' class="w-100 border-0 text-center fIpd" placeholder="IPD" value="{{ $spectacle?->rpd ?? '' }}" maxlength="6" readonly /></td>
-                                                        <td>
-                                                            {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctFirst')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens1')->placeholder('Select')->required() }}
-                                                        </td>
-                                                        <td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td>
-                                                        <td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td>
-                                                        <td width="15%"><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td>
+                                                    <td class="text-center">
+                                                        <a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a>
+                                                        <inputy type='hidden' name='fitting[]' value="0">
+                                                    </td>
+                                                    <td>
+                                                        <select class="border-0" name="eye[]">
+                                                            <option value="re">RE</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->re_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 fSph') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->re_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2 fCyl') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->re_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2 fAxis') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->re_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 fAdd') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->text('va[]', $spectacle?->re_va ?? '')->class('w-100 border-0 text-center fVa')->maxlength(6)->attribute('readonly', 'true')->placeholder('VA') }}
+                                                    </td>
+                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center fIpd" placeholder="IPD" value="{{ $spectacle?->rpd ?? '' }}" maxlength="6" readonly /></td>
+                                                    <td>
+                                                        {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctFirst')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens1')->placeholder('Select')->required() }}
+                                                    </td>
+                                                    <td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td>
+                                                    <td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td>
+                                                    <td width="15%"><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td>
                                                 </tr>
                                                 <tr>
-                                                    <inputy type='hidden' name='fitting[]' value="0">
-                                                        <td class="text-center">
-                                                            <a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a>
-                                                        </td>
-                                                        <td>
-                                                            <select class="border-0" name="eye[]">
-                                                                <option value="le">LE</option>
-                                                            </select>
-                                                        </td>
-                                                        <td>
-                                                            {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->le_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 sSph')->attribute('id', 'sph1') }}
-                                                        </td>
-                                                        <td>
-                                                            {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->le_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2 sCyl')->attribute('id', 'cyl1') }}
-                                                        </td>
-                                                        <td>
-                                                            {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->le_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2 sAxis')->attribute('id', 'axis1') }}
-                                                        </td>
-                                                        <td>
-                                                            {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->le_add ?? $spectacle?->le_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 sAdd')->attribute('id', 'add1') }}
-                                                        </td>
-                                                        <td>
-                                                            {{ html()->text('va[]', $spectacle?->le_va ?? '')->class('w-100 border-0 text-center sVa')->maxlength(6)->attribute('readonly', 'true')->placeholder('VA') }}
-                                                        </td>
-                                                        <td><input type="text" name='ipd[]' class="w-100 border-0 text-center sIpd" placeholder="IPD" value="{{ $spectacle?->lpd ?? '' }}" maxlength="6" readonly /></td>
-                                                        <td>
-                                                            {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctSecond')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens2')->placeholder('Select')->required() }}
-                                                        </td>
-                                                        <td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td>
-                                                        <td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td>
-                                                        <td width="15%"><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td>
+                                                    <td class="text-center">
+                                                        <a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a>
+                                                        <inputy type='hidden' name='fitting[]' value="0">
+                                                    </td>
+                                                    <td>
+                                                        <select class="border-0" name="eye[]">
+                                                            <option value="le">LE</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $spectacle?->le_sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2 sSph')->attribute('id', 'sph1') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $spectacle?->le_cyl ?? $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2 sCyl')->attribute('id', 'cyl1') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $spectacle?->le_axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2 sAxis')->attribute('id', 'axis1') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $spectacle?->le_add ?? $spectacle?->le_add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2 sAdd')->attribute('id', 'add1') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->text('va[]', $spectacle?->le_va ?? '')->class('w-100 border-0 text-center sVa')->maxlength(6)->attribute('readonly', 'true')->placeholder('VA') }}
+                                                    </td>
+                                                    <td><input type="text" name='ipd[]' class="w-100 border-0 text-center sIpd" placeholder="IPD" value="{{ $spectacle?->lpd ?? '' }}" maxlength="6" readonly /></td>
+                                                    <td>
+                                                        {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctSecond')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens2')->placeholder('Select')->required() }}
+                                                    </td>
+                                                    <td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td>
+                                                    <td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td>
+                                                    <td width="15%"><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-center">
