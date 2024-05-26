@@ -108,10 +108,10 @@ class LabController extends Controller
 
     public function assignOrders()
     {
-        $ord = OrderDetail::whereIn('id', LabOrder::where('lab_id', 0)->pluck('order_detail_id'))->selectRaw("order_details.*, '0' as lab_id");
+        //$ord = OrderDetail::whereIn('id', LabOrder::where('lab_id', 0)->pluck('order_detail_id'))->selectRaw("order_details.*, '0' as lab_id");
         $orders = OrderDetail::leftJoin("lab_orders as lo", "lo.order_detail_id", "order_details.id")->leftJoin('orders as o', 'o.id', 'order_details.order_id')->selectRaw("order_details.*, lo.lab_id")->whereIn('order_details.eye', ['re', 'le'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'CEO')), function ($q) {
             return $q->where('o.branch_id', Session::get('branch'));
-        })->whereNotIn('o.order_status', ['delivered', 'ready-for-delivery'])->whereNull('o.deleted_at')->whereNull("lo.lab_id")->union($ord)->get();
+        })->whereNotIn('o.order_status', ['delivered', 'ready-for-delivery'])->whereNull('o.deleted_at')->whereNull("lo.lab_id")->get();
         $labs = Branch::whereIn('type', ['rx-lab', 'fitting-lab', 'stock-lab', 'outside-lab'])->get();
         return view('backend.lab.orders', compact('orders', 'labs'));
     }
