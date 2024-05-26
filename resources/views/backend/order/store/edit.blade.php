@@ -199,80 +199,80 @@
                                                         </select>
                                                     </td>
                                                     @if(in_array($item->eye, ['re', 'le', 'both']))
-
-                                                    <td>
-                                                        {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $item->sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2')->if($key==0, function($el){
+                                                    <inputy type='hidden' name='fitting[]' value="0">
+                                                        <td>
+                                                            {{ html()->select('sph[]', $powers?->where('name', 'sph')->pluck('value', 'value'), $item->sph ?? $powers?->where('name', 'sph')->where('default', 'true')?->first()?->value)->class('border-0 select2')->if($key==0, function($el){
                                                             return $el->attribute('class', 'fSph');
                                                         })->if($key==1, function($el){
                                                             return $el->attribute('class', 'sSph');
                                                         })->attribute('id', 'sph_'.$key) }}
-                                                    </td>
-                                                    <td>
-                                                        {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $item->cyl ??  $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2')->if($key==0, function($el){
+                                                        </td>
+                                                        <td>
+                                                            {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $item->cyl ??  $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2')->if($key==0, function($el){
                                                             return $el->attribute('class', 'fCyl');
                                                         })->if($key==1, function($el){
                                                             return $el->attribute('class', 'sCyl');
                                                         })->attribute('id', 'cyl_'.$key) }}
-                                                    </td>
-                                                    <td>
-                                                        {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $item->axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2')->if($key==0, function($el){
+                                                        </td>
+                                                        <td>
+                                                            {{ html()->select('axis[]', $powers?->where('name', 'axis')->pluck('value', 'value'), $item->axis ?? $powers?->where('name', 'axis')->where('default', 'true')?->first()?->value)->class('border-0 select2')->if($key==0, function($el){
                                                             return $el->attribute('class', 'fAxis');
                                                         })->if($key==1, function($el){
                                                             return $el->attribute('class', 'sAxis');
                                                         })->attribute('id', 'axis_'.$key) }}
-                                                    </td>
-                                                    <td>
-                                                        {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $item->add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2')->if($key==0, function($el){
+                                                        </td>
+                                                        <td>
+                                                            {{ html()->select('add[]', $powers?->where('name', 'add')->pluck('value', 'value'), $item->add ?? $powers?->where('name', 'add')->where('default', 'true')?->first()?->value)->class('border-0 select2')->if($key==0, function($el){
                                                             return $el->attribute('class', 'fAdd');
                                                         })->if($key==1, function($el){
                                                             return $el->attribute('class', 'sAdd');
                                                         })->attribute('id', 'add_'.$key) }}
-                                                    </td>
-                                                    <td>
-                                                        {{ html()->text('va[]', $item->va ?? '')->class('w-100 border-0 text-center')->if($key==0, function($el){
+                                                        </td>
+                                                        <td>
+                                                            {{ html()->text('va[]', $item->va ?? '')->class('w-100 border-0 text-center')->if($key==0, function($el){
                                                             return $el->attribute('class', 'fVa');
                                                         })->if($key==1, function($el){
                                                             return $el->attribute('class', 'sVa');
                                                         })->maxlength(6)->placeholder('VA') }}
-                                                    </td>
-                                                    <td width="15%">
-                                                        {{ html()->text('ipd[]', $item->ipd ?? '')->class('w-100 border-0 text-center')->if($key==0, function($el){
+                                                        </td>
+                                                        <td width="15%">
+                                                            {{ html()->text('ipd[]', $item->ipd ?? '')->class('w-100 border-0 text-center')->if($key==0, function($el){
                                                             return $el->attribute('class', 'fIpd');
                                                         })->if($key==1, function($el){
                                                             return $el->attribute('class', 'sIpd');
                                                         })->maxlength(6)->placeholder('VA') }}
-                                                    </td>
-                                                    @endif
-                                                    @if(in_array($item->eye, ['frame', 'service']))
-                                                    <td colspan="4">
-                                                        <div class="d-none">
-                                                            <input type="hidden" name="sph[]" />
-                                                            <input type="hidden" name="cyl[]" />
-                                                            <input type="hidden" name="axis[]" />
-                                                            <input type="hidden" name="add[]" />
-                                                            <input type="hidden" name="ipd[]" />
-                                                            <input type="hidden" name="va[]" />
-                                                        </div>
-                                                    </td>
-                                                    <td colspan="2">
-                                                        <select class="border-0" name="fitting[]">
-                                                            <option value="0">Select</option>
-                                                            <option value="1" {{ ($item->fitting) ? 'selected' : '' }}>Fitting</option>
-                                                        </select>
-                                                    </td>
-                                                    @endif
-                                                    <td>
-                                                        {{ html()->select('product_id[]', $products->when(in_array($item->eye, ['re', 'le', 'both']), function($q){
+                                                        </td>
+                                                        @endif
+                                                        @if(in_array($item->eye, ['frame', 'service']))
+                                                        <td colspan="4">
+                                                            <div class="d-none">
+                                                                <input type="hidden" name="sph[]" />
+                                                                <input type="hidden" name="cyl[]" />
+                                                                <input type="hidden" name="axis[]" />
+                                                                <input type="hidden" name="add[]" />
+                                                                <input type="hidden" name="ipd[]" />
+                                                                <input type="hidden" name="va[]" />
+                                                            </div>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <select class="border-0" name="fitting[]">
+                                                                <option value="0">Select</option>
+                                                                <option value="1" {{ ($item->fitting) ? 'selected' : '' }}>Fitting</option>
+                                                            </select>
+                                                        </td>
+                                                        @endif
+                                                        <td>
+                                                            {{ html()->select('product_id[]', $products->when(in_array($item->eye, ['re', 'le', 'both']), function($q){
                                                             return $q->where('category', 'lens');
                                                         })->when(in_array($item->eye, ['frame']), function($q){
                                                             return $q->where('category', 'frame');
                                                         })->when(in_array($item->eye, ['service']), function($q){
                                                             return $q->where('category', 'service');
                                                         })->pluck('name', 'id'), $item->product_id)->class('border-0 select2 selPdct')->attribute('id', $item->id)->placeholder('Select')->required() }}
-                                                    </td>
-                                                    <td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" value="{{ $item->qty }}" required /></td>
-                                                    <td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' value="{{ $item->unit_price }}" step="any" required readonly /></td>
-                                                    <td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" value="{{ $item->total }}" required readonly /></td>
+                                                        </td>
+                                                        <td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" value="{{ $item->qty }}" required /></td>
+                                                        <td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' value="{{ $item->unit_price }}" step="any" required readonly /></td>
+                                                        <td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" value="{{ $item->total }}" required readonly /></td>
                                                 </tr>
                                                 @empty
                                                 @endforelse
