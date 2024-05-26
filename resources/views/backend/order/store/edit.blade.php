@@ -206,7 +206,7 @@
                                                         })->if($key==1, function($el){
                                                             return $el->attribute('class', 'sSph');
                                                         })->attribute('id', 'sph_'.$key) }}
-                                                        <inputy type='hidden' name='fitting[]' value="0">
+                                                        <input type='hidden' name='fitting[]' value="0">
                                                     </td>
                                                     <td>
                                                         {{ html()->select('cyl[]', $powers?->where('name', 'cyl')->pluck('value', 'value'), $item->cyl ??  $powers?->where('name', 'cyl')->where('default', 'true')?->first()?->value)->class('border-0 select2')->if($key==0, function($el){

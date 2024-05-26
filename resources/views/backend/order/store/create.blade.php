@@ -183,7 +183,7 @@
                                                 <tr>
                                                     <td class="text-center">
                                                         <a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a>
-                                                        <inputy type='hidden' name='fitting[]' value="0">
+                                                        <input type='hidden' name='fitting[]' value="0">
                                                     </td>
                                                     <td>
                                                         <select class="border-0" name="eye[]">
@@ -216,7 +216,7 @@
                                                 <tr>
                                                     <td class="text-center">
                                                         <a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a>
-                                                        <inputy type='hidden' name='fitting[]' value="0">
+                                                        <input type='hidden' name='fitting[]' value="0">
                                                     </td>
                                                     <td>
                                                         <select class="border-0" name="eye[]">
