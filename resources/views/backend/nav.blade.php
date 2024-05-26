@@ -25,13 +25,27 @@
             </a>
             {{
                 Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('received-from-lab-orders', route('stock.comparison'), 'Stock Comparison');
+            }}
+        </li>
+        <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
+            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                <svg class="stroke-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-social') }}"></use>
+                </svg>
+                <svg class="fill-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#fill-social') }}"></use>
+                </svg>
+                <span>Lab</span>
+            </a>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
                 ->linkIfCan('lab-assign-orders', route('lab.assign.orders'), 'Assign Orders')
                 ->linkIfCan('lab-assigned-orders', route('lab.view.orders'), 'Assigned Orders')
                 ->linkIfCan('received-from-lab-orders', route('received.from.lab.orders'), 'Received From Lab')
                 ->linkIfCan('lab-job-completed-orders', route('job.completed.lab.orders'), 'Job Completed')
                 ->linkIfCan('lab-under-process-orders', route('under.process.lab.orders'), 'Under Process')
-                ->linkIfCan('lab-main-branch-orders', route('main.branch.lab.orders'), 'Main Branch')
-                ->linkIfCan('received-from-lab-orders', route('stock.comparison'), 'Stock Comparison');
+                ->linkIfCan('lab-main-branch-orders', route('main.branch.lab.orders'), 'Main Branch');
             }}
         </li>
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
