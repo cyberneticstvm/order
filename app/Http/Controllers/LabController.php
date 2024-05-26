@@ -329,7 +329,14 @@ class LabController extends Controller
         $orders = LabOrder::whereIn('status', ['job-completed'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager', 'CEO')), function ($q) {
             return $q->where('lab_id', Session::get('branch'));
         })->get()->unique('order_detail_id');
-        return view('backend.lab.job-completed', compact('orders'));
+        if (in_array(Auth::user()->roles->first()->name, array('Store Manager', 'Administrator', 'CEO'))) :
+            $status = array('received-from-lab' => 'Received From Lab', 'sent-to-branch' => 'Sent to Branch', 'sent-to-lab' => 'Sent to Lab', 'sent-to-main-branch' => 'Sent to Main Branch', 'job-completed' => 'Job Completed', 'job-under-process' => 'Job Under Process');
+            $labs = Branch::whereIn('type', ['rx-lab', 'fitting-lab', 'stock-lab', 'outside-lab'])->selectRaw("id, name")->get();
+        else :
+            $status = array('sent-to-branch' => 'Sent to Origin Branch', 'sent-to-main-branch' => 'Sent to Main Branch', 'job-completed' => 'Job Completed', 'job-under-process' => 'Job Under Process', 'sent-to-lab' => 'Sent to Lab');
+            $labs = (Branch::where('id', Session::get('branch'))->first()->type == 'rx-lab') ? Branch::whereIn('type', ['fitting-lab', 'stock-lab'])->selectRaw("id, name")->get() : collect();
+        endif;
+        return view('backend.lab.job-completed', compact('orders', 'status', 'labs'));
     }
 
     public function underProcessOrders()
@@ -337,7 +344,14 @@ class LabController extends Controller
         $orders = LabOrder::whereIn('status', ['job-under-process'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager', 'CEO')), function ($q) {
             return $q->where('lab_id', Session::get('branch'));
         })->get()->unique('order_detail_id');
-        return view('backend.lab.under-process', compact('orders'));
+        if (in_array(Auth::user()->roles->first()->name, array('Store Manager', 'Administrator', 'CEO'))) :
+            $status = array('received-from-lab' => 'Received From Lab', 'sent-to-branch' => 'Sent to Branch', 'sent-to-lab' => 'Sent to Lab', 'sent-to-main-branch' => 'Sent to Main Branch', 'job-completed' => 'Job Completed', 'job-under-process' => 'Job Under Process');
+            $labs = Branch::whereIn('type', ['rx-lab', 'fitting-lab', 'stock-lab', 'outside-lab'])->selectRaw("id, name")->get();
+        else :
+            $status = array('sent-to-branch' => 'Sent to Origin Branch', 'sent-to-main-branch' => 'Sent to Main Branch', 'job-completed' => 'Job Completed', 'job-under-process' => 'Job Under Process', 'sent-to-lab' => 'Sent to Lab');
+            $labs = (Branch::where('id', Session::get('branch'))->first()->type == 'rx-lab') ? Branch::whereIn('type', ['fitting-lab', 'stock-lab'])->selectRaw("id, name")->get() : collect();
+        endif;
+        return view('backend.lab.under-process', compact('orders', 'status', 'labs'));
     }
 
     public function mainBranchOrders()
@@ -345,7 +359,14 @@ class LabController extends Controller
         $orders = LabOrder::whereIn('status', ['sent-to-main-branch'])->when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'Store Manager', 'CEO')), function ($q) {
             return $q->where('lab_id', Session::get('branch'));
         })->get()->unique('order_detail_id');
-        return view('backend.lab.mainbranch', compact('orders'));
+        if (in_array(Auth::user()->roles->first()->name, array('Store Manager', 'Administrator', 'CEO'))) :
+            $status = array('received-from-lab' => 'Received From Lab', 'sent-to-branch' => 'Sent to Branch', 'sent-to-lab' => 'Sent to Lab', 'sent-to-main-branch' => 'Sent to Main Branch', 'job-completed' => 'Job Completed', 'job-under-process' => 'Job Under Process');
+            $labs = Branch::whereIn('type', ['rx-lab', 'fitting-lab', 'stock-lab', 'outside-lab'])->selectRaw("id, name")->get();
+        else :
+            $status = array('sent-to-branch' => 'Sent to Origin Branch', 'sent-to-main-branch' => 'Sent to Main Branch', 'job-completed' => 'Job Completed', 'job-under-process' => 'Job Under Process', 'sent-to-lab' => 'Sent to Lab');
+            $labs = (Branch::where('id', Session::get('branch'))->first()->type == 'rx-lab') ? Branch::whereIn('type', ['fitting-lab', 'stock-lab'])->selectRaw("id, name")->get() : collect();
+        endif;
+        return view('backend.lab.mainbranch', compact('orders', 'status', 'labs'));
     }
 
     public function delete(string $id)
