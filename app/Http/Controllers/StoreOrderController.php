@@ -175,7 +175,7 @@ class StoreOrderController extends Controller
                         'add' => $request->add[$key] ?? NULL,
                         'ipd' => $request->ipd[$key],
                         'va' => $request->va[$key],
-                        'fitting' => $request->fitting[$key],
+                        /*'fitting' => $request->fitting[$key],*/
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
@@ -329,7 +329,7 @@ class StoreOrderController extends Controller
                         'add' => $request->add[$key] ?? NULL,
                         'ipd' => $request->ipd[$key] ?? NULL,
                         'va' => $request->va[$key],
-                        'fitting' => $request->fitting[$key],
+                        /*'fitting' => $request->fitting[$key],*/
                         'created_at' => $order->created_at ?? Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
