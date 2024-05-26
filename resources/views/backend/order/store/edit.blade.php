@@ -244,7 +244,7 @@
                                                     </td>
                                                     @endif
                                                     @if(in_array($item->eye, ['frame', 'service']))
-                                                    <td colspan="6">
+                                                    <td colspan="4">
                                                         <div class="d-none">
                                                             <input type="hidden" name="sph[]" />
                                                             <input type="hidden" name="cyl[]" />
@@ -253,6 +253,12 @@
                                                             <input type="hidden" name="ipd[]" />
                                                             <input type="hidden" name="va[]" />
                                                         </div>
+                                                    </td>
+                                                    <td colspan="2">
+                                                        <select class="border-0" name="fitting[]">
+                                                            <option value="0">Select</option>
+                                                            <option value="1" {{ ($item->fitting) ? 'selected' : '' }}>Fitting</option>
+                                                        </select>
                                                     </td>
                                                     @endif
                                                     <td>

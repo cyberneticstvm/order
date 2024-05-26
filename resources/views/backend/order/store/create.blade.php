@@ -248,7 +248,7 @@
                                                     <td class="text-center">
                                                         <a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a>
                                                     </td>
-                                                    <td colspan="7">
+                                                    <td colspan="5">
                                                         <select class="border-0" name="eye[]">
                                                             <option value="frame">Frame</option>
                                                         </select>
@@ -260,6 +260,12 @@
                                                             <input type="hidden" name="ipd[]" />
                                                             <input type="hidden" name="va[]" />
                                                         </div>
+                                                    </td>
+                                                    <td colspan="2">
+                                                        <select class="border-0" name="fitting[]">
+                                                            <option value="0">Select</option>
+                                                            <option value="1">Fitting</option>
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         {{ html()->select('product_id[]', $products->where('category', 'frame')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct')->attribute('data-batch', 'NA')->attribute('data-category', 'frame')->attribute('id', 'frame')->placeholder('Select')->required() }}
