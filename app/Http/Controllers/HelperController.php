@@ -15,6 +15,7 @@ use App\Models\ProductDamage;
 use App\Models\Spectacle;
 use App\Models\Transfer;
 use App\Models\TransferDetails;
+use App\Models\UserBranch;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,8 +38,12 @@ class HelperController extends Controller
 
     public function switchBranch($branch)
     {
-        Session::put('branch', $branch);
-        return redirect()->back()->with("success", "Branch switched successfully");
+        if (UserBranch::where('user_id', Auth::id())->where('branch_id', $branch)->exists()) :
+            Session::put('branch', $branch);
+            return redirect()->back()->with("success", "Branch switched successfully");
+        else :
+            return redirect()->back()->with("error", "Requested branch access denied!");
+        endif;
     }
 
     public function updateInvoiceNumber()
