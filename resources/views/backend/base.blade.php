@@ -72,6 +72,21 @@
         </div>
         <div class="nav-right col-xxl-7 col-xl-6 col-md-7 col-8 pull-right right-header p-0 ms-auto">
           <ul class="nav-menus">
+            @if(in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO']))
+            <li class="language-nav">
+              <div class="translate_wrapper">
+                <div class="current_lang">
+                  <div class="lang"><i class="fa fa-refresh" aria-hidden="true"></i><span class="lang-txt">{{ branches()->where('id', Session::get('branch'))->first()->name }}</span></div>
+                </div>
+                <div class="more_lang">
+                  @forelse(branches()->where('id', '!=', Session::get('branch')) as $key => $branch)
+                  <div class="lang" data-value="{{ $branch->name }}"><i class="fa fa-check-circle-o fa-lg" aria-hidden="true"></i><span class="lang-txt"><a href="{{ route('switch.branch', $branch->id) }}" class="text-dark">{{ $branch->name }}</a></span></div>
+                  @empty
+                  @endforelse
+                </div>
+              </div>
+            </li>
+            @endif
             <li class="profile-nav onhover-dropdown pe-0 py-0">
               <div class="media profile-media"><img class="b-r-10" src="{{ asset('/backend/assets/images/dashboard/profile.png') }}" alt="">
                 <div class="media-body"><span>{{ Auth::user()->name }}</span>

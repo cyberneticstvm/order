@@ -35,6 +35,12 @@ class HelperController extends Controller
         $this->middleware('permission:search-prescription', ['only' => ['searchPrescription', 'searchPrescriptionFetch']]);
     }
 
+    public function switchBranch($branch)
+    {
+        Session::put('branch', $branch);
+        return redirect()->back()->with("success", "Branch switched successfully");
+    }
+
     public function updateInvoiceNumber()
     {
         $orders = Order::where('order_status', 'delivered')->orderBy('invoice_generated_at', 'ASC')->get();
