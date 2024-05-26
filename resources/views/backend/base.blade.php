@@ -79,7 +79,7 @@
                   <div class="lang"><i class="fa fa-refresh" aria-hidden="true"></i><span class="lang-txt">{{ branches()->where('id', Session::get('branch'))->first()->name }}</span></div>
                 </div>
                 <div class="more_lang">
-                  @forelse(branches()->where('id', '!=', Session::get('branch')) as $key => $branch)
+                  @forelse(userBranches()->where('id', '!=', Session::get('branch')) as $key => $branch)
                   <div class="lang" data-value="{{ $branch->name }}"><i class="fa fa-check-circle-o fa-lg" aria-hidden="true"></i><span class="lang-txt"><a href="{{ route('switch.branch', $branch->id) }}" class="text-dark">{{ $branch->name }}</a></span></div>
                   @empty
                   @endforelse

@@ -26,6 +26,7 @@ use App\Models\Product;
 use App\Models\ProductSubcategory;
 use App\Models\Setting;
 use App\Models\Transfer;
+use App\Models\UserBranch;
 use App\Models\Voucher;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -56,6 +57,11 @@ function qrCodeText()
 function branches()
 {
     return Branch::all();
+}
+
+function userBranches()
+{
+    return Branch::whereIn('id', UserBranch::where('user_id', Auth::id())->pluck('branch_id'))->get();
 }
 
 function procedures()
