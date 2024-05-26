@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('ipd', 7)->nullable();
             $table->string('int_add', 7)->nullable();
             $table->enum('thickness', ['thin', 'maximum-thin', 'normal-thick', 'not-applicable'])->nullable();
+            $table->boolean('fitting')->default('0')->nullable();
             $table->decimal('unit_price', 8, 2)->default(0);
             $table->decimal('total', 9, 2)->default(0);
             $table->decimal('tax_percentage', 5, 2)->nullable();
