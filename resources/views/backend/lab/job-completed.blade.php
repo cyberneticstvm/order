@@ -21,7 +21,7 @@
         </div>
     </div>
     <!-- Container-fluid starts-->
-    {{ html()->form('POST', route('received.from.lab.orders.update'))->attribute('name', 'labStatusForm')->attribute('id', 'labStatusForm')->open() }}
+    {{ html()->form('POST', route('lab.order.update.status'))->attribute('name', 'labStatusForm')->attribute('id', 'labStatusForm')->open() }}
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
