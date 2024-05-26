@@ -38,8 +38,8 @@ class HelperController extends Controller
 
     public function switchBranch($branch)
     {
-        if (UserBranch::where('user_id', Auth::id())->where('branch_id', $branch)->exists()) :
-            Session::put('branch', $branch);
+        if (UserBranch::where('user_id', Auth::id())->where('branch_id', decrypt($branch))->exists()) :
+            Session::put('branch', decrypt($branch));
             return redirect()->back()->with("success", "Branch switched successfully");
         else :
             return redirect()->back()->with("error", "Requested branch access denied!");

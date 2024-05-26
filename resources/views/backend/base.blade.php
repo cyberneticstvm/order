@@ -79,7 +79,7 @@
                 </div>
                 <div class="more_lang">
                   @forelse(userBranches()->where('id', '!=', Session::get('branch')) as $key => $branch)
-                  <div class="lang" data-value="{{ $branch->name }}"><i class="fa fa-check-circle-o fa-lg" aria-hidden="true"></i><span class="lang-txt"><a href="{{ route('switch.branch', $branch->id) }}" class="text-dark">{{ $branch->name }}</a></span></div>
+                  <div class="lang" data-value="{{ $branch->name }}"><i class="fa fa-check-circle-o fa-lg" aria-hidden="true"></i><span class="lang-txt"><a href="{{ route('switch.branch', encrypt($branch->id)) }}" class="text-dark">{{ $branch->name }}</a></span></div>
                   @empty
                   @endforelse
                 </div>
