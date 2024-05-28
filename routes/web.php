@@ -126,6 +126,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/lab/note/{oid}', 'getLabNote')->name('ajax.get.lab.note');
         Route::get('/booked/product/details', 'getBookedProductDetails')->name('ajax.get.booked.product.details');
         Route::get('/transferin/product/details', 'transferInProductDetails')->name('ajax.get.transfer.in.product.details');
+        Route::get('/transferout/product/details', 'transferOutProductDetails')->name('ajax.get.transfer.in.product.details');
     });
 
     Route::prefix('/backend')->controller(HelperController::class)->group(function () {

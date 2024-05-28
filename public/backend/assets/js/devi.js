@@ -278,6 +278,24 @@ $(function () {
         });
     });
 
+    $(document).on("click", ".trnsOutPdct", function () {
+        var drawer = $(this).data('drawer');
+        var branch = $(this).data('branch');
+        var category = $(this).data('category');
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/transferout/product/details',
+            data: { 'branch': branch, 'category': category },
+            success: function (res) {
+                $("#" + drawer).drawer('toggle');
+                $("#" + drawer).find(".drawer-content").html(res);
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        });
+    });
+
     $(document).on("keyup", ".retqty", function () {
         let dis = $(this); let qty = parseInt(dis.val()); let price = parseFloat(dis.parent().parent().find(".retval").text().replace(/\,/g, ''));
         dis.parent().parent().find(".custacc").val((parseFloat(qty * price) > 0) ? parseFloat(qty * price).toFixed(2) : 0.00);
