@@ -72,8 +72,8 @@
                                             {{ html()->checkbox('chkItem[]', '', (old('chkItem')[$key]) ?? $item->id)->class('chkItem chk_'.$item->id.' '.$item->eye) }}
                                         </td>
                                         <td class="text-center"><a href="javascript:void(0)" class="labNote" data-drawer="labNoteDrawer" data-oid="{{ $item->order_id }}"><i class="fa fa-edit {{ isOrderNote($item->order?->id) }} fa-lg"></i></a></td>
-                                        <td class="{{ ($item->lab_id == '0') ? 'text-warning' : 'text-primary'  }}">{{ $item->created_at->format('d.M.Y') }}</td>
-                                        <td><a href="javascript:void(0)" class="dayBook {{ $item->order?->isEdited() }}" data-from-date="" data-to-date="" data-type="order" data-mode="{{ $item->order?->id }}" data-branch="" data-drawer="orderDrawer">{{ $item->order?->ono() }}</a></td>
+                                        <td class="{{ ($item->lab_id == '0') ? 'text-warning' : ''  }}">{{ $item->created_at->format('d.M.Y') }}</td>
+                                        <td><a href="javascript:void(0)" class="dayBook {{ $item->order?->isEdited() ?? 'text-primary' }}" data-from-date="" data-to-date="" data-type="order" data-mode="{{ $item->order?->id }}" data-branch="" data-drawer="orderDrawer">{{ $item->order?->ono() }}</a></td>
                                         <td class="fw-bold">{{ strtoupper($item->eye) }}</td>
                                         <td>{{ $item->sph }}</td>
                                         <td>{{ $item->cyl }}</td>
