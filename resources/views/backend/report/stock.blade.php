@@ -14,7 +14,7 @@
                                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg></a></li>
                         <li class="breadcrumb-item">Inventory</li>
-                        <li class="breadcrumb-item active">Stock In Hand</li>
+                        <li class="breadcrumb-item active">Stock In Hand {{ $dd }}</li>
                     </ol>
                 </div>
             </div>
