@@ -98,9 +98,9 @@
                                 <tfoot>
                                     <tr>
                                         <td colspan="4" class="fw-bold text-end">Total</td>
-                                        <td class="fw-bold text-right"><a href="javascript:void(0)" class="bkdPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="bookedPdctDrawer" data-fadte="{{ $inputs[2] }}">{{ $data->sum('soldQty') }}</a></td>
-                                        <td class="fw-bold text-right"><a href="javascript:void(0)" class="trnsInPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="transferInPdctDrawer" data-fadte="{{ $inputs[2] }}">{{ $data->sum('purchasedQty') }}</a></td>
-                                        <td class="fw-bold text-right"><a href="javascript:void(0)" class="trnsOutPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="transferInPdctDrawer" data-fadte="{{ $inputs[2] }}">{{ $data->sum('transferredQty') }}</a></td>
+                                        <td class="fw-bold text-right"><a href="javascript:void(0)" class="bkdPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="bookedPdctDrawer">{{ $data->sum('soldQty') }}</a></td>
+                                        <td class="fw-bold text-right"><a href="javascript:void(0)" class="trnsInPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="transferInPdctDrawer">{{ $data->sum('purchasedQty') }}</a></td>
+                                        <td class="fw-bold text-right"><a href="javascript:void(0)" class="trnsOutPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="transferInPdctDrawer">{{ $data->sum('transferredQty') }}</a></td>
                                         <td class="fw-bold text-right">{{ $data->sum('returnedQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('damagedQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('balanceQty') }}</td>
