@@ -266,7 +266,7 @@ $(function () {
         var category = $(this).data('category');
         $.ajax({
             type: 'GET',
-            url: '/transferin/product/details',
+            url: '/ajax/transferin/product/details',
             data: { 'branch': branch, 'category': category },
             success: function (res) {
                 $("#" + drawer).drawer('toggle');
