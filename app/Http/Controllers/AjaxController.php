@@ -374,7 +374,7 @@ class AjaxController extends Controller
     {
         $c = 1;
         $type = ($request->category == 'lens') ? ['re', 'le'] : [$request->category];
-        $orders = OrderDetail::leftJoin('orders as o', 'o.id', 'order_details.order_id')->where('o.branch_id', $request->branch)->selectRaw("order_details.*")->whereNotIn('o.order_status', ['delivered', 'cancelled'])->whereIn('order_details.eye', $type)->whereNull('order_details.return')->whereNull('o.deleted_at')->whereBetween('order_details.created_at', [Carbon::parse($request->fdate)->startOfDay(), Carbon::today()->endOfDay()])->get();
+        $orders = OrderDetail::leftJoin('orders as o', 'o.id', 'order_details.order_id')->where('o.branch_id', $request->branch)->selectRaw("order_details.*")->whereNotIn('o.order_status', ['delivered', 'cancelled'])->whereIn('order_details.eye', $type)->whereNull('order_details.return')->whereNull('o.deleted_at')->get();
         $op = "<table class='table table-bordered'><thead><tr><th>SL No</th><th>Order No</th><th>Product</th><th>Qty</th><th>Status</th></tr></thead><tbody>";
         foreach ($orders as $key => $item) :
             $op .= "<tr>";
@@ -392,7 +392,7 @@ class AjaxController extends Controller
 
     public function transferInProductDetails(Request $request){
         $c = 1;
-        $transfers = TransferDetails::leftJoin('transfers as t', 't.id', 'transfer_details.transfer_id')->selectRaw("transfer_details.product_id, transfer_details.transfer_id, SUM(transfer_details.qty) AS qty")->where('t.to_branch_id', $request->branch)->where('t.transfer_status', 1)->where('t.category', $request->category)->whereNull('t.deleted_at')->whereBetween("transfer_details.created_at", [Carbon::parse($request->fdate)->startOfDay(), Carbon::today()->endOfDay()])->groupBy('transfer_details.product_id', 'transfer_details.transfer_id')->get();
+        $transfers = TransferDetails::leftJoin('transfers as t', 't.id', 'transfer_details.transfer_id')->selectRaw("transfer_details.product_id, transfer_details.transfer_id, SUM(transfer_details.qty) AS qty")->where('t.to_branch_id', $request->branch)->where('t.transfer_status', 1)->where('t.category', $request->category)->whereNull('t.deleted_at')->groupBy('transfer_details.product_id', 'transfer_details.transfer_id')->get();
         $op = "<table class='table table-bordered'><thead><tr><th>SL No</th><th>Transfer No</th><th>Product</th><th>Qty</th><th>Date</th></tr></thead><tbody>";
         foreach ($transfers->where('qty', '>', 0) as $key => $item) :
             $op .= "<tr>";
@@ -410,7 +410,7 @@ class AjaxController extends Controller
 
     public function transferOutProductDetails(Request $request){
         $c = 1;
-        $transfers = TransferDetails::leftJoin('transfers as t', 't.id', 'transfer_details.transfer_id')->selectRaw("transfer_details.product_id, transfer_details.transfer_id, SUM(transfer_details.qty) AS qty")->where('t.from_branch_id', $request->branch)->where('t.transfer_status', 1)->where('t.category', $request->category)->whereNull('t.deleted_at')->whereBetween("transfer_details.created_at", [Carbon::parse($request->fdate)->startOfDay(), Carbon::today()->endOfDay()])->groupBy('transfer_details.product_id', 'transfer_details.transfer_id')->get();
+        $transfers = TransferDetails::leftJoin('transfers as t', 't.id', 'transfer_details.transfer_id')->selectRaw("transfer_details.product_id, transfer_details.transfer_id, SUM(transfer_details.qty) AS qty")->where('t.from_branch_id', $request->branch)->where('t.transfer_status', 1)->where('t.category', $request->category)->whereNull('t.deleted_at')->groupBy('transfer_details.product_id', 'transfer_details.transfer_id')->get();
         $op = "<table class='table table-bordered'><thead><tr><th>SL No</th><th>Transfer No</th><th>Product</th><th>Qty</th><th>Date</th></tr></thead><tbody>";
         foreach ($transfers->where('qty', '>', 0) as $key => $item) :
             $op .= "<tr>";

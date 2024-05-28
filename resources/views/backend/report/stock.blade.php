@@ -28,13 +28,6 @@
                         <div class="card-wrapper">
                             <form class="row g-3" method="post" action="{{ route('report.stock.status.fetch') }}">
                                 @csrf
-                                <div class="col-md-2">
-                                    <label class="form-label req">From Date</label>
-                                    {{ html()->date($name = 'from_date', $value = ($inputs[2]) ?? date('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}
-                                    @error('from_date')
-                                    <small class="text-danger">{{ $errors->first('from_date') }}</small>
-                                    @enderror
-                                </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Product Category</label>
                                     <div class="input-group">

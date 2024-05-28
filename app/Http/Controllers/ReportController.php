@@ -97,20 +97,19 @@ class ReportController extends Controller
     {
         $branches = $this->branches;
         $data = collect();
-        $inputs = array('0', 'frame', date('Y-m-d'));
+        $inputs = array('0', 'frame');
         return view('backend.report.stock', compact('branches', 'data', 'inputs'));
     }
 
     public function fetchStockStatus(Request $request)
     {
         $this->validate($request, [
-            'from_date' => 'required',
             'category' => 'required',
             'branch' => 'required',
         ]);
         $data = getInventory($request->branch, 0, $request->category);
         $branches = $this->branches;
-        $inputs = array($request->branch, $request->category, $request->from_date);
+        $inputs = array($request->branch, $request->category);
         return view('backend.report.stock', compact('data', 'branches', 'inputs'));
     }
 
