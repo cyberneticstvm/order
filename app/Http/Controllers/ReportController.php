@@ -99,7 +99,7 @@ class ReportController extends Controller
         $data = collect();
         $inputs = array('0', 'frame', date('Y-m-d'));
         $dd = Carbon::today()->endOfDay();
-        return view('backend.report.stock', compact('branches', 'data', 'inputs'));
+        return view('backend.report.stock', compact('branches', 'data', 'inputs', 'dd'));
     }
 
     public function fetchStockStatus(Request $request)
