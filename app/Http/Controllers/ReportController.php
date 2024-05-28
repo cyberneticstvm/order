@@ -108,9 +108,9 @@ class ReportController extends Controller
             'category' => 'required',
             'branch' => 'required',
         ]);
-        $data = getInventory($request->branch, 0, $request->category, $request->from_date);
+        $data = getInventory($request->branch, 0, $request->category);
         $branches = $this->branches;
-        $inputs = array($request->branch, $request->category);
+        $inputs = array($request->branch, $request->category, $request->from_date);
         return view('backend.report.stock', compact('data', 'branches', 'inputs'));
     }
 
