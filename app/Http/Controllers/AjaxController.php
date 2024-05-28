@@ -393,7 +393,7 @@ class AjaxController extends Controller
         $c = 1;
         $transfers = TransferDetails::leftJoin('transfers as t', 't.id', 'transfer_details.transfer_id')->selectRaw("transfer_details.product_id, transfer_details.transfer_id, SUM(transfer_details.qty) AS qty")->where('t.to_branch_id', $request->branch)->where('t.transfer_status', 1)->where('t.category', $request->category)->whereNull('t.deleted_at')->groupBy('transfer_details.product_id', 'transfer_details.transfer_id')->get();
         $op = "<table class='table table-bordered'><thead><tr><th>SL No</th><th>Transfer No</th><th>Product</th><th>Qty</th><th>Date</th></tr></thead><tbody>";
-        foreach ($transfers as $key => $item) :
+        foreach ($transfers->where('qty', '>', 0) as $key => $item) :
             $op .= "<tr>";
             $op .= "<td>" . $c++ . "</td>";
             $op .= "<td>" . $item->transfer?->transfer_number . "</td>";
