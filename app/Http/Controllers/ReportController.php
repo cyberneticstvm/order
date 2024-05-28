@@ -98,8 +98,7 @@ class ReportController extends Controller
         $branches = $this->branches;
         $data = collect();
         $inputs = array('0', 'frame', date('Y-m-d'));
-        $dd = Carbon::today()->endOfDay();
-        return view('backend.report.stock', compact('branches', 'data', 'inputs', 'dd'));
+        return view('backend.report.stock', compact('branches', 'data', 'inputs'));
     }
 
     public function fetchStockStatus(Request $request)
@@ -112,8 +111,7 @@ class ReportController extends Controller
         $data = getInventory($request->branch, 0, $request->category);
         $branches = $this->branches;
         $inputs = array($request->branch, $request->category, $request->from_date);
-        $dd = Carbon::parse($request->from_date)->startOfDay();
-        return view('backend.report.stock', compact('data', 'branches', 'inputs', 'dd'));
+        return view('backend.report.stock', compact('data', 'branches', 'inputs'));
     }
 
     public function loginLog()
