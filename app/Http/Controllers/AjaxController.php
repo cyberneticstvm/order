@@ -391,7 +391,7 @@ class AjaxController extends Controller
 
     public function transferInProductDetails(Request $request){
         $c = 1;
-        $transfers = TransferDetails::leftJoin('transfers as t', 't.id', 'transfer_details.transfer_id')->selectRaw('transfer_details.*')->where('t.to_branch_id', $request->branch)->where('t.transfer_status', 1)->where('t.category', $request->category)->whereNull('t.deleted_at')->having('transfer_details.qty', '>', 0)->get();
+        $transfers = TransferDetails::leftJoin('transfers as t', 't.id', 'transfer_details.transfer_id')->selectRaw('transfer_details.*')->where('t.to_branch_id', $request->branch)->where('t.transfer_status', 1)->where('t.category', $request->category)->whereNull('t.deleted_at')->where('transfer_details.qty', '>', 0)->get();
         $op = "<table class='table table-bordered'><thead><tr><th>SL No</th><th>Transfer No</th><th>Product</th><th>Qty</th><th>Date</th></tr></thead><tbody>";
         foreach ($transfers as $key => $item) :
             $op .= "<tr>";
