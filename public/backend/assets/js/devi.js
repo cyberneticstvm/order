@@ -245,11 +245,12 @@ $(function () {
     $(document).on("click", ".bkdPdct", function () {
         var drawer = $(this).data('drawer');
         var branch = $(this).data('branch');
+        var fdate = $(this).data('fdate');
         var category = $(this).data('category');
         $.ajax({
             type: 'GET',
             url: '/ajax/booked/product/details',
-            data: { 'branch': branch, 'category': category },
+            data: { 'branch': branch, 'category': category, 'fdate': fdate },
             success: function (res) {
                 $("#" + drawer).drawer('toggle');
                 $("#" + drawer).find(".drawer-content").html(res);
@@ -263,11 +264,12 @@ $(function () {
     $(document).on("click", ".trnsInPdct", function () {
         var drawer = $(this).data('drawer');
         var branch = $(this).data('branch');
+        var fdate = $(this).data('fdate');
         var category = $(this).data('category');
         $.ajax({
             type: 'GET',
             url: '/ajax/transferin/product/details',
-            data: { 'branch': branch, 'category': category },
+            data: { 'branch': branch, 'category': category, 'fdate': fdate },
             success: function (res) {
                 $("#" + drawer).drawer('toggle');
                 $("#" + drawer).find(".drawer-content").html(res);
@@ -281,11 +283,12 @@ $(function () {
     $(document).on("click", ".trnsOutPdct", function () {
         var drawer = $(this).data('drawer');
         var branch = $(this).data('branch');
+        var fdate = $(this).data('fdate');
         var category = $(this).data('category');
         $.ajax({
             type: 'GET',
             url: '/ajax/transferout/product/details',
-            data: { 'branch': branch, 'category': category },
+            data: { 'branch': branch, 'category': category, 'fdate': fdate },
             success: function (res) {
                 $("#" + drawer).drawer('toggle');
                 $("#" + drawer).find(".drawer-content").html(res);

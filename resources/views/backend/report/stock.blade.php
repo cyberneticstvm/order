@@ -28,6 +28,13 @@
                         <div class="card-wrapper">
                             <form class="row g-3" method="post" action="{{ route('report.stock.status.fetch') }}">
                                 @csrf
+                                <div class="col-md-2">
+                                    <label class="form-label req">From Date</label>
+                                    {{ html()->date($name = 'from_date', $value = ($inputs[2]) ?? date('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}
+                                    @error('from_date')
+                                    <small class="text-danger">{{ $errors->first('from_date') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Product Category</label>
                                     <div class="input-group">
@@ -98,9 +105,9 @@
                                 <tfoot>
                                     <tr>
                                         <td colspan="4" class="fw-bold text-end">Total</td>
-                                        <td class="fw-bold text-right"><a href="javascript:void(0)" class="bkdPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="bookedPdctDrawer">{{ $data->sum('soldQty') }}</a></td>
-                                        <td class="fw-bold text-right"><a href="javascript:void(0)" class="trnsInPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="transferInPdctDrawer">{{ $data->sum('purchasedQty') }}</a></td>
-                                        <td class="fw-bold text-right"><a href="javascript:void(0)" class="trnsOutPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="transferInPdctDrawer">{{ $data->sum('transferredQty') }}</a></td>
+                                        <td class="fw-bold text-right"><a href="javascript:void(0)" class="bkdPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="bookedPdctDrawer" data-fadte="{{ $inputs[2] }}">{{ $data->sum('soldQty') }}</a></td>
+                                        <td class="fw-bold text-right"><a href="javascript:void(0)" class="trnsInPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="transferInPdctDrawer" data-fadte="{{ $inputs[2] }}">{{ $data->sum('purchasedQty') }}</a></td>
+                                        <td class="fw-bold text-right"><a href="javascript:void(0)" class="trnsOutPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="transferInPdctDrawer" data-fadte="{{ $inputs[2] }}">{{ $data->sum('transferredQty') }}</a></td>
                                         <td class="fw-bold text-right">{{ $data->sum('returnedQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('damagedQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('balanceQty') }}</td>
