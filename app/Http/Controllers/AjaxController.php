@@ -17,6 +17,7 @@ use App\Models\ProductSubcategory;
 use App\Models\PurchaseDetail;
 use App\Models\Spectacle;
 use App\Models\Transfer;
+use App\Models\TransferDetails;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -384,6 +385,23 @@ class AjaxController extends Controller
             $op .= "</tr>";
         endforeach;
         $op .= "</tr><td colspan='3' class='text-end'>Total</td><td class='text-end fw-bold'>" . $orders->sum('qty') . "</td><td></td></tr>";
+        $op .= "</tbody></table>";
+        echo $op;
+    }
+
+    public function transferInProductDetails(Request $request){
+        $transfers = TransferDetails::leftJoin('transfers as t', 't.id', 'transfer_details.transfer_id')->selectRaw('transfer_details.*')->where('t.to_branch_id', $request->branch)->where('t.transfer_status', 1)->where('t.category', $request->category)->whereNull('t.deleted_at')->get();
+        $op = "<table class='table table-bordered'><thead><tr><th>SL No</th><th>Transfer No</th><th>Product</th><th>Qty</th><th>Date</th></tr></thead><tbody>";
+        foreach ($transfers as $key => $item) :
+            $op .= "<tr>";
+            $op .= "<td>" . $key + 1 . "</td>";
+            $op .= "<td>" . $item->transfer?->transfer_number . "</td>";
+            $op .= "<td>" . $item->product?->name . "</td>";
+            $op .= "<td class='text-end'>" . $item->qty . "</td>";
+            $op .= "<td>" . $item->transfer?->created_at->format('d.M.Y') . "</td>";
+            $op .= "</tr>";
+        endforeach;
+        $op .= "</tr><td colspan='3' class='text-end'>Total</td><td class='text-end fw-bold'>" . $transfers->sum('qty') . "</td><td></td></tr>";
         $op .= "</tbody></table>";
         echo $op;
     }
