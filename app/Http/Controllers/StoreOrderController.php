@@ -406,7 +406,7 @@ class StoreOrderController extends Controller
     public function destroy(string $id)
     {
         $order = Order::findOrFail(decrypt($id));
-        if (LabOrder::where('order_id', $order->id)->exists()) :
+        if (LabOrder::where('order_id', $order->id)->whereIn('status', ['sent-to-lab', 'job-under-process'])->exists()) :
             return redirect()->back()->with('error', 'Order has already been assigned to Lab!');
         else :
             cancelOrder($order->id);
