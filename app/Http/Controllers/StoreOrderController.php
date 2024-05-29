@@ -342,6 +342,13 @@ class StoreOrderController extends Controller
                         'updated_by' => $request->user()->id,
                         'updated_at' => Carbon::now(),
                     ]);*/
+                    $p = Payment::where('order_id', $id)->where('payment_type', 'advance');
+                    $created_by = $request->user()->id;
+                    $created_at = Carbon::now();
+                    if ($p->exists()) :
+                        $created_by = $p->first()->created_by;
+                        $created_at = $p->first()->created_at;
+                    endif;
                     Payment::updateOrCreate(
                         ['order_id' => $id, 'payment_type' => 'advance'],
                         [
@@ -353,9 +360,9 @@ class StoreOrderController extends Controller
                             'payment_type' => 'advance',
                             'notes' => 'Advance received against order number ' . $order->ono(),
                             'branch_id' => branch()->id,
-                            'created_by' => $order->created_by,
+                            'created_by' => $created_by,
                             'updated_by' => $request->user()->id,
-                            'created_at' => $order->created_at,
+                            'created_at' => $created_at,
                             'updated_at' => Carbon::now(),
                         ]
                     );
