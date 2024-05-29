@@ -30,6 +30,7 @@ class ReportController extends Controller
     public function __construct()
     {
         $this->middleware('permission:report-daybook', ['only' => ['daybook', 'fetchDayBook']]);
+        $this->middleware('permission:report-payment', ['only' => ['payment', 'fetchPayment']]);
         $this->middleware('permission:report-sales', ['only' => ['sales', 'fetchSales']]);
         $this->middleware('permission:report-stock-status', ['only' => ['stockStatus', 'fetchStockStatus']]);
         $this->middleware('permission:report-login-log', ['only' => ['loginLog', 'fetchLoginLog']]);
@@ -71,6 +72,28 @@ class ReportController extends Controller
         $data = getDayBook($inputs[0], $inputs[1], $inputs[2]);
         $opening_balance = getOpeningBalance(Carbon::parse($request->from_date)->startOfDay()->subDay(), $request->branch);
         return view('backend.report.daybook', compact('data', 'inputs', 'branches', 'opening_balance'));
+    }
+
+    public function payment()
+    {
+        $inputs = [date('Y-m-d'), date('Y-m-d'), 0, Session::get('branch')];
+        $branches = $this->branches;
+        $pmodes = PaymentMode::pluck('name', 'id');
+        $data = collect();
+        return view('backend.report.payment', compact('data', 'inputs', 'branches', 'pmodes'));
+    }
+
+    public function fetchPayment(Request $request)
+    {
+        $inputs = [$request->from_date, $request->to_date, $request->pmode, $request->branch];
+        $branches = $this->branches;
+        $pmodes = PaymentMode::pluck('name', 'id');
+        $data = Payment::whereBetween('created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->pmode > 0, function ($q) use ($request) {
+            return $q->where('payment_mode', $request->pmode);
+        })->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('branch_id', $request->branch);
+        })->latest()->get();
+        return view('backend.report.payment', compact('data', 'inputs', 'branches', 'pmodes'));
     }
 
     public function sales()

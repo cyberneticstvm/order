@@ -350,6 +350,7 @@
             {{
                 Menu::new()->addClass('sidebar-submenu')
                 ->linkIfCan('report-daybook', route('report.daybook'), 'Daybook')
+                ->linkIfCan('report-payment', route('report.payment'), 'Payments')
                 ->linkIfCan('report-sales', route('report.sales'), 'Sales')
                 ->linkIfCan('report-stock-status', route('report.stock.status'), 'Stock Status')
                 ->linkIfCan('report-login-log', route('report.login.log'), 'Login Log')

@@ -584,6 +584,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
     Route::prefix('/backend/report')->controller(ReportController::class)->group(function () {
         Route::get('/daybook', 'daybook')->name('report.daybook');
         Route::post('/daybook', 'fetchDaybook')->name('report.daybook.fetch');
+        Route::get('/payment', 'payment')->name('report.payment');
+        Route::post('/payment', 'fetchPayment')->name('report.payment.fetch');
         Route::get('/consultation', 'consultation')->name('report.consultation');
         Route::post('/consultation', 'fetchConsultation')->name('report.consultation.fetch');
         Route::get('/lab', 'lab')->name('report.lab');
