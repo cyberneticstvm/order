@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Closing;
+use App\Models\ProductDamage;
+use App\Models\SalesReturn;
 use App\Models\Transfer;
 use App\Models\TransferDetails;
 use Carbon\Carbon;
@@ -101,7 +103,7 @@ class SettingController extends Controller
             'branch_id' => 'required',
             'product_category' => 'required',
         ]);
-        try {
+        /*try {
             DB::transaction(function () use ($request) {
                 $data = [];
                 $qty = 0;
@@ -137,6 +139,20 @@ class SettingController extends Controller
                 endforeach;
                 TransferDetails::insert($data);
             });
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage());
+        }*/
+        try {
+            $transfer = Transfer::where('from_branch_id', $request->branch_id)->where('transfer_status', 0);
+            if ($transfer->exists()) :
+                return redirect()->back()->with("error", "Some pending transfer yet to be accepted");
+            else :
+                DB::transaction(function () use ($request) {
+                    Transfer::where('category', $request->product_category)->where('to_branch_id', $request->branch_id)->delete();
+                    SalesReturn::where('returned_branch', $request->branch_id)->delete();
+                    ProductDamage::where('from_branch', $request->branch_id)->delete();
+                });
+            endif;
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage());
         }
