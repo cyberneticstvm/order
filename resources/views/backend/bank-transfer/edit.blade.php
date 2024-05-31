@@ -39,6 +39,13 @@
                                     <small class="text-danger">{{ $errors->first('amount') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-3">
+                                    <label class="form-label req">Transfer Type</label>
+                                    {{ html()->select($name = 'type', bankTransferTypes(), $btransfer->type)->class('form-control')->placeholder('Type') }}
+                                    @error('type')
+                                    <small class="text-danger">{{ $errors->first('type') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Notes</label>
                                     {{ html()->text($name = 'notes', $value = $btransfer->notes)->class('form-control')->placeholder('Notes') }}

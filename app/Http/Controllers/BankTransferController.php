@@ -41,6 +41,7 @@ class BankTransferController extends Controller
     {
         $this->validate($request, [
             'amount' => 'required',
+            'type' => 'required',
         ]);
         $input = $request->all();
         $input['branch_id'] = Session::get('branch');
@@ -74,6 +75,7 @@ class BankTransferController extends Controller
     {
         $this->validate($request, [
             'amount' => 'required',
+            'type' => 'required',
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;

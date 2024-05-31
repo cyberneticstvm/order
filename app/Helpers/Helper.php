@@ -205,6 +205,10 @@ function casetypes()
     return array('box' => 'Box', 'rexine' => 'Rexine', 'other' => 'Other');
 }
 
+function bankTransferTypes(){
+    return array('cdm' => 'CDM / Bank', 'cash' => 'Cash');
+}
+
 function headcategory()
 {
     return array('expense' => 'Expense', 'income' => 'Income', 'other' => 'Other');
@@ -254,7 +258,9 @@ function getDayBook($fdate, $tdate, $branch)
     $paid_total_card = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [2]);
     $paid_total_upi = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [3]);
     $paid_total_other = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [5, 6, 7]);
-    $bank_transfer_total = getBankTransferTotal($from_date, $to_date, $branch);
+    $bank_transfer_total = getBankTransferTotal($from_date, $to_date, $branch, $type=null);
+    $bank_transfer_cash = getBankTransferTotal($from_date, $to_date, $branch, $type='cash');
+    $bank_transfer_cdm = getBankTransferTotal($from_date, $to_date, $branch, $type='cdm');
     $voucher_income_total_cash = getVoucherTotal($from_date, $to_date, $branch, $type = 'receipt', $mode = [1]);
     $voucher_income_total_bank = getVoucherTotal($from_date, $to_date, $branch, $type = 'receipt', $mode = [4]);
     $voucher_income_total_card = getVoucherTotal($from_date, $to_date, $branch, $type = 'receipt', $mode = [2]);
@@ -284,6 +290,8 @@ function getDayBook($fdate, $tdate, $branch)
         'paid_total_upi' => $paid_total_upi,
         'paid_total_other' => $paid_total_other,
         'bank_transfer_total' => $bank_transfer_total,
+        'bank_transfer_cash' => $bank_transfer_cash,
+        'bank_transfer_cdm' => $bank_transfer_cdm,
         'voucher_income_total_cash' => $voucher_income_total_cash,
         'voucher_income_total_bank' => $voucher_income_total_bank,
         'voucher_income_total_card' => $voucher_income_total_card,
@@ -316,10 +324,12 @@ function getVoucherTotal($from_date, $to_date, $branch, $type, $mode)
     })->sum('amount');
 }
 
-function getBankTransferTotal($from_date, $to_date, $branch)
+function getBankTransferTotal($from_date, $to_date, $branch, $type)
 {
     return BankTransfer::whereBetween('created_at', [$from_date, $to_date])->when($branch > 0, function ($q) use ($branch) {
         return $q->where('branch_id', $branch);
+    })->when($type, function ($q) use ($type) {
+        return $q->where('type', $type);
     })->sum('amount');
 }
 
@@ -434,7 +444,7 @@ function getInventory($branch, $product, $category)
             $branch = Branch::findOrFail($branch);
             $bname = $branch->name;
             /*$stock = DB::select("SELECT '$bname' AS branch, tbl1.product_id, tbl1.product_name, tbl1.purchasedQty, tbl1.transferredQty, tbl1.code AS pcode, SUM(CASE WHEN o.branch_id = ? AND o.deleted_at IS NULL AND o.order_status != 'delivered' THEN od.qty ELSE 0 END) AS soldQty, SUM(CASE WHEN o.branch_id = ? AND o.deleted_at IS NULL AND o.order_status = 'delivered' THEN od.qty ELSE 0 END) AS billedQty, SUM(CASE WHEN sr.returned_branch=? AND sr.deleted_at IS NULL THEN srd.returned_qty ELSE 0 END) AS returnedQty, (tbl1.purchasedQty + SUM(CASE WHEN sr.returned_branch=? AND sr.deleted_at IS NULL THEN srd.returned_qty ELSE 0 END)) - ((tbl1.transferredQty+SUM(CASE WHEN o.branch_id = ? AND o.deleted_at IS NULL AND o.order_status = 'delivered' THEN od.qty ELSE 0 END) + SUM(CASE WHEN dam.deleted_at IS NULL AND dam.from_branch = ? THEN dam.qty ELSE 0 END))) AS balanceQty, SUM(CASE WHEN dam.deleted_at IS NULL AND dam.from_branch = ? THEN dam.qty ELSE 0 END) AS damagedQty FROM (SELECT pdct.id AS product_id, pdct.code, pdct.name AS product_name, SUM(CASE WHEN t.to_branch_id = ? THEN td.qty ELSE 0 END) AS purchasedQty, SUM(CASE WHEN t.from_branch_id = ? THEN td.qty ELSE 0 END) AS transferredQty FROM transfer_details td LEFT JOIN transfers t ON t.id = td.transfer_id LEFT JOIN products pdct ON td.product_id = pdct.id WHERE IF(? > 0, td.product_id = ?, 1) AND pdct.category = ? AND t.deleted_at IS NULL AND t.transfer_status = 1 GROUP BY pdct.id, pdct.name, pdct.code) AS tbl1 LEFT JOIN order_details od ON od.product_id = tbl1.product_id LEFT JOIN orders o ON o.id = od.order_id LEFT JOIN product_damages dam ON tbl1.product_id = dam.product_id LEFT JOIN sales_return_details srd ON tbl1.product_id = srd.product_id LEFT JOIN sales_returns sr ON sr.id = srd.return_id GROUP BY product_id, product_name, purchasedQty, transferredQty, pcode", [$branch->id, $branch->id, $branch->id, $branch->id, $branch->id, $branch->id, $branch->id, $branch->id, $branch->id, $product, $product, $category]);*/
-            $stock = DB::select("SELECT tbl3.*, SUM(CASE WHEN dam.deleted_at IS NULL AND dam.from_branch = ? THEN dam.qty ELSE 0 END) AS damagedQty, ((tbl3.purchasedQty+tbl3.returnedQty)-(tbl3.transferredQty+tbl3.billedQty+SUM(CASE WHEN dam.deleted_at IS NULL AND dam.from_branch = ? THEN dam.qty ELSE 0 END))) AS balanceQty FROM(SELECT tbl2.*, SUM(CASE WHEN sr.returned_branch = ? AND sr.deleted_at IS NULL THEN srd.returned_qty ELSE 0 END) AS returnedQty FROM (SELECT tbl1.*, SUM(CASE WHEN o.branch_id = ? AND o.deleted_at IS NULL AND o.order_status != 'delivered' AND od.return IS NULL THEN od.qty ELSE 0 END) AS soldQty, SUM(CASE WHEN o.branch_id = ? AND o.deleted_at IS NULL AND o.order_status = 'delivered' AND od.return IS NULL AND o.stock_updated_at IS NULL THEN od.qty ELSE 0 END) AS billedQty FROM (SELECT pdct.id AS product_id, pdct.code AS pcode, pdct.name AS product_name, SUM(CASE WHEN t.to_branch_id = ? THEN td.qty ELSE 0 END) AS purchasedQty, SUM(CASE WHEN t.from_branch_id = ? THEN td.qty ELSE 0 END) AS transferredQty FROM transfer_details td LEFT JOIN transfers t ON t.id = td.transfer_id LEFT JOIN products pdct ON td.product_id = pdct.id WHERE IF(? > 0, td.product_id = ?, 1) AND pdct.category = ? AND t.deleted_at IS NULL AND t.transfer_status = 1 GROUP BY pdct.id, pdct.name, pdct.code) AS tbl1 LEFT JOIN order_details od ON od.product_id = tbl1.product_id LEFT JOIN orders o ON o.id = od.order_id GROUP BY product_id, product_name, purchasedQty, transferredQty, pcode) AS tbl2 LEFT JOIN sales_return_details srd ON tbl2.product_id = srd.product_id LEFT JOIN sales_returns sr ON sr.id = srd.return_id GROUP BY product_id, product_name, purchasedQty, transferredQty, pcode, billedQty, soldQty) AS tbl3 LEFT JOIN product_damages dam ON tbl3.product_id = dam.product_id GROUP BY product_id, product_name, purchasedQty, transferredQty, pcode, billedQty, soldQty, returnedQty", [$branch->id, $branch->id, $branch->id, $branch->id, $branch->id, $branch->id, $branch->id, $product, $product, $category]);
+            $stock = DB::select("SELECT tbl3.*, SUM(CASE WHEN dam.deleted_at IS NULL AND dam.approved_status = 1 AND dam.from_branch = ? THEN dam.qty ELSE 0 END) AS damagedQty, ((tbl3.purchasedQty+tbl3.returnedQty)-(tbl3.transferredQty+tbl3.billedQty+SUM(CASE WHEN dam.deleted_at IS NULL AND dam.from_branch = ? THEN dam.qty ELSE 0 END))) AS balanceQty FROM(SELECT tbl2.*, SUM(CASE WHEN sr.returned_branch = ? AND sr.deleted_at IS NULL THEN srd.returned_qty ELSE 0 END) AS returnedQty FROM (SELECT tbl1.*, SUM(CASE WHEN o.branch_id = ? AND o.deleted_at IS NULL AND o.order_status != 'delivered' AND od.return IS NULL THEN od.qty ELSE 0 END) AS soldQty, SUM(CASE WHEN o.branch_id = ? AND o.deleted_at IS NULL AND o.order_status = 'delivered' AND od.return IS NULL AND o.stock_updated_at IS NULL THEN od.qty ELSE 0 END) AS billedQty FROM (SELECT pdct.id AS product_id, pdct.code AS pcode, pdct.name AS product_name, SUM(CASE WHEN t.to_branch_id = ? THEN td.qty ELSE 0 END) AS purchasedQty, SUM(CASE WHEN t.from_branch_id = ? THEN td.qty ELSE 0 END) AS transferredQty FROM transfer_details td LEFT JOIN transfers t ON t.id = td.transfer_id LEFT JOIN products pdct ON td.product_id = pdct.id WHERE IF(? > 0, td.product_id = ?, 1) AND pdct.category = ? AND t.deleted_at IS NULL AND t.transfer_status = 1 GROUP BY pdct.id, pdct.name, pdct.code) AS tbl1 LEFT JOIN order_details od ON od.product_id = tbl1.product_id LEFT JOIN orders o ON o.id = od.order_id GROUP BY product_id, product_name, purchasedQty, transferredQty, pcode) AS tbl2 LEFT JOIN sales_return_details srd ON tbl2.product_id = srd.product_id LEFT JOIN sales_returns sr ON sr.id = srd.return_id GROUP BY product_id, product_name, purchasedQty, transferredQty, pcode, billedQty, soldQty) AS tbl3 LEFT JOIN product_damages dam ON tbl3.product_id = dam.product_id GROUP BY product_id, product_name, purchasedQty, transferredQty, pcode, billedQty, soldQty, returnedQty", [$branch->id, $branch->id, $branch->id, $branch->id, $branch->id, $branch->id, $branch->id, $product, $product, $category]);
         endif;
     endif;
     return collect($stock);

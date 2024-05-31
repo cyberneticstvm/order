@@ -70,6 +70,7 @@
                                         <th>Invoice</th>
                                         <th>Order Status</th>
                                         <th>Edit</th>
+                                        <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -93,6 +94,7 @@
                                         <td><a href="{{ route('order.status', encrypt($item->id)) }}">{{ $item->order_status }}</a></td>
                                         @endif
                                         <td class="text-center"><a href="{{ route(($item->category == 'store') ? 'store.order.edit' : 'solution.order.edit', encrypt($item->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
+                                        <td class="text-center"><a href="{{ route(($item->category == 'store') ? 'store.order.delete' : 'solution.order.delete', encrypt($item->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
                                     </tr>
                                     @empty
                                     @endforelse
