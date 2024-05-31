@@ -205,6 +205,10 @@ function casetypes()
     return array('box' => 'Box', 'rexine' => 'Rexine', 'other' => 'Other');
 }
 
+function bankTransferTypes(){
+    return array('cdm' => 'CDM / Bank', 'cash' => 'Cash');
+}
+
 function headcategory()
 {
     return array('expense' => 'Expense', 'income' => 'Income', 'other' => 'Other');

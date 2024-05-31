@@ -41,6 +41,7 @@
                                         <th>SL No</th>
                                         <th>Amount</th>
                                         <th>Notes</th>
+                                        <th>Type</th>
                                         <th>Status</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
@@ -52,6 +53,7 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $transfer->amount }}</td>
                                         <td>{{ $transfer->notes }}</td>
+                                        <td>{{ ucfirst($transfer->type) }}</td>
                                         <td class="text-center">{!! $transfer->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('bank.transfer.edit', encrypt($transfer->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center"><a href="{{ route('bank.transfer.delete', encrypt($transfer->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
