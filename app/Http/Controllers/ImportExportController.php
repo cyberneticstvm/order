@@ -261,7 +261,7 @@ class ImportExportController extends Controller
         $stock = StockCompareTemp::where('category', $category)->where('branch_id', $branch)->selectRaw("product_id, SUM(qty) AS qty, product_name, product_code")->groupBy('product_id', 'product_name', 'product_code')->get();;
         if ($stock->isNotEmpty()) :
             foreach ($stock as $key => $item) :
-                $current = getInventory($branch, $item->id, $category);
+                $current = getInventory($branch, $item->product_id, $category);
                 $qty = $item->qty ?? 0;
                 if ($current->sum('balanceQty') != 0 || $qty != 0) :
                     $records[] = [
@@ -274,10 +274,8 @@ class ImportExportController extends Controller
                 endif;
             endforeach;
             if ($records) :
-                dd($records);
-                die;
-            //StockCompareTemp::query()->delete();
-            //return Excel::download(new ProductCompareExport(collect($records)), 'compare_difference.xlsx');
+                //StockCompareTemp::query()->delete();
+                return Excel::download(new ProductCompareExport(collect($records)), 'compare_difference.xlsx');
             endif;
         else :
             return redirect()->back()->with("error", "Empty records");
