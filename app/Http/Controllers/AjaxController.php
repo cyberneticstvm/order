@@ -146,6 +146,7 @@ class AjaxController extends Controller
     public function getFrameDetailed(Request $request)
     {
         $op = "";
+        $c = 1;
         $fdate = Carbon::parse($request->from_date)->startOfDay();
         $tdate = Carbon::parse($request->to_date)->endOfDay();
         $order = Order::whereBetween(($request->status == 'delivered') ? 'invoice_generated_at' : 'created_at', [$fdate, $tdate])->when($request->branch > 0, function ($q) use ($request) {
@@ -159,7 +160,7 @@ class AjaxController extends Controller
         foreach ($order as $key1 => $ord) :
             foreach ($ord->details->where('eye', 'frame') as $key => $item) :
                 $op .= "<tr>";
-                $op .= '<td>' . $key1 + 1 . '</td>';
+                $op .= '<td>' . $c++ . '</td>';
                 $op .= '<td>' . $ord->ono() . '</td>';
                 $op .= '<td>' . $item->product?->name . '</td>';
                 $op .= '<td>' . $item->product?->code . '</td>';
