@@ -265,8 +265,8 @@ class ImportExportController extends Controller
                 $qty = $item->qty ?? 0;
                 if ($current->sum('balanceQty') != 0 || $qty != 0) :
                     $records[] = [
-                        'product_name' => $item->name,
-                        'product_code' => $item->code,
+                        'product_name' => $item->product_name,
+                        'product_code' => $item->product_code,
                         'stock_in_hand' => $current->sum('balanceQty'),
                         'uploaded_qty' => $qty,
                         'difference' => ($qty > $current->sum('balanceQty')) ? abs($qty) - abs($current->sum('balanceQty')) : abs($current->sum('balanceQty')) - abs($qty),
@@ -274,8 +274,10 @@ class ImportExportController extends Controller
                 endif;
             endforeach;
             if ($records) :
-                //StockCompareTemp::query()->delete();
-                return Excel::download(new ProductCompareExport(collect($records)), 'compare_difference.xlsx');
+                dd($records);
+                die;
+            //StockCompareTemp::query()->delete();
+            //return Excel::download(new ProductCompareExport(collect($records)), 'compare_difference.xlsx');
             endif;
         else :
             return redirect()->back()->with("error", "Empty records");
