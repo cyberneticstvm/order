@@ -191,8 +191,8 @@
                                         <td class="text-end text-secondary">
                                             <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="bank" data-mode="0" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->bank_transfer_total, 2) }}</a>
                                         </td>
-                                        <td>{{ number_format($data->bank_transfer_cdm, 2) }}</td>
-                                        <td>{{ number_format($data->bank_transfer_cash, 2) }}</td>
+                                        <td>{{ number_format($data->bank_transfer_cdm, 2) }} (CDM)</td>
+                                        <td>{{ number_format($data->bank_transfer_cash, 2) }} (CASH)</td>
                                         <td colspan="3"></td>
                                     </tr>
                                     <tr>
