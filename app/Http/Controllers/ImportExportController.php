@@ -17,6 +17,7 @@ use App\Imports\ProductCompareImport;
 use App\Imports\ProductLensPurchaseImport;
 use App\Imports\ProductPurchaseImport;
 use App\Imports\ProductTransferImport;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductDamage;
 use App\Models\Purchase;
@@ -257,7 +258,7 @@ class ImportExportController extends Controller
     {
         $records = [];
         /*$stock = Product::leftJoin('stock_compare_temps as sct', 'products.id', 'sct.product_id')->where('products.category', $category)->selectRaw("sct.product_id, SUM(sct.qty) AS qty, products.id, products.name, products.code")->groupBy('sct.product_id', 'products.id', 'products.name', 'products.code')->get();*/
-        $stock = StockCompareTemp::where('category', $category)->selectRaw("product_id, SUM(qty) AS qty, product_name, product_code")->groupBy('product_id', 'product_name', 'product_code')->get();;
+        $stock = StockCompareTemp::where('category', $category)->where('branch_id', $branch)->selectRaw("product_id, SUM(qty) AS qty, product_name, product_code")->groupBy('product_id', 'product_name', 'product_code')->get();;
         if ($stock->isNotEmpty()) :
             foreach ($stock as $key => $item) :
                 $current = getInventory($branch, $item->id, $category);
@@ -296,6 +297,7 @@ class ImportExportController extends Controller
                     Transfer::where('category', $category)->where('to_branch_id', $branch)->delete();
                     SalesReturn::where('returned_branch', $branch)->delete();
                     ProductDamage::where('from_branch', $branch)->delete();
+                    Order::where('branch_id', $branch)->update(['stock_updated_at' => Carbon::now()]);
                     $transfer = Transfer::create([
                         'transfer_number' => transferId($category)->tid,
                         'category' => $category,

@@ -59,6 +59,7 @@ return new class extends Migration
             $table->foreign('branch_id')->references('id')->on('branches');
             $table->timestamps();
             $table->softDeletes();
+            $table->dateTime('stock_updated_at')->nullable();
         });
     }
 
