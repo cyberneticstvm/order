@@ -71,6 +71,7 @@
                                         <th>PID</th>
                                         <th>Code</th>
                                         <th>Booked</th>
+                                        <th>Billed</th>
                                         <th>Transfer In</th>
                                         <th>Transfer Out</th>
                                         <th>Returned</th>
@@ -86,6 +87,7 @@
                                         <td>{{ $item->product_id }}</td>
                                         <td>{{ $item->pcode }}</td>
                                         <td>{{ $item->soldQty }}</td>
+                                        <td>{{ $item->billedQty }}</td>
                                         <td>{{ $item->purchasedQty }}</td>
                                         <td>{{ $item->transferredQty }}</td>
                                         <td>{{ $item->returnedQty }} </td>
@@ -97,8 +99,9 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="4" class="fw-bold text-end">Total</td>
+                                        <td colspan="3" class="fw-bold text-end">Total</td>
                                         <td class="fw-bold text-right"><a href="javascript:void(0)" class="bkdPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="bookedPdctDrawer">{{ $data->sum('soldQty') }}</a></td>
+                                        <td class="fw-bold text-end">{{ $data->sum('billedQty') }}</td>
                                         <td class="fw-bold text-right"><a href="javascript:void(0)" class="trnsInPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="transferInPdctDrawer">{{ $data->sum('purchasedQty') }}</a></td>
                                         <td class="fw-bold text-right"><a href="javascript:void(0)" class="trnsOutPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="transferInPdctDrawer">{{ $data->sum('transferredQty') }}</a></td>
                                         <td class="fw-bold text-right">{{ $data->sum('returnedQty') }}</td>
