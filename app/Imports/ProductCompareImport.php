@@ -33,11 +33,19 @@ class ProductCompareImport implements WithStartRow, ToModel
                 'category' => $this->data->category,
             ]);
         else :
-            $this->pdct[] = [
+            StockCompareTemp::create([
+                'branch_id' => $this->data->branch,
+                'product_id' => NULL,
+                'product_code' => NULL,
+                'product_name' => NULL,
+                'qty' => 0,
+                'category' => $this->data->category,
+            ]);
+        /*$this->pdct[] = [
                 'product_code' => $row[0],
                 'qty' => $row[1],
                 'remarks' => 'Product not found',
-            ];
+            ];*/
         endif;
     }
 

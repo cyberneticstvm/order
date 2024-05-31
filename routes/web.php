@@ -176,8 +176,13 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/transfer', 'importTransfer')->name('import.transfer');
         Route::post('/transfer', 'importTransferUpdate')->name('import.transfer.update');
 
-        Route::get('/stock/comparison', 'stockComparison')->name('stock.comparison');
-        Route::post('/stock/comparison', 'stockComparisonUpdate')->name('stock.comparison.update');
+        Route::get('/stock/preview', 'stockPreview')->name('stock.preview');
+        Route::post('/stock/preview', 'stockPreviewUpdate')->name('stock.preview.update');
+
+        Route::get('/stock/compare/{category}/{branch}', 'compareStock')->name('stock.compare');
+        Route::get('/stock/update/{category}/{branch}', 'updateStock')->name('stock.update');
+
+        Route::get('/stock/previw/item/delete/{id}', 'deleteTempItem')->name('temp.item.delete');
     });
 
     Route::prefix('/backend/pdf')->controller(PdfController::class)->group(function () {

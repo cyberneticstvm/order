@@ -10,4 +10,9 @@ class StockCompareTemp extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class, 'branch_id', 'id');
+    }
 }

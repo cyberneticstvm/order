@@ -21,11 +21,11 @@
                 <svg class="fill-icon">
                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#fill-learning') }}"></use>
                 </svg>
-                <span>Extras</span>
+                <span>Stock / Inventory</span>
             </a>
             {{
                 Menu::new()->addClass('sidebar-submenu')
-                ->linkIfCan('received-from-lab-orders', route('stock.comparison'), 'Stock Comparison');
+                ->linkIfCan('stock-comparison', route('stock.preview'), 'Stock Comparison');
             }}
         </li>
         <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
