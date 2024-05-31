@@ -148,7 +148,7 @@ class AjaxController extends Controller
         $op = "";
         $fdate = Carbon::parse($request->from_date)->startOfDay();
         $tdate = Carbon::parse($request->to_date)->endOfDay();
-        $order = Order::whereBetween('created_at', [$fdate, $tdate])->when($request->branch > 0, function ($q) use ($request) {
+        $order = Order::whereBetween(($request->status == 'delivered') ? 'invoice_generated_at' : 'created_at', [$fdate, $tdate])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('branch_id', $request->branch);
         })->when($request->status, function ($q) use ($request) {
             return $q->where('order_status', $request->status);
