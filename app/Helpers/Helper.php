@@ -258,7 +258,9 @@ function getDayBook($fdate, $tdate, $branch)
     $paid_total_card = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [2]);
     $paid_total_upi = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [3]);
     $paid_total_other = getPaidTotalByMode($from_date, $to_date, $branch, $mode = [5, 6, 7]);
-    $bank_transfer_total = getBankTransferTotal($from_date, $to_date, $branch);
+    $bank_transfer_total = getBankTransferTotal($from_date, $to_date, $branch, $type=null);
+    $bank_transfer_cash = getBankTransferTotal($from_date, $to_date, $branch, $type='cash');
+    $bank_transfer_cdm = getBankTransferTotal($from_date, $to_date, $branch, $type='cdm');
     $voucher_income_total_cash = getVoucherTotal($from_date, $to_date, $branch, $type = 'receipt', $mode = [1]);
     $voucher_income_total_bank = getVoucherTotal($from_date, $to_date, $branch, $type = 'receipt', $mode = [4]);
     $voucher_income_total_card = getVoucherTotal($from_date, $to_date, $branch, $type = 'receipt', $mode = [2]);
@@ -288,6 +290,8 @@ function getDayBook($fdate, $tdate, $branch)
         'paid_total_upi' => $paid_total_upi,
         'paid_total_other' => $paid_total_other,
         'bank_transfer_total' => $bank_transfer_total,
+        'bank_transfer_cash' => $bank_transfer_cash,
+        'bank_transfer_cdm' => $bank_transfer_cdm,
         'voucher_income_total_cash' => $voucher_income_total_cash,
         'voucher_income_total_bank' => $voucher_income_total_bank,
         'voucher_income_total_card' => $voucher_income_total_card,
@@ -320,10 +324,12 @@ function getVoucherTotal($from_date, $to_date, $branch, $type, $mode)
     })->sum('amount');
 }
 
-function getBankTransferTotal($from_date, $to_date, $branch)
+function getBankTransferTotal($from_date, $to_date, $branch, $type)
 {
     return BankTransfer::whereBetween('created_at', [$from_date, $to_date])->when($branch > 0, function ($q) use ($branch) {
         return $q->where('branch_id', $branch);
+    })->when($type, function ($q) use ($type) {
+        return $q->where('type', $type);
     })->sum('amount');
 }
 
