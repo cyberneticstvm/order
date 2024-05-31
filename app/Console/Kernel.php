@@ -4,6 +4,8 @@ namespace App\Console;
 
 use App\Models\Branch;
 use App\Models\Closing;
+use App\Models\Order;
+use App\Models\OrderHistory;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -38,6 +40,10 @@ class Kernel extends ConsoleKernel
                     'updated_at' => Carbon::now(),
                 ]);
             endforeach;
+        })->dailyAt('23:45');
+
+        $schedule->call(function () {
+            OrderHistory::whereIn('order_id', Order::where('order_status', 'delivered')->whereDate('invoice_generated_at', '<=', Carbon::now()->subDays(7))->pluck('id'))->forcedelete();
         })->dailyAt('23:45');
     }
 
