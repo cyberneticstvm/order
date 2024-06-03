@@ -349,7 +349,7 @@ class AjaxController extends Controller
 
     public function checkPendingTransfer(Request $request)
     {
-        $transfer = Transfer::when(!in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO']), function ($q) {
+        $transfer = Transfer::when(!in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO', 'Store Manager']), function ($q) {
             return $q->where('to_branch_id', Session::get('branch'));
         })->where('transfer_status', 0);
         return response()->json([
