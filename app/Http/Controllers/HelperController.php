@@ -27,7 +27,7 @@ class HelperController extends Controller
     function __construct()
     {
         $this->middleware('permission:pending-transfer-list|pending-transfer-edit|product-damage-transfer-list|product-damage-transfer-update', ['only' => ['pendingTransfer', 'pendingTransferUpdate', 'pendingDamageTransfer', 'pendingDamageTransferUpdate']]);
-        $this->middleware('permission:pending-transfer-list', ['only' => ['pendingTransfer']]);
+        /*$this->middleware('permission:pending-transfer-list', ['only' => ['pendingTransfer']]);*/
         $this->middleware('permission:pending-transfer-edit', ['only' => ['pendingTransferEdit', 'pendingTransferUpdate']]);
         $this->middleware('permission:product-damage-transfer-list', ['only' => ['pendingDamageTransfer']]);
         $this->middleware('permission:product-damage-transfer-update', ['only' => ['pendingDamageTransferEdit', 'pendingDamageTransferUpdate']]);
@@ -104,7 +104,7 @@ class HelperController extends Controller
 
     public function pendingTransfer()
     {
-        $transfers = Transfer::when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'CEO')), function ($q) {
+        $transfers = Transfer::when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'CEO', 'Store Manager')), function ($q) {
             return $q->where('to_branch_id', Session::get('branch'));
         })->where('transfer_status', 0)->latest()->get();
         return view('backend.order.transfer.pending', compact('transfers'));
