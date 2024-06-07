@@ -354,7 +354,7 @@ class ImportExportController extends Controller
         return Excel::download(new OrderExport($request), 'order.xlsx');
     }
 
-    public function exportStockStatus(string $catgeory, string $braanch)
+    public function exportStockStatus(string $category, string $branch)
     {
         return Excel::download(new StockStatusReportExport($category, $branch), 'stock.xlsx');
     }
