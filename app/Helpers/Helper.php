@@ -33,6 +33,10 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+function apiSecret()
+{
+    return 'fdjsvsgdf4dhgf687f4bg54g4hf787';
+}
 
 function settings()
 {
