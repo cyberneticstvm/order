@@ -351,6 +351,8 @@ class ImportExportController extends Controller
 
     public function exportOrder(Request $request)
     {
+        dd($request);
+        die;
         return Excel::download(new OrderExport($request), 'order.xlsx');
     }
 
