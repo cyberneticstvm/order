@@ -27,9 +27,9 @@ class StockStatusReportExport implements FromCollection, WithMapping, WithHeadin
     {
         $category = $this->category;
         $branch = $this->branch;
-        $stock = getInventory($category, 0, $branch);
-        dd($stock);
+        echo $category;
         die;
+        $stock = getInventory($category, 0, $branch);
         return $stock->map(function ($data, $key) {
             return [
                 'item_serial' =>  $key + 1,
