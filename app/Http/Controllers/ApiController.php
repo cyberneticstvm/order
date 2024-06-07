@@ -9,7 +9,7 @@ class ApiController extends Controller
 {
     function getOrder($id, $secret)
     {
-        if ($secret == 'Qwert!@#$1235') :
+        if ($secret == 'Qwert!@#$12345') :
             $order = Order::find($id);
             if ($order) :
                 return response()->json([
