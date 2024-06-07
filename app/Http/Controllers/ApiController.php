@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -12,9 +13,11 @@ class ApiController extends Controller
         if ($secret == apiSecret()) :
             $order = Order::find($id);
             if ($order) :
+                $odetail = OrderDetail::where('order_id', $order->id)->get();
                 return response()->json([
                     'status' => true,
-                    'data' => $order
+                    'data' => $order,
+                    'odetail' => $odetail,
                 ], 200);
             else :
                 return response()->json([
