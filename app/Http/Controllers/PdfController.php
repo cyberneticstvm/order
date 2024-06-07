@@ -202,6 +202,15 @@ class PdfController extends Controller
         return $pdf->stream('order.pdf');
     }
 
+    public function exportStockStatus(Request $request)
+    {
+        $stock = getInventory($request->branch, 0, $request->category);
+        $branch = Branch::find($request->branch);
+        $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
+        $pdf = PDF::loadView('/backend/pdf/stock', compact('stock', 'qrcode', 'request', 'branch'));
+        return $pdf->stream('stock.pdf');
+    }
+
     public function NumberintoWords(float $number)
     {
         $number_after_decimal = round($number - ($num = floor($number)), 2) * 100;
