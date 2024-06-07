@@ -61,6 +61,19 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col text-end">
+                                <div class="btn-group">
+                                    <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Export</button>
+                                    <ul class="dropdown-menu dropdown-block">
+                                        <li><a class="dropdown-item txt-dark" href="{{ route('export.stock.status.pdf', ['category' => $inputs[1], 'branch' => $inputs[0]]) }}" target="_blank"><i class="icofont icofont-file-pdf txt-danger fw-bold"></i> Pdf</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('export.stock.status.excel', ['category' => $inputs[1], 'branch' => $inputs[0]]) }}" target="_blank"><i class="icofont icofont-file-excel txt-success fw-bold"></i> Excel</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive theme-scrollbar">
                             <table class="display" id="dataTable" style="width:100%">

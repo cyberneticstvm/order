@@ -161,6 +161,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/product/accessory', 'exportProductFrame')->name('export.product.accessory');
 
         Route::get('/order/{fdate}/{tdate}/{status}/{branch}', 'exportOrder')->name('export.order');
+        Route::get('/stock/{category}/{branch}', 'exportStockStatus')->name('export.stock.status.excel');
     });
 
     Route::prefix('/backend/import')->controller(ImportExportController::class)->group(function () {
@@ -208,6 +209,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/order/prescription/{id}', 'exportOrderPrescription')->name('store.order.prescription');
         Route::get('/customer/prescription/{id}', 'exportCustomerPrescription')->name('customer.order.prescription');
         Route::get('/order/{fdate}/{tdate}/{status}/{branch}', 'exportOrder')->name('export.order.pdf');
+        Route::get('/order/{category}/{branch}', 'exportStockStatus')->name('export.stock.status.pdf');
     });
 
     Route::prefix('/backend/bank/transfer')->controller(BankTransferController::class)->group(function () {

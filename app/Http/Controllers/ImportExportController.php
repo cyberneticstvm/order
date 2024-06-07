@@ -10,6 +10,7 @@ use App\Exports\ProductCompareExport;
 use App\Exports\ProductFrameExport;
 use App\Exports\ProductLensExport;
 use App\Exports\ProductPharmacyExport;
+use App\Exports\StockStatusReportExport;
 use App\Models\Branch;
 use App\Imports\FrameImport;
 use App\Imports\LensImport;
@@ -351,5 +352,10 @@ class ImportExportController extends Controller
     public function exportOrder(Request $request)
     {
         return Excel::download(new OrderExport($request), 'order.xlsx');
+    }
+
+    public function exportStockStatus(Request $request)
+    {
+        return Excel::download(new StockStatusReportExport($request), 'stock.xlsx');
     }
 }
