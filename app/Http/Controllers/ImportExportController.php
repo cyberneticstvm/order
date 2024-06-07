@@ -351,15 +351,11 @@ class ImportExportController extends Controller
 
     public function exportOrder(Request $request)
     {
-        dd($request);
-        die;
         return Excel::download(new OrderExport($request), 'order.xlsx');
     }
 
-    public function exportStockStatus(Request $request)
+    public function exportStockStatus(string $catgeory, string $braanch)
     {
-        dd($request);
-        die;
-        return Excel::download(new StockStatusReportExport($request), 'stock.xlsx');
+        return Excel::download(new StockStatusReportExport($category, $branch), 'stock.xlsx');
     }
 }

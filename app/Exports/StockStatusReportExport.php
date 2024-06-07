@@ -15,17 +15,19 @@ class StockStatusReportExport implements FromCollection, WithMapping, WithHeadin
     /**
      * @return \Illuminate\Support\Collection
      */
-    protected $request;
+    protected $category, $branch;
 
-    public function __construct($request)
+    public function __construct($category, $branch)
     {
-        $this->request = $request;
+        $this->category = $category;
+        $this->branch = $branch;
     }
 
     public function collection()
     {
-        $request = $this->request;
-        $stock = getInventory($request->category, 0, $request->branch);
+        $category = $this->category;
+        $branch = $this->branch;
+        $stock = getInventory($category, 0, $branch);
         return $stock->map(function ($data, $key) {
             return [
                 'item_serial' =>  $key + 1,
