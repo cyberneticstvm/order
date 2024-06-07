@@ -28,9 +28,10 @@
                 </tr>
             </thead>
             <tbody>
+                @php($c=1)
                 @forelse($stock->where('balanceQty', '>', 0) as $key => $item)
                 <tr>
-                    <td>{{ $key + 1 }}</td>
+                    <td>{{ $c++ }}</td>
                     <td>{{ $item->product_name }}</td>
                     <td>{{ $item->product_id }}</td>
                     <td>{{ $item->pcode }}</td>
