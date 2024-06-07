@@ -21,6 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //Route::middleware('auth:sanctum')->group(function () {
 Route::prefix('/order')->controller(ApiController::class)->group(function () {
-    Route::get('/{id}', 'getOrder')->name('get.order');
+    Route::get('/{id}/{secret}', 'getOrder')->name('get.order');
 });
 //});

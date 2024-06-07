@@ -7,19 +7,26 @@ use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
-    function getOrder($id)
+    function getOrder($id, $secret)
     {
-        $order = Order::find($id);
-        if ($order) :
-            return response()->json([
-                'status' => true,
-                'data' => $order
-            ], 200);
+        if ($secret == 'Qwert!@#$1235') :
+            $order = Order::find($id);
+            if ($order) :
+                return response()->json([
+                    'status' => true,
+                    'data' => $order
+                ], 200);
+            else :
+                return response()->json([
+                    'status' => false,
+                    'data' => "No Order Found!"
+                ], 404);
+            endif;
         else :
             return response()->json([
                 'status' => false,
-                'data' => "No Order Found!"
-            ], 404);
+                'data' => "Invalid Secret Key!"
+            ], 500);
         endif;
     }
 }
