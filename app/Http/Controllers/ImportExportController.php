@@ -356,6 +356,8 @@ class ImportExportController extends Controller
 
     public function exportStockStatus(Request $request)
     {
+        dd($request);
+        die;
         return Excel::download(new StockStatusReportExport($request), 'stock.xlsx');
     }
 }
