@@ -12,13 +12,13 @@
             <thead>
                 <tr>
                     <td width="20%" class="border-0">Customer Name</td>
-                    <td width="25%" class="border-0 fw-bold">{{ $order->name }}</td>
+                    <td width="25%" class="border-0 fw-bold">{{ $order?->name }}</td>
                     <td width="10%" class="border-0">Address</td>
                     <td width="45%" class="border-0 fw-bold" colspan="3">{{ $order->place }}</td>
                 </tr>
                 <tr>
                     <td width="20%" class="border-0">Product Adviser</td>
-                    <td width="25%" class="border-0 fw-bold">{{ $order->adviser->name }}</td>
+                    <td width="25%" class="border-0 fw-bold">{{ $order->adviser?->name }}</td>
                     <td width="15%" class="border-0">Order Number</td>
                     <td width="40%" class="border-0 fw-bold" colspan="3">{{ $order->branch->code }}/{{ $order->id }}</td>
                 </tr>
@@ -54,7 +54,7 @@
             @forelse($order->details as $key => $value)
             <tr>
                 <td class="border-0 pd-1">{{ $slno++ }}</td>
-                <td class="border-0 pd-1">{{ $value->product->name }} ({{ strtoupper($value->eye) }})</td>
+                <td class="border-0 pd-1">{{ $value->product?->name }} ({{ strtoupper($value->eye) }})</td>
                 <td class="text-right border-0 pd-1">{{ $value->qty }}</td>
                 <td class="text-right border-0 pd-1">{{ $value->unit_price }}</td>
                 <td class="text-right border-0 pd-1">{{ $value->total }}</td>
