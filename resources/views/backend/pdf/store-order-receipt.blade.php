@@ -18,7 +18,7 @@
                 </tr>
                 <tr>
                     <td width="20%" class="border-0">Product Adviser</td>
-                    <td width="25%" class="border-0 fw-bold">{{ $order->adviser?->name }}</td>
+                    <td width="25%" class="border-0 fw-bold">{{ $order?->adviser?->name }}</td>
                     <td width="15%" class="border-0">Order Number</td>
                     <td width="40%" class="border-0 fw-bold" colspan="3">{{ $order->branch->code }}/{{ $order->id }}</td>
                 </tr>
@@ -54,7 +54,7 @@
             @forelse($order->details as $key => $value)
             <tr>
                 <td class="border-0 pd-1">{{ $slno++ }}</td>
-                <td class="border-0 pd-1">{{ $value->product?->name }} ({{ strtoupper($value->eye) }})</td>
+                <td class="border-0 pd-1">{{ $value?->product?->name }} ({{ strtoupper($value->eye) }})</td>
                 <td class="text-right border-0 pd-1">{{ $value->qty }}</td>
                 <td class="text-right border-0 pd-1">{{ $value->unit_price }}</td>
                 <td class="text-right border-0 pd-1">{{ $value->total }}</td>
@@ -110,13 +110,13 @@
             <thead>
                 <tr>
                     <td width="25%" class="no-border">C.Name / ID</td>
-                    <td width="40%" class="no-border fw-bold font-big">{{ $order->name }} / {{ $order->customer_id }}</td>
+                    <td width="40%" class="no-border fw-bold font-big">{{ $order?->name }} / {{ $order->customer_id }}</td>
                     <td width="10%" class="no-border">Ord.Number</td>
                     <td width="25%" class="no-border fw-bold font-big">{{ $order->branch->code }}/{{ $order->id }}</td>
                 </tr>
                 <tr>
                     <td width="25%" class="no-border">P.Adviser</td>
-                    <td width="40%" class="no-border">{{ $order->adviser->name }}</td>
+                    <td width="40%" class="no-border">{{ $order?->adviser?->name }}</td>
                     <td width="10%" class="no-border">E.D.Date</td>
                     <td width="25%" class="no-border">{{ $order->expected_delivery_date->format('d, M Y') }}</td>
                 </tr>
@@ -148,7 +148,7 @@
                 <tr>
                     <td class="no-border">{{ $slno++ }}</td>
                     <td class="no-border">{{ strtoupper($value->eye) }}</td>
-                    <td class="no-border">{{ $value->product->name }}</td>
+                    <td class="no-border">{{ $value?->product?->name }}</td>
                     <td class="text-right no-border">{{ $value->qty }}</td>
                 </tr>
                 @empty
