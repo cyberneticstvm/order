@@ -56,7 +56,7 @@ class Order extends Model
 
     public function adviser()
     {
-        return $this->belongsTo(User::class, 'product_adviser', 'id');
+        return $this->belongsTo(User::class, 'product_adviser', 'id')->withTrashed();
     }
 
     public function isEdited()
