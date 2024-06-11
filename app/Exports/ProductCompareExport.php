@@ -9,10 +9,11 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use PhpOffice\PhpSpreadsheet\Style\Font;
+use Maatwebsite\Excel\Events\AfterSheet;
+/*use PhpOffice\PhpSpreadsheet\Style\Font;
 use PhpOffice\PhpSpreadsheet\Style\Conditional;
 use PhpOffice\PhpSpreadsheet\Style\Conditional\Rule;
-use Maatwebsite\Excel\Events\AfterSheet;
+use Maatwebsite\Excel\Concerns\WithPreCalculateFormulas;*/
 
 class ProductCompareExport implements WithEvents, FromCollection, WithMapping, WithHeadings, ShouldAutoSize, WithStyles
 {
@@ -33,7 +34,7 @@ class ProductCompareExport implements WithEvents, FromCollection, WithMapping, W
                 'item_seral' => $key + 1,
                 'item_name' => $data['product_name'],
                 'item_code' => $data['product_code'],
-                'stock_in_hand' => $data['stock_in_hand'],
+                'stock_in_hand' => $data['stock_in_hand'] ?? 0,
                 'uploaded_qty' => $data['uploaded_qty'],
                 'difference' => $data['difference'],
             ];
@@ -53,9 +54,10 @@ class ProductCompareExport implements WithEvents, FromCollection, WithMapping, W
     public function styles(Worksheet $sheet)
     {
         $sheet->getStyle('A1:F1')->getFont()->setBold(true);
-        $numOfRows = count($this->data);
-        $totalRow = $numOfRows + 1;
-        $sheet->setCellValue("F$totalRow", "=SUM(F1:F$numOfRows)");
+        $numOfRows = count($this->data) + 1;
+        $totalRow = $numOfRows + 2;
+        $sheet->setCellValue("E{$totalRow}", "Total");
+        $sheet->setCellValue("F{$totalRow}", "=SUM(F1:F{$numOfRows})");
     }
 
     public function registerEvents(): array
