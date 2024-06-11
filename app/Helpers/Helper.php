@@ -551,13 +551,28 @@ function isProductChanged($oid, $products)
 
 function orderUpdateType($request, $id)
 {
-    $msg = "Order has been Edited";
-    /*$odetail = OrderDetail::where('order_id', $id)->pluck('product_id', 'sph', 'cyl', 'axis', 'product_id')->toArray();
-    foreach ($request->product_id as $key => $item) :
-        if ($request->sph[$key] != $odetail[0]->sph) :
-
-        endif;
-    endforeach;*/
-
+    $msg = "";
+    $odetail = OrderDetail::where('order_id', $id)->selectRaw("sph, cyl, axis, `add`, product_id")->get()->toArray();
+    if (array_diff(array_column($odetail, 'sph'), $request->sph)) :
+        $msg = "Sph ";
+    endif;
+    if (array_diff(array_column($odetail, 'cyl'), $request->cyl)) :
+        $msg .= "Cyl ";
+    endif;
+    if (array_diff(array_column($odetail, 'axis'), $request->axis)) :
+        $msg .= "Axis ";
+    endif;
+    if (array_diff(array_column($odetail, 'add'), $request->add)) :
+        $msg .= "Add ";
+    endif;
+    if (array_diff(array_column($odetail, 'product_id'), $request->product_id)) :
+        $msg .= "Product ";
+    endif;
+    if ($msg) :
+        $msg .= "has been changed";
+        Order::where('id', $id)->update(['prescription_updated_at' => Carbon::now()]);
+    else :
+        $msg = "Order has been Edited";
+    endif;
     return $msg;
 }
