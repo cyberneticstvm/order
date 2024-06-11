@@ -40,7 +40,7 @@ class HelperController extends Controller
     public function viewArr($id)
     {
         $odetail = OrderDetail::where('order_id', $id)->selectRaw("sph, cyl, axis, `add`, product_id")->get()->toArray();
-        dd($odetail);
+        dd($odetail['sph']);
     }
 
     public function switchBranch($branch)
