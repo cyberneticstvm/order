@@ -111,7 +111,7 @@
             let c = confirm("Expected delivery date and order date are same. proceed?")
             if (!c) return false
         }
-        if (parseFloat(disc) > parseFloat(disc_allowed) && "{{ Auth::user()->roles->first()->name }}" != 'Administrator') {
+        if (parseFloat(disc) > parseFloat(disc_allowed)) {
             failed({
                 'error': 'Discount amount is greater than allowed'
             })
