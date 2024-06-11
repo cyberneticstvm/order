@@ -258,19 +258,20 @@ class ImportExportController extends Controller
     public function compareStock(string $category, string $branch)
     {
         $records = [];
-        /*$stock = Product::leftJoin('stock_compare_temps as sct', 'products.id', 'sct.product_id')->where('products.category', $category)->selectRaw("sct.product_id, SUM(sct.qty) AS qty, products.id, products.name, products.code")->groupBy('sct.product_id', 'products.id', 'products.name', 'products.code')->get();*/
-        $stock = StockCompareTemp::where('category', $category)->where('branch_id', $branch)->selectRaw("product_id, SUM(qty) AS qty, product_name, product_code")->groupBy('product_id', 'product_name', 'product_code')->get();;
+        $stock = Product::leftJoin('stock_compare_temps as sct', 'products.id', 'sct.product_id')->where('products.category', $category)->selectRaw("sct.product_id, SUM(sct.qty) AS qty, products.id, products.name, products.code")->groupBy('sct.product_id', 'products.id', 'products.name', 'products.code')->get();
+        /*$stock = StockCompareTemp::where('category', $category)->where('branch_id', $branch)->selectRaw("product_id, SUM(qty) AS qty, product_name, product_code")->groupBy('product_id', 'product_name', 'product_code')->get();*/
         if ($stock->isNotEmpty()) :
             foreach ($stock as $key => $item) :
-                $current = getInventory($branch, $item->product_id, $category);
+                $current = getInventory($branch, $item->id, $category);
                 $qty = $item->qty ?? 0;
                 if ($current->sum('balanceQty') != 0 || $qty != 0) :
                     $records[] = [
-                        'product_name' => $item->product_name,
-                        'product_code' => $item->product_code,
+                        'product_name' => $item->name,
+                        'product_code' => $item->code,
                         'stock_in_hand' => $current->sum('balanceQty'),
                         'uploaded_qty' => $qty,
-                        'difference' => ($qty > $current->sum('balanceQty')) ? abs($qty) - abs($current->sum('balanceQty')) : abs($current->sum('balanceQty')) - abs($qty),
+                        'difference' => $qty - $current->sum('balanceQty'),
+                        //'difference' => ($qty > $current->sum('balanceQty')) ? abs($qty) - abs($current->sum('balanceQty')) : abs($current->sum('balanceQty')) - abs($qty),
                     ];
                 endif;
             endforeach;

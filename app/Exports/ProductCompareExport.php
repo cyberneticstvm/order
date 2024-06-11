@@ -6,10 +6,15 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Style\Font;
+use PhpOffice\PhpSpreadsheet\Style\Conditional;
+use PhpOffice\PhpSpreadsheet\Style\Conditional\Rule;
+use Maatwebsite\Excel\Events\AfterSheet;
 
-class ProductCompareExport implements FromCollection, WithMapping, WithHeadings, ShouldAutoSize, WithStyles
+class ProductCompareExport implements WithEvents, FromCollection, WithMapping, WithHeadings, ShouldAutoSize, WithStyles
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -47,6 +52,37 @@ class ProductCompareExport implements FromCollection, WithMapping, WithHeadings,
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->getStyle('A1:E1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:F1')->getFont()->setBold(true);
+        $numOfRows = count($this->data);
+        $totalRow = $numOfRows + 1;
+        $sheet->setCellValue("F$totalRow", "=SUM(F1:F$numOfRows)");
+    }
+
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class => function (AfterSheet $event) {
+                // Get the total number of rows
+                $totalRows = count($this->data);
+
+                // Loop through each row and apply conditional formatting
+                for ($row = 2; $row <= $totalRows + 1; $row++) {
+                    $cellValue = $event->sheet->getCell('F' . $row)->getValue();
+
+                    if ($cellValue > 0) {
+                        // Apply bold font to cell A in the current row
+                        $event->sheet->getDelegate()->getStyle("A$row:F$row")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                            ->getStartColor()
+                            ->setARGB('ffd22b');
+                    }
+                    if ($cellValue < 0) {
+                        // Apply bold font to cell A in the current row
+                        $event->sheet->getDelegate()->getStyle("A$row:F$row")->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                            ->getStartColor()
+                            ->setARGB('d53600');
+                    }
+                }
+            },
+        ];
     }
 }
