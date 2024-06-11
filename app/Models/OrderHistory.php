@@ -14,6 +14,6 @@ class OrderHistory extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'performed_by', 'id');
+        return $this->belongsTo(User::class, 'performed_by', 'id')->withTrashed();
     }
 }
