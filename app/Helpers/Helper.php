@@ -548,3 +548,16 @@ function isProductChanged($oid, $products)
     endforeach;
     return $ret;
 }
+
+function orderUpdateType($request, $id)
+{
+    $msg = "Order has been Edited";
+    /*$odetail = OrderDetail::where('order_id', $id)->pluck('product_id', 'sph', 'cyl', 'axis', 'product_id')->toArray();
+    foreach ($request->product_id as $key => $item) :
+        if ($request->sph[$key] != $odetail[0]->sph) :
+
+        endif;
+    endforeach;*/
+
+    return $msg;
+}

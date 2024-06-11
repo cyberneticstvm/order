@@ -269,7 +269,8 @@ class StoreOrderController extends Controller
             'product_id' => 'present|array'
         ]);
         try {
-            DB::transaction(function () use ($request, $id) {
+            $msg = orderUpdateType($request, $id);
+            DB::transaction(function () use ($request, $id, $msg) {
                 $order = Order::findOrFail($id);
                 if (isProductChanged($order->id, $request->product_id)) :
                     LabOrder::where('order_id', $order->id)->delete();
@@ -399,7 +400,7 @@ class StoreOrderController extends Controller
                         'updated_by' => $request->user()->id,
                     ]);
                 endif;
-                recordOrderEvent($order->id, 'Order has been edited');
+                recordOrderEvent($order->id, $msg);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());

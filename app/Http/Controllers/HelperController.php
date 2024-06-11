@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\CustomerAccount;
 use App\Models\LabOrderNote;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\OrderStatusNote;
 use App\Models\Patient;
 use App\Models\Payment;
@@ -34,6 +35,12 @@ class HelperController extends Controller
         $this->middleware('permission:search-order', ['only' => ['searchOrder', 'searchOrderFetch']]);
         $this->middleware('permission:search-customer', ['only' => ['searchCustomer', 'searchCustomerFetch']]);
         $this->middleware('permission:search-prescription', ['only' => ['searchPrescription', 'searchPrescriptionFetch']]);
+    }
+
+    public function viewArr($id)
+    {
+        $odetail = OrderDetail::where('order_id', $id)->pluck('product_id', 'sph', 'cyl', 'axis', 'product_id')->toArray();
+        dd($odetail);
     }
 
     public function switchBranch($branch)
