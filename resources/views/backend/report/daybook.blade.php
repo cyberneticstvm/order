@@ -191,9 +191,10 @@
                                         <td class="text-end text-secondary">
                                             <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="bank" data-mode="0" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->bank_transfer_total, 2) }}</a>
                                         </td>
-                                        <td class="text-center text-secondary">CDM<br/>{{ number_format($data->bank_transfer_cdm, 2) }}</td>
-                                        <td class="text-center text-secondary">Cash<br/>{{ number_format($data->bank_transfer_cash, 2) }}</td>
-                                        <td colspan="3"></td>
+                                        <td class="text-center text-secondary">CDM<br />{{ number_format($data->bank_transfer_cdm, 2) }}</td>
+                                        <td class="text-center text-secondary">Cash<br />{{ number_format($data->bank_transfer_cash, 2) }}</td>
+                                        <td class="text-center">Other<br /><a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="ord" data-mode="5" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->paid_total_other, 2) }}</a></td>
+                                        <td colspan="2"></td>
                                     </tr>
                                     <tr>
                                         <td class="text-end fw-bold text-success">
