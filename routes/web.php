@@ -101,8 +101,8 @@ Route::middleware(['web', 'auth'])->group(function () {
 Route::middleware(['web', 'auth', 'branch'])->group(function () {
 
     Route::prefix('/backend')->controller(HelperController::class)->group(function () {
-        /*Route::get('/transfer/product/{category}/{branch}', 'transferProductBulk')->name('transfer.product.bulk');*/
-        Route::get('/ord/{id}', 'viewArr')->name('view.arr');
+        /*Route::get('/transfer/product/{category}/{branch}', 'transferProductBulk')->name('transfer.product.bulk');
+        Route::get('/ord/{id}', 'viewArr')->name('view.arr');*/
     });
 
     Route::prefix('/ajax')->controller(AjaxController::class)->group(function () {
