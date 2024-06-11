@@ -39,7 +39,7 @@ class HelperController extends Controller
 
     public function viewArr($id)
     {
-        $odetail = OrderDetail::where('order_id', $id)->pluck('product_id', 'sph', 'cyl', 'axis', 'product_id')->get();
+        $odetail = OrderDetail::where('order_id', $id)->get()->pluck('product_id', 'sph', 'cyl', 'axis', 'product_id');
         dd($odetail);
     }
 
