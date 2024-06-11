@@ -337,12 +337,7 @@ class StoreOrderController extends Controller
                 endforeach;
                 OrderDetail::insert($data);
                 if ($request->advance > 0) :
-                    /*Payment::where('order_id', $id)->where('payment_type', 'advance')->update([
-                        'amount' => $request->advance,
-                        'payment_mode' => $request->payment_mode,
-                        'updated_by' => $request->user()->id,
-                        'updated_at' => Carbon::now(),
-                    ]);*/
+
                     $p = Payment::where('order_id', $id)->where('payment_type', 'advance');
                     $created_by = $request->user()->id;
                     $created_at = Carbon::now();
