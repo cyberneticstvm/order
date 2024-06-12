@@ -98,7 +98,7 @@
             @forelse($order->details as $key => $item)
             <tr>
                 <td class="text-center b-0">{{ $key + 1 }}</td>
-                <td class="b-0">{{ $item->product->name }} ($item->eye)</td>
+                <td class="b-0">{{ $item->product->name }} {{ ($item->eye) }}</td>
                 <td class="text-center b-0">{{ ($item->eye) ? hsn()[$item->eye] : '' }}</td>
                 <td class="text-center b-0">{{ $item->qty }}</td>
                 <td class="text-end b-0">{{ number_format($item->unit_price - $item->tax_amount, 2) }}</td>
