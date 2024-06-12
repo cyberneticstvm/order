@@ -39,7 +39,7 @@
                         <div class="card-wrapper">
                             <form class="row g-3" method="post" action="{{ route('solution.order.update', $order->id) }}" name="orderForm" id="orderForm">
                                 @csrf
-                                <input type="hidden" name="consultation_id" value="{{ $mrecord?->id ?? 0 }}" />
+                                <input type="hidden" name="consultation_id" value="{{ $order->consultation_id }}" />
                                 <input type="hidden" name="disc_per" value="{{ branch()->discount_limit_percentage }}" />
                                 <input type="hidden" name="customer_id" id="customer_id" value="{{ $order?->customer_id ?? 0 }}" />
                                 <div class="col-md-2">
