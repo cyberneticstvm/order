@@ -396,18 +396,6 @@ class StoreOrderController extends Controller
                         'updated_by' => $request->user()->id,
                     ]);
                 endif;                
-                /*if($msg == "upd"):
-                    $msg = "Order has been updated.";
-                    foreach($old_ods as $key => $item):
-                        LabOrder::where('order_detail_id', $item->id)->where('order_id', $order->id)->update([
-                            'order_detail_id' => '',
-                            'updated_by' => $request->user()->id,
-                            'updated_at' => Carbon::now(),
-                        ]);
-                    endforeach;
-                else:
-                    LabOrder::where('order_id', $id)->delete();
-                endif;*/
                 LabOrder::where('order_id', $id)->delete();
                 recordOrderEvent($order->id, $msg);
             });
