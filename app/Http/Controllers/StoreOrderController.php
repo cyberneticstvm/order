@@ -273,7 +273,7 @@ class StoreOrderController extends Controller
             DB::transaction(function () use ($request, $id, $msg) {
                 $order = Order::findOrFail($id);
                 //if (isProductChanged($order->id, $request->product_id)) :
-                    LabOrder::where('order_id', $order->id)->delete();
+                    //LabOrder::where('order_id', $order->id)->delete();
                 //endif;
                 Order::findOrFail($id)->update([
                     'spectacle_id' => $request->spectacle_id,
@@ -311,6 +311,7 @@ class StoreOrderController extends Controller
                     'state' => $request->state,
                     'updated_by' => $request->user()->id,
                 ]);
+                $old_ods = OrderDetail::where('order_id', $order->id)->get();
                 OrderDetail::where('order_id', $id)->delete();
                 $data = [];
                 foreach ($request->product_id as $key => $item) :
@@ -394,7 +395,20 @@ class StoreOrderController extends Controller
                         'created_by' => $request->user()->id,
                         'updated_by' => $request->user()->id,
                     ]);
-                endif;
+                endif;                
+                /*if($msg == "upd"):
+                    $msg = "Order has been updated.";
+                    foreach($old_ods as $key => $item):
+                        LabOrder::where('order_detail_id', $item->id)->where('order_id', $order->id)->update([
+                            'order_detail_id' => '',
+                            'updated_by' => $request->user()->id,
+                            'updated_at' => Carbon::now(),
+                        ]);
+                    endforeach;
+                else:
+                    LabOrder::where('order_id', $id)->delete();
+                endif;*/
+                LabOrder::where('order_id', $id)->delete();
                 recordOrderEvent($order->id, $msg);
             });
         } catch (Exception $e) {

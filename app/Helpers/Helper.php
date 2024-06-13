@@ -567,9 +567,9 @@ function orderUpdateType($request, $id)
     endif;
     if (array_diff(array_column($odetail, 'product_id'), $request->product_id)) :
         $msg .= "Product ";
-    endif;
+    endif;    
     if ($msg) :
-        $msg .= "has been updated";
+        $msg .= "has been updated";        
         Order::where('id', $id)->update(['prescription_updated_at' => Carbon::now()]);
     else :
         $msg = "Order has been Updated";
