@@ -272,9 +272,9 @@ class StoreOrderController extends Controller
             $msg = orderUpdateType($request, $id);
             DB::transaction(function () use ($request, $id, $msg) {
                 $order = Order::findOrFail($id);
-                if (isProductChanged($order->id, $request->product_id)) :
+                //if (isProductChanged($order->id, $request->product_id)) :
                     LabOrder::where('order_id', $order->id)->delete();
-                endif;
+                //endif;
                 Order::findOrFail($id)->update([
                     'spectacle_id' => $request->spectacle_id,
                     'order_date' => $request->order_date,
