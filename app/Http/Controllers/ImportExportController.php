@@ -284,28 +284,38 @@ class ImportExportController extends Controller
         endif;
     }
 
-    public function updateStock(Request $request, string $category, string $branch)
+    public function updateStock(string $category, string $branch)
     {
+        return view('backend.extras.stock-update', compact('category', 'branch'));
+    }
+
+    public function updateStockProceed(Request $request)
+    {
+        $this->validate($request, [
+            'branch' => 'required',
+            'category' => 'required',
+            'confirm_text' => 'required|same:confirmation_text',
+        ]);
         try {
-            $transfer = Transfer::where('from_branch_id', $branch)->where('transfer_status', 0);
+            $transfer = Transfer::where('from_branch_id', $request->branch)->where('transfer_status', 0);
             $products = StockCompareTemp::all();
             if ($transfer->exists()) :
                 return redirect()->back()->with("error", "Some pending transfer yet to be accepted");
             elseif ($products->count() == 0) :
                 return redirect()->back()->with("error", "Empty records");
             else :
-                DB::transaction(function () use ($category, $branch, $request, $products) {
+                DB::transaction(function () use ($request, $products) {
                     $data = [];
-                    Transfer::where('category', $category)->where('to_branch_id', $branch)->orWhere('from_branch_id', $branch)->delete();
-                    SalesReturn::where('returned_branch', $branch)->delete();
-                    ProductDamage::where('from_branch', $branch)->delete();
-                    Order::where('branch_id', $branch)->where('order_status', 'delivered')->update(['stock_updated_at' => Carbon::now()]);
+                    Transfer::where('category', $request->category)->where('to_branch_id', $request->branch)->orWhere('from_branch_id', $request->branch)->delete();
+                    SalesReturn::where('returned_branch', $request->branch)->delete();
+                    ProductDamage::where('from_branch', $request->branch)->delete();
+                    Order::where('branch_id', $request->branch)->where('order_status', 'delivered')->update(['stock_updated_at' => Carbon::now()]);
                     $transfer = Transfer::create([
-                        'transfer_number' => transferId($category)->tid,
-                        'category' => $category,
+                        'transfer_number' => transferId($request->category)->tid,
+                        'category' => $request->category,
                         'transfer_date' => Carbon::today(),
                         'from_branch_id' => 1000, // If branch id 1000, then treat as stock adjustment entry
-                        'to_branch_id' => $branch,
+                        'to_branch_id' => $request->branch,
                         'transfer_note' => "Stock Adjustment Entry",
                         'transfer_status' => 1,
                         'created_by' => $request->user()->id,
@@ -329,7 +339,7 @@ class ImportExportController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage());
         }
-        return redirect()->back()->with("success", "Stock updated successfully");
+        return redirect()->route('stock.preview')->with("success", "Stock updated successfully");
     }
 
     public function deleteTempItem(string $id)

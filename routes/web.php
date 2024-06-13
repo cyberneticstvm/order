@@ -183,6 +183,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
 
         Route::get('/stock/compare/{category}/{branch}', 'compareStock')->name('stock.compare');
         Route::get('/stock/update/{category}/{branch}', 'updateStock')->name('stock.update');
+        Route::post('/stock/update', 'updateStockProceed')->name('stock.update.proceed');
 
         Route::get('/stock/previw/item/delete/{id}', 'deleteTempItem')->name('temp.item.delete');
     });
