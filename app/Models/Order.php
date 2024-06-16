@@ -61,7 +61,13 @@ class Order extends Model
 
     public function isEdited()
     {
-        return ($this->prescription_updated_at) ? "text-danger fw-bold" : "";
+        $txt = "";
+        if ($this->prescription_updated_at) :
+            $txt = "text-danger fw-bold";
+        elseif ($this->created_at != $this->updated_at) :
+            $txt = "text-warning fw-bold";
+        endif;
+        return $txt;
     }
 
     public function labNotes()
