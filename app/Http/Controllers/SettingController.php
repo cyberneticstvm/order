@@ -6,6 +6,7 @@ use App\Models\Branch;
 use App\Models\Closing;
 use App\Models\ProductDamage;
 use App\Models\SalesReturn;
+use App\Models\Setting;
 use App\Models\Transfer;
 use App\Models\TransferDetails;
 use Carbon\Carbon;
@@ -23,6 +24,7 @@ class SettingController extends Controller
     {
         $this->middleware('permission:setting-account-adjustment', ['only' => ['accountSetting', 'accountSettingUpdate']]);
         $this->middleware('permission:setting-stock-adjustment', ['only' => ['stockAdjustmentSetting', 'stockAdjustmentSettingFetch', 'stockAdjustmentSettingUpdate']]);
+        $this->middleware('permission:settings-extra', ['only' => ['extraSetting', 'extraSettingsUpdate']]);
 
         $this->middleware(function ($request, $next) {
             $brs = Branch::selectRaw("0 as id, 'All / Main Branch' as name");
@@ -33,6 +35,23 @@ class SettingController extends Controller
             })->orderBy('id')->pluck('name', 'id');
             return $next($request);
         });
+    }
+
+    public function extraSetting()
+    {
+        return view('backend.settings.extras');
+    }
+
+    public function extraSettingsUpdate(Request $request)
+    {
+        try {
+            Setting::findOrFail(1)->update([
+                'enable_ip_info' => $request->enable_ip_info ?? 0,
+            ]);
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage());
+        }
+        return redirect()->back()->with("success", "Settings updated successfully!");
     }
 
     public function accountSetting()

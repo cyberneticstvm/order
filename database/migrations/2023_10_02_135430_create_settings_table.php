@@ -25,6 +25,7 @@ return new class extends Migration
             $table->enum('tax_type', ['VAT', 'GST', 'OTHER'])->default('GST');
             $table->string('currency')->default('₹')->nullable();
             $table->decimal('daily_expense_limit')->default(0);
+            $table->boolean('enable_ip_info')->default(0);
         });
     }
 

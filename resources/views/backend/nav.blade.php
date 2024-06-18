@@ -381,7 +381,8 @@
             {{
                 Menu::new()->addClass('sidebar-submenu')
                 ->linkIfCan('setting-account-adjustment', route('account.setting'), 'Adjust Account')
-                ->linkIfCan('setting-stock-adjustment', route('setting.stock.adjustment'), 'Stock Adjustment');
+                ->linkIfCan('setting-stock-adjustment', route('setting.stock.adjustment'), 'Stock Adjustment')
+                ->linkIfCan('settings-extra', route('settings.extra'), 'Settings Extra');
             }}
         </li>
     </ul>

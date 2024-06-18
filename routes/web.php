@@ -662,5 +662,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/stock', 'stockAdjustmentSetting')->name('setting.stock.adjustment');
         Route::post('/stock', 'stockAdjustmentSettingFetch')->name('setting.stock.adjustment.fetch');
         Route::post('/stock/update', 'stockAdjustmentSettingUpdate')->name('setting.stock.adjustment.update');
+
+        Route::get('/extra', 'extraSetting')->name('settings.extra');
+        Route::post('/extra', 'extraSettingsUpdate')->name('settings.extra.update');
     });
 });
