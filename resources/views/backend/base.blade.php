@@ -38,7 +38,7 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('/backend/assets/css/vendors/bootstrap.css') }}">
   <!-- App css-->
   <link rel="stylesheet" type="text/css" href="{{ asset('/backend/assets/css/style.css') }}">
-  <link id="color" rel="stylesheet" href="{{ asset('/backend/assets/css/color-1.css') }}" media="screen">
+  <link id="color" rel="stylesheet" href="{{ asset('/backend/assets/css/color-6.css') }}" media="screen">
   <!-- Responsive css-->
   <link rel="stylesheet" type="text/css" href="{{ asset('/backend/assets/css/responsive.css') }}">
 </head>

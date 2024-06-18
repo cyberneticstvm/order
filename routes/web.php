@@ -96,6 +96,11 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/backend/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
     Route::post('/user/branch/update', [UserController::class, 'updateBranch'])->name('user.branch.update');
     Route::get('/closingbalance', [HelperController::class, 'closingBalance'])->name('closing.balance');
+
+    Route::prefix('/backend/settings')->controller(SettingController::class)->group(function () {
+        Route::get('/extra', 'extraSetting')->name('settings.extra');
+        Route::post('/extra', 'extraSettingsUpdate')->name('settings.extra.update');
+    });
 });
 
 Route::middleware(['web', 'auth', 'branch'])->group(function () {
@@ -662,8 +667,5 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/stock', 'stockAdjustmentSetting')->name('setting.stock.adjustment');
         Route::post('/stock', 'stockAdjustmentSettingFetch')->name('setting.stock.adjustment.fetch');
         Route::post('/stock/update', 'stockAdjustmentSettingUpdate')->name('setting.stock.adjustment.update');
-
-        Route::get('/extra', 'extraSetting')->name('settings.extra');
-        Route::post('/extra', 'extraSettingsUpdate')->name('settings.extra.update');
     });
 });
