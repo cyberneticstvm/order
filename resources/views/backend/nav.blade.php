@@ -99,7 +99,7 @@
                 <h6 class="">Operations</h6>
             </div>
         </li>
-        @if(auth()->user()->can('user-list') || auth()->user()->can('user-create') || auth()->user()->can('user-edit') || auth()->user()->can('user-delete') || auth()->user()->can('role-list') || auth()->user()->can('role-create') || auth()->user()->can('role-edit') || auth()->user()->can('role-delete'))
+        @if(auth()?->user()?->can('user-list') || auth()?->user()?->can('user-create') || auth()?->user()?->can('user-edit') || auth()?->user()?->can('user-delete') || auth()?->user()?->can('role-list') || auth()?->user()?->can('role-create') || auth()?->user()?->can('role-edit') || auth()?->user()?->can('role-delete'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -117,7 +117,7 @@
             }}
         </li>
         @endif
-        @if(auth()->user()->can('branch-list') || auth()->user()->can('branch-create') || auth()->user()->can('branch-edit') || auth()->user()->can('branch-delete'))
+        @if(auth()?->user()?->can('branch-list') || auth()?->user()?->can('branch-create') || auth()?->user()?->can('branch-edit') || auth()?->user()?->can('branch-delete'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -134,7 +134,7 @@
             }}
         </li>
         @endif
-        @if(auth()->user()->can('customer-list') || auth()->user()->can('customer-create') || auth()->user()->can('customer-edit') || auth()->user()->can('customer-delete') || auth()->user()->can('spectacle-list'))
+        @if(auth()?->user()?->can('customer-list') || auth()?->user()?->can('customer-create') || auth()?->user()?->can('customer-edit') || auth()?->user()?->can('customer-delete') || auth()?->user()?->can('spectacle-list'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -157,7 +157,7 @@
                 <h6>Order</h6>
             </div>
         </li>
-        @if(auth()->user()->can('store-order-list') || auth()->user()->can('store-order-create') || auth()->user()->can('store-order-edit') || auth()->user()->can('store-order-delete') || auth()->user()->can('invoice-register') || auth()->user()->can('invoice-register-not-generated') || auth()->user()->can('sales-return-list') || auth()->user()->can('product-damage-list'))
+        @if(auth()?->user()?->can('store-order-list') || auth()?->user()?->can('store-order-create') || auth()?->user()?->can('store-order-edit') || auth()?->user()?->can('store-order-delete') || auth()?->user()?->can('invoice-register') || auth()?->user()?->can('invoice-register-not-generated') || auth()?->user()?->can('sales-return-list') || auth()?->user()?->can('product-damage-list'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -178,7 +178,7 @@
             }}
         </li>
         @endif
-        @if(auth()->user()->can('pending-transfer-list') || auth()->user()->can('pending-transfer-edit') || auth()->user()->can('product-damage-transfer-list'))
+        @if(auth()?->user()?->can('pending-transfer-list') || auth()?->user()?->can('pending-transfer-edit') || auth()?->user()?->can('product-damage-transfer-list'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -196,7 +196,7 @@
             }}
         </li>
         @endif
-        @if(auth()->user()->can('payment-list') || auth()->user()->can('payment-create') || auth()->user()->can('payment-edit') || auth()->user()->can('payment-delete'))
+        @if(auth()?->user()?->can('payment-list') || auth()?->user()?->can('payment-create') || auth()?->user()?->can('payment-edit') || auth()?->user()?->can('payment-delete'))
         <li class="sidebar-main-title">
             <div>
                 <h6>Payments</h6>
