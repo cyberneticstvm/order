@@ -77,12 +77,12 @@ class PaymentController extends Controller
             $tot = Order::findOrFail($request->order_id);
             $paid = Payment::where('order_id', $request->order_id)->sum('amount');
             $credit = $tot->credit_used ?? 0;
-            $due = floatval($tot->invoice_total - ($paid + $credit));
+            $due_amount = floatval($tot->invoice_total - ($paid + $credit));
             $amount = floatval($request->amount);
-            if ($request->payment_type == 'balance' && $amount != $due) :
-                throw new Exception("Balance amount should be " . $due);
+            if ($request->payment_type == 'balance' && $amount != $due_amount) :
+                throw new Exception("Balance amount should be " . $due_amount);
             endif;
-            if ($request->payment_type != 'balance' && ($due != $amount) && $request->generate_invoice) :
+            if ($request->payment_type != 'balance' && ($due_amount != $amount) && $request->generate_invoice) :
                 throw new Exception("Please uncheck the Generate Invoice Box!");
             endif;
             Payment::create([
