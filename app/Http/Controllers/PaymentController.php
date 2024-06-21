@@ -78,7 +78,7 @@ class PaymentController extends Controller
             $paid = Payment::where('order_id', $request->order_id)->sum('amount');
             $credit = $tot->credit_used ?? 0;
             $due = $tot->invoice_total - ($paid + $credit);
-            echo $due;
+            echo $request->amount;
             die;
             if ($request->payment_type == 'balance' && ($due != $request->amount)) :
                 throw new Exception("Balance amount should be " . $due);
