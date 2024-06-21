@@ -87,8 +87,6 @@ class PaymentController extends Controller
                     echo "amount lt";
                 if ($amount == $due_amount)
                     echo "amount";
-                if ($amount != $due_amount)
-                    echo "amount not equal";
                 die;
             endif;
             if ($request->payment_type != 'balance' && ($due_amount != $amount) && $request->generate_invoice) :
