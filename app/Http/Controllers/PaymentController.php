@@ -81,11 +81,10 @@ class PaymentController extends Controller
             $amount = floatval($request->amount);
             if ($request->payment_type == 'balance') :
                 if ($amount === $due) :
-                    //throw new Exception("Balance amount should be " . $due);
-                    throw new Exception("Good");
+                //throw new Exception("Balance amount should be " . $due);
+                //throw new Exception("Good");
                 else :
-                    dd($amount, $due);
-                    die;
+                    throw new Exception("Balance amount should be " . $due);
                 endif;
             endif;
             if ($request->payment_type != 'balance' && ($due != $amount) && $request->generate_invoice) :
