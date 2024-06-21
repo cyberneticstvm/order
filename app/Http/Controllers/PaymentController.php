@@ -81,8 +81,12 @@ class PaymentController extends Controller
             $amount = floatval($request->amount);
             if ($request->payment_type == 'balance' && $amount != $due_amount) :
                 //throw new Exception("Balance amount should be " . $due_amount);
-                dd($tot->invoice_total, $credit, $paid, $due_amount, $amount);
-                die;
+                if ($amount > $due_amount)
+                    echo "amount gt";
+                if ($amount < $due_amount)
+                    echo "amount lt";
+                if ($amount == $due_amount)
+                    echo "amount";
             endif;
             if ($request->payment_type != 'balance' && ($due_amount != $amount) && $request->generate_invoice) :
                 throw new Exception("Please uncheck the Generate Invoice Box!");
