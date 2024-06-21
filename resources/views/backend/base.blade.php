@@ -163,7 +163,7 @@
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <!-- Plugins JS Ends-->
   <!-- Theme js-->
-  @if(Route::current()->getName() == 'dashboard')
+  @if(Route::current()?->getName() == 'dashboard')
   <script src="{{ asset('/backend/assets/js/chart/apex-chart/apex-chart.js') }}"></script>
   <script src="{{ asset('/backend/assets/js/chart/apex-chart/stock-prices.js') }}"></script>
   <script src="{{ asset('/backend/assets/js/dashboard/dashboard.js') }}"></script>
