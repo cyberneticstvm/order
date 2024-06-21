@@ -82,7 +82,7 @@ class PaymentController extends Controller
             if ($request->payment_type == 'balance' && $amount != $due_amount) :
                 //throw new Exception("Balance amount should be " . $due_amount);
                 if ($amount > $due_amount)
-                    echo "amount gt";
+                    echo "amount gt" . $amount;
                 if ($amount < $due_amount)
                     echo "amount lt";
                 if ($amount == $due_amount)
