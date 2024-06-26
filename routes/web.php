@@ -4,6 +4,7 @@ use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\BankTransferController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\BranchOptoController;
 use App\Http\Controllers\CampController;
 use App\Http\Controllers\CampPatientController;
 use App\Http\Controllers\CollectionController;
@@ -247,6 +248,15 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/edit/{id}', 'edit')->name('role.edit');
         Route::post('/edit/{id}', 'update')->name('role.update');
         Route::get('/delete/{id}', 'destroy')->name('role.delete');
+    });
+
+    Route::prefix('/backend/branch/opto')->controller(BranchOptoController::class)->group(function () {
+        Route::get('/', 'index')->name('bo');
+        Route::get('/create', 'create')->name('bo.create');
+        Route::post('/save', 'store')->name('bo.save');
+        Route::get('/edit/{id}', 'edit')->name('bo.edit');
+        Route::post('/edit/{id}', 'update')->name('bo.update');
+        Route::get('/delete/{id}', 'destroy')->name('bo.delete');
     });
 
     Route::prefix('/backend/branch')->controller(BranchController::class)->group(function () {

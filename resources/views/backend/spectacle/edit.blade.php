@@ -44,7 +44,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label">Optometrist</label>
+                                    <label class="form-label req">Optometrist</label>
                                     {{ html()->select('optometrist', $optometrists, $spectacle->optometrist ?? '')->class('form-control select2')->placeholder('Select') }}
                                     @error('optometrist')
                                     <small class="text-danger">{{ $errors->first('optometrist') }}</small>

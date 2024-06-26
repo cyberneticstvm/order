@@ -182,11 +182,18 @@
             </table>
         </div>
     </div>
-    <div class="col text-end mt-50">
-        <p>For DEVI OPTICIANS</p>
-        <br />
-        <p>Authorised Signatory</p>
-    </div>
+    <table class="border-0 mt-30" width="100%">
+        <tr>
+            <td class="border-0">
+                <p>Ophthalmologist</p>
+                <p class="fw-bold">{{ $spectacle->doctors?->name ?? 'Na' }}</p>
+            </td>
+            <td class="text-end border-0">
+                <p>Optometrist</p>
+                <p class="fw-bold">{{ $spectacle->optometrists?->name ?? 'Na' }}</p>
+            </td>
+        </tr>
+    </table>
     <footer>
         <p>Thank You and Visit Again..</p>
     </footer>

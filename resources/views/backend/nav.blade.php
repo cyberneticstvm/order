@@ -99,7 +99,7 @@
                 <h6 class="">Operations</h6>
             </div>
         </li>
-        @if(auth()?->user()?->can('user-list') || auth()?->user()?->can('user-create') || auth()?->user()?->can('user-edit') || auth()?->user()?->can('user-delete') || auth()?->user()?->can('role-list') || auth()?->user()?->can('role-create') || auth()?->user()?->can('role-edit') || auth()?->user()?->can('role-delete'))
+        @if(auth()?->user()?->can('user-list') || auth()?->user()?->can('user-create') || auth()?->user()?->can('user-edit') || auth()?->user()?->can('user-delete') || auth()?->user()?->can('role-list') || auth()?->user()?->can('role-create') || auth()?->user()?->can('role-edit') || auth()?->user()?->can('role-delete') || auth()?->user()?->can('branch-opto-list'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
@@ -113,7 +113,8 @@
             {{
                 Menu::new()->addClass('sidebar-submenu')
                 ->linkIfCan('user-list', route('users'), 'User Register')
-                ->linkIfCan('role-list', route('roles'), 'Roles & Permissions');
+                ->linkIfCan('role-list', route('roles'), 'Roles & Permissions')
+                ->linkIfCan('branch-opto-list', route('bo'), 'Branch & Opto');
             }}
         </li>
         @endif

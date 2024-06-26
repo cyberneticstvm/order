@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BranchOpto;
 use App\Models\Customer;
 use App\Models\Power;
 use App\Models\Registration;
@@ -30,8 +31,10 @@ class SpectacleController extends Controller
         $this->middleware(function ($request, $next) {
 
             //$this->optometrists = User::role('Optometrist')->pluck('name', 'id');
-            $this->optometrists = User::leftJoin('user_branches as ub', 'users.id', 'ub.user_id')->select('users.id', 'users.name')->where('ub.branch_id', Session::get('branch'))->role('Optometrist')->pluck('name', 'id');
-            $this->doctors = User::role('Doctor')->pluck('name', 'id');
+            /*$this->optometrists = User::leftJoin('user_branches as ub', 'users.id', 'ub.user_id')->select('users.id', 'users.name')->where('ub.branch_id', Session::get('branch'))->role('Optometrist')->pluck('name', 'id');
+            $this->doctors = User::role('Doctor')->pluck('name', 'id');*/
+            $this->optometrists = BranchOpto::leftJoin('users AS u', 'u.id', 'branch_optos.user_id')->where('branch_optos.branch_id', Session::get('branch'))->where('branch_optos.designation', 'Optometrist')->pluck('u.name', 'u.id');
+            $this->doctors = BranchOpto::leftJoin('users AS u', 'u.id', 'branch_optos.user_id')->where('branch_optos.branch_id', Session::get('branch'))->where('branch_optos.designation', 'Doctor')->pluck('u.name', 'u.id');
             $this->powers = Power::all();
 
             return $next($request);
@@ -71,6 +74,7 @@ class SpectacleController extends Controller
         $this->validate($request, [
             'customer_id' => 'required',
             'registration_id' => 'required',
+            'optometrist' => 'required',
         ]);
         $input = $request->except(array('spectacle_id'));
         $input['created_by'] = $request->user()->id;
@@ -105,6 +109,9 @@ class SpectacleController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $this->validate($request, [
+            'optometrist' => 'required',
+        ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
         Spectacle::findOrFail($id)->update($input);
