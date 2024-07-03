@@ -142,7 +142,7 @@
                                     <tr>
                                         <td>Voucher</td>
                                         <td class="text-end">{{ number_format($data->voucher_receipt_total, 2) }}</td>
-                                        <td class="text-end">{{ number_format($data->voucher_payment_total, 2) }}</td>
+                                        <td class="text-end"><a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="voucher" data-mode="5" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->voucher_payment_total, 2) }}</a></td>
                                         <td class="text-end">{{ number_format($data->voucher_income_total_cash, 2) }}</td>
                                         <td class="text-end">{{ number_format($data->voucher_income_total_bank, 2) }}</td>
                                         <td class="text-end">{{ number_format($data->voucher_income_total_card, 2) }}</td>
