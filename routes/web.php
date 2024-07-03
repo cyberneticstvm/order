@@ -89,6 +89,12 @@ Route::middleware(['web'])->group(function () {
 Route::middleware(['web', 'auth', 'branch'])->group(function () {
     Route::prefix('/backend')->controller(HelperController::class)->group(function () {
         Route::get('/switch/branch/{branch}', [HelperController::class, 'switchBranch'])->name('switch.branch');
+
+        Route::get('/edit/dispatch/order', [HelperController::class, 'editDispatechedOrder'])->name('edit.dispatched.order');
+        Route::post('/edit/dispatch/order', [HelperController::class, 'editDispatechedOrderFetch'])->name('edit.dispatched.order.fetch');
+        Route::get('/edit/dispatch/order/proceed', [HelperController::class, ''])->name('edit.dispatched.order.proceed');
+        Route::get('/edit/dispatch/order/update/{id}', [HelperController::class, 'editDispatechedOrderGet'])->name('edit.dispatched.order.get');
+        Route::post('/edit/dispatch/order/update/{id}', [HelperController::class, 'editDispatechedOrderUpdate'])->name('edit.dispatched.order.update');
         /*Route::get('/update/invoice', 'updateInvoiceNumber')->name('update.invoice.number');*/
     });
 });

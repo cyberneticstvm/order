@@ -74,7 +74,8 @@
             </a>
             {{
                 Menu::new()->addClass('sidebar-submenu')
-                ->linkIfCan('search-order', route('search.order'), 'Order');
+                ->linkIfCan('search-order', route('search.order'), 'Order')
+                ->linkIfCan('update-delivered-order', route('edit.dispatched.order'), 'Update Delivered Order');
             }}
         </li>
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>

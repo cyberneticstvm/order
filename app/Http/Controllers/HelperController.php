@@ -35,6 +35,7 @@ class HelperController extends Controller
         $this->middleware('permission:search-order', ['only' => ['searchOrder', 'searchOrderFetch']]);
         $this->middleware('permission:search-customer', ['only' => ['searchCustomer', 'searchCustomerFetch']]);
         $this->middleware('permission:search-prescription', ['only' => ['searchPrescription', 'searchPrescriptionFetch']]);
+        $this->middleware('permission:update-delivered-order', ['only' => ['editDispatechedOrder', 'editDispatechedOrderUpdate']]);
     }
 
     public function viewArr($id)
@@ -273,5 +274,37 @@ class HelperController extends Controller
             'created_by' => $request->user()->id,
         ]);
         return redirect()->route('lab.assign.orders')->with("success", "Order notes updated successfully.");
+    }
+
+    public function editDispatechedOrder()
+    {
+        return view('backend.order.edit-after-dispatch');
+    }
+
+    public function editDispatechedOrderFetch(Request $request)
+    {
+        $this->validate($request, [
+            'search_term' => 'required'
+        ]);
+        $order = Order::whereIn('order_status', ['delivered'])->whereDate('invoice_generated_at', Carbon::today())->where('id', $request->search_term)->orWhere('order_sequence', $request->search_term)->firstOrFail();
+        return view('backend.order.edit-dispatch-proceed', compact('order'));
+    }
+
+    public function editDispatechedOrderGet(string $id)
+    {
+        $order = Order::findOrFail(decrypt($id));
+        return view('backend.order.edit-dispatch-update', compact('order'));
+    }
+
+    public function editDispatechedOrderUpdate(Request $request, string $id)
+    {
+        $this->validate($request, [
+            //
+        ]);
+        $input = $request->all();
+        $input['updated_by'] = $request->user()->id;
+        Order::findOrFail($id)->update($input);
+        recordOrderEvent($id, "Order has been updated after delivered");
+        return redirect()->route('edit.dispatched.order')->with("success", "Record updated successfully");
     }
 }
