@@ -71,7 +71,7 @@
                                                     {{ html()->number($name = 'amount[]', $item->amount, '', '', 'any')->class('form-control')->placeholder('0') }}
                                                 </td>
                                                 <td>
-                                                    {{ html()->select($name = 'payment_type[]', $value = paymentypes(), $item->payment_type)->class('form-control select2')->placeholder('Select') }}
+                                                    {{ html()->select($name = 'payment_type[]', array('advance', 'Advance') + paymentypes(), $item->payment_type)->class('form-control select2')->placeholder('Select') }}
                                                 </td>
                                                 <td>
                                                     {{ html()->select($name = 'payment_mode[]', $value = $pmodes, $item->payment_mode)->class('form-control select2')->placeholder('Select') }}
