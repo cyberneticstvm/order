@@ -37,31 +37,10 @@
                                     {{ html()->number($name = 'invoice_number', $order->ino())->class('form-control')->disabled() }}
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="form-label req">Order Total</label>
-                                    {{ html()->number($name = 'order_total', $order->order_total, '', '', 'any')->class('form-control')->placeholder('0') }}
-                                    @error('order_total')
-                                    <small class="text-danger">{{ $errors->first('order_total') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-md-2">
                                     <label class="form-label req">Discount</label>
                                     {{ html()->number($name = 'discount', $order->discount, '', '', 'any')->class('form-control')->placeholder('0') }}
                                     @error('discount')
                                     <small class="text-danger">{{ $errors->first('discount') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="form-label req">Invoice Total</label>
-                                    {{ html()->number($name = 'invoice_total', $order->invoice_total, '', '', 'any')->class('form-control')->placeholder('0') }}
-                                    @error('invoice_total')
-                                    <small class="text-danger">{{ $errors->first('invoice_total') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="form-label req">Advance</label>
-                                    {{ html()->number($name = 'advance', $order->advance, '', '', 'any')->class('form-control')->placeholder('0') }}
-                                    @error('advance')
-                                    <small class="text-danger">{{ $errors->first('advance') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
@@ -71,11 +50,42 @@
                                     <small class="text-danger">{{ $errors->first('credit_used') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-2">
-                                    <label class="form-label req">Balance</label>
-                                    {{ html()->number($name = 'balance', $order->balance, '', '', 'any')->class('form-control')->placeholder('0') }}
-                                    @error('balance')
-                                    <small class="text-danger">{{ $errors->first('balance') }}</small>
+                                <div class="col-md-12 table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Payment ID</th>
+                                                <th>Amount</th>
+                                                <th>Type</th>
+                                                <th>Mode</th>
+                                                <th>Notes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse($payments as $key => $item)
+                                            <tr>
+                                                <td>
+                                                    {{ html()->number($name = 'payment_id[]', $item->id, '', '', 'any')->class('form-control')->placeholder('0') }}
+                                                </td>
+                                                <td>
+                                                    {{ html()->number($name = 'amount[]', $item->amount, '', '', 'any')->class('form-control')->placeholder('0') }}
+                                                </td>
+                                                <td>
+                                                    {{ html()->select($name = 'payment_type[]', $value = paymentypes(), $item->payment_type)->class('form-control select2')->placeholder('Select') }}
+                                                </td>
+                                                <td>
+                                                    {{ html()->select($name = 'payment_mode[]', $value = $pmodes, $item->payment_mode)->class('form-control select2')->placeholder('Select') }}
+                                                </td>
+                                                <td>
+                                                    {{ html()->text($name = 'notes[]', $value = $item->notes)->class('form-control')->placeholder('Notes') }}
+                                                </td>
+                                            </tr>
+                                            @empty
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                    @error('payment_id')
+                                    <small class="text-danger">{{ $errors->first('payment_id') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-12 text-end">

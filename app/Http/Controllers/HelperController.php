@@ -11,6 +11,7 @@ use App\Models\OrderDetail;
 use App\Models\OrderStatusNote;
 use App\Models\Patient;
 use App\Models\Payment;
+use App\Models\PaymentMode;
 use App\Models\Product;
 use App\Models\ProductDamage;
 use App\Models\Spectacle;
@@ -18,6 +19,7 @@ use App\Models\Transfer;
 use App\Models\TransferDetails;
 use App\Models\UserBranch;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -286,25 +288,42 @@ class HelperController extends Controller
         $this->validate($request, [
             'search_term' => 'required'
         ]);
-        $order = Order::whereIn('order_status', ['delivered'])->whereDate('invoice_generated_at', Carbon::today())->where('id', $request->search_term)->orWhere('order_sequence', $request->search_term)->firstOrFail();
+        $order = Order::whereIn('order_status', ['delivered'])->whereDate('invoice_generated_at', Carbon::today())->where('id', $request->search_term)->firstOrFail();
         return view('backend.order.edit-dispatch-proceed', compact('order'));
     }
 
     public function editDispatechedOrderGet(string $id)
     {
         $order = Order::findOrFail(decrypt($id));
-        return view('backend.order.edit-dispatch-update', compact('order'));
+        $payments = Payment::where('order_id', $order->id)->get();
+        $pmodes = PaymentMode::pluck('name', 'id');
+        return view('backend.order.edit-dispatch-update', compact('order', 'payments', 'pmodes'));
     }
 
     public function editDispatechedOrderUpdate(Request $request, string $id)
     {
         $this->validate($request, [
-            //
+            'payment_id' => 'required',
         ]);
-        $input = $request->all();
-        $input['updated_by'] = $request->user()->id;
-        Order::findOrFail($id)->update($input);
-        recordOrderEvent($id, "Order has been updated after delivered");
+        try {
+            $input = $request->only(array('discount', 'credit_used'));
+            $input['updated_by'] = $request->user()->id;
+            DB::transaction(function () use ($request, $input, $id) {
+                Order::findOrFail($id)->update($input);
+                foreach ($request->payment_id as $key => $item) :
+                    Payment::findOrFail($item)->update([
+                        'amount' => $request->amount[$key],
+                        'payment_type' => $request->payment_type[$key],
+                        'payment_mode' => $request->payment_mode[$key],
+                        'notes' => $request->notes[$key],
+                        'updated_by' => $request->user()->id,
+                    ]);
+                endforeach;
+                recordOrderEvent($id, "Order has been updated after delivered");
+            });
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
         return redirect()->route('edit.dispatched.order')->with("success", "Record updated successfully");
     }
 }

@@ -29,8 +29,8 @@
                             <form class="row g-3" method="post" action="{{ route('edit.dispatched.order.fetch') }}">
                                 @csrf
                                 <div class="col-md-4">
-                                    <label class="form-label req">Order ID / Invoice No.</label>
-                                    {{ html()->text($name = 'search_term', $value = old('search_term'))->class('form-control')->placeholder('Search by Order Id / Invoice No.') }}
+                                    <label class="form-label req">Order ID </label>
+                                    {{ html()->text($name = 'search_term', $value = old('search_term'))->class('form-control')->placeholder('Search by Order Id.') }}
                                     @error('search_term')
                                     <small class="text-danger">{{ $errors->first('search_term') }}</small>
                                     @enderror
