@@ -85,6 +85,10 @@ class PaymentController extends Controller
             if ($request->payment_type != 'balance' && ($due_amount != $amount) && $request->generate_invoice) :
                 throw new Exception("Please uncheck the Generate Invoice Box!");
             endif;
+            if (isPendingFromLab($request->order_id) && $request->generate_invoice && !Session::has('geninv')) :
+                Session::put('geninv', $request->input());
+                return redirect()->back()->with("warning", "One or more items are pending from Lab. Do you want to procced?");
+            endif;
             Payment::create([
                 'consultation_id' => $request->consultation_id,
                 'patient_id' => 0,
@@ -109,6 +113,7 @@ class PaymentController extends Controller
                 recordOrderEvent($request->order_id, 'Invoice has been generated');
             endif;
             recordOrderEvent($request->order_id, 'Payment received');
+            Session::forget('geninv');
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }

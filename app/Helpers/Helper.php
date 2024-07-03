@@ -480,7 +480,8 @@ function isPendingFromLab($oid)
     $orders = LabOrder::where('order_id', $oid)->whereIn('status', ['sent-to-lab', 'received-from-lab'])->count('id');
     if ($orders > 0)
         return true;
-    return false;
+    else
+        return false;
 }
 
 function updateLabOrderStatus($oid)

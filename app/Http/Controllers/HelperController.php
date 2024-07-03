@@ -217,8 +217,10 @@ class HelperController extends Controller
                 cancelOrder($order->id);
             elseif (!isFullyPaid($order->id, $request->order_status)) :
                 return redirect()->back()->with("error", "Amount due.");
-            //elseif (isPendingFromLab($order->id)) :
-            //return redirect()->back()->with("error", "One or more items pending from Lab");
+            elseif (!Session::has('geninv') && isPendingFromLab($order->id) && in_array($request->order_status, ['ready-for-delivery', 'delivered'])) :
+                //return redirect()->back()->with("error", "One or more items are pending from Lab");
+                Session::put('geninv', $request->input());
+                return redirect()->back()->with("warning", "One or more items are pending from Lab. Do you want to procced?");
             else :
                 $ino = ($request->order_status == 'delivered') ? branchInvoiceNumber() : NULL;
                 $order->update(['order_status' => $request->order_status, 'order_sequence' => $ino]);
@@ -235,6 +237,7 @@ class HelperController extends Controller
                 endif;
                 recordOrderEvent($order->id, 'Order status has been updated to ' . $request->order_status . ' with notes ' . $request->status_note);
             endif;
+            Session::forget('geninv');
             return redirect()->route('search.order')->with("success", "Status updated successfully");
         else :
             return redirect()->back()->with("error", "Cannot update status for the order which has invoice number already been generated");

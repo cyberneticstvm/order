@@ -45,7 +45,11 @@
                                 </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
+                                    @if(Session::has('geninv'))
                                     <button class="btn btn-submit btn-success" type="submit">Update</button>
+                                    @else
+                                    <button class="btn btn-submit btn-warning" type="submit">Proceed</button>
+                                    @endif
                                 </div>
                             </form>
                         </div>
