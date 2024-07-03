@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Invoice Number</label>
-                                    {{ html()->number($name = 'invoice_number', $order->ino())->class('form-control')->disabled() }}
+                                    {{ html()->text($name = 'invoice_number', $order->ino())->class('form-control')->disabled() }}
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Discount</label>
