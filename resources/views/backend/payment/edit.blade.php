@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Payment Type</label>
-                                    {{ html()->select($name = 'payment_type', $value = paymentypes(), $payment->payment_type)->class('form-control select2')->placeholder('Select') }}
+                                    {{ html()->select($name = 'payment_type', array('advance', 'Advance') + paymentypes(), $payment->payment_type)->class('form-control select2')->placeholder('Select') }}
                                     @error('payment_type')
                                     <small class="text-danger">{{ $errors->first('payment_type') }}</small>
                                     @enderror

@@ -65,7 +65,7 @@
                                             @forelse($payments as $key => $item)
                                             <tr>
                                                 <td>
-                                                    {{ html()->number($name = 'payment_id[]', $item->id, '', '', 'any')->class('form-control')->placeholder('0') }}
+                                                    {{ html()->number($name = 'payment_id[]', $item->id, '', '', 'any')->class('form-control')->readonly() }}
                                                 </td>
                                                 <td>
                                                     {{ html()->number($name = 'amount[]', $item->amount, '', '', 'any')->class('form-control')->placeholder('0') }}
