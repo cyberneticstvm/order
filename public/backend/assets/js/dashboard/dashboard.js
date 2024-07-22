@@ -149,14 +149,17 @@ $(function () {
 
     $.getJSON('/ajax/chart/order/comparison/' + 0, function (response) {
         //console.log(response)
-        let discrete = []; let series = [];
+        let discrete = []; let series = []; let labels = [];
         $.each(response, function(key, val){
             $.ajax({
                 type: 'GET',
                 url: '/ajax/chart/order/comparison/' + val.bname,
                 success: function (res) {
                     console.log(res)
-                    series.push({'name': res.bname, 'type': 'area', 'data': [res[0].order_count, res[1].order_count, res[2].order_count, res[3].order_count, res[4].order_count, res[5].order_count, res[6].order_count, res[7].order_count, res[8].order_count, res[9].order_count, res[10].order_count, res[11].order_count]})
+                    series.push({'name': res.bname, 'type': 'area', 'data': [res[0].order_count, res[1].order_count, res[2].order_count, res[3].order_count, res[4].order_count, res[5].order_count, res[6].order_count, res[7].order_count, res[8].order_count, res[9].order_count, res[10].order_count, res[11].order_count]});
+
+                    labels = [res[0].month, res[1].month, res[2].month, res[3].month, res[4].month,
+                    res[5].month, res[6].month, res[7].month, res[8].month, res[9].month, res[10].month, res[11].month]
                 }
             });
         });
@@ -215,18 +218,7 @@ $(function () {
                 stops: [0, 100],
               },
             },
-            labels: [response[0].month,
-            response[1].month,
-            response[2].month,
-            response[3].month,
-            response[4].month,
-            response[5].month,
-            response[6].month,
-            response[7].month,
-            response[8].month,
-            response[9].month,
-            response[10].month,
-            response[11].month],
+            labels: labels,
             markers: {
               discrete: discrete,
               hover: {
