@@ -130,7 +130,7 @@
                 <div class="card visitor-card"> 
                       <div class="card-header card-no-border">
                         <div class="header-top">
-                          <h5 class="m-0">Order Comparison Chart - <span class="occbname">{{ branches()->where('id', Session::get('branch'))->first()->name }}</span></h5>
+                          <h5 class="m-0">Order Comparison Chart - <span class="occbname">{{ branches()->where('id', Session::get('branch'))->first()->name ?? '' }}</span></h5>
                           <div class="card-header-right-icon">
                             <div class="dropdown icon-dropdown">
                               <button class="btn dropdown-toggle" id="visitorButton" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
