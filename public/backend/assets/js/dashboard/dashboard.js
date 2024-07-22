@@ -220,7 +220,7 @@ $(function () {
             },
             yaxis: {
               min: 0,
-              max: 100,
+              max: 5000,
               tickAmount: 5,
               tickPlacement: "between",
               labels: {
