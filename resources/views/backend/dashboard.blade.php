@@ -130,13 +130,13 @@
                 <div class="card visitor-card"> 
                       <div class="card-header card-no-border">
                         <div class="header-top">
-                          <h5 class="m-0">Order Comparison Chart</h5>
+                          <h5 class="m-0">Order Comparison Chart - <span class="occbname">{{ branches()->where('id', Session::get('branch'))->first()->name }}</span></h5>
                           <div class="card-header-right-icon">
                             <div class="dropdown icon-dropdown">
                               <button class="btn dropdown-toggle" id="visitorButton" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
                               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="visitorButton">
                                 @forelse(userBranches()->where('type', 'branch') as $key => $item)
-                                <a class="dropdown-item" href="#">{{ $item->name }}</a>
+                                <a class="dropdown-item" href="{{ route('ajax.chart.order.comparison', $item->id) }}">{{ $item->name }}</a>
                                 @empty
                                 @endforelse
                                 </div>                                
