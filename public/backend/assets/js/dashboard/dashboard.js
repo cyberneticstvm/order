@@ -148,14 +148,15 @@ $(function () {
     });
 
     $.getJSON('/ajax/chart/order/comparison/' + 0, function (response) {
-        console.log(response)
+        //console.log(response)
         let discrete = []; let series = [];
         $.each(response, function(key, val){
             $.ajax({
                 type: 'GET',
                 url: '/ajax/chart/order/comparison/' + val.bname,
                 success: function (res) {
-                    series.push({'name': val.bname ?? 'Branch', 'type': 'area', 'data': [res[0].order_count, res[1].order_count, res[2].order_count, res[3].order_count, res[4].order_count, res[5].order_count, res[6].order_count, res[7].order_count, res[8].order_count, res[9].order_count, res[10].order_count, res[11].order_count]})
+                    console.log(res)
+                    series.push({'name': res.bname, 'type': 'area', 'data': [res[0].order_count, res[1].order_count, res[2].order_count, res[3].order_count, res[4].order_count, res[5].order_count, res[6].order_count, res[7].order_count, res[8].order_count, res[9].order_count, res[10].order_count, res[11].order_count]})
                 }
             });
         });
