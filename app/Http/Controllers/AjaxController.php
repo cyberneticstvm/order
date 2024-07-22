@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\BankTransfer;
 use App\Models\Consultation;
 use App\Models\IncomeExpense;
@@ -369,10 +370,13 @@ class AjaxController extends Controller
         return json_encode($orders);
     }
 
-    public function getOrderComparisonData(){
-        $orders = Month::leftJoin('orders as o', function ($q) {
+    public function getOrderComparisonData($bname){
+        $branch = Branch::where('name', $bname)->first();
+        $orders = Month::leftJoin('orders as o', function ($q) use($branch) {
             $q->on('o.created_at', '>=', DB::raw('LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH'));
-            $q->on('o.created_at', '<', DB::raw('LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH + INTERVAL 1 MONTH'));
+            $q->on('o.created_at', '<', DB::raw('LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH + INTERVAL 1 MONTH'))->when($branch, function($q) use($branch) {
+                return $q->where('o.branch_id', $branch->id);
+            });
         })->leftJoin('branches as b', 'b.id', 'o.branch_id')->select(DB::raw("LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH AS date, COUNT(o.id) AS order_count, b.name as bname, CONCAT_WS('/', DATE_FORMAT(LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH, '%b'), DATE_FORMAT(LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH, '%y')) AS month"))->groupBy('date', 'months.id', 'bname')->orderByDesc('date')->get();
         return json_encode($orders);
     }
