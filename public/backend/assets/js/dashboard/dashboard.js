@@ -156,7 +156,7 @@ $(function () {
                 dataType: 'json',
                 url: '/ajax/chart/order/comparison/' + val.name,
                 success: function (res) {
-                    series.push({'name': 'Varkala', 'type': 'area', 'data': [res[0].order_count, res[1].order_count, res[2].order_count, res[3].order_count, res[4].order_count, res[5].order_count, res[6].order_count, res[7].order_count, res[8].order_count, res[9].order_count, res[10].order_count, res[11].order_count]});
+                    series.push({'name': res.bname, 'type': 'area', 'data': [res[0].order_count, res[1].order_count, res[2].order_count, res[3].order_count, res[4].order_count, res[5].order_count, res[6].order_count, res[7].order_count, res[8].order_count, res[9].order_count, res[10].order_count, res[11].order_count]});
                 }
             });
         });
