@@ -370,17 +370,18 @@ class AjaxController extends Controller
         return json_encode($orders);
     }
 
-    public function getOrderComparisonData($bname){
-        if($bname != 0):
-            $branch = Branch::where('name', $bname)->first();
-            $data = Month::leftJoin('orders as o', function ($q) use($branch) {
-                $q->on('o.created_at', '>=', DB::raw('LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH'));
-                $q->on('o.created_at', '<', DB::raw('LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH + INTERVAL 1 MONTH'))->where('o.branch_id', $branch->id);
-            })->leftJoin('branches as b', 'b.id', 'o.branch_id')->select(DB::raw("LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH AS date, COUNT(o.id) AS order_count, b.name as bname, CONCAT_WS('/', DATE_FORMAT(LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH, '%b'), DATE_FORMAT(LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH, '%y')) AS month"))->groupBy('date', 'months.id', 'bname')->orderByDesc('date')->get();
-        else:
-            $data = Branch::where('type', 'branch')->get();
-        endif;
-        return json_encode($data);
+    public function getOrderComparisonData(){
+        $orders = Month::leftJoin('orders as o', function ($q){
+            $q->on('o.created_at', '>=', DB::raw('LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH'));
+            $q->on('o.created_at', '<', DB::raw('LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH + INTERVAL 1 MONTH'));
+        })->select(DB::raw("LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH AS date, COUNT(o.id) AS order_count, o.branch_id, CONCAT_WS('/', DATE_FORMAT(LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH, '%b'), DATE_FORMAT(LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH, '%y')) AS month"))->groupBy('date', 'months.id', 'o.branch_id')->orderByDesc('date')->get();
+        return json_encode($orders);
+    }
+
+    public function getBranches($id){
+        return Branch::when($id > 0, function($q) use ($id){
+            return $q->where('id', $id);
+        })->get();
     }
 
     public function checkPendingTransfer(Request $request)
