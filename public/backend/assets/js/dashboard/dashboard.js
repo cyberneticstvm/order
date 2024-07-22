@@ -147,12 +147,156 @@ $(function () {
         orderchart.render();
     });
 
-    $.getJSON('/ajax/chart/order/comparison', function (response) {
+    $.getJSON('/ajax/chart/order/comparison/'+ 0, function (response) {
         console.log(response)
-        /*var ordercomparison = new ApexCharts(
-        document.querySelector("#ordercomparison"),
-        orderoptions
-        );
-        ordercomparison.render();*/
+        var ordercomparisonchartoptions = {
+            series: [
+              {
+                name: "Total",
+                data: [response[0].order_count, response[1].order_count, response[2].order_count, response[3].order_count, response[4].order_count, response[5].order_count, response[6].order_count, response[7].order_count, response[8].order_count, response[9].order_count, response[10].order_count, response[11].order_count],
+              },
+              {
+                name: "Delivered",
+                data: [response[0].dcount, response[1].dcount, response[2].dcount, response[3].dcount, response[4].dcount, response[5].dcount, response[6].dcount, response[7].dcount, response[8].dcount, response[9].dcount, response[10].dcount, response[11].dcount],
+              },
+            ],
+            chart: {
+              type: "bar",
+              height: 270,
+              toolbar: {
+                show: false,
+              },
+            },
+            plotOptions: {
+              bar: {
+                horizontal: false,
+                columnWidth: "50%",
+              },
+            },
+            dataLabels: {
+              enabled: false,
+            },
+            stroke: {
+              show: true,
+              width: 6,
+              colors: ["transparent"],
+            },
+            grid: {
+              show: true,
+              borderColor: "var(--chart-border)",
+              xaxis: {
+                lines: {
+                  show: true,
+                },
+              },
+            },
+            colors: ["#FFA941", "var(--theme-deafult)"],
+            xaxis: {
+              categories: [response[0].month,
+              response[1].month,
+              response[2].month,
+              response[3].month,
+              response[4].month,
+              response[5].month,
+              response[6].month,
+              response[7].month,
+              response[8].month,
+              response[9].month,
+              response[10].month,
+              response[11].month],
+              tickAmount: 4,
+              tickPlacement: "between",
+              labels: {
+                style: {
+                  fontFamily: "Rubik, sans-serif",
+                },
+              },
+              axisBorder: {
+                show: false,
+              },
+              axisTicks: {
+                show: false,
+              },
+            },
+            yaxis: {
+              min: 0,
+              max: 100,
+              tickAmount: 5,
+              tickPlacement: "between",
+              labels: {
+                style: {
+                  fontFamily: "Rubik, sans-serif",
+                },
+              },
+            },
+            fill: {
+              opacity: 1,
+            },
+            legend: {
+              position: "top",
+              horizontalAlign: "left",
+              fontFamily: "Rubik, sans-serif",
+              fontSize: "14px",
+              fontWeight: 500,
+              labels: {
+                colors: "var(--chart-text-color)",
+              },
+              markers: {
+                width: 6,
+                height: 6,
+                radius: 12,
+              },
+              itemMargin: {
+                horizontal: 10,
+              },
+            },
+            responsive: [
+              {
+                breakpoint: 1366,
+                options: {
+                  plotOptions: {
+                    bar: {
+                      columnWidth: "80%",
+                    },
+                  },
+                  grid: {
+                    padding: {
+                      right: 0,
+                    },
+                  },
+                },
+              },
+              {
+                breakpoint: 992,
+                options: {
+                  plotOptions: {
+                    bar: {
+                      columnWidth: "70%",
+                    },
+                  },
+                },
+              },
+              {
+                breakpoint: 576,
+                options: {
+                  plotOptions: {
+                    bar: {
+                      columnWidth: "60%",
+                    },
+                  },
+                  grid: {
+                    padding: {
+                      right: 5,
+                    },
+                  },
+                },
+              },
+            ],
+          };
+        var chartordercomparison = new ApexCharts(
+            document.querySelector("#order-comparison-chart"),
+            ordercomparisonchartoptions
+          );
+          chartordercomparison.render();
     });
 });
