@@ -1,6 +1,6 @@
 $(function () {
     $.getJSON('/ajax/chart/order', function (response) {
-        console.log(response)
+        //console.log(response)
         var orderoptions = {
             series: [
                 {
@@ -145,5 +145,129 @@ $(function () {
             orderoptions
         );
         orderchart.render();
+    });
+
+    $.getJSON('/ajax/chart/order/comparison', function (response) {
+        console.log(response)
+        let discrete = []; let series = [];
+        $.each(response, function(key, val){
+            series.push({'name': val.bname ?? 'Branch', 'type': 'area', 'data': []})
+        });
+        var orderoptions = {
+            series: series,
+            chart: {
+              height: 300,
+              type: "line",
+              stacked: false,
+              toolbar: {
+                show: false,
+              },
+              dropShadow: {
+                enabled: true,
+                top: 2,
+                left: 0,
+                blur: 4,
+                color: "#000",
+                opacity: 0.08,
+              },
+            },
+            stroke: {
+              width: [2, 2, 2],
+              curve: "smooth",
+            },
+            grid: {
+              show: true,
+              borderColor: "var(--chart-border)",
+              strokeDashArray: 0,
+              position: "back",
+              xaxis: {
+                lines: {
+                  show: true,
+                },
+              },
+              padding: {
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 0,
+              },
+            },
+            plotOptions: {
+              bar: {
+                columnWidth: "50%",
+              },
+            },
+            colors: ["#7064F5", "#54BA4A", "#FF3364"],
+            fill: {
+              type: "gradient",
+              gradient: {
+                shade: "light",
+                type: "vertical",
+                opacityFrom: 0.4,
+                opacityTo: 0,
+                stops: [0, 100],
+              },
+            },
+            labels: [response[0].month,
+            response[1].month,
+            response[2].month,
+            response[3].month,
+            response[4].month,
+            response[5].month,
+            response[6].month,
+            response[7].month,
+            response[8].month,
+            response[9].month,
+            response[10].month,
+            response[11].month],
+            markers: {
+              discrete: discrete,
+              hover: {
+                size: 5,
+                sizeOffset: 0,
+              },
+            },
+            xaxis: {
+              type: "category",
+              tickAmount: 4,
+              tickPlacement: "between",
+              tooltip: {
+                enabled: false,
+              },
+              axisBorder: {
+                color: "var(--chart-border)",
+              },
+              axisTicks: {
+                show: false,
+              },
+            },
+            legend: {
+              show: false,
+            },
+            yaxis: {
+              min: 0,
+              tickAmount: 12,
+              tickPlacement: "between",
+            },
+            tooltip: {
+              shared: false,
+              intersect: false,
+            },
+            responsive: [
+              {
+                breakpoint: 1200,
+                options: {
+                  chart: {
+                    height: 250,
+                  },
+                },
+              },
+            ],
+          };        
+          var ordercomparison = new ApexCharts(
+            document.querySelector("#ordercomparison"),
+            orderoptions
+          );
+          ordercomparison.render();
     });
 });

@@ -126,6 +126,27 @@
                     </div>
                 </div>
             </div>
+            <div class="col-xl-12">
+                <div class="card market-card">
+                    <div class="card-header card-no-border">
+                        <div class="header-top">
+                            <h5>Order Comparison Graph</h5>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="row m-0 overall-card">
+                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 p-0 box-col-12 col-ed-12">
+                                <div class="current-sale-container order-container">
+                                    <div class="overview-wrapper" id="ordercomparison"></div>
+                                    <div class="back-bar-container"> 
+                                        <div id="order-bar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
