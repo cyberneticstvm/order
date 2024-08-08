@@ -53,6 +53,7 @@
                                         <th>Invoice Number</th>
                                         <th>Invoice Total</th>
                                         <th>Paid</th>
+                                        <th>Discount</th>
                                         <th>Balance</th>
                                         <th>Order Status</th>
                                         <th>Invoice</th>
@@ -68,7 +69,8 @@
                                         <td>{{ $item->ino() }}</td>
                                         <td>{{ $item->invoice_total }}</td>
                                         <td>{{ number_format($item->payments->sum('amount') + $item->credit_used, 2) }}</td>
-                                        <td>{{ number_format($item->invoice_total-($item->payments->sum('amount') + $item->credit_used + $item->discount), 2) }}</td>
+                                        <td>{{ number_format($item->discount, 2) }}</td>
+                                        <td>{{ number_format($item->invoice_total-($item->payments->sum('amount') + $item->credit_used), 2) }}</td>
                                         <td>{{ ucfirst($item->order_status) }}</td>
                                         <td class="text-center"><a href="{{ route('store.order.invoice', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                     </tr>
