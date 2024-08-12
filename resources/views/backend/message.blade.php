@@ -123,7 +123,7 @@
         }
         if (frm['credit_used'].value > frm['available_credit'].value) {
             failed({
-                'error': 'Credit used is greater than available credit!'
+                'error': 'Credit used is greater than available credit!'.frm['available_credit'].value
             })
             return false;
         }
