@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\BankTransferController;
@@ -96,6 +97,9 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/edit/dispatch/order/update/{id}', [HelperController::class, 'editDispatechedOrderGet'])->name('edit.dispatched.order.get');
         Route::post('/edit/dispatch/order/update/{id}', [HelperController::class, 'editDispatechedOrderUpdate'])->name('edit.dispatched.order.update');
         /*Route::get('/update/invoice', 'updateInvoiceNumber')->name('update.invoice.number');*/
+
+        /* Adv Controller */
+        Route::get('/adv/customer/create', [AdvertisementController::class, 'createAdvCustomer'])->name('adv.customer.create');
     });
 });
 
