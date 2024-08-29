@@ -119,7 +119,7 @@
                                         <td class="fw-bold text-right"><a href="javascript:void(0)" class="trnsOutPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="transferInPdctDrawer">{{ $data->sum('transferredQty') }}</a></td>
                                         <td class="fw-bold text-right">{{ $data->sum('returnedQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('damagedQty') }}</td>
-                                        <td class="fw-bold text-right">{{ $data->sum('balanceQty') + $data->sum('returnedQty') }}</td>
+                                        <td class="fw-bold text-right">{{ $data->sum('balanceQty') }}</td>
                                     </tr>
                                 </tfoot>
                             </table>
