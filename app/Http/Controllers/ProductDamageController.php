@@ -31,7 +31,8 @@ class ProductDamageController extends Controller
      */
     public function create($category)
     {
-        $products = Product::where('category', $category)->orderBy('name')->get();
+        //$products = Product::where('category', $category)->orderBy('name')->get();
+        $products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', [$category])->orderBy('name')->get();
         return view('backend.order.damage.create', compact('products'));
     }
 
@@ -69,7 +70,8 @@ class ProductDamageController extends Controller
     public function edit(string $id)
     {
         $damage = ProductDamage::findOrFail(decrypt($id));
-        $products = Product::where('category', $damage->category)->orderBy('name')->get();
+        //$products = Product::where('category', $damage->category)->orderBy('name')->get();
+        $products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', [$damage->category])->orderBy('name')->get();
         return view('backend.order.damage.edit', compact('damage', 'products'));
     }
 
