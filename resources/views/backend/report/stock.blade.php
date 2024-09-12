@@ -83,6 +83,7 @@
                                         <th>Product Name</th>
                                         <th>PID</th>
                                         <th>Code</th>
+                                        <th>Item Total</th>
                                         <th>Booked</th>
                                         <th>Billed</th>
                                         <th>Transfer In</th>
@@ -99,6 +100,7 @@
                                         <td>{{ $item->product_name }}</td>
                                         <td>{{ $item->product_id }}</td>
                                         <td>{{ $item->pcode }}</td>
+                                        <td>{{ $item->item_tot }}</td>
                                         <td>{{ $item->soldQty }}</td>
                                         <td>{{ $item->billedQty }}</td>
                                         <td>{{ $item->purchasedQty }}</td>
@@ -114,6 +116,7 @@
                                     <tr>
                                         <td colspan="4" class="fw-bold text-end">Total</td>
                                         <td class="fw-bold text-right"><a href="javascript:void(0)" class="bkdPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="bookedPdctDrawer">{{ $data->sum('soldQty') }}</a></td>
+                                        <td class="fw-bold">{{ $data->sum('item_tot') }}</td>
                                         <td class="fw-bold">{{ $data->sum('billedQty') }}</td>
                                         <td class="fw-bold text-right"><a href="javascript:void(0)" class="trnsInPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="transferInPdctDrawer">{{ $data->sum('purchasedQty') }}</a></td>
                                         <td class="fw-bold text-right"><a href="javascript:void(0)" class="trnsOutPdct" data-branch="{{ $inputs[0] }} " data-category="{{ $inputs[1] }}" data-drawer="transferInPdctDrawer">{{ $data->sum('transferredQty') }}</a></td>
