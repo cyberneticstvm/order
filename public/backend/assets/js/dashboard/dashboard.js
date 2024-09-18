@@ -192,7 +192,8 @@ $(function () {
             },
             colors: ["#FFA941", "var(--theme-deafult)"],
             xaxis: {
-              categories: [response.ord[0].month,
+              categories: [
+              response.ord[0].month,
               response.ord[1].month,
               response.ord[2].month,
               response.ord[3].month,
@@ -204,7 +205,7 @@ $(function () {
               response.ord[9].month,
               response.ord[10].month,
               response.ord[11].month],
-              tickAmount: 4,
+              tickAmount: 12,
               tickPlacement: "between",
               labels: {
                 style: {
