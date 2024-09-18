@@ -53,6 +53,8 @@ class SendDocuments extends Mailable
     {
         return [
             Attachment::fromData(fn() => $this->data['invoice']->output(), 'invoice.pdf')->withMime('application/pdf'),
+            Attachment::fromData(fn() => $this->data['receipt']->output(), 'receipt.pdf')->withMime('application/pdf'),
+            Attachment::fromData(fn() => $this->data['prescription']->output(), 'prescription.pdf')->withMime('application/pdf'),
         ];
     }
 }
