@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendDocuments;
 use App\Models\Consultation;
 use App\Models\Customer;
 use App\Models\CustomerAccount;
@@ -340,6 +341,10 @@ class HelperController extends Controller
             $qrcode = null;
             $data = ['body' => $request->body, 'cname' => $order->name];
             $advance = $order->payments->where('payment_type', 'advance1')->sum('amount');
+            $data['invoice'] = Pdf::loadView('backend.pdf.store-order-invoice', compact('order', 'nums', 'qrcode'));
+            $data['receipt'] = Pdf::loadView('backend.pdf.store-order-receipt', compact('order', 'qrcode', 'advance'));
+            $data['prescription'] = Pdf::loadView('backend.pdf.prescription', compact('order', 'qrcode'));
+            /*$advance = $order->payments->where('payment_type', 'advance1')->sum('amount');
             $invoice = Pdf::loadView('backend.pdf.store-order-invoice', compact('order', 'nums', 'qrcode'));
             $receipt = Pdf::loadView('backend.pdf.store-order-receipt', compact('order', 'qrcode', 'advance'));
             $prescription = Pdf::loadView('backend.pdf.prescription', compact('order', 'qrcode'));
@@ -349,7 +354,8 @@ class HelperController extends Controller
                     ->attachData($invoice->output(), "invoice.pdf")
                     ->attachData($receipt->output(), "receipt.pdf")
                     ->attachData($prescription->output(), "prescription.pdf");
-            });
+            });*/
+            Mail::to($request->email)->send(new SendDocuments($data));
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
