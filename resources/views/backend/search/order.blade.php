@@ -70,6 +70,7 @@
                                         <th>Order</th>
                                         <th>Invoice</th>
                                         <th>Order Status</th>
+                                        <th>E-mail</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
@@ -95,6 +96,7 @@
                                         @else
                                         <td><a href="{{ route('order.status', encrypt($item->id)) }}">{{ $item->order_status }}</a></td>
                                         @endif
+                                        <td class="text-center"><a href="javascript:void(0)" class="email" data-ono="{{ $item->ono() }}" data-type="email" data-oid="{{ $item->id }}" data-branch="" data-drawer="emailDrawer"><i class="fa fa-envelope text-success"></i></a></td>
                                         <td class="text-center"><a href="{{ route(($item->category == 'store') ? 'store.order.edit' : 'solution.order.edit', encrypt($item->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center"><a href="{{ route(($item->category == 'store') ? 'store.order.delete' : 'solution.order.delete', encrypt($item->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
                                     </tr>
@@ -113,4 +115,5 @@
 <div class="drawer drawer-left slide" tabindex="-1" role="dialog" aria-labelledby="drawer-3-title" aria-hidden="true" id="orderDrawer">
     <div class="drawer-content drawer-content-scrollable" role="document"></div>
 </div>
+@include("backend.misc.email-drawer")
 @endsection

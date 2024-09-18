@@ -168,6 +168,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/search/prescription', 'searchPrescriptionFetch')->name('search.prescription.fetch');
 
         Route::post('/lab/note/update', 'updateLabNote')->name('lab.note.update');
+
+        Route::post('/email/docs', 'emailDocs')->name('email.docs');
     });
 
     Route::prefix('/backend/export')->controller(ImportExportController::class)->group(function () {

@@ -222,6 +222,13 @@ $(function () {
         });
     });
 
+    $(document).on("click", ".email", function () {
+        var drawer = $(this).data('drawer');
+        $("#order_id").val($(this).data('oid'));        
+        $(".ono").html($(this).data('ono'));        
+        $("#" + drawer).drawer('toggle');
+    });
+
     $(document).on("click", ".frameCount", function () {
         var drawer = $(this).data('drawer');
         var fdate = $(this).data('from-date');

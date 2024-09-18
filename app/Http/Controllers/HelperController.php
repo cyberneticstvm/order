@@ -18,11 +18,13 @@ use App\Models\Spectacle;
 use App\Models\Transfer;
 use App\Models\TransferDetails;
 use App\Models\UserBranch;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class HelperController extends Controller
@@ -325,5 +327,27 @@ class HelperController extends Controller
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
         return redirect()->route('edit.dispatched.order')->with("success", "Record updated successfully");
+    }
+
+    public function emailDocs(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email',
+        ]);
+        try {
+            $order = Order::findOrFail($request->order_id);
+            $nums = 0;
+            $qrcode = null;
+            $data = ['body' => $request->body, 'cname' => $order->name];
+            $pdf = Pdf::loadView('backend.pdf.store-order-invoice', compact('order', 'nums', 'qrcode'));
+            Mail::send('backend.email.send-documents', $data, function ($message) use ($request, $pdf) {
+                $message->to($request->email)
+                    ->subject("Documents - Devi Eye Hospitals")
+                    ->attachData($pdf->output(), "invoice.pdf");
+            });
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
+        return redirect()->back()->with("success", "Email sent successfully");
     }
 }
