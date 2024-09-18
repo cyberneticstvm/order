@@ -339,11 +339,16 @@ class HelperController extends Controller
             $nums = 0;
             $qrcode = null;
             $data = ['body' => $request->body, 'cname' => $order->name];
-            $pdf = Pdf::loadView('backend.pdf.store-order-invoice', compact('order', 'nums', 'qrcode'));
-            Mail::send('backend.email.send-documents', $data, function ($message) use ($request, $pdf) {
+            $advance = $order->payments->where('payment_type', 'advance1')->sum('amount');
+            $invoice = Pdf::loadView('backend.pdf.store-order-invoice', compact('order', 'nums', 'qrcode'));
+            $receipt = Pdf::loadView('backend.pdf.store-order-receipt', compact('order', 'qrcode', 'advance'));
+            $prescription = Pdf::loadView('backend.pdf.prescription', compact('order', 'qrcode'));
+            Mail::send('backend.email.send-documents', $data, function ($message) use ($request, $invoice, $receipt, $prescription) {
                 $message->to($request->email)
                     ->subject("Documents - Devi Eye Hospitals")
-                    ->attachData($pdf->output(), "invoice.pdf");
+                    ->attachData($invoice->output(), "invoice.pdf")
+                    ->attachData($receipt->output(), "receipt.pdf")
+                    ->attachData($prescription->output(), "prescription.pdf");
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
