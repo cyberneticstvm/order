@@ -33,7 +33,7 @@
                     </div>
                     <div class="col-md-12">
                         {{ html()->checkbox($name = 'prescription', $checked=false, '1')->class('form-check-input')->attribute('id', 'prescription') }}
-                        <label class="form-check-label">Prescription</label>
+                        <label class="form-check-label">Spectacle Prescription</label>
                     </div>
                     <div class="col-12 text-end mt-3">
                         <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
