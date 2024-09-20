@@ -10,7 +10,7 @@
                     <input type="hidden" name="order_id" id="order_id" value="" />
                     <div class="col-md-12">
                         <label class="form-label req">E-mail</label>
-                        {{ html()->text($name = 'email', $value = old('email'))->class('form-control')->placeholder('E-mail') }}
+                        {{ html()->email($name = 'email', $value = old('email'))->class('form-control')->placeholder('E-mail')->required() }}
                         @error('email')
                         <small class="text-danger">{{ $errors->first('email') }}</small>
                         @enderror
