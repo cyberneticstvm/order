@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SendDocuments;
+use App\Models\Branch;
 use App\Models\Consultation;
 use App\Models\Customer;
 use App\Models\CustomerAccount;
@@ -337,25 +338,16 @@ class HelperController extends Controller
         ]);
         try {
             $order = Order::findOrFail($request->order_id);
+            $spectacle = Spectacle::where('registration_id', $order->registration_id)->first();
             $nums = 0;
             $qrcode = null;
-            $data = ['body' => $request->body, 'cname' => $order->name];
+            $data = ['body' => $request->body, 'cname' => $order->name, 'uname' => Auth::user()->name, 'time' => Carbon::now(), 'branch' => Branch::find(Session::get('branch'))->name, 'is_invoice' => $request->invoice, 'is_receipt' => $request->receipt, 'is_prescription' => $request->prescription];
             $advance = $order->payments->where('payment_type', 'advance1')->sum('amount');
             $data['invoice'] = Pdf::loadView('backend.pdf.store-order-invoice', compact('order', 'nums', 'qrcode'));
             $data['receipt'] = Pdf::loadView('backend.pdf.store-order-receipt', compact('order', 'qrcode', 'advance'));
-            $data['prescription'] = Pdf::loadView('backend.pdf.prescription', compact('order', 'qrcode'));
-            /*$advance = $order->payments->where('payment_type', 'advance1')->sum('amount');
-            $invoice = Pdf::loadView('backend.pdf.store-order-invoice', compact('order', 'nums', 'qrcode'));
-            $receipt = Pdf::loadView('backend.pdf.store-order-receipt', compact('order', 'qrcode', 'advance'));
-            $prescription = Pdf::loadView('backend.pdf.prescription', compact('order', 'qrcode'));
-            Mail::send('backend.email.send-documents', $data, function ($message) use ($request, $invoice, $receipt, $prescription) {
-                $message->to($request->email)
-                    ->subject("Documents - Devi Eye Hospitals")
-                    ->attachData($invoice->output(), "invoice.pdf")
-                    ->attachData($receipt->output(), "receipt.pdf")
-                    ->attachData($prescription->output(), "prescription.pdf");
-            });*/
-            Mail::to($request->email)->send(new SendDocuments($data));
+            $data['prescription'] = Pdf::loadView('backend.pdf.spectacle', compact('spectacle', 'qrcode'));
+
+            Mail::to($request->email)->cc('admin@enieco.com')->send(new SendDocuments($data));
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }

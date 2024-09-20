@@ -51,10 +51,13 @@ class SendDocuments extends Mailable
      */
     public function attachments(): array
     {
-        return [
-            Attachment::fromData(fn() => $this->data['invoice']->output(), 'invoice.pdf')->withMime('application/pdf'),
-            Attachment::fromData(fn() => $this->data['receipt']->output(), 'receipt.pdf')->withMime('application/pdf'),
-            Attachment::fromData(fn() => $this->data['prescription']->output(), 'prescription.pdf')->withMime('application/pdf'),
-        ];
+        $docs = array();
+        if ($this->data['is_invoice'])
+            array_push($docs, Attachment::fromData(fn() => $this->data['invoice']->output(), 'invoice.pdf')->withMime('application/pdf'));
+        if ($this->data['is_receipt'])
+            array_push($docs, Attachment::fromData(fn() => $this->data['receipt']->output(), 'receipt.pdf')->withMime('application/pdf'));
+        if ($this->data['is_prescription'])
+            array_push($docs, Attachment::fromData(fn() => $this->data['prescription']->output(), 'prescription.pdf')->withMime('application/pdf'));
+        return $docs;
     }
 }
