@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    Dear {{ $cname }}<br /><br />
+    Dear {{ $cname }},<br /><br />
     {{ $body }}<br />
     <br />
 

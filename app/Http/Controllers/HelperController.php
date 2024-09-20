@@ -347,7 +347,7 @@ class HelperController extends Controller
             $data['receipt'] = Pdf::loadView('backend.pdf.store-order-receipt', compact('order', 'qrcode', 'advance'));
             $data['prescription'] = Pdf::loadView('backend.pdf.spectacle', compact('spectacle', 'qrcode'));
 
-            Mail::to($request->email)->cc('admin@enieco.com')->send(new SendDocuments($data));
+            Mail::to($request->email)->cc('cssumesh@yahoo.com')->send(new SendDocuments($data));
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
