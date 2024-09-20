@@ -25,11 +25,11 @@
                     <div class="col-md-12 mt-3">Attachments</div>
                     <div class="col-md-12 mt-3">
                         {{ html()->checkbox($name = 'invoice', $checked=false, '1')->class('form-check-input')->attribute('id', 'invoice') }}
-                        <label class="form-check-label">Invoice</label>
+                        <label class="form-check-label">Bill / Invoice</label>
                     </div>
                     <div class="col-md-12">
                         {{ html()->checkbox($name = 'receipt', $checked=false, '1')->class('form-check-input')->attribute('id', 'receipt') }}
-                        <label class="form-check-label">Receipt</label>
+                        <label class="form-check-label">Order</label>
                     </div>
                     <div class="col-md-12">
                         {{ html()->checkbox($name = 'prescription', $checked=false, '1')->class('form-check-input')->attribute('id', 'prescription') }}
