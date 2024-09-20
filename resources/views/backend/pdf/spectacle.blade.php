@@ -2,12 +2,12 @@
 @section("pdfcontent")
 <div class="row">
     <div class="text-center">
-        {{ $spectacle??->branch->address }}, {{ $spectacle??->branch->phone }}
+        {{ $spectacle?->branch->address }}, {{ $spectacle?->branch->phone }}
     </div>
 </div>
 <div class="row">
     <div class="col">
-        <h4 class="text-center"><u>spectacle? PRESCRIPTION</u></h4>
+        <h4 class="text-center"><u>SPECTACLE PRESCRIPTION</u></h4>
         <table width="100%" cellpadding="0" cellspacing="0" class="bordered">
             <thead>
                 <tr>
