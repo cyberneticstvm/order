@@ -92,64 +92,29 @@
                 </div>
             </div>
             <div class="col-xl-12">
-                <div class="card market-card">
+                <div class="card visitor-card">
                     <div class="card-header card-no-border">
                         <div class="header-top">
-                            <h5>Order Status Graph</h5>
-                            <!--<ul class="nav nav-tabs custom-tab" id="tabdesign" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="hour-tab" data-bs-toggle="tab" data-bs-target="#hour" type="button" role="tab" aria-selected="false">1H</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="day-tab" data-bs-toggle="tab" data-bs-target="#day" type="button" role="tab" aria-selected="false">1D</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="week-tab" data-bs-toggle="tab" data-bs-target="#week" type="button" role="tab" aria-selected="true">1W</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="month-tab" data-bs-toggle="tab" data-bs-target="#month" type="button" role="tab" aria-selected="false">1M</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="year-tab" data-bs-toggle="tab" data-bs-target="#year" type="button" role="tab" aria-selected="false">1Y</button>
-                                </li>
-                            </ul>-->
-                        </div>
-                    </div>
-                    <div class="card-body pt-0">
-                        <div class="row m-0 overall-card">
-                            <div class="col-xxl-12 col-xl-12 col-md-12 col-sm-12 p-0 box-col-12 col-ed-12">
-                                <div class="market-chart-container">
-                                    <div id="order-chart"></div>
+                            <h5 class="m-0">Order Comparison Chart - <span class="occbname">{{ branches()->where('id', Session::get('branch'))->first()->name ?? '' }}</span></h5>
+                            <div class="card-header-right-icon">
+                                <div class="dropdown icon-dropdown">
+                                    <button class="btn dropdown-toggle" id="visitorButton" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="visitorButton">
+                                        @forelse(userBranches()->where('type', 'branch') as $key => $item)
+                                        <a class="dropdown-item" href="{{ route('switch.branch', encrypt($item->id)) }}">{{ $item->name }}</a>
+                                        @empty
+                                        @endforelse
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-xl-12">
-                <div class="card visitor-card"> 
-                      <div class="card-header card-no-border">
-                        <div class="header-top">
-                          <h5 class="m-0">Order Comparison Chart - <span class="occbname">{{ branches()->where('id', Session::get('branch'))->first()->name ?? '' }}</span></h5>
-                          <div class="card-header-right-icon">
-                            <div class="dropdown icon-dropdown">
-                              <button class="btn dropdown-toggle" id="visitorButton" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
-                              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="visitorButton">
-                                @forelse(userBranches()->where('type', 'branch') as $key => $item)
-                                <a class="dropdown-item" href="{{ route('switch.branch', encrypt($item->id)) }}">{{ $item->name }}</a>
-                                @empty
-                                @endforelse
-                                </div>                                
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card-body pt-0">
+                    <div class="card-body pt-0">
                         <div class="visitors-container">
-                          <div id="order-comparison-chart"></div>
+                            <div id="order-comparison-chart"></div>
                         </div>
-                      </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
