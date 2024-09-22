@@ -418,7 +418,7 @@ class AjaxController extends Controller
     {
         $c = 1;
         $type = ($request->category == 'lens') ? ['re', 'le'] : [$request->category];
-        $orders = OrderDetail::leftJoin('orders as o', 'o.id', 'order_details.order_id')->where('o.branch_id', $request->branch)->selectRaw("order_details.*")->whereNull('o.stock_updated_at')->whereNotIn('o.order_status', ['delivered', 'cancelled'])->whereIn('order_details.eye', $type)->whereNull('order_details.return')->whereNull('o.deleted_at')->get();
+        $orders = OrderDetail::leftJoin('orders as o', 'o.id', 'order_details.order_id')->where('o.branch_id', $request->branch)->selectRaw("order_details.*")->whereNull('o.stock_updated_at')->whereNotIn('o.order_status', ['delivered', 'cancelled'])->whereIn('order_details.eye', $type)->whereNull('o.deleted_at')->get();
         $op = "<table class='table table-bordered'><thead><tr><th>SL No</th><th>Order No</th><th>Product</th><th>Qty</th><th>Status</th></tr></thead><tbody>";
         foreach ($orders as $key => $item) :
             $op .= "<tr>";
