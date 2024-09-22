@@ -150,6 +150,16 @@
                                         <td class="text-end">{{ number_format($data->voucher_income_total_other, 2) }}</td>
                                     </tr>
                                     <tr>
+                                        <td>Ad Payment</td>
+                                        <td class="text-end">0.00</td>
+                                        <td class="text-end">{{ number_format($data->vehicle_payment_total_cash + $data->vehicle_payment_total_upi, 2) }}</td>
+                                        <td class="text-end">{{ number_format($data->vehicle_payment_total_cash, 2) }}</td>
+                                        <td class="text-end">0.00</td>
+                                        <td class="text-end">0.00</td>
+                                        <td class="text-end">{{ number_format($data->vehicle_payment_total_upi, 2) }}</td>
+                                        <td class="text-end">0.00</td>
+                                    </tr>
+                                    <tr>
                                         <td class="text-end fw-bold text-danger">
                                             Total
                                         </td>
@@ -201,7 +211,7 @@
                                             Day Closing
                                         </td>
                                         <td class="text-end fw-bold text-success">
-                                            {{ number_format(($data->paid_total_cash + $data->income_total_cash + $data->voucher_income_total_cash + $opening_balance) - ($data->expense_total + $data->bank_transfer_total + $data->voucher_paid_total_cash), 2) }}
+                                            {{ number_format(($data->paid_total_cash + $data->income_total_cash + $data->voucher_income_total_cash + $opening_balance) - ($data->expense_total + $data->bank_transfer_total + $data->voucher_paid_total_cash + $data->vehicle_payment_total_cash), 2) }}
                                         </td>
                                         <td></td>
                                         <td colspan="5"></td>

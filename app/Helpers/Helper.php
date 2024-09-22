@@ -27,6 +27,7 @@ use App\Models\ProductSubcategory;
 use App\Models\Setting;
 use App\Models\Transfer;
 use App\Models\UserBranch;
+use App\Models\VehiclePayment;
 use App\Models\Voucher;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -283,6 +284,8 @@ function getDayBook($fdate, $tdate, $branch)
     $advance_total = getOrderPayments($from_date, $to_date, $branch, $mode = ['advance']);
     $advance_after_order_total = getOrderPayments($from_date, $to_date, $branch, $mode = ['advance1']);
     $receipts_order_total = getOrderPayments($from_date, $to_date, $branch, $mode = ['partial', 'balance']);
+    $vehicle_payment_total_cash = getVehiclePaymentTotal($from_date, $to_date, $branch, $mode = [1]);
+    $vehicle_payment_total_upi = getVehiclePaymentTotal($from_date, $to_date, $branch, $mode = [3]);
     return json_encode([
         'order_total' => $order_total,
         'paid_total' => $paid_total,
@@ -316,7 +319,16 @@ function getDayBook($fdate, $tdate, $branch)
         'advance_total' => $advance_total,
         'advance_after_order_total' => $advance_after_order_total,
         'receipts_order_total' => $receipts_order_total,
+        'vehicle_payment_total_cash' => $vehicle_payment_total_cash,
+        'vehicle_payment_total_upi' => $vehicle_payment_total_upi,
     ]);
+}
+
+function getVehiclePaymentTotal($from_date, $to_date, $branch, $mode)
+{
+    return VehiclePayment::whereBetween('created_at', [$from_date, $to_date])->whereIn('payment_mode', $mode)->when($branch > 0, function ($q) use ($branch) {
+        return $q->where('branch_id', $branch);
+    })->sum('amount');
 }
 
 function getOrderPayments($from_date, $to_date, $branch, $mode)

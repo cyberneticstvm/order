@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
             foreach ($branches as $key => $branch) :
                 $payments = getPaidTotalByMode(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id, $mode = [1]);
                 $expense = getExpenseTotal(Carbon::today(), Carbon::today(), $branch->id);
+                $vehicle_payment_total = getVehiclePaymentTotal(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id, $mode = [1]);
                 $income = getIncomeTotalByMode(Carbon::today(), Carbon::today(), $branch->id, $mode = [1]);
                 $bank = getBankTransferTotal(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id, null);
                 $opening_balance = getOpeningBalance(Carbon::today()->subDay(), $branch->id);
@@ -33,7 +34,7 @@ class Kernel extends ConsoleKernel
                 $voucher_total_payment = getVoucherTotal(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id, $type = 'payment', $mode = [1]);
                 Closing::insert([
                     'date' => Carbon::today(),
-                    'closing_balance' => ($opening_balance + $payments + $income + $voucher_total_receipt) - ($expense + $bank + $voucher_total_payment),
+                    'closing_balance' => ($opening_balance + $payments + $income + $voucher_total_receipt) - ($expense + $bank + $voucher_total_payment + $vehicle_payment_total),
                     'branch' => $branch->id,
                     'closed_by' => 1,
                     'created_at' => Carbon::now(),
