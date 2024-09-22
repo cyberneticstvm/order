@@ -83,9 +83,9 @@ class AdvertisementController extends Controller
         $vehicle = Vehicle::findOrFail(decrypt($id));
         $payment = VehiclePayment::where('vehicle_id', $vehicle->id)->latest()->first();
         $diff = Carbon::now()->diffInDays(Carbon::parse($payment?->created_at));
-        if ($payment && $diff < $vehicle->payment_terms):
+        /*if ($payment && $diff < $vehicle->payment_terms):
             return redirect()->back()->with("error", $vehicle->payment_terms - $diff . " days left to make the next payment");
-        endif;
+        endif;*/
         $payments = VehiclePayment::withTrashed()->where('vehicle_id', $vehicle->id)->latest()->get();
         $pmodes = PaymentMode::orderBy('name')->get();
         return view('backend.ads.vehicle.payment', compact('vehicle', 'diff', 'payments', 'pmodes'));
@@ -97,6 +97,12 @@ class AdvertisementController extends Controller
             'amount' => 'required',
             'payment_mode' => 'required',
         ]);
+        $vehicle = Vehicle::findOrFail($id);
+        $payment = VehiclePayment::where('vehicle_id', $vehicle->id)->latest()->first();
+        $diff = Carbon::now()->diffInDays(Carbon::parse($payment?->created_at));
+        if ($payment && $diff < $vehicle->payment_terms):
+            return redirect()->back()->with("error", $vehicle->payment_terms - $diff . " days left to make the next payment");
+        endif;
         $input = $request->all();
         $input['vehicle_id'] = $id;
         $input['branch_id'] = Session::get('branch');

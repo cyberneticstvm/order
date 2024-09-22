@@ -159,6 +159,10 @@ $(function () {
                 name: "Delivered",
                 data: [response.ord[0].dcount, response.ord[1].dcount, response.ord[2].dcount, response.ord[3].dcount, response.ord[4].dcount, response.ord[5].dcount, response.ord[6].dcount, response.ord[7].dcount, response.ord[8].dcount, response.ord[9].dcount, response.ord[10].dcount, response.ord[11].dcount],
               },
+              {
+                name: "Balance",
+                data: [response.ord[0].bcount, response.ord[1].bcount, response.ord[2].bcount, response.ord[3].bcount, response.ord[4].bcount, response.ord[5].bcount, response.ord[6].bcount, response.ord[7].bcount, response.ord[8].bcount, response.ord[9].bcount, response.ord[10].bcount, response.ord[11].bcount],
+              },
             ],
             chart: {
               type: "bar",
@@ -190,7 +194,7 @@ $(function () {
                 },
               },
             },
-            colors: ["#FFA941", "var(--theme-deafult)"],
+            colors: ["#FFA941", "var(--theme-deafult)", "#f54132"],
             xaxis: {
               categories: [
               response.ord[0].month,
