@@ -367,6 +367,26 @@
         </li>
         <li class="sidebar-main-title">
             <div>
+                <h6>Ads</h6>
+            </div>
+        </li>
+        <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
+            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                <svg class="stroke-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#eth') }}"></use>
+                </svg>
+                <svg class="fill-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#eth') }}"></use>
+                </svg>
+                <span>Vehicles</span>
+            </a>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('vehicle-list', route('vehicles'), 'Vehicle List');
+            }}
+        </li>
+        <li class="sidebar-main-title">
+            <div>
                 <h6>Settings</h6>
             </div>
         </li>

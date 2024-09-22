@@ -99,7 +99,19 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         /*Route::get('/update/invoice', 'updateInvoiceNumber')->name('update.invoice.number');*/
 
         /* Adv Controller */
-        Route::get('/adv/customer/create', [AdvertisementController::class, 'createAdvCustomer'])->name('adv.customer.create');
+    });
+
+    Route::prefix('/backend')->controller(AdvertisementController::class)->group(function () {
+        Route::get('/adv/customer', 'index')->name('vehicles');
+        Route::get('/adv/customer/create', 'create')->name('vehicle.create');
+        Route::post('/adv/customer/create', 'store')->name('vehicle.save');
+        Route::get('/adv/customer/edit/{id}', 'edit')->name('vehicle.edit');
+        Route::post('/adv/customer/edit/{id}', 'update')->name('vehicle.update');
+        Route::get('/adv/customer/delete/{id}', 'destroy')->name('vehicle.delete');
+
+        Route::get('/adv/customer/payment/{id}', 'payment')->name('vehicle.payment');
+        Route::post('/adv/customer/payment/{id}', 'paymentSave')->name('vehicle.payment.save');
+        Route::delete('/adv/customer/delete/{id}', 'destroy')->name('payment.delete');
     });
 });
 
