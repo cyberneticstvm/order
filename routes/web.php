@@ -85,6 +85,10 @@ Route::middleware(['web'])->group(function () {
         Route::post('/login', 'signin')->name('user.login');
         Route::get('/logout', 'logout')->name('logout')->middleware('auth');
     });
+
+    Route::controller(HelperController::class)->group(function () {
+        Route::get('/bill/details/{id}', 'billDetails')->name('bill.details');
+    });
 });
 
 Route::middleware(['web', 'auth', 'branch'])->group(function () {

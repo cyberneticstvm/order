@@ -44,6 +44,14 @@ class HelperController extends Controller
         $this->middleware('permission:update-delivered-order', ['only' => ['editDispatechedOrder', 'editDispatechedOrderUpdate']]);
     }
 
+    public function billDetails(string $id)
+    {
+        $order = Order::findOrFail(decrypt($id));
+        if ($order->invoice_number) :
+            return view('backend.extras.invoice-view', compact('order'));
+        endif;
+    }
+
     public function viewArr($id)
     {
         $odetail = OrderDetail::where('order_id', $id)->selectRaw("sph, cyl, axis, `add`, product_id")->get()->toArray();
