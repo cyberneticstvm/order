@@ -14,7 +14,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
-                <img src="./backend/assets/images/logo/devi-logo.png" width='50%' />
+                <img src="/backend/assets/images/logo/devi-logo.png" width='50%' />
             </div>
             <div class="col-12 text-center">
                 Customer Name: {{ $order->name }}<br />
