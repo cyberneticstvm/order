@@ -101,7 +101,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <h4 class="mb-0 text-primary">{{ getInventory(Session::get('branch'), 0, 'store')->sum('balanceQty') }}</h4><span class="f-light"></span>
+                                <h4 class="mb-0 text-primary">{{ getInventory(1, 0, 'store')->sum('balanceQty') }}</h4><span class="f-light"></span>
                             </div>
                         </div>
                     </div>
