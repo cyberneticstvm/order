@@ -58,9 +58,14 @@
                 </svg>
                 <span class="lan-3">Dashboard </span>
             </a>
-            <ul class="sidebar-submenu">
+            <!--<ul class="sidebar-submenu">
                 <li><a class="" href="{{ route('dashboard') }}">Dashboard</a></li>
-            </ul>
+            </ul>-->
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->link(route('dashboard'), 'Dashboard')
+                ->linkIfCan('admin-dashboard', route('ajax.admin.dashboard'), 'Admin Dashboard');
+            }}
         </li>
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">

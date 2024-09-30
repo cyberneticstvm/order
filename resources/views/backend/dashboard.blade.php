@@ -13,7 +13,7 @@
                                 <svg class="stroke-icon">
                                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg></a></li>
-                        <li class="breadcrumb-item">Pages</li>
+                        <li class="breadcrumb-item">Dashboard</li>
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
                 </div>
@@ -95,7 +95,7 @@
                 <div class="card course-box widget-course">
                     <div class="card-body">
                         <div class="course-widget">
-                            <div class="course-icon success">
+                            <div class="course-icon">
                                 <svg class="fill-icon">
                                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#tag') }}"></use>
                                 </svg>

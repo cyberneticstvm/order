@@ -42,6 +42,12 @@ class HelperController extends Controller
         $this->middleware('permission:search-customer', ['only' => ['searchCustomer', 'searchCustomerFetch']]);
         $this->middleware('permission:search-prescription', ['only' => ['searchPrescription', 'searchPrescriptionFetch']]);
         $this->middleware('permission:update-delivered-order', ['only' => ['editDispatechedOrder', 'editDispatechedOrderUpdate']]);
+        $this->middleware('permission:admin-dashboard', ['only' => ['adminDashboard']]);
+    }
+
+    public function adminDashboard()
+    {
+        return view('backend.dashboard-admin');
     }
 
     public function billDetails(string $id)

@@ -148,7 +148,7 @@ $(function () {
     });
 
     $.getJSON('/ajax/chart/order/comparison/'+ 0, function (response) {
-        console.log(response)
+        //console.log(response)
         var ordercomparisonchartoptions = {
             series: [
               {
@@ -304,4 +304,162 @@ $(function () {
           );
           chartordercomparison.render();
     });
+
+    $.getJSON('/ajax/chart/sales/comparison/'+ 0, function (response) {
+      console.log(response)
+      var ordercomparisonchartoptions = {
+          series: [
+            {
+              name: "Total",
+              data: [response.ord[0].total, response.ord[1].total, response.ord[2].total, response.ord[3].total, response.ord[4].total, response.ord[5].total, response.ord[6].total, response.ord[7].total, response.ord[8].total, response.ord[9].total, response.ord[10].total, response.ord[11].total],
+            },
+            {
+              name: "Advance",
+              data: [response.ord[0].advance, response.ord[1].advance, response.ord[2].advance, response.ord[3].advance, response.ord[4].advance, response.ord[5].advance, response.ord[6].advance, response.ord[7].advance, response.ord[8].advance, response.ord[9].advance, response.ord[10].advance, response.ord[11].advance],
+            },
+            {
+              name: "Balance",
+              data: [response.ord[0].balance, response.ord[1].balance, response.ord[2].balance, response.ord[3].balance, response.ord[4].balance, response.ord[5].balance, response.ord[6].balance, response.ord[7].balance, response.ord[8].balance, response.ord[9].balance, response.ord[10].balance, response.ord[11].balance],
+            },
+          ],
+          chart: {
+            type: "bar",
+            height: 270,
+            toolbar: {
+              show: false,
+            },
+          },
+          plotOptions: {
+            bar: {
+              horizontal: false,
+              columnWidth: "50%",
+            },
+          },
+          dataLabels: {
+            enabled: false,
+          },
+          stroke: {
+            show: true,
+            width: 6,
+            colors: ["transparent"],
+          },
+          grid: {
+            show: true,
+            borderColor: "var(--chart-border)",
+            xaxis: {
+              lines: {
+                show: true,
+              },
+            },
+          },
+          colors: ["#FFA941", "var(--theme-deafult)", "#f54132"],
+          xaxis: {
+            categories: [
+            response.ord[0].month,
+            response.ord[1].month,
+            response.ord[2].month,
+            response.ord[3].month,
+            response.ord[4].month,
+            response.ord[5].month,
+            response.ord[6].month,
+            response.ord[7].month,
+            response.ord[8].month,
+            response.ord[9].month,
+            response.ord[10].month,
+            response.ord[11].month],
+            tickAmount: 12,
+            tickPlacement: "between",
+            labels: {
+              style: {
+                fontFamily: "Rubik, sans-serif",
+              },
+            },
+            axisBorder: {
+              show: false,
+            },
+            axisTicks: {
+              show: false,
+            },
+          },
+          yaxis: {
+            min: 0,
+            max: 1000,
+            tickAmount: 5,
+            tickPlacement: "between",
+            labels: {
+              style: {
+                fontFamily: "Rubik, sans-serif",
+              },
+            },
+          },
+          fill: {
+            opacity: 1,
+          },
+          legend: {
+            position: "top",
+            horizontalAlign: "left",
+            fontFamily: "Rubik, sans-serif",
+            fontSize: "14px",
+            fontWeight: 500,
+            labels: {
+              colors: "var(--chart-text-color)",
+            },
+            markers: {
+              width: 6,
+              height: 6,
+              radius: 12,
+            },
+            itemMargin: {
+              horizontal: 10,
+            },
+          },
+          responsive: [
+            {
+              breakpoint: 1366,
+              options: {
+                plotOptions: {
+                  bar: {
+                    columnWidth: "80%",
+                  },
+                },
+                grid: {
+                  padding: {
+                    right: 0,
+                  },
+                },
+              },
+            },
+            {
+              breakpoint: 992,
+              options: {
+                plotOptions: {
+                  bar: {
+                    columnWidth: "70%",
+                  },
+                },
+              },
+            },
+            {
+              breakpoint: 576,
+              options: {
+                plotOptions: {
+                  bar: {
+                    columnWidth: "60%",
+                  },
+                },
+                grid: {
+                  padding: {
+                    right: 5,
+                  },
+                },
+              },
+            },
+          ],
+        };
+      var chartordercomparison = new ApexCharts(
+          document.querySelector("#sales-comparison-chart"),
+          ordercomparisonchartoptions
+        );
+        chartordercomparison.render();
+  });
 });
