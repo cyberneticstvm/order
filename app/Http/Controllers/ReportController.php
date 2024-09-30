@@ -346,8 +346,8 @@ class ReportController extends Controller
         $this->validate($request, [
             'from_date' => 'required',
             'to_date' => 'required',
-            'min' => 'required|numeric',
-            'max' => 'required|numeric',
+            'minimum' => 'required|numeric',
+            'maximum' => 'required|numeric',
         ]);
         try {
             $inputs = [$request->from_date, $request->to_date, $request->branch, $request->category, $request->minimum, $request->maximum];
