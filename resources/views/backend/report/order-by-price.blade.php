@@ -88,7 +88,7 @@
                                 <tbody>
                                     @forelse($data as $key => $item)
                                     <tr>
-                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $key }}</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -100,7 +100,7 @@
                                 <tfoot>
                                     <tr>
                                         <td colspan="4" class="text-end fw-bold">Total</td>
-                                        <td class="text-end fw-bold">{{ number_format($data->sum('amount'), 2) }}</td>
+                                        <td class="text-end fw-bold"></td>
                                     </tr>
                                 </tfoot>
                             </table>
