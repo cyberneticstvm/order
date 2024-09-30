@@ -91,6 +91,32 @@
                     </ul>
                 </div>
             </div>
+            <div class="col-xl-3">
+                <div class="card course-box widget-course">
+                    <div class="card-body">
+                        <div class="course-widget">
+                            <div class="course-icon success">
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#tag') }}"></use>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="mb-0 text-primary">{{ getInventory(Session::get('branch'), 0, 'store')->sum('balanceQty') }}</h4><span class="f-light"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="square-group">
+                        <li class="square-1 warning"></li>
+                        <li class="square-1 primary"></li>
+                        <li class="square-2 warning1"></li>
+                        <li class="square-3 danger"></li>
+                        <li class="square-4 light"></li>
+                        <li class="square-5 warning"></li>
+                        <li class="square-6 success"></li>
+                        <li class="square-7 success"></li>
+                    </ul>
+                </div>
+            </div>
             <div class="col-xl-12">
                 <div class="card visitor-card">
                     <div class="card-header card-no-border">
