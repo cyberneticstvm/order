@@ -355,7 +355,7 @@ class ReportController extends Controller
             $categories = ProductSubcategory::all()->unique('category')->pluck('category', 'category');
             $data = OrderDetail::leftJoin('orders AS o', 'o.id', 'order_details.order_id')->selectRaw("COUNT(order_details.id) AS ocount, order_details.eye")->when($request->branch > 0, function ($q) use ($request) {
                 return $q->where('o.branch_id', $request->branch);
-            })->when($request->category = 'lens', function ($q) use ($request) {
+            })->when($request->category == 'lens', function ($q) use ($request) {
                 return $q->whereIn('order_details.eye', ['re', 'le']);
             })->when($request->category != 'lens', function ($q) use ($request) {
                 return $q->whereIn('order_details.eye', [$request->category]);
