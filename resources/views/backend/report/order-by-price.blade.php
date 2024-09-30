@@ -79,8 +79,6 @@
                                 <thead>
                                     <tr>
                                         <th>SL No</th>
-                                        <th>Branch</th>
-                                        <th>Category</th>
                                         <th>Order Count</th>
                                         <th>Total</th>
                                     </tr>
@@ -89,20 +87,12 @@
                                     @forelse($data as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="text-end"></td>
+                                        <td>{{ $item->ocount }}</td>
+                                        <td class="text-end">{{ $item->amount }}</td>
                                     </tr>
                                     @empty
                                     @endforelse
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="4" class="text-end fw-bold">Total</td>
-                                        <td class="text-end fw-bold"></td>
-                                    </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>
