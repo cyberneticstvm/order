@@ -16,8 +16,8 @@
             <div class="col-12 text-center">
                 <img src="/public/backend/assets/images/logo/devi-logo.png" width='40%' />
             </div>
-            <div class="col-12 mt-3 mx-auto">
-                <table class="table table-bordered table-stripped" width="50%">
+            <div class="col-6 mt-3 justify-content-center">
+                <table class="table table-bordered table-stripped">
                     <thead>
                         <tr>
                             <td>Customer Name</td>
