@@ -9,16 +9,19 @@ use App\Models\Head;
 use App\Models\IncomeExpense;
 use App\Models\LoginLog;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Payment;
 use App\Models\PaymentMode;
 use App\Models\Product;
 use App\Models\ProductDamage;
+use App\Models\ProductSubcategory;
 use App\Models\PurchaseDetail;
 use App\Models\SalesReturn;
 use App\Models\Transfer;
 use App\Models\TransferDetails;
 use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -41,6 +44,7 @@ class ReportController extends Controller
         $this->middleware('permission:report-product-transfer', ['only' => ['productTransfer', 'fetchProductTransfer']]);
         $this->middleware('permission:report-purchase', ['only' => ['purchase', 'fetchPurchase']]);
         $this->middleware('permission:export-order', ['only' => ['exportOrder']]);
+        $this->middleware('permission:report-order-by-price', ['only' => ['orderByPrice', 'orderByPriceFetch']]);
 
         $this->middleware(function ($request, $next) {
             $brs = Branch::selectRaw("0 as id, 'All / Main Branch' as name");
@@ -326,5 +330,39 @@ class ReportController extends Controller
         $branches = $this->branches;
         $sales = [];
         return view('backend.report.order', compact('sales', 'inputs', 'branches'));
+    }
+
+    function orderByPrice()
+    {
+        $inputs = [date('Y-m-d'), date('Y-m-d'), Session::get('branch'), $cat = 'frame', $min = 1, $max = 1000];
+        $data = collect();
+        $branches = $this->branches;
+        $categories = ProductSubcategory::all()->unique('category')->pluck('category', 'category');
+        return view('backend.report.order-by-price', compact('data', 'inputs', 'categories', 'branches'));
+    }
+
+    function orderByPriceFetch(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required',
+            'to_date' => 'required',
+            'min' => 'required|numeric',
+            'max' => 'required|numeric',
+        ]);
+        try {
+            $inputs = [$request->from_date, $request->to_date, $request->branch, $request->category, $request->min, $request->max];
+            $branches = $this->branches;
+            $categories = ProductSubcategory::all()->unique('category')->pluck('category', 'category');
+            $data = OrderDetail::leftJoin('orders AS o', 'o.id', 'order_details.order_id')->selectRaw("COUNT(order_details.id) AS ocount, order_details.eye")->when($request->branch > 0, function ($q) use ($request) {
+                return $q->where('o.branch_id', $request->branch);
+            })->when($request->category = 'lens', function ($q) use ($request) {
+                return $q->whereIn('order_details.eye', ['re', 'le']);
+            })->when($request->category != 'lens', function ($q) use ($request) {
+                return $q->whereIn('order_details.eye', [$request->category]);
+            })->groupBy("order_details.eye")->get();
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
+        return view('backend.report.order-by-price', compact('data', 'inputs', 'categories', 'branches'));
     }
 }
