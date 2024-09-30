@@ -52,11 +52,11 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">Min. Price.</label>
-                                    {{ html()->number($name = 'min', ($inputs[4]) ?? old('min'))->class('form-control')->placeholder('0') }}
+                                    {{ html()->number($name = 'minimum', $value = ($inputs[4]) ?? old('minimum'), '', '', '')->class('form-control')->placeholder('0.00') }}
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">Max. Price.</label>
-                                    {{ html()->number($name = 'max', ($inputs[5]) ?? old('max'))->class('form-control')->placeholder('0') }}
+                                    {{ html()->number($name = 'maximum', $value = ($inputs[5]) ?? old('maximum'), '', '', '')->class('form-control')->placeholder('0.00') }}
                                 </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
@@ -80,6 +80,7 @@
                                     <tr>
                                         <th>SL No</th>
                                         <th>Order Count</th>
+                                        <th>Category</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
@@ -88,6 +89,7 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->ocount }}</td>
+                                        <td>{{ $item->eye }}</td>
                                         <td class="text-end">{{ $item->amount }}</td>
                                     </tr>
                                     @empty
