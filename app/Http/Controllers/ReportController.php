@@ -335,10 +335,9 @@ class ReportController extends Controller
     function orderByPrice()
     {
         $inputs = [date('Y-m-d'), date('Y-m-d'), Session::get('branch'), $cat = 'frame', $min = 1, $max = 1000];
-        $data = collect();
         $branches = $this->branches;
         $categories = ProductSubcategory::all()->unique('category')->pluck('category', 'category');
-        return view('backend.report.order-by-price', compact('data', 'inputs', 'categories', 'branches'));
+        return view('backend.report.order-by-price', compact('inputs', 'categories', 'branches'));
     }
 
     function orderByPriceFetch(Request $request)
@@ -349,22 +348,22 @@ class ReportController extends Controller
             'min' => 'required|numeric',
             'max' => 'required|numeric',
         ]);
-        try {
-            $inputs = [$request->from_date, $request->to_date, $request->branch, $request->category, $request->min, $request->max];
-            $branches = $this->branches;
-            $categories = ProductSubcategory::all()->unique('category')->pluck('category', 'category');
-            $data = OrderDetail::leftJoin('orders AS o', 'o.id', 'order_details.order_id')->selectRaw("SUM(order_details.qty) AS ocount, SUM(order_details.total) AS amount, order_details.eye")->when($request->branch > 0, function ($q) use ($request) {
-                return $q->where('o.branch_id', $request->branch);
-            })->when($request->category == 'lens', function ($q) use ($request) {
-                return $q->whereIn('order_details.eye', ['re', 'le']);
-            })->when($request->category != 'lens', function ($q) use ($request) {
-                return $q->whereIn('order_details.eye', [$request->category]);
-            })->groupBy("order_details.eye")->get();
-            dd($data);
-            die;
-        } catch (Exception $e) {
-            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
-        }
-        return view('backend.report.order-by-price', compact('data', 'inputs', 'categories', 'branches'));
+        //try {
+        $inputs = [$request->from_date, $request->to_date, $request->branch, $request->category, $request->min, $request->max];
+        $branches = $this->branches;
+        $categories = ProductSubcategory::all()->unique('category')->pluck('category', 'category');
+        $records = OrderDetail::leftJoin('orders AS o', 'o.id', 'order_details.order_id')->selectRaw("SUM(order_details.qty) AS ocount, SUM(order_details.total) AS amount, order_details.eye")->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('o.branch_id', $request->branch);
+        })->when($request->category == 'lens', function ($q) use ($request) {
+            return $q->whereIn('order_details.eye', ['re', 'le']);
+        })->when($request->category != 'lens', function ($q) use ($request) {
+            return $q->whereIn('order_details.eye', [$request->category]);
+        })->groupBy("order_details.eye")->get();
+        // dd($records);
+        // die;
+        //} catch (Exception $e) {
+        //return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        //}
+        return view('backend.report.order-by-price', compact('records', 'inputs', 'categories', 'branches'));
     }
 }

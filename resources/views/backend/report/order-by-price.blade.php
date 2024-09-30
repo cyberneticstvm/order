@@ -84,7 +84,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($data as $key => $item)
+                                    @forelse($records as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->ocount }}</td>
@@ -93,6 +93,12 @@
                                     @empty
                                     @endforelse
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" class="text-end fw-bold">Total</td>
+                                        <td class="text-end fw-bold">{{ number_format($records->sum('amount'), 2) }}</td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
