@@ -35,6 +35,10 @@
                             <td>Bill Amount</td>
                             <td>{{ $order->invoice_total  }}</td>
                         </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td>{{ $order->place  }}</td>
+                        </tr>
                     </thead>
                 </table>
             </div>
