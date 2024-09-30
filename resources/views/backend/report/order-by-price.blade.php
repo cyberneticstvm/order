@@ -80,6 +80,7 @@
                                     <tr>
                                         <th>SL No</th>
                                         <th>Product</th>
+                                        <th>Unit Price</th>
                                         <th>Order Count</th>
                                         <th>Category</th>
                                         <th>Total</th>
@@ -90,6 +91,7 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->product->name }}</td>
+                                        <td>{{ $item->product->selling_price }}</td>
                                         <td>{{ $item->ocount }}</td>
                                         <td>{{ $item->eye }}</td>
                                         <td class="text-end">{{ $item->amount }}</td>
