@@ -383,7 +383,7 @@ $(function () {
           },
           yaxis: {
             min: 0,
-            max: 5000000,
+            max: 2500000,
             tickAmount: 5,
             tickPlacement: "between",
             labels: {
