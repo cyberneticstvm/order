@@ -360,6 +360,8 @@ class ReportController extends Controller
             })->when($request->category != 'lens', function ($q) use ($request) {
                 return $q->whereIn('order_details.eye', [$request->category]);
             })->groupBy("order_details.eye")->get();
+            dd($data);
+            die;
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
