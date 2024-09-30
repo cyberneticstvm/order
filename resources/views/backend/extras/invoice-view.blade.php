@@ -16,11 +16,27 @@
             <div class="col-12 text-center">
                 <img src="/public/backend/assets/images/logo/devi-logo.png" width='40%' />
             </div>
-            <div class="col-12 mt-3 fw-bold">
-                Customer Name: {{ $order->name }}<br />
-                Bill Number: {{ $order->ino() }}<br />
-                Bill Date: {{ $order->invoice_generated_at->format('d.M.Y h:i') }}<br />
-                Bill Amount: {{ $order->invoice_total }}<br />
+            <div class="col-12 text-center mt-3">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <td>Customer Name</td>
+                            <td>{{ $order->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Bill Number</td>
+                            <td>{{ $order->ino() }}</td>
+                        </tr>
+                        <tr>
+                            <td>Bill Date</td>
+                            <td>{{ $order->invoice_generated_at->format('d.M.Y h:i a') }}</td>
+                        </tr>
+                        <tr>
+                            <td>Bill Amount</td>
+                            <td>{{ $order->invoice_total  }}</td>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
