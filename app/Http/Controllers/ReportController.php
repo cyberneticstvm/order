@@ -359,7 +359,7 @@ class ReportController extends Controller
                 return $q->whereIn('order_details.eye', ['re', 'le']);
             })->when($request->category != 'lens', function ($q) use ($request) {
                 return $q->whereIn('order_details.eye', [$request->category]);
-            })->groupBy("order_details.eye")->get();
+            })->whereBetween('o.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->whereNull('order_details.return')->groupBy("order_details.eye")->get();
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
