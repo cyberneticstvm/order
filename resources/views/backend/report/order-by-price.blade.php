@@ -88,7 +88,7 @@
                                 <tbody>
                                     @forelse($data as $key => $item)
                                     <tr>
-                                        <td>{{ $key }}</td>
+                                        <td>{{ $key + 1 }}</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
