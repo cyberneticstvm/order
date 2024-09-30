@@ -311,15 +311,15 @@ $(function () {
           series: [
             {
               name: "Total",
-              data: [response.ord[0].total, response.ord[1].total, response.ord[2].total, response.ord[3].total, response.ord[4].total, response.ord[5].total, response.ord[6].total, response.ord[7].total, response.ord[8].total, response.ord[9].total, response.ord[10].total, response.ord[11].total],
+              data: [response.tot[0].total, response.tot[1].total, response.tot[2].total, response.tot[3].total, response.tot[4].total, response.tot[5].total, response.tot[6].total, response.tot[7].total, response.tot[8].total, response.tot[9].total, response.tot[10].total, response.tot[11].total],
             },
             {
               name: "Advance",
-              data: [response.ord[0].advance, response.ord[1].advance, response.ord[2].advance, response.ord[3].advance, response.ord[4].advance, response.ord[5].advance, response.ord[6].advance, response.ord[7].advance, response.ord[8].advance, response.ord[9].advance, response.ord[10].advance, response.ord[11].advance],
+              data: [response.adv[0].advance, response.adv[1].advance, response.adv[2].advance, response.adv[3].advance, response.adv[4].advance, response.adv[5].advance, response.adv[6].advance, response.adv[7].advance, response.adv[8].advance, response.adv[9].advance, response.adv[10].advance, response.adv[11].advance],
             },
             {
               name: "Balance",
-              data: [response.ord[0].balance, response.ord[1].balance, response.ord[2].balance, response.ord[3].balance, response.ord[4].balance, response.ord[5].balance, response.ord[6].balance, response.ord[7].balance, response.ord[8].balance, response.ord[9].balance, response.ord[10].balance, response.ord[11].balance],
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             },
           ],
           chart: {
