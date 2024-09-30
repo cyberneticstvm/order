@@ -12,11 +12,11 @@
 <body>
 
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-12 text-center">
                 <img src="/public/backend/assets/images/logo/devi-logo.png" width='40%' />
             </div>
-            <div class="col-6 mt-3 justify-content-center">
+            <div class="col-6 mt-3">
                 <table class="table table-bordered table-stripped">
                     <thead>
                         <tr>
