@@ -18,7 +18,7 @@
             </div>
             <div class="col-12 text-center">
                 Customer Name: {{ $order->name }}<br />
-                Bill Number: {{ $order->ino }}<br />
+                Bill Number: {{ $order->ino() }}<br />
                 Bill Date: {{ $order->invoice_generated_at->format('d.M.Y h:i') }}<br />
                 Bill Amount: {{ $order->invoice_total }}<br />
             </div>
