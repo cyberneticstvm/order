@@ -14,9 +14,9 @@
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
-                <img src="/public/backend/assets/images/logo/devi-logo.png" width='50%' />
+                <img src="/public/backend/assets/images/logo/devi-logo.png" width='40%' />
             </div>
-            <div class="col-12 text-center">
+            <div class="col-12 mt-3 fw-bold">
                 Customer Name: {{ $order->name }}<br />
                 Bill Number: {{ $order->ino() }}<br />
                 Bill Date: {{ $order->invoice_generated_at->format('d.M.Y h:i') }}<br />
