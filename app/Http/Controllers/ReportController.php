@@ -353,13 +353,13 @@ class ReportController extends Controller
             $inputs = [$request->from_date, $request->to_date, $request->branch, $request->category, $request->minimum, $request->maximum];
             $branches = $this->branches;
             $categories = ProductSubcategory::all()->unique('category')->pluck('category', 'category');
-            $records = OrderDetail::leftJoin('orders AS o', 'o.id', 'order_details.order_id')->selectRaw("SUM(order_details.qty) AS ocount, SUM(order_details.total) AS amount, order_details.eye")->when($request->branch > 0, function ($q) use ($request) {
+            $records = OrderDetail::leftJoin('orders AS o', 'o.id', 'order_details.order_id')->selectRaw("SUM(order_details.qty) AS ocount, SUM(order_details.total) AS amount, order_details.eye, order_details.product_id")->when($request->branch > 0, function ($q) use ($request) {
                 return $q->where('o.branch_id', $request->branch);
             })->when($request->category == 'lens', function ($q) use ($request) {
                 return $q->whereIn('order_details.eye', ['re', 'le']);
             })->when($request->category != 'lens', function ($q) use ($request) {
                 return $q->whereIn('order_details.eye', [$request->category]);
-            })->whereBetween('o.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->whereNull('order_details.return')->groupBy("order_details.eye")->get();
+            })->whereBetween('o.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->whereNull('order_details.return')->groupBy('order_details.eye', 'order_details.product_id')->get();
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }

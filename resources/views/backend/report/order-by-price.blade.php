@@ -79,6 +79,7 @@
                                 <thead>
                                     <tr>
                                         <th>SL No</th>
+                                        <th>Product</th>
                                         <th>Order Count</th>
                                         <th>Category</th>
                                         <th>Total</th>
@@ -88,6 +89,7 @@
                                     @forelse($records as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
+                                        <td>{{ $item->product->name }}</td>
                                         <td>{{ $item->ocount }}</td>
                                         <td>{{ $item->eye }}</td>
                                         <td class="text-end">{{ $item->amount }}</td>
@@ -97,7 +99,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="3" class="text-end fw-bold">Total</td>
+                                        <td colspan="4" class="text-end fw-bold">Total</td>
                                         <td class="text-end fw-bold">{{ number_format($records->sum('amount'), 2) }}</td>
                                     </tr>
                                 </tfoot>
