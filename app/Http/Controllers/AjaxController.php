@@ -387,7 +387,7 @@ class AjaxController extends Controller
         $bid = ($bid > 0) ? $bid : Session::get('branch');
         $month = ($month > 0) ? $month : date('m');
         $year = ($year > 0) ? $year : date('Y');
-        $order = Order::leftJoin('payments as p', 'orders.id', 'p.order_id')->selectRaw("IFNULL(SUM(orders.invoice_total), 0) AS invtot, IFNULL(SUM(p.amount), 0) AS advance, IFNULL(SUM(orders.invoice_total) - SUM(p.amount), 0) AS balance")->whereMonth('orders.created_at', $month)->whereYear('orders.created_at', $year)->where('orders.branch_id', $bid)->first();
+        $order = Order::leftJoin('payments as p', 'orders.id', 'p.order_id')->selectRaw("IFNULL(SUM(orders.invoice_total), 0) AS invtot, IFNULL(SUM(p.amount), 0) AS advance, IFNULL(SUM(orders.invoice_total) - SUM(p.amount), 0) AS balance")->whereMonth('orders.created_at', Carbon::parse($month)->month)->whereYear('orders.created_at', $year)->where('orders.branch_id', $bid)->first();
         return json_encode($order);
     }
 

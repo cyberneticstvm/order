@@ -29,7 +29,7 @@
                             <h5 class="m-0">Sales Numbers - <span class="occbname">{{ branches()->where('id', Session::get('branch'))->first()->name ?? '' }}</span></h5>
                             <div class="dropdown">
                                 <label class="form-label">Month</label>
-                                {{ html()->select($name = 'month', allMonths()->pluck('name', 'id'), $value = date('m'))->class('form-control selChangeChart')->attribute('id', 'selChangeMonth')->placeholder('Select') }}
+                                {{ html()->select($name = 'month', allMonths()->pluck('name', 'name'), $value = date('F'))->class('form-control selChangeChart')->attribute('id', 'selChangeMonth')->placeholder('Select') }}
                             </div>
                             <div class="dropdown">
                                 <label class="form-label">Year</label>
