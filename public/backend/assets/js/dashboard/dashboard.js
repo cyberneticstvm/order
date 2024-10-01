@@ -160,8 +160,7 @@ $(function () {
     getSalesComparisonData(0, 0, 0);      
 
 
-    $(".selChangeChart").change(function(e){
-      e.preventDefault();
+    $(".selChangeChart").change(function(){
         let branch = $("#current_branch").val();
         let month = $("#selChangeMonth").val();
         let year = $("#selChangeYear").val();
@@ -178,10 +177,10 @@ $(function () {
         var chart = new ApexCharts(
           document.querySelector("#sales-comparison-chart"),
           options
-        );
-        
+        );        
         chart.render();
-        getSalesComparisonData(branch, month, year);
+
+        getSalesComparisonData(branch, month, year)
     });
 });
 
