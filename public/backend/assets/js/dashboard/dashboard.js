@@ -170,9 +170,10 @@ $(function () {
 
 function getSalesComparisonData(branch, month, year){
   $.getJSON('/ajax/chart/sales/comparison/0/0/0', function (response) {
+    console.log(response.data[0].advance)
   var optionsprofit = {
     labels: ["Advance", "Balance"],
-    series: [response.data[0].advance, response.data[0].balance],
+    series: [parseInt(response.data[0].advance), parseInt(response.data[0].balance)],
     chart: {
       type: "donut",
       height: 300,
