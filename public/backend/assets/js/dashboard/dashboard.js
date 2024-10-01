@@ -155,12 +155,27 @@ $(function () {
             ordercomparisonchartoptions
           );
           chartordercomparison.render();
+    });   
+
+  getChartData(0, 0, 0);
+
+    $(".selChangeChart").change(function(e){
+        let branch = $("#current_branch").val();
+        let month = $("#selChangeMonth").val();
+        let year = $("#selChangeYear").val();
+        getChartData(branch, month, year);        
     });
+});
 
-    
 
-    $.getJSON('/ajax/chart/sales/comparison/0/0/0', function (response) {
-      //console.log(response.invtot)
+function getChartData(branch, month, year){
+  $.ajax({
+    url: '/ajax/chart/sales/comparison/'+branch+'/'+month+'/'+year,
+    type: 'GET',
+    dataType: 'json',
+    async: true,
+    cache: false,
+    success: function (response) {
       var options = {
         labels: ["Advance", "Balance"],
         series: [parseFloat(response.advance), parseFloat(response.balance)],
@@ -284,37 +299,14 @@ $(function () {
           },
         ],
       };
-    var salescomparisonchart = new ApexCharts(
-      document.querySelector("#sales-comparison-chart"),
-      options
-    );
-    salescomparisonchart.render();
-  });      
-
-
-    $(".selChangeChart").change(function(e){
-        let branch = $("#current_branch").val();
-        let month = $("#selChangeMonth").val();
-        let year = $("#selChangeYear").val();
-        $.ajax({
-          url: '/ajax/chart/sales/comparison/'+branch+'/'+month+'/'+year,
-          type: 'GET',
-          dataType: 'json',
-          async: true,
-          cache: false,
-          //beforeSend: function() { openLoadingDialog('#container'); },
-          success: function (response) {
-              //closeLoadingDialog('#container');
-              console.log(response.invtot)
-              var salescomparisonchart = new ApexCharts(
-                document.querySelector("#sales-comparison-chart"),
-                options
-              );
-              salescomparisonchart.render();
-          }
-      });
-    });
-});
+      var salescomparisonchart = new ApexCharts(
+        document.querySelector("#sales-comparison-chart"),
+        options
+      );
+      salescomparisonchart.render();  
+    }
+  });
+}
 
 
   
