@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Crypt;
 
 class HelperController extends Controller
 {
@@ -52,7 +53,7 @@ class HelperController extends Controller
 
     public function billDetails(string $id)
     {
-        $order = Order::findOrFail(decrypt($id));
+        $order = Order::findOrFail(Crypt::encryptString($id));
         if ($order->invoice_number) :
             return view('backend.extras.invoice-view', compact('order'));
         endif;

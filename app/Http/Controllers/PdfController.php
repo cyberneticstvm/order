@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Session;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Crypt;
 
 class PdfController extends Controller
 {
@@ -154,7 +155,7 @@ class PdfController extends Controller
     {
         $order = Order::findOrFail(decrypt($id));
         if ($order->invoice_number) :
-            $oid = encrypt($order->id);
+            $oid = Crypt::decryptString($order->id);
             $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://order.speczone.net/bill/details/' . $oid));
             $nums = $this->NumberintoWords($order->invoice_total);
             $pdf = PDF::loadView('/backend/pdf/store-order-invoice', compact('order', 'qrcode', 'nums'));
