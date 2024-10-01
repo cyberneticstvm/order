@@ -52,7 +52,7 @@ class HelperController extends Controller
 
     public function billDetails(string $id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::findOrFail(decrypt($id));
         if ($order->invoice_number) :
             return view('backend.extras.invoice-view', compact('order'));
         endif;
