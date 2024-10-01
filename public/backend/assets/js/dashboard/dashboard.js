@@ -169,14 +169,17 @@ $(function () {
               height: 300,
               type: 'donut',
           },
-          dataLabels: {
-              enabled: false
-          },
           series: [],
           noData: {
             text: 'Loading...'
           }
         }
+        var chart = new ApexCharts(
+          document.querySelector("#sales-comparison-chart"),
+          options
+        );
+        
+        chart.render();
         getSalesComparisonData(branch, month, year);
     });
 });
@@ -307,8 +310,6 @@ function getSalesComparisonData(branch, month, year){
         },
       ],
     };
-    if (window.chart)
-      window.chart.destroy();
   var chart = new ApexCharts(
     document.querySelector("#sales-comparison-chart"),
     options
