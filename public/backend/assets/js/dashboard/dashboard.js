@@ -157,7 +157,7 @@ $(function () {
           chartordercomparison.render();
     });   
 
-  getChartData(0, 'October', 0);
+  getChartData(0, 0, 0);
 
     $(".selChangeChart").change(function(e){
         let branch = $("#current_branch").val();
