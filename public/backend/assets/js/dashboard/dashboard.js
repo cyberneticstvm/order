@@ -163,16 +163,13 @@ $(function () {
     $(".selChangeChart").change(function(){
       var options = {
         chart: {
-            height: 350,
+            height: 300,
             type: 'donut',
         },
         dataLabels: {
             enabled: false
         },
         series: [],
-        title: {
-            text: 'Ajax Example',
-        },
         noData: {
           text: 'Loading...'
         }
