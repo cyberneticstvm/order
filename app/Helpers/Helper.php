@@ -14,6 +14,7 @@ use App\Models\Head;
 use App\Models\IncomeExpense;
 use App\Models\LabOrder;
 use App\Models\LabOrderNote;
+use App\Models\Month;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\OrderHistory;
@@ -37,6 +38,11 @@ use Illuminate\Support\Facades\Storage;
 function apiSecret()
 {
     return 'fdjsvsgdf4dhgf687f4bg54g4hf787';
+}
+
+function allMonths()
+{
+    return Month::all();
 }
 
 function settings()

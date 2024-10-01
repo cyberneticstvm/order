@@ -1,152 +1,4 @@
 $(function () {
-    $.getJSON('/ajax/chart/order', function (response) {
-        //console.log(response)
-        var orderoptions = {
-            series: [
-                {
-                    name: "Order Count",
-                    type: "column",
-                    data: [response[0].order_count, response[1].order_count, response[2].order_count, response[3].order_count, response[4].order_count, response[5].order_count, response[6].order_count, response[7].order_count, response[8].order_count, response[9].order_count, response[10].order_count, response[11].order_count],
-                },
-                {
-                    name: "Order Count",
-                    type: "line",
-                    data: [response[0].order_count, response[1].order_count, response[2].order_count, response[3].order_count, response[4].order_count, response[5].order_count, response[6].order_count, response[7].order_count, response[8].order_count, response[9].order_count, response[10].order_count, response[11].order_count],
-                },
-            ],
-            chart: {
-                height: 300,
-                type: "line",
-                stacked: false,
-                toolbar: {
-                    show: false,
-                },
-                dropShadow: {
-                    enabled: true,
-                    enabledOnSeries: [1],
-                    top: 0,
-                    left: 0,
-                    blur: 15,
-                    color: "var(--theme-deafult)",
-                    opacity: 0.3,
-                },
-            },
-            stroke: {
-                width: [0, 3],
-                curve: "smooth",
-            },
-            dataLabels: {
-                enabled: true,
-                enabledOnSeries: [1],
-            },
-            colors: ["rgba(170, 175, 203, 0.2)", "var(--theme-deafult)"],
-            grid: {
-                borderColor: "var(--chart-border)",
-            },
-            plotOptions: {
-                bar: {
-                    columnWidth: "20%",
-                },
-            },
-
-            fill: {
-                type: ["solid", "gradient"],
-                gradient: {
-                    shade: "light",
-                    type: "vertical",
-                    shadeIntensity: 0.5,
-                    gradientToColors: ["var(--theme-deafult)", "#d867ac"],
-                    opacityFrom: 0.8,
-                    opacityTo: 0.8,
-                    colorStops: [
-                        {
-                            offset: 0,
-                            color: "#d867ac",
-                            opacity: 1,
-                        },
-                        {
-                            offset: 30,
-                            color: "#d867ac",
-                            opacity: 1,
-                        },
-                        {
-                            offset: 50,
-                            color: "var(--theme-deafult)",
-                            opacity: 1,
-                        },
-                        {
-                            offset: 80,
-                            color: "var(--theme-deafult)",
-                            opacity: 1,
-                        },
-                        {
-                            offset: 100,
-                            color: "var(--theme-deafult)",
-                            opacity: 1,
-                        },
-                    ],
-                },
-            },
-            labels: [
-                response[0].month,
-                response[1].month,
-                response[2].month,
-                response[3].month,
-                response[4].month,
-                response[5].month,
-                response[6].month,
-                response[7].month,
-                response[8].month,
-                response[9].month,
-                response[10].month,
-                response[11].month,
-            ],
-            markers: {
-                size: 0,
-            },
-            yaxis: {
-                min: 0,
-                //max: 20,
-                tickAmount: 1,
-                labels: {
-                    formatter: function (val) {
-                        return val + "#";
-                    },
-                    style: {
-                        fontSize: "12px",
-                        fontFamily: "Rubik, sans-serif",
-                        colors: "var(--chart-text-color)",
-                    },
-                },
-            },
-            xaxis: {
-                tooltip: {
-                    enabled: false,
-                },
-                labels: {
-                    style: {
-                        fontSize: "10px",
-                        fontFamily: "Rubik, sans-serif",
-                        colors: "var(--chart-text-color)",
-                    },
-                },
-            },
-            tooltip: {
-                shared: true,
-                intersect: false,
-            },
-            legend: {
-                show: false,
-            },
-        };
-
-        var orderchart = new ApexCharts(
-            document.querySelector("#order-chart"),
-            orderoptions
-        );
-        orderchart.render();
-    });
-
     $.getJSON('/ajax/chart/order/comparison/'+ 0, function (response) {
         //console.log(response)
         var ordercomparisonchartoptions = {
@@ -305,161 +157,146 @@ $(function () {
           chartordercomparison.render();
     });
 
-    $.getJSON('/ajax/chart/sales/comparison/'+ 0, function (response) {
-      console.log(response)
-      var ordercomparisonchartoptions = {
-          series: [
-            {
-              name: "Total",
-              data: [response.tot[0].total, response.tot[1].total, response.tot[2].total, response.tot[3].total, response.tot[4].total, response.tot[5].total, response.tot[6].total, response.tot[7].total, response.tot[8].total, response.tot[9].total, response.tot[10].total, response.tot[11].total],
-            },
-            {
-              name: "Advance",
-              data: [response.adv[0].advance, response.adv[1].advance, response.adv[2].advance, response.adv[3].advance, response.adv[4].advance, response.adv[5].advance, response.adv[6].advance, response.adv[7].advance, response.adv[8].advance, response.adv[9].advance, response.adv[10].advance, response.adv[11].advance],
-            },
-            {
-              name: "Balance",
-              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            },
-          ],
-          chart: {
-            type: "bar",
-            height: 270,
-            toolbar: {
-              show: false,
-            },
-          },
-          plotOptions: {
-            bar: {
-              horizontal: false,
-              columnWidth: "50%",
-            },
-          },
-          dataLabels: {
-            enabled: false,
-          },
-          stroke: {
-            show: true,
-            width: 6,
-            colors: ["transparent"],
-          },
-          grid: {
-            show: true,
-            borderColor: "var(--chart-border)",
-            xaxis: {
-              lines: {
-                show: true,
-              },
-            },
-          },
-          colors: ["#FFA941", "var(--theme-deafult)", "#f54132"],
-          xaxis: {
-            categories: [
-            response.tot[0].month,
-            response.tot[1].month,
-            response.tot[2].month,
-            response.tot[3].month,
-            response.tot[4].month,
-            response.tot[5].month,
-            response.tot[6].month,
-            response.tot[7].month,
-            response.tot[8].month,
-            response.tot[9].month,
-            response.tot[10].month,
-            response.tot[11].month],
-            tickAmount: 12,
-            tickPlacement: "between",
-            labels: {
-              style: {
-                fontFamily: "Rubik, sans-serif",
-              },
-            },
-            axisBorder: {
-              show: false,
-            },
-            axisTicks: {
-              show: false,
-            },
-          },
-          yaxis: {
-            min: 0,
-            max: 2500000,
-            tickAmount: 5,
-            tickPlacement: "between",
-            labels: {
-              style: {
-                fontFamily: "Rubik, sans-serif",
-              },
-            },
-          },
-          fill: {
-            opacity: 1,
-          },
-          legend: {
-            position: "top",
-            horizontalAlign: "left",
-            fontFamily: "Rubik, sans-serif",
-            fontSize: "14px",
-            fontWeight: 500,
-            labels: {
-              colors: "var(--chart-text-color)",
-            },
-            markers: {
-              width: 6,
-              height: 6,
-              radius: 12,
-            },
-            itemMargin: {
-              horizontal: 10,
-            },
-          },
-          responsive: [
-            {
-              breakpoint: 1366,
-              options: {
-                plotOptions: {
-                  bar: {
-                    columnWidth: "80%",
-                  },
-                },
-                grid: {
-                  padding: {
-                    right: 0,
-                  },
-                },
-              },
-            },
-            {
-              breakpoint: 992,
-              options: {
-                plotOptions: {
-                  bar: {
-                    columnWidth: "70%",
-                  },
-                },
-              },
-            },
-            {
-              breakpoint: 576,
-              options: {
-                plotOptions: {
-                  bar: {
-                    columnWidth: "60%",
-                  },
-                },
-                grid: {
-                  padding: {
-                    right: 5,
-                  },
-                },
-              },
-            },
-          ],
-        };
-      var chartordercomparison = new ApexCharts(
-          document.querySelector("#sales-comparison-chart"),
-          ordercomparisonchartoptions
-        );
-        chartordercomparison.render();
-  });
+      getSalesComparisonData(0, 0, 0);      
+
+
+    $(".selChangeChart").change(function(){
+      let branch = $("#current_branch").val();
+      let month = $("#selChangeMonth").val();
+      let year = $("#selChangeYear").val();
+      getSalesComparisonData(branch, month, year);
+    });
 });
+
+function getSalesComparisonData(branch, month, year){
+  $.getJSON('/ajax/chart/sales/comparison/0/0/0', function (response) {
+  var optionsprofit = {
+    labels: ["Advance", "Balance"],
+    series: [response.data[0].advance, response.data[0].balance],
+    chart: {
+      type: "donut",
+      height: 300,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    legend: {
+      position: "bottom",
+      fontSize: "14px",
+      fontFamily: "Rubik, sans-serif",
+      fontWeight: 500,
+      labels: {
+        colors: ["var(--chart-text-color)"],
+      },
+      markers: {
+        width: 6,
+        height: 6,
+      },
+      itemMargin: {
+        horizontal: 7,
+        vertical: 0,
+      },
+    },
+    stroke: {
+      width: 10,
+      colors: ["var(--light2)"],
+    },
+    plotOptions: {
+      pie: {
+        expandOnClick: false,
+        donut: {
+          size: "83%",
+          labels: {
+            show: true,
+            name: {
+              offsetY: 4,
+            },
+            total: {
+              show: true,
+              fontSize: "20px",
+              fontFamily: "Rubik, sans-serif",
+              fontWeight: 500,
+              label: "₹ "+ response.data[0].invtot,
+              formatter: () => "Total Sales",
+            },
+          },
+        },
+      },
+    },
+    states: {
+      normal: {
+        filter: {
+          type: "none",
+        },
+      },
+      hover: {
+        filter: {
+          type: "none",
+        },
+      },
+      active: {
+        allowMultipleDataPointsSelection: false,
+        filter: {
+          type: "none",
+        },
+      },
+    },
+    colors: ["#54BA4A", "#FFA941"],
+    responsive: [
+      {
+        breakpoint: 1630,
+        options: {
+          chart: {
+            height: 360,
+          },
+        },
+      },
+      {
+        breakpoint: 1584,
+        options: {
+          chart: {
+            height: 400,
+          },
+        },
+      },
+      {
+        breakpoint: 1473,
+        options: {
+          chart: {
+            height: 250,
+          },
+        },
+      },
+      {
+        breakpoint: 1425,
+        options: {
+          chart: {
+            height: 270,
+          },
+        },
+      },
+      {
+        breakpoint: 1400,
+        options: {
+          chart: {
+            height: 320,
+          },
+        },
+      },
+      {
+        breakpoint: 480,
+        options: {
+          chart: {
+            height: 250,
+          },
+        },
+      },
+    ],
+  };
+  var chartprofit = new ApexCharts(
+    document.querySelector("#sales-comparison-chart"),
+    optionsprofit
+  );
+  chartprofit.render();
+});
+}

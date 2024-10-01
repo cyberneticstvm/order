@@ -22,21 +22,18 @@
     </div>
     <div class="container-fluid">
         <div class="row widget-grid">
-            <div class="col-xl-12">
+            <div class="col-xl-6">
                 <div class="card visitor-card">
                     <div class="card-header card-no-border">
                         <div class="header-top">
-                            <h5 class="m-0">Sales Chart - <span class="occbname">{{ branches()->where('id', Session::get('branch'))->first()->name ?? '' }}</span></h5>
-                            <div class="card-header-right-icon">
-                                <div class="dropdown icon-dropdown">
-                                    <button class="btn dropdown-toggle" id="visitorButton" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more-alt"></i></button>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="visitorButton">
-                                        @forelse(userBranches()->where('type', 'branch') as $key => $item)
-                                        <a class="dropdown-item" href="{{ route('switch.branch', encrypt($item->id)) }}">{{ $item->name }}</a>
-                                        @empty
-                                        @endforelse
-                                    </div>
-                                </div>
+                            <h5 class="m-0">Sales Numbers - <span class="occbname">{{ branches()->where('id', Session::get('branch'))->first()->name ?? '' }}</span></h5>
+                            <div class="dropdown">
+                                <label class="form-label">Month</label>
+                                {{ html()->select($name = 'month', allMonths()->pluck('name', 'id'), $value = date('m'))->class('form-control selChangeChart')->attribute('id', 'selChangeMonth')->placeholder('Select') }}
+                            </div>
+                            <div class="dropdown">
+                                <label class="form-label">Year</label>
+                                {{ html()->select($name = 'year', array('2024' => '2024', '2025' => '2025', '2026' => '2026'), $value = date('Y'))->attribute('id', 'selChangeYear')->class('form-control selChangeChart')->placeholder('Select') }}
                             </div>
                         </div>
                     </div>

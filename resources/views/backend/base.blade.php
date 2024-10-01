@@ -44,6 +44,7 @@
 </head>
 
 <body>
+  <input type="hidden" name="current_branch" id="current_branch" value="{{ Session::get('branch') ?? 0 }}" />
   <!-- loader starts-->
   <div class="loader-wrapper">
     <div class="loader-index"> <span></span></div>
