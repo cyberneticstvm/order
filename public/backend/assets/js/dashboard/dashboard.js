@@ -157,142 +157,158 @@ $(function () {
           chartordercomparison.render();
     });
 
-      getSalesComparisonData(0, 0, 0);      
+    getSalesComparisonData(0, 0, 0);      
 
 
     $(".selChangeChart").change(function(){
         let branch = $("#current_branch").val();
         let month = $("#selChangeMonth").val();
         let year = $("#selChangeYear").val();
+        var options = {
+          chart: {
+              height: 300,
+              type: 'donut',
+          },
+          dataLabels: {
+              enabled: false
+          },
+          series: [],
+          noData: {
+            text: 'Loading...'
+          }
+        }
         getSalesComparisonData(branch, month, year);
     });
 });
 
 function getSalesComparisonData(branch, month, year){
+  
   $.getJSON('/ajax/chart/sales/comparison/'+branch+'/'+month+'/'+year, function (response) {
     var options = {
-    labels: ["Advance", "Balance"],
-    series: [parseFloat(response.data[0].advance), parseFloat(response.data[0].balance)],
-    chart: {
-      type: "donut",
-      height: 300,
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    legend: {
-      position: "bottom",
-      fontSize: "14px",
-      fontFamily: "Rubik, sans-serif",
-      fontWeight: 500,
-      labels: {
-        colors: ["var(--chart-text-color)"],
+      labels: ["Advance", "Balance"],
+      series: [parseFloat(response.data[0].advance), parseFloat(response.data[0].balance)],
+      chart: {
+        type: "donut",
+        height: 300,
       },
-      markers: {
-        width: 6,
-        height: 6,
+      dataLabels: {
+        enabled: false,
       },
-      itemMargin: {
-        horizontal: 7,
-        vertical: 0,
+      legend: {
+        position: "bottom",
+        fontSize: "14px",
+        fontFamily: "Rubik, sans-serif",
+        fontWeight: 500,
+        labels: {
+          colors: ["var(--chart-text-color)"],
+        },
+        markers: {
+          width: 6,
+          height: 6,
+        },
+        itemMargin: {
+          horizontal: 7,
+          vertical: 0,
+        },
       },
-    },
-    stroke: {
-      width: 10,
-      colors: ["var(--light2)"],
-    },
-    plotOptions: {
-      pie: {
-        expandOnClick: false,
-        donut: {
-          size: "83%",
-          labels: {
-            show: true,
-            name: {
-              offsetY: 4,
-            },
-            total: {
+      stroke: {
+        width: 10,
+        colors: ["var(--light2)"],
+      },
+      plotOptions: {
+        pie: {
+          expandOnClick: false,
+          donut: {
+            size: "83%",
+            labels: {
               show: true,
-              fontSize: "20px",
-              fontFamily: "Rubik, sans-serif",
-              fontWeight: 500,
-              label: "₹ "+ response.data[0].invtot,
-              formatter: () => "Total Sales",
+              name: {
+                offsetY: 4,
+              },
+              total: {
+                show: true,
+                fontSize: "20px",
+                fontFamily: "Rubik, sans-serif",
+                fontWeight: 500,
+                label: "₹ "+ response.data[0].invtot,
+                formatter: () => "Total Sales",
+              },
             },
           },
         },
       },
-    },
-    states: {
-      normal: {
-        filter: {
-          type: "none",
+      states: {
+        normal: {
+          filter: {
+            type: "none",
+          },
         },
-      },
-      hover: {
-        filter: {
-          type: "none",
+        hover: {
+          filter: {
+            type: "none",
+          },
         },
-      },
-      active: {
-        allowMultipleDataPointsSelection: false,
-        filter: {
-          type: "none",
-        },
-      },
-    },
-    colors: ["#54BA4A", "#FFA941"],
-    responsive: [
-      {
-        breakpoint: 1630,
-        options: {
-          chart: {
-            height: 360,
+        active: {
+          allowMultipleDataPointsSelection: false,
+          filter: {
+            type: "none",
           },
         },
       },
-      {
-        breakpoint: 1584,
-        options: {
-          chart: {
-            height: 400,
+      colors: ["#54BA4A", "#FFA941"],
+      responsive: [
+        {
+          breakpoint: 1630,
+          options: {
+            chart: {
+              height: 360,
+            },
           },
         },
-      },
-      {
-        breakpoint: 1473,
-        options: {
-          chart: {
-            height: 250,
+        {
+          breakpoint: 1584,
+          options: {
+            chart: {
+              height: 400,
+            },
           },
         },
-      },
-      {
-        breakpoint: 1425,
-        options: {
-          chart: {
-            height: 270,
+        {
+          breakpoint: 1473,
+          options: {
+            chart: {
+              height: 250,
+            },
           },
         },
-      },
-      {
-        breakpoint: 1400,
-        options: {
-          chart: {
-            height: 320,
+        {
+          breakpoint: 1425,
+          options: {
+            chart: {
+              height: 270,
+            },
           },
         },
-      },
-      {
-        breakpoint: 480,
-        options: {
-          chart: {
-            height: 250,
+        {
+          breakpoint: 1400,
+          options: {
+            chart: {
+              height: 320,
+            },
           },
         },
-      },
-    ],
-  };
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              height: 250,
+            },
+          },
+        },
+      ],
+    };
+    if (window.chart)
+      window.chart.destroy();
   var chart = new ApexCharts(
     document.querySelector("#sales-comparison-chart"),
     options
