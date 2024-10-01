@@ -163,7 +163,6 @@ $(function () {
         let branch = $("#current_branch").val();
         let month = $("#selChangeMonth").val();
         let year = $("#selChangeYear").val();
-        alert(month)
         getChartData(branch, month, year);        
     });
 });
