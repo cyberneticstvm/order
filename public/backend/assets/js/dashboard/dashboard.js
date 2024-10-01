@@ -301,8 +301,8 @@ function getChartData(branch, month, year){
       };
       var options1 = {
         chart: {
-            height: 350,
-            type: 'bar',
+            height: 300,
+            type: 'donut',
         },
         series: [],
         noData: {
