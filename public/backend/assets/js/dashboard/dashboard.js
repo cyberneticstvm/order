@@ -161,25 +161,6 @@ $(function () {
 
 
     $(".selChangeChart").change(function(){
-      var options = {
-        chart: {
-            height: 300,
-            type: 'donut',
-        },
-        dataLabels: {
-            enabled: false
-        },
-        series: [],
-        noData: {
-          text: 'Loading...'
-        }
-      }
-      var chart = new ApexCharts(
-        document.querySelector("#sales-comparison-chart"),
-        options
-      );
-      
-      chart.render();
         let branch = $("#current_branch").val();
         let month = $("#selChangeMonth").val();
         let year = $("#selChangeYear").val();
