@@ -172,7 +172,7 @@ function getSalesComparisonData(branch, month, year){
   $.getJSON('/ajax/chart/sales/comparison/'+branch+'/'+month+'/'+year, function (response) {
     var options = {
     labels: ["Advance", "Balance"],
-    series: [parseInt(response.data[0].advance), parseInt(response.data[0].balance)],
+    series: [parseFloat(response.data[0].advance), parseFloat(response.data[0].balance)],
     chart: {
       type: "donut",
       height: 300,
