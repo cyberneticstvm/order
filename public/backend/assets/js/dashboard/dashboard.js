@@ -161,17 +161,38 @@ $(function () {
 
 
     $(".selChangeChart").change(function(){
-      let branch = $("#current_branch").val();
-      let month = $("#selChangeMonth").val();
-      let year = $("#selChangeYear").val();
-      getSalesComparisonData(branch, month, year);
+      var options = {
+        chart: {
+            height: 350,
+            type: 'donut',
+        },
+        dataLabels: {
+            enabled: false
+        },
+        series: [],
+        title: {
+            text: 'Ajax Example',
+        },
+        noData: {
+          text: 'Loading...'
+        }
+      }
+      var chart = new ApexCharts(
+        document.querySelector("#sales-comparison-chart"),
+        options
+      );
+      
+      chart.render();
+        let branch = $("#current_branch").val();
+        let month = $("#selChangeMonth").val();
+        let year = $("#selChangeYear").val();
+        getSalesComparisonData(branch, month, year);
     });
 });
 
 function getSalesComparisonData(branch, month, year){
   $.getJSON('/ajax/chart/sales/comparison/0/0/0', function (response) {
-    console.log(response.data[0].advance)
-  var optionsprofit = {
+    var options = {
     labels: ["Advance", "Balance"],
     series: [parseInt(response.data[0].advance), parseInt(response.data[0].balance)],
     chart: {
@@ -294,10 +315,10 @@ function getSalesComparisonData(branch, month, year){
       },
     ],
   };
-  var chartprofit = new ApexCharts(
+  var chart = new ApexCharts(
     document.querySelector("#sales-comparison-chart"),
-    optionsprofit
+    options
   );
-  chartprofit.render();
+  chart.render();
 });
 }
