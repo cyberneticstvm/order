@@ -299,20 +299,6 @@ function getChartData(branch, month, year){
           },
         ],
       };
-      var options1 = {
-        chart: {
-            height: 300,
-            type: 'donut',
-        },
-        series: [],
-        noData: {
-          text: 'Loading...'
-        }
-      }
-      var salescomparisonchart = new ApexCharts(
-        document.querySelector("#sales-comparison-chart"),
-        options1
-      );
       var salescomparisonchart = new ApexCharts(
         document.querySelector("#sales-comparison-chart"),
         options
