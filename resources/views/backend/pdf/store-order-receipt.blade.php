@@ -20,7 +20,7 @@
                     <td width="20%" class="border-0">Product Adviser</td>
                     <td width="25%" class="border-0 fw-bold">{{ $order?->adviser?->name }}</td>
                     <td width="15%" class="border-0">Order Number</td>
-                    <td width="40%" class="border-0 fw-bold" colspan="3">{{ $order->ono() }}</td>
+                    <td width="40%" class="border-0 fw-bold font-big" colspan="3">{{ $order->ono() }}</td>
                 </tr>
                 <tr>
                     <td width="20%" class="border-0">MRN</td>
@@ -112,7 +112,7 @@
                     <td width="25%" class="no-border">C.Name / ID</td>
                     <td width="40%" class="no-border fw-bold font-big">{{ $order?->name }} / {{ $order->customer_id }}</td>
                     <td width="10%" class="no-border">Ord.Number</td>
-                    <td width="25%" class="no-border fw-bold font-big">{{ $order->branch->code }}/{{ $order->id }}</td>
+                    <td width="25%" class="no-border fw-bold font-big">{{ $order->ono() }}</td>
                 </tr>
                 <tr>
                     <td width="25%" class="no-border">P.Adviser</td>

@@ -21,7 +21,7 @@ class Order extends Model
 
     public function ono()
     {
-        return 'ORD/' . $this->branch->code . '/' . $this->id;
+        return $this->branch->code . '/' . $this->id;
     }
 
     public function ino()
