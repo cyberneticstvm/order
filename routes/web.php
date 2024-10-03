@@ -88,6 +88,8 @@ Route::middleware(['web'])->group(function () {
 
     Route::controller(HelperController::class)->group(function () {
         Route::get('/bill/details/{id}', 'billDetails')->name('bill.details');
+        Route::get('/adv/customer/fetch', 'fetchVehicle')->name('vehicle.fetch');
+        Route::post('/adv/customer/fetch', 'fetchVehicleDetails')->name('vehicle.fetch.details');
     });
 });
 
@@ -106,9 +108,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
     });
 
     Route::prefix('/backend')->controller(AdvertisementController::class)->group(function () {
-        Route::get('/adv/customer/fetch', 'fetchVehicle')->name('vehicle.fetch');
-        Route::post('/adv/customer/fetch', 'fetchVehicleDetails')->name('vehicle.fetch.details');
-        Route::get('/adv/customer/create', 'index')->name('vehicles');
+        Route::get('/adv/customer', 'index')->name('vehicles');
         Route::get('/adv/customer/create', 'create')->name('vehicle.create');
         Route::post('/adv/customer/create', 'store')->name('vehicle.save');
         Route::get('/adv/customer/edit/{id}', 'edit')->name('vehicle.edit');

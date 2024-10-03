@@ -369,4 +369,16 @@ class HelperController extends Controller
         }
         return redirect()->back()->with("success", "Email sent successfully");
     }
+
+    function fetchVehicle()
+    {
+        return view("backend.extras.fetch-vehicle");
+    }
+
+    function fetchVehicleDetails(Request $request)
+    {
+        $this->validate($request, [
+            'mobile' => 'required|numeric|digits:10',
+        ]);
+    }
 }
