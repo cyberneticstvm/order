@@ -52,7 +52,7 @@ function getYears()
 
 function unpaidTotal($branch)
 {
-    return Order::leftJoin('payments as p', 'orders.id', 'p.order_id')->selectRaw("IFNULL(SUM(orders.invoice_total), 0) AS invtot, IFNULL(SUM(p.amount), 0) AS advance, IFNULL(SUM(orders.invoice_total) - SUM(p.amount), 0) AS balance")->where('orders.branch_id', $branch)->first()->balance;
+    return Order::leftJoin('payments as p', 'orders.id', 'p.order_id')->selectRaw("IFNULL(SUM(orders.invoice_total), 0) AS invtot, IFNULL(SUM(p.amount), 0) AS advance, IFNULL(SUM(orders.invoice_total) - SUM(p.amount), 0) AS balance")->whereNotIn('order_status', ['delivered'])->where('orders.branch_id', $branch)->first()->balance;
 }
 
 function settings()
