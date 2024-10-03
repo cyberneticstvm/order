@@ -177,8 +177,8 @@ function getChartData(branch, month, year){
     cache: false,
     success: function (response) {
       options = {
-        labels: ["Balance", "Collected"],
-        series: [parseFloat(response[0].balance, parseFloat(response[0].advance))],
+        labels: ["Advance", "Balance"],
+        series: [parseFloat(response[0].advance), parseFloat(response[0].balance)],
         chart: {
           type: "donut",
           height: 300,
@@ -247,7 +247,7 @@ function getChartData(branch, month, year){
             },
           },
         },
-        colors: ["#FFA941", "#54BA4A"],
+        colors: ["#54BA4A", "#FFA941"],
         responsive: [
           {
             breakpoint: 1630,
