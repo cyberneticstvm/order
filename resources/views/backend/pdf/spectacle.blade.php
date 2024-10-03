@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                     <td>OPTOMETRIST:</td>
-                    <td> {{ $spectacle?->optometrist_hospital ?? $spectacle?->optometrist?->name }}</td>
+                    <td> </td>
                     <td>MR ID</td>
                     <td>{{ $spectacle?->customer->mrn ?? 'Direct' }}</td>
                 </tr>
@@ -190,7 +190,7 @@
             </td>
             <td class="text-end border-0">
                 <p>Optometrist</p>
-                <p class="fw-bold"></p>
+                <p class="fw-bold">{{ $spectacle?->optometrists?->name ?? 'Na' }}</p>
             </td>
         </tr>
     </table>
