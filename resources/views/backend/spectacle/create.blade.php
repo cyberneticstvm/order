@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">Optometrist (Hospital)</label>
-                                    {{ html()->text($name = 'optometrist_hospital', old('optometrist_hospital'))->class('form-control')->placeholder('Optometrist (Hospital)')->disabled() }}
+                                    {{ html()->text($name = 'optometrist_hospital', old('optometrist_hospital'))->class('form-control')->placeholder('Optometrist (Hospital)') }}
                                 </div>
                                 <div class="col-md-6 mt-5 table-responsive">
                                     <h5 class="text-center text-secondary">Prescription Details</h5>
