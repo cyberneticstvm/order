@@ -24,6 +24,6 @@ class Vehicle extends Model
 
     public function payment()
     {
-        return $this->hasMany(VehiclePayment::class, 'id', 'vehicle_id')->latest()->get();
+        return $this->hasMany(VehiclePayment::class, 'vehicle_id', 'id')->latest();
     }
 }
