@@ -44,7 +44,7 @@
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $vehicle->reg_number }}</td>
                                 <td>{{ $vehicle->contact_number }}</td>
-                                <td>{{ $vehicle->payment->latest()->first()->created_at->format('d.M.Y') }}</td>
+                                <td>{{ $vehicle->payment->first()?->created_at?->format('d.M.Y') ?? 'Na' }}</td>
                             </tr>
                             @empty
                             @endforelse
