@@ -387,7 +387,6 @@ class AjaxController extends Controller
         $bid = ($bid > 0) ? $bid : Session::get('branch');
         $month = ($month > 0) ? $month : date('m');
         $year = ($year > 0) ? $year : date('Y');
-        //$order = Order::leftJoin('payments as p', 'orders.id', 'p.order_id')->selectRaw("IFNULL(SUM(orders.invoice_total), 0) AS invtot, IFNULL(SUM(p.amount), 0) AS advance, IFNULL(SUM(orders.invoice_total) - SUM(p.amount), 0) AS balance")->whereMonth('orders.created_at', $month)->whereYear('orders.created_at', $year)->where('orders.branch_id', $bid)->first();
         $order = DB::select("SELECT SUM(tbl2.invoice_total) AS invtot, SUM(tbl2.advance) AS advance, SUM(tbl2.invoice_total)-SUM(tbl2.advance) AS balance FROM (SELECT DISTINCT(tbl1.id) AS oid, tbl1.invoice_total, SUM(p.amount) AS advance FROM (SELECT o.id, o.invoice_total FROM orders o WHERE o.branch_id = ? AND MONTH(o.created_at) = ? AND YEAR(o.created_at) = ?) AS tbl1 LEFT JOIN payments p ON p.order_id = tbl1.id GROUP BY oid, invoice_total) AS tbl2", [$bid, $month, $year]);
         return json_encode($order);
     }
