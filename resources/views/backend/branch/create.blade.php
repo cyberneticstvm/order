@@ -89,6 +89,13 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
+                                    <label class="form-label">Target Percentage</label>
+                                    {{ html()->number($name = 'target_percentage', old('target_percentage'), $min='0', $max='100', $step='1')->class('form-control')->placeholder('0') }}
+                                    @error('target_percentage')
+                                    <small class="text-danger">{{ $errors->first('target_percentage') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
                                     <label class="form-label req">Daily Expense Limit</label>
                                     {{ html()->number($name = 'daily_expense_limit', $value = old('daily_expense_limit'), $min='1', $max='', $step='1')->class('form-control')->placeholder('0.00') }}
                                     @error('daily_expense_limit')

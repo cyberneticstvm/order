@@ -85,7 +85,10 @@ class UserController extends Controller
         $branches = Branch::whereIn('id', UserBranch::where('user_id', Auth::id())->pluck('branch_id'))->pluck('name', 'id');
         $dvals = array('0' => '0.00', '1' => '0.00');
         if (Session::has('branch')) :
-            $dvals[0] = Branch::findOrFail(Session::get('branch'))->monthly_target;
+            $branch = Branch::findOrFail(Session::get('branch'));
+            $unpaid = unpaidTotal($branch->id);
+            $target = ($branch->target_percentage > 0) ? $unpaid + $branch->monthly_target + (($branch->monthly_target * $branch->target_percentage) / 100) : $unpaid + $branch->monthly_target;
+            $dvals[0] = $target;
             $dvals[1] = Order::where('branch_id', Session::get('branch'))->whereBetween('invoice_generated_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->where('order_status', 'delivered')->sum('invoice_total');
         endif;
         $uagent = Session::get('uagent');
