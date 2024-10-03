@@ -45,6 +45,11 @@ function allMonths()
     return Month::all();
 }
 
+function getYears()
+{
+    return Order::selectRaw("YEAR(created_at) AS id, YEAR(created_at) AS name")->groupBy("id")->pluck('name', 'id');
+}
+
 function settings()
 {
     return Setting::findOrFail(1);

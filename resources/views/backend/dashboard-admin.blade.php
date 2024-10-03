@@ -33,7 +33,7 @@
                             </div>
                             <div class="dropdown">
                                 <label class="form-label">Year</label>
-                                {{ html()->select($name = 'year', array('2024' => '2024', '2025' => '2025', '2026' => '2026'), $value = date('Y'))->attribute('id', 'selChangeYear')->class('form-control selChangeChart')->placeholder('Select') }}
+                                {{ html()->select($name = 'year', getYears(), $value = date('Y'))->attribute('id', 'selChangeYear')->class('form-control selChangeChart')->placeholder('Select') }}
                             </div>
                         </div>
                     </div>
