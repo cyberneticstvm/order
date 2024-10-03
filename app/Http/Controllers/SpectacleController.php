@@ -74,7 +74,6 @@ class SpectacleController extends Controller
         $this->validate($request, [
             'customer_id' => 'required',
             'registration_id' => 'required',
-            'optometrist' => 'required',
         ]);
         $input = $request->except(array('spectacle_id'));
         $input['created_by'] = $request->user()->id;
@@ -109,9 +108,9 @@ class SpectacleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $this->validate($request, [
+        /*$this->validate($request, [
             'optometrist' => 'required',
-        ]);
+        ]);*/
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
         Spectacle::findOrFail($id)->update($input);
