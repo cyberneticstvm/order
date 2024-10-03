@@ -176,7 +176,7 @@ function getChartData(branch, month, year){
     async: true,
     cache: false,
     success: function (response) {
-      var options = '';
+      console.log(response);
       options = {
         labels: ["Advance", "Balance"],
         series: [parseFloat(response.advance), parseFloat(response.balance)],
@@ -304,9 +304,14 @@ function getChartData(branch, month, year){
         document.querySelector("#sales-comparison-chart"),
         options
       );
+      salescomparisonchart.updateSeries(reset(options));
       salescomparisonchart.render();  
     }
   });
+}
+
+function reset(options) {
+  return options.series
 }
 
 
