@@ -178,7 +178,7 @@ function getChartData(branch, month, year){
     success: function (response) {
       options = {
         labels: ["Advance", "Balance"],
-        series: [parseFloat(response.advance), parseFloat(response.balance)],
+        series: [parseFloat(response[0].advance), parseFloat(response[0].balance)],
         chart: {
           type: "donut",
           height: 300,
@@ -222,7 +222,7 @@ function getChartData(branch, month, year){
                   fontSize: "20px",
                   fontFamily: "Rubik, sans-serif",
                   fontWeight: 500,
-                  label: "₹ "+ response.invtot,
+                  label: "₹ "+ response[0].invtot,
                   formatter: () => "Total Sales",
                 },
               },
