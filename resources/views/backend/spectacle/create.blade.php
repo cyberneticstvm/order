@@ -52,18 +52,18 @@
                                     <small class="text-danger">{{ $errors->first('optometrist') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label class="form-label">Doctor</label>
                                     {{ html()->select('doctor', $doctors, $spectacle->doctor ?? '')->class('form-control select2')->placeholder('Select') }}
                                     @error('doctor')
                                     <small class="text-danger">{{ $errors->first('doctor') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label class="form-label">Hospital Prescription</label>
                                     {{ html()->select('spectacle_id', $hospital_prescriptions->pluck('mrn', 'id'), '')->class('form-control select2 changePresc')->attribute('data-source', 'hospital')->placeholder('Select') }}
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label class="form-label">Optometrist (Hospital)</label>
                                     {{ html()->text($name = 'optometrist_hospital', old('optometrist_hospital'))->class('form-control')->placeholder('Optometrist (Hospital)')->disabled() }}
                                 </div>
