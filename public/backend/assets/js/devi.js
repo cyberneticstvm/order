@@ -345,6 +345,9 @@ $(function () {
             type: 'GET',
             url: '/ajax/prescription/' + source + '/' + val,
             success: function (spectacle) {
+
+                $(".hOpto").val(spectacle.optometrist);
+
                 $(".fSph").val(spectacle.re_sph);
                 $(".fCyl").val(spectacle.re_cyl);
                 $(".fAxis").val(spectacle.re_axis);
