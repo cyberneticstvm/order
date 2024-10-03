@@ -21,12 +21,36 @@
                     @csrf
                     <div class="input-group mb-3">
                         {{ html()->text($name = 'mobile', old('mobile'))->class('form-control')->placeholder('Mobile Number') }}
-                        @error('mobile')
-                        <small class="text-danger">{{ $errors->first('mobile') }}</small>
-                        @enderror
+
                         <button class="btn btn-info" type="submit">Fetch</button>
                     </div>
+                    @error('mobile')
+                    <small class="text-danger">{{ $errors->first('mobile') }}</small>
+                    @enderror
                 </form>
+                <div class="">
+                    <table class="table table-bordered table-stripped">
+                        <thead>
+                            <tr>
+                                <th>SL No.</th>
+                                <th>Vehicle Number</th>
+                                <th>Contact Number</th>
+                                <th>Last Payment Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($vehicles as $key => $vehicle)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                <td>{{ $vehicle->reg_number }}</td>
+                                <td>{{ $vehicle->contact_number }}</td>
+                                <td>{{ $vehicle->payment->latest()->first()->created_at->format('d.M.Y') }}</td>
+                            </tr>
+                            @empty
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

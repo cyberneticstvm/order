@@ -21,4 +21,9 @@ class Vehicle extends Model
     {
         return $this->belongsTo(Branch::class, 'branch_id', 'id');
     }
+
+    public function payment()
+    {
+        return $this->hasMany(VehiclePayment::class, 'id', 'vehicle_id');
+    }
 }

@@ -20,6 +20,7 @@ use App\Models\Spectacle;
 use App\Models\Transfer;
 use App\Models\TransferDetails;
 use App\Models\UserBranch;
+use App\Models\Vehicle;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Exception;
@@ -372,7 +373,8 @@ class HelperController extends Controller
 
     function fetchVehicle()
     {
-        return view("backend.extras.fetch-vehicle");
+        $vehicles = collect();
+        return view("backend.extras.fetch-vehicle", compact('vehicles'));
     }
 
     function fetchVehicleDetails(Request $request)
@@ -380,5 +382,7 @@ class HelperController extends Controller
         $this->validate($request, [
             'mobile' => 'required|numeric|digits:10',
         ]);
+        $vehicles = Vehicle::where('contact_number', $request->mobile)->latest()->get();
+        return view("backend.extras.fetch-vehicle", compact('vehicles'));
     }
 }
