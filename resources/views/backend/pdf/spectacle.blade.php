@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                     <td>OPTOMETRIST:</td>
-                    <td> </td>
+                    <td> {{ $spectacle?->optometrist_hospital ?? $spectacle?->optometrists?->name }}</td>
                     <td>MR ID</td>
                     <td>{{ $spectacle?->customer->mrn ?? 'Direct' }}</td>
                 </tr>
