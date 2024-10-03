@@ -62,6 +62,7 @@ return new class extends Migration
             $table->string('cl_os_axis', 7)->nullable();
             $table->unsignedBigInteger('doctor')->nullable();
             $table->unsignedBigInteger('optometrist')->nullable();
+            $table->unsignedBigInteger('optometrist_hospital')->nullable();
             $table->text('notes')->nullable();
             $table->text('advice')->nullable();
             $table->unsignedBigInteger('branch_id');

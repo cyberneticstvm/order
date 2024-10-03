@@ -57,6 +57,10 @@
                                     <small class="text-danger">{{ $errors->first('doctor') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Optometrist (Hospital)</label>
+                                    {{ html()->text($name = 'optometrist_hospital', $spectacle->optometrist_hospital ?? '')->class('form-control')->placeholder('Optometrist (Hospital)') }}
+                                </div>
                                 <div class="col-md-6 mt-5 table-responsive">
                                     <h5 class="text-center text-secondary">Prescription Details</h5>
                                     <table class="table table-stripped mt-3">
