@@ -247,7 +247,7 @@ function getChartData(branch, month, year){
             },
           },
         },
-        colors: ["#54BA4A", "#FFA941"],
+        colors: ["#FFA941", "#54BA4A"],
         responsive: [
           {
             breakpoint: 1630,
