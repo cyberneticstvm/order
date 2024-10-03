@@ -17,7 +17,7 @@
             <tbody>
                 <tr>
                     <td>CUSTOMER NAME</td>
-                    <td>{{ $spectacle?->customer->name }}</td>
+                    <td>{{ $spectacle?->customer?->name }}</td>
                     <td>AGE / SEX</td>
                     <td>{{ $spectacle?->customer->age }}</td>
                 </tr>
