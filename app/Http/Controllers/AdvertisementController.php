@@ -117,4 +117,16 @@ class AdvertisementController extends Controller
         VehiclePayment::findOrFail(decrypt($id))->delete();
         return redirect()->route('vehicles')->with("success", "Payment deleted successfully");
     }
+
+    function fetchVehicle()
+    {
+        return view("backend.extras.fetch-vehicle");
+    }
+
+    function fetchVehicleDetails(Request $request)
+    {
+        $this->validate($request, [
+            'mobile' => 'required|numeric|digits:10',
+        ]);
+    }
 }
