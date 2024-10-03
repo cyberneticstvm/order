@@ -176,7 +176,6 @@ function getChartData(branch, month, year){
     async: true,
     cache: false,
     success: function (response) {
-      console.log(response);
       options = {
         labels: ["Advance", "Balance"],
         series: [parseFloat(response.advance), parseFloat(response.balance)],
