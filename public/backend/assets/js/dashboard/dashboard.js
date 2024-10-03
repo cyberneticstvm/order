@@ -177,7 +177,7 @@ function getChartData(branch, month, year){
     cache: false,
     success: function (response) {
       options = {
-        labels: ["Advance", "Balance"],
+        labels: ["Collected", "Balance"],
         series: [parseFloat(response[0].advance), parseFloat(response[0].balance)],
         chart: {
           type: "donut",
