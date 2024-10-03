@@ -190,7 +190,7 @@
             </td>
             <td class="text-end border-0">
                 <p>Optometrist</p>
-                <p class="fw-bold">{{ $spectacle?->optometrists?->name ?? 'Na' }}</p>
+                <p class="fw-bold">{{ $spectacle?->optometrist_hospital ?? $spectacle?->optometrists?->name }}</p>
             </td>
         </tr>
     </table>
