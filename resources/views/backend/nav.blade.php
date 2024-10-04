@@ -288,13 +288,17 @@
                 <li><a class="submenu-title" href="javascript:void(0)">Solutions<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                     {{
                         Menu::new()->addClass('nav-sub-childmenu submenu-content')
-                        ->linkIfCan('product-solution-list', route('product.solution'), 'Solutions Register');
+                        ->linkIfCan('product-solution-list', route('product.solution'), 'Solutions Register')
+                        ->linkIfCan('purchase-solution-list', route('solution.purchase'), 'Solution Purchase')
+                        ->linkIfCan('solution-transfer-list', route('solution.transfer'), 'Solution Transfer');
                     }}
                 </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Accessories<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                     {{
                         Menu::new()->addClass('nav-sub-childmenu submenu-content')
-                        ->linkIfCan('product-accessory-list', route('product.accessory'), 'Accessory Register');
+                        ->linkIfCan('product-accessory-list', route('product.accessory'), 'Accessory Register')
+                        ->linkIfCan('purchase-accessory-list', route('accessory.purchase'), 'Accessory Purchase')
+                        ->linkIfCan('accessory-transfer-list', route('accessory.transfer'), 'Accessory Transfer');
                     }}
                 </li>
 

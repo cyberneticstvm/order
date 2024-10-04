@@ -33,9 +33,11 @@ use App\Http\Controllers\ProductLensController;
 use App\Http\Controllers\ProductPharmacyController;
 use App\Http\Controllers\ProductServiceController;
 use App\Http\Controllers\ProductSolutionController;
+use App\Http\Controllers\PurchaseAccessoryController;
 use App\Http\Controllers\PurchaseFrameController;
 use App\Http\Controllers\PurchaseLensController;
 use App\Http\Controllers\PurchasePharmacyController;
+use App\Http\Controllers\PurchaseSolutionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SalesReturnContoller;
@@ -44,9 +46,11 @@ use App\Http\Controllers\SolutionOrderController;
 use App\Http\Controllers\SpectacleController;
 use App\Http\Controllers\StoreOrderController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\TransferAccessoryController;
 use App\Http\Controllers\TransferFrameController;
 use App\Http\Controllers\TransferLensController;
 use App\Http\Controllers\TransferPharmacyController;
+use App\Http\Controllers\TransferSolutionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use App\Models\CustomerAccount;
@@ -537,6 +541,24 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/delete/{id}', 'destroy')->name('frame.purchase.delete');
     });
 
+    Route::prefix('/backend/purchase/accessory')->controller(PurchaseAccessoryController::class)->group(function () {
+        Route::get('/', 'index')->name('accessory.purchase');
+        Route::get('/create', 'create')->name('accessory.purchase.create');
+        Route::post('/create', 'store')->name('accessory.purchase.save');
+        Route::get('/edit/{id}', 'edit')->name('accessory.purchase.edit');
+        Route::post('/edit/{id}', 'update')->name('accessory.purchase.update');
+        Route::get('/delete/{id}', 'destroy')->name('accessory.purchase.delete');
+    });
+
+    Route::prefix('/backend/purchase/solution')->controller(PurchaseSolutionController::class)->group(function () {
+        Route::get('/', 'index')->name('solution.purchase');
+        Route::get('/create', 'create')->name('solution.purchase.create');
+        Route::post('/create', 'store')->name('solution.purchase.save');
+        Route::get('/edit/{id}', 'edit')->name('solution.purchase.edit');
+        Route::post('/edit/{id}', 'update')->name('solution.purchase.update');
+        Route::get('/delete/{id}', 'destroy')->name('solution.purchase.delete');
+    });
+
     Route::prefix('/backend/transfer/pharmacy')->controller(TransferPharmacyController::class)->group(function () {
         Route::get('/', 'index')->name('pharmacy.transfer');
         Route::get('/create', 'create')->name('pharmacy.transfer.create');
@@ -562,6 +584,24 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/edit/{id}', 'edit')->name('frame.transfer.edit');
         Route::post('/edit/{id}', 'update')->name('frame.transfer.update');
         Route::get('/delete/{id}', 'destroy')->name('frame.transfer.delete');
+    });
+
+    Route::prefix('/backend/transfer/accessory')->controller(TransferAccessoryController::class)->group(function () {
+        Route::get('/', 'index')->name('accessory.transfer');
+        Route::get('/create', 'create')->name('accessory.transfer.create');
+        Route::post('/create', 'store')->name('accessory.transfer.save');
+        Route::get('/edit/{id}', 'edit')->name('accessory.transfer.edit');
+        Route::post('/edit/{id}', 'update')->name('accessory.transfer.update');
+        Route::get('/delete/{id}', 'destroy')->name('accessory.transfer.delete');
+    });
+
+    Route::prefix('/backend/transfer/solution')->controller(TransferSolutionController::class)->group(function () {
+        Route::get('/', 'index')->name('solution.transfer');
+        Route::get('/create', 'create')->name('solution.transfer.create');
+        Route::post('/create', 'store')->name('solution.transfer.save');
+        Route::get('/edit/{id}', 'edit')->name('solution.transfer.edit');
+        Route::post('/edit/{id}', 'update')->name('solution.transfer.update');
+        Route::get('/delete/{id}', 'destroy')->name('solution.transfer.delete');
     });
 
     Route::prefix('/backend/head')->controller(HeadController::class)->group(function () {

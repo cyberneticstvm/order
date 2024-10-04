@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('transfers', function (Blueprint $table) {
             $table->id();
             $table->string('transfer_number')->unique();
-            $table->enum('category', ['lens', 'frame', 'pharmacy', 'service', 'other'])->nullable();
+            $table->enum('category', ['lens', 'frame', 'pharmacy', 'accessory', 'solution', 'service', 'other'])->nullable();
             $table->unsignedBigInteger('from_branch_id');
             $table->unsignedBigInteger('to_branch_id');
             $table->date('transfer_date')->nullable();
