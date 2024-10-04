@@ -29,11 +29,11 @@ class ProductLensExport implements FromCollection, WithMapping, WithHeadings, Sh
         return $products->map(function ($data, $key) {
             return [
                 'item_serial' =>  $key + 1,
-                'item_name' => $data->name,
+                'item_name' => $data?->name,
                 'item_code' => $data->code,
                 'item_material' => $data->material,
                 'item_coating' => $data->coating?->name,
-                'item_type' => $data->type?->name,
+                'item_type' => $data?->type?->name,
                 'item_manufacturer' => $data->manufacturer?->name ?? '',
                 'item_mrp' => $data->mrp,
                 'item_sp' => $data->selling_price,

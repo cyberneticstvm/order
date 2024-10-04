@@ -29,12 +29,12 @@ class ProductFrameExport implements FromCollection, WithMapping, WithHeadings, S
         return $products->map(function ($data, $key) {
             return [
                 'item_serial' =>  $key + 1,
-                'item_name' => $data->name,
+                'item_name' => $data?->name,
                 'item_code' => $data->code,
                 'item_material' => $data->material,
                 'item_shape' => $data->shape?->name,
-                'item_type' => $data->type?->name,
-                'item_manufacturer' => $data->manufacturer->name,
+                'item_type' => $data?->type?->name,
+                'item_manufacturer' => $data?->manufacturer?->name ?? '',
                 'item_mrp' => $data->mrp,
                 'item_sp' => $data->selling_price,
                 'item_tax' => $data->tax_percentage,
