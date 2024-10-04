@@ -26,11 +26,11 @@
                 @forelse($products as $key => $item)
                 <tr>
                     <td>{{ $key + 1 }}</td>
-                    <td>{{ $item->name }}</td>
+                    <td>{{ $item?->name }}</td>
                     <td>{{ $item->code }}</td>
-                    <td>{{ $item->type->name }}</td>
-                    <td>{{ $item->shape->name }}</td>
-                    <td>{{ $item->manufacturer->name }}</td>
+                    <td>{{ $item?->type?->name }}</td>
+                    <td>{{ $item?->shape?->name }}</td>
+                    <td>{{ $item?->manufacturer?->name }}</td>
                     <td class="text-end">{{ $item->selling_price }}</td>
                 </tr>
                 @empty
