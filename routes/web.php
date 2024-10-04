@@ -245,8 +245,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/product/pharmacy', 'exportProductPharmacy')->name('pdf.product.pharmacy');
         Route::get('/product/lens', 'exportProductLens')->name('pdf.product.lens');
         Route::get('/product/frame', 'exportProductFrame')->name('pdf.product.frame');
-        Route::get('/product/solution', 'exportProductLens')->name('pdf.product.solution');
-        Route::get('/product/accessory', 'exportProductFrame')->name('pdf.product.accessory');
+        Route::get('/product/solution', 'exportProductSolution')->name('pdf.product.solution');
+        Route::get('/product/accessory', 'exportProductAccessory')->name('pdf.product.accessory');
         Route::get('/payment/receipt/{id}', 'exportPaymentReceipt')->name('pdf.payment.receipt');
         Route::get('/order/invoices', 'invoices')->name('invoice.register');
         Route::get('/order/notgenerated/invoices', 'invoicesNotGenerated')->name('not.generated.invoice.register');

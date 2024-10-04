@@ -106,6 +106,22 @@ class PdfController extends Controller
         return $pdf->stream('frame-products.pdf');
     }
 
+    public function exportProductSolution()
+    {
+        $products = Product::with('manufacturer')->where('category', 'solution')->orderBy('name')->get();
+        $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
+        $pdf = PDF::loadView('/backend/pdf/product-frame', compact('products', 'qrcode'));
+        return $pdf->stream('solution-products.pdf');
+    }
+
+    public function exportProductAccessory()
+    {
+        $products = Product::with('manufacturer')->where('category', 'accessory')->orderBy('name')->get();
+        $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
+        $pdf = PDF::loadView('/backend/pdf/product-frame', compact('products', 'qrcode'));
+        return $pdf->stream('accessory-products.pdf');
+    }
+
     public function exportPaymentReceipt($id)
     {
         $payment = Payment::findOrFail(decrypt($id));
