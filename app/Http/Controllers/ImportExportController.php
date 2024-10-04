@@ -6,10 +6,12 @@ use App\Exports\AppointmentExport;
 use App\Exports\CampPatientExport;
 use App\Exports\FailedProductsExport;
 use App\Exports\OrderExport;
+use App\Exports\ProductAccessoryExport;
 use App\Exports\ProductCompareExport;
 use App\Exports\ProductFrameExport;
 use App\Exports\ProductLensExport;
 use App\Exports\ProductPharmacyExport;
+use App\Exports\ProductSolutionExport;
 use App\Exports\StockStatusReportExport;
 use App\Models\Branch;
 use App\Imports\FrameImport;
@@ -78,6 +80,16 @@ class ImportExportController extends Controller
     public function exportProductFrame(Request $request)
     {
         return Excel::download(new ProductFrameExport($request), 'frame_products.xlsx');
+    }
+
+    public function exportProductSolution(Request $request)
+    {
+        return Excel::download(new ProductSolutionExport($request), 'solution_products.xlsx');
+    }
+
+    public function exportProductAccessory(Request $request)
+    {
+        return Excel::download(new ProductAccessoryExport($request), 'accessory_products.xlsx');
     }
 
     public function importProductPurchase()

@@ -204,8 +204,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/product/pharmacy', 'exportProductPharmacy')->name('export.product.pharmacy');
         Route::get('/product/lens', 'exportProductLens')->name('export.product.lens');
         Route::get('/product/frame', 'exportProductFrame')->name('export.product.frame');
-        Route::get('/product/solution', 'exportProductFrame')->name('export.product.solution');
-        Route::get('/product/accessory', 'exportProductFrame')->name('export.product.accessory');
+        Route::get('/product/solution', 'exportProductSolution')->name('export.product.solution');
+        Route::get('/product/accessory', 'exportProductAccessory')->name('export.product.accessory');
 
         Route::get('/order/{fdate}/{tdate}/{status}/{branch}', 'exportOrder')->name('export.order');
         Route::get('/stock/{category}/{branch}', 'exportStockStatus')->name('export.stock.status.excel');
