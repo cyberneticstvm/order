@@ -323,6 +323,10 @@ var brOptions = {
   },
   plotOptions: {
     radialBar: {
+      hollow: {
+        margin: 15,
+        size: "70%"
+      }, 
       dataLabels: {
         name: {
           fontSize: "22px",
