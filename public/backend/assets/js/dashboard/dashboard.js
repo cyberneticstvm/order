@@ -325,7 +325,7 @@ var brOptions = {
     radialBar: {
       hollow: {
         margin: 15,
-        size: "70%"
+        size: "50%"
       }, 
       dataLabels: {
         name: {
