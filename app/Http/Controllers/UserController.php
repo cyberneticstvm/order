@@ -83,7 +83,7 @@ class UserController extends Controller
     {
         $patients = Patient::whereDate('created_at', Carbon::today())->where('branch_id', Session::get('branch'))->withTrashed()->latest()->get();
         $branches = Branch::whereIn('id', UserBranch::where('user_id', Auth::id())->pluck('branch_id'))->pluck('name', 'id');
-        $dvals = array('0' => '0.00', '1' => '0.00');
+        $dvals = array('0' => '0.00', '1' => '0.00', '2' => '0.00');
         if (Session::has('branch')) :
             $branch = Branch::findOrFail(Session::get('branch'));
             $unpaid = unpaidTotal($branch->id, $month = 0, $year = 0,  0);
