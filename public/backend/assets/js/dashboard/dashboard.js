@@ -181,7 +181,7 @@ function getChartData(branch, month, year){
         series: [parseFloat(response[0].advance), parseFloat(response[0].balance)],
         chart: {
           type: "donut",
-          height: 300,
+          height: 350,
         },
         dataLabels: {
           enabled: false,
