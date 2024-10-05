@@ -334,7 +334,7 @@ var brOptions = {
           show: true,
           label: "Performance",
           formatter: function (w) {
-            //return 249;
+            return 1000000;
           },
         },
       },
