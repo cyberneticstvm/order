@@ -145,6 +145,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
 
     Route::prefix('/ajax')->controller(AjaxController::class)->group(function () {
         Route::get('/chart/order', 'getOrderData')->name('ajax.chart.order');
+        Route::get('/chart/branch/performance', 'getBranchPerformance')->name('ajax.chart.branch.performance');
         Route::get('/chart/branch/{id}', 'getBranches')->name('ajax.chart.branch');
         Route::get('/chart/order/comparison/{bid}', 'getOrderComparisonData')->name('ajax.chart.order.comparison');
         Route::get('/chart/sales/comparison/{bid}/{month}/{year}/', 'getSalesComparisonData')->name('ajax.chart.sales.comparison');

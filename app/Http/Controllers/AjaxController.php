@@ -391,6 +391,16 @@ class AjaxController extends Controller
         return json_encode($order);
     }
 
+    public function getBranchPerformance()
+    {
+        $branches = Branch::where('type', 'branch')->get();
+        $data = array();
+        foreach ($branches as $Key => $item):
+            array_push($data, array('branch' => $item->name, 'balance' => unpaidTotal($item->id, 0, 0, 0)->balance));
+        endforeach;
+        return json_encode($data);
+    }
+
     public function getBranches($id)
     {
         return Branch::when($id > 0, function ($q) use ($id) {

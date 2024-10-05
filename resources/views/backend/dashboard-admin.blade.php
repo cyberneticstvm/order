@@ -26,6 +26,18 @@
                 <div class="card visitor-card">
                     <div class="card-header card-no-border">
                         <div class="header-top">
+                            <h5 class="m-0">Branch Performance</span></h5>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div id="brPerformanceChart"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card visitor-card">
+                    <div class="card-header card-no-border">
+                        <div class="header-top">
                             <h5 class="m-0">Sales Numbers - <span class="occbname">{{ branches()->where('id', Session::get('branch'))->first()->name ?? '' }}</span></h5>
                             <div class="dropdown">
                                 <label class="form-label">Month</label>

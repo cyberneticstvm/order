@@ -309,6 +309,77 @@ function getChartData(branch, month, year){
   });
 }
 
+$.getJSON('/ajax/chart/branch/performance', function (response) {
+  let br = [], bal = [];
+  for (const [key, value] of Object.entries(response)) {
+    br.push(value.branch)
+    bal.push(parseFloat(value.balance))
+  }
+  console.log(br)
+var brOptions = {
+  chart: {
+    height: 350,
+    type: "radialBar",
+  },
+  plotOptions: {
+    radialBar: {
+      dataLabels: {
+        name: {
+          fontSize: "22px",
+        },
+        value: {
+          fontSize: "16px",
+        },
+        total: {
+          show: true,
+          label: "Performance",
+          formatter: function (w) {
+            //return 249;
+          },
+        },
+      },
+    },
+  },
+  series: bal,
+  labels: br,
+  responsive: [
+    {
+      breakpoint: 480,
+      options: {
+        chart: {
+          height: 250,
+        },
+        legend: {
+          show: false,
+        },
+        plotOptions: {
+          radialBar: {
+            dataLabels: {
+              name: {
+                offsetY: -1,
+              },
+              value: {
+                offsetY: 4,
+              },
+            },
+          },
+        },
+      },
+    },
+  ],
+  colors: [
+    CubaAdminConfig.secondary,
+    "#51bb25",
+    "#f8d62b",
+    CubaAdminConfig.primary,
+  ],
+};
+
+var chartBrPerf = new ApexCharts(document.querySelector("#brPerformanceChart"), brOptions);
+
+chartBrPerf.render();
+});
+
 function reset(options) {
   return options.series
 }
