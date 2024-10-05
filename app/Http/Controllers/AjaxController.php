@@ -396,7 +396,11 @@ class AjaxController extends Controller
         $branches = Branch::where('type', 'branch')->get();
         $data = array();
         foreach ($branches as $Key => $item):
-            array_push($data, array('branch' => $item->name, 'balance' => unpaidTotal($item->id, 0, 0, 0)->balance));
+            $tot = (unpaidTotal($item->id, 0, 0, 0)->invtot > 0) ? unpaidTotal($item->id, 0, 0, 0)->invtot : 1;
+            $advance = (unpaidTotal($item->id, 0, 0, 0)->advance > 0) ? unpaidTotal($item->id, 0, 0, 0)->advance : 1;
+            $balance = (unpaidTotal($item->id, 0, 0, 0)->balance > 0) ? unpaidTotal($item->id, 0, 0, 0)->balance : 1;
+            $bal_per = ($advance / $tot) * 100;
+            array_push($data, array('branch' => $item->name, 'balance' => $bal_per, 'total' => $tot, 'advance' => $advance));
         endforeach;
         return json_encode($data);
     }

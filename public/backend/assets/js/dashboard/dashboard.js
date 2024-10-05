@@ -313,9 +313,9 @@ $.getJSON('/ajax/chart/branch/performance', function (response) {
   let br = [], bal = [];
   for (const [key, value] of Object.entries(response)) {
     br.push(value.branch)
-    bal.push(parseFloat(value.balance))
+    bal.push(parseFloat(value.balance).toFixed(2))
   }
-  console.log(br)
+  //console.log(response)
 var brOptions = {
   chart: {
     height: 350,
@@ -334,7 +334,7 @@ var brOptions = {
           show: true,
           label: "Performance",
           formatter: function (w) {
-            return 1000000;
+            //return 1000000;
           },
         },
       },
