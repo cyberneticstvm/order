@@ -49,7 +49,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <h4 class="mb-0">₹{{ number_format($dvals[0], 2) }} + ₹{{ number_format($dvals[2], 2) }}</h4><span class="f-light"></span>
+                                <h4 class="mb-0">₹{{ number_format($dvals[0], 2) }}</h4><span class="f-light"></span>
                             </div>
                         </div>
                     </div>
