@@ -181,7 +181,7 @@ function getChartData(branch, month, year){
         series: [parseFloat(response[0].advance), parseFloat(response[0].balance)],
         chart: {
           type: "donut",
-          height: 500,
+          height: 400,
         },
         dataLabels: {
           enabled: false,
@@ -318,7 +318,7 @@ $.getJSON('/ajax/chart/branch/performance', function (response) {
   //console.log(response)
 var brOptions = {
   chart: {
-    height: 500,
+    height: 400,
     type: "radialBar",
   },
   plotOptions: {
