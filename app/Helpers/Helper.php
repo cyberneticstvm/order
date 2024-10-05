@@ -58,7 +58,7 @@ function unpaidTotal($branch, $month, $year, $current_month)
     })->when($year > 0, function ($q) use ($year) {
         return $q->whereYear('orders.created_at', $year);
     })->when($current_month == 0, function ($q) {
-        return $q->whereYear('orders.created_at', '!=', Carbon::today()->year)->whereMonth('orders.created_at', '!=', Carbon::today()->month);
+        return $q->whereNotYear('orders.created_at', Carbon::today()->year)->whereNotMonth('orders.created_at', Carbon::today()->month);
     })->first();
     return $order;
 }
