@@ -86,10 +86,11 @@ class UserController extends Controller
         $dvals = array('0' => '0.00', '1' => '0.00');
         if (Session::has('branch')) :
             $branch = Branch::findOrFail(Session::get('branch'));
-            $unpaid = unpaidTotal($branch->id, $month = 0, $year = 0);
-            $target = ($branch->target_percentage > 0) ? $unpaid->balance + $branch->monthly_target + (($branch->monthly_target * $branch->target_percentage) / 100) : $unpaid->balance + $branch->monthly_target;
+            $unpaid = unpaidTotal($branch->id, $month = 0, $year = 0,  0);
+            $target = ($branch->target_percentage > 0) ? $branch->monthly_target + (($branch->monthly_target * $branch->target_percentage) / 100) : $branch->monthly_target;
             $dvals[0] = $target;
             $dvals[1] = Order::where('branch_id', Session::get('branch'))->whereBetween('invoice_generated_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->where('order_status', 'delivered')->sum('invoice_total');
+            $dvals[2] = $unpaid->balance;
         endif;
         $uagent = Session::get('uagent');
         return view('backend.dashboard', compact('branches', 'patients', 'dvals', 'uagent'));

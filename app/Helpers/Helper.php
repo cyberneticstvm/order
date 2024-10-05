@@ -50,13 +50,15 @@ function getYears()
     return Order::selectRaw("YEAR(created_at) AS id, YEAR(created_at) AS name")->get()->unique("id")->pluck('name', 'id');
 }
 
-function unpaidTotal($branch, $month, $year)
+function unpaidTotal($branch, $month, $year, $current_month)
 {
-    //return Order::leftJoin('payments as p', 'orders.id', 'p.order_id')->selectRaw("IFNULL(SUM(orders.invoice_total), 0) AS invtot, IFNULL(SUM(p.amount), 0) AS advance, IFNULL(SUM(orders.invoice_total) - SUM(p.amount), 0) AS balance")->whereNotIn('order_status', ['delivered'])->where('orders.branch_id', $branch)->first()->balance;
+    //current month exclude if 0
     $order = Order::leftJoin('payments as p', 'orders.id', 'p.order_id')->selectRaw("IFNULL(SUM(orders.invoice_total), 0) AS invtot, IFNULL(SUM(p.amount), 0) AS advance, IFNULL(SUM(orders.invoice_total) - SUM(p.amount), 0) AS balance")->where('orders.branch_id', $branch)->whereNotIn('orders.order_status', ['delivered'])->when($month > 0, function ($q) use ($month) {
         return $q->whereMonth('orders.created_at', $month);
     })->when($year > 0, function ($q) use ($year) {
         return $q->whereYear('orders.created_at', $year);
+    })->when($current_month == 0, function ($q) {
+        return $q->whereMonth('orders.created_at', '!=', date('m'))->whereYear('orders.created_at', '!=', date('Y'));
     })->first();
     return $order;
 }
