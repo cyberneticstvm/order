@@ -318,7 +318,7 @@ $.getJSON('/ajax/chart/branch/performance', function (response) {
   //console.log(response)
 var brOptions = {
   chart: {
-    height: 350,
+    height: 500,
     type: "radialBar",
   },
   plotOptions: {
