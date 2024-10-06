@@ -44,7 +44,7 @@ class ApiController extends Controller
                 return response()->json([
                     'status' => true,
                     'data' => $vehicle,
-                    'status' => $vehicle->vstatus(),
+                    'vstatus' => $vehicle->vstatus(),
                 ], 200);
             else :
                 return response()->json([
