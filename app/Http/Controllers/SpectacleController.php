@@ -9,6 +9,7 @@ use App\Models\Registration;
 use App\Models\Spectacle;
 use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -60,9 +61,19 @@ class SpectacleController extends Controller
         $doctors = $this->doctors;
         $powers = $this->powers;
         $spectacle = [];
-        $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', $customer->mrn)->first();
+        /*$mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', $customer->mrn)->first();
         $mrns = DB::connection('mysql1')->table('patient_medical_records')->where('patient_id', $mrecord->patient_id ?? 0)->pluck('id');
-        $hospital_prescriptions = DB::connection('mysql1')->table('spectacles')->selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->whereIn('medical_record_id', $mrns)->get();
+        $hospital_prescriptions = DB::connection('mysql1')->table('spectacles')->selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->whereIn('medical_record_id', $mrns)->get();*/
+        try {
+            $secret = apiSecret();
+            $mrn = $customer->mrn;
+            $url = api_url() . "/api/mrecord/" . $mrn . "/" . $secret;
+            $json = file_get_contents($url);
+            $mrecord = json_decode($json);
+            $hospital_prescriptions = $mrecord->prescription;
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage());
+        }
         return view('backend.spectacle.create', compact('registration', 'optometrists', 'doctors', 'powers', 'spectacle', 'hospital_prescriptions'));
     }
 

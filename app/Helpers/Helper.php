@@ -36,6 +36,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+
+function api_url()
+{
+    return "https://hospital.speczone.net";
+}
+
 function apiSecret()
 {
     return 'fdjsvsgdf4dhgf687f4bg54g4hf787';

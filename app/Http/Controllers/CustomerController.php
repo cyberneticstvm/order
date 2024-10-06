@@ -20,7 +20,7 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    protected $optometrists, $doctors, $powers, $mobile;
+    protected $optometrists, $doctors, $powers, $mobile, $secret;
     public function __construct()
     {
         $this->middleware('permission:customer-list|customer-create|customer-edit|customer-delete', ['only' => ['index', 'store', 'spectacles']]);
@@ -37,6 +37,7 @@ class CustomerController extends Controller
 
             return $next($request);
         });
+        $this->secret = apiSecret();
     }
 
     public function index()
@@ -61,11 +62,19 @@ class CustomerController extends Controller
         ]);
         $source = $request->source;
         if ($request->source == 'hospital') :
-            $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', $request->search_term)->first();
+
+            /*$mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', $request->search_term)->first();*/
+            $val = $request->search_term;
+            $url = api_url() . "/api/mrecord/" . $val . "/" . $this->secret;
+            $json = file_get_contents($url);
+            $mrecord = json_decode($json);
+            $mrecord = $mrecord->mrecord;
+
             if ($mrecord) :
                 $patient = Customer::selectRaw("name as patient_name, address, id as patient_id")->where('mrn', $mrecord->id)->latest()->first();
                 if (!$patient)
-                    $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id)->first();
+                    /*$patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id)->first();*/
+                    $patient = $mrecord->patient;
                 return view('backend.customer.proceed', compact('mrecord', 'patient', 'source'));
             else :
                 return redirect()->back()->with('error', 'No records found')->withInput($request->all());
@@ -90,11 +99,22 @@ class CustomerController extends Controller
         $spectacle = [];
         $cid = 0;
         if ($source == 'hospital') :
-            $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', decrypt($id))->first();
-            $spectacle = DB::connection('mysql1')->table('spectacles')->where('medical_record_id', decrypt($id))->first();
+            /*$mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', decrypt($id))->first();
+            $spectacle = DB::connection('mysql1')->table('spectacles')->where('medical_record_id', decrypt($id))->first();*/
+
+
+            $val = decrypt($id);
+            $url = api_url() . "/api/mrecord/" . $val . "/" . $this->secret;
+            $json = file_get_contents($url);
+            $mrecord = json_decode($json);
+            $mrecord = $mrecord->mrecord;
+            $spectacle = $mrecord->spectacle;
+
+
             $patient = Customer::selectRaw("id, name as patient_name, age, address, mobile as mobile_number, alt_mobile, gstin, company_name")->where('mrn', $mrecord->id)->latest()->first();
             if (!$patient) :
-                $patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();
+                /*$patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();*/
+                $patient = $mrecord->patient;
             else :
                 $cid = $patient->id;
             endif;
@@ -240,13 +260,21 @@ class CustomerController extends Controller
         endif;
 
         $store_prescriptions = Spectacle::where('customer_id', $registration->customer_id)->selectRaw("CONCAT_WS(' / ', 'OID', order_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS oid, id")->get();
-        $hospital_prescriptions = DB::connection('mysql1')->table('spectacles')->selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->where('medical_record_id', $customer->mrn)->get();
+
+        /*$hospital_prescriptions = DB::connection('mysql1')->table('spectacles')->selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->where('medical_record_id', $customer->mrn)->get();*/
+
+
+
+        $secret = apiSecret();
+        $mrn = $customer->mrn;
+        $url = api_url() . "/api/mrecord/" . $mrn . "/" . $secret;
+        $json = file_get_contents($url);
+        $mrecord = json_decode($json);
+        $hospital_prescriptions = $mrecord->prescription;
+
         if (!$spectacle) :
             $spectacle = Spectacle::where('customer_id', $registration->customer_id)->latest()->first();
         endif;
-        /*if (!$spectacle) :
-            $spectacle = DB::connection('mysql1')->table('spectacles')->where('medical_record_id', $customer->mrn)->first();
-        endif;*/
         return view('backend.customer.spectacle', compact('spectacle', 'customer', 'doctors', 'optometrists', 'powers', 'registration', 'store_prescriptions', 'hospital_prescriptions'));
     }
 
