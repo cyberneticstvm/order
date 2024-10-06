@@ -69,7 +69,7 @@ class CustomerController extends Controller
             $json = file_get_contents($url);
             $mrecord = json_decode($json);
             $mrecord = $mrecord->mrecord;
-            dd($mrecord);
+            dd($mrecord->patient);
             die;
             if ($mrecord) :
                 $patient = Customer::selectRaw("name as patient_name, address, id as patient_id")->where('mrn', $mrecord->id)->latest()->first();
