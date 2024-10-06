@@ -67,15 +67,13 @@ class CustomerController extends Controller
             $val = $request->search_term;
             $url = api_url() . "/api/mrecord/" . $val . "/" . $this->secret;
             $json = file_get_contents($url);
-            $mrecord = json_decode($json);
-            $mrecord = $mrecord->mrecord;
-            dd($mrecord->patient);
-            die;
+            $data = json_decode($json);
+            $mrecord = $data->mrecord;
             if ($mrecord) :
                 $patient = Customer::selectRaw("name as patient_name, address, id as patient_id")->where('mrn', $mrecord->id)->latest()->first();
                 if (!$patient)
                     /*$patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id)->first();*/
-                    $patient = $mrecord->patient;
+                    $patient = $data->patient;
                 return view('backend.customer.proceed', compact('mrecord', 'patient', 'source'));
             else :
                 return redirect()->back()->with('error', 'No records found')->withInput($request->all());
@@ -107,15 +105,15 @@ class CustomerController extends Controller
             $val = decrypt($id);
             $url = api_url() . "/api/mrecord/" . $val . "/" . $this->secret;
             $json = file_get_contents($url);
-            $mrecord = json_decode($json);
-            $mrecord = $mrecord->mrecord;
-            $spectacle = $mrecord->spectacle;
+            $data = json_decode($json);
+            $mrecord = $data->mrecord;
+            $spectacle = $data->spectacle;
 
 
             $patient = Customer::selectRaw("id, name as patient_name, age, address, mobile as mobile_number, alt_mobile, gstin, company_name")->where('mrn', $mrecord->id)->latest()->first();
             if (!$patient) :
                 /*$patient = DB::connection('mysql1')->table('patient_registrations')->where('id', $mrecord->patient_id ?? 0)->first();*/
-                $patient = $mrecord->patient;
+                $patient = $data->patient;
             else :
                 $cid = $patient->id;
             endif;
@@ -270,8 +268,8 @@ class CustomerController extends Controller
         $mrn = $customer->mrn;
         $url = api_url() . "/api/mrecord/" . $mrn . "/" . $secret;
         $json = file_get_contents($url);
-        $mrecord = json_decode($json);
-        $hospital_prescriptions = $mrecord->prescription;
+        $data = json_decode($json);
+        $hospital_prescriptions = $data->prescription;
 
         if (!$spectacle) :
             $spectacle = Spectacle::where('customer_id', $registration->customer_id)->latest()->first();

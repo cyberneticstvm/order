@@ -59,8 +59,8 @@ class AjaxController extends Controller
             $secret = apiSecret();
             $url = api_url() . "/api/prescription/" . $val . "/" . $secret;
             $json = file_get_contents($url);
-            $spectacle = json_decode($json);
-            $spectacle = $spectacle->spectacle;
+            $data = json_decode($json);
+            $spectacle = $data->spectacle;
         else :
             $spectacle = Spectacle::findOrFail($val);
         endif;

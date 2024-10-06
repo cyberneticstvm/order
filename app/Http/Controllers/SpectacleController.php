@@ -69,8 +69,8 @@ class SpectacleController extends Controller
             $mrn = $customer->mrn;
             $url = api_url() . "/api/mrecord/" . $mrn . "/" . $secret;
             $json = file_get_contents($url);
-            $mrecord = json_decode($json);
-            $hospital_prescriptions = $mrecord->prescription;
+            $data = json_decode($json);
+            $hospital_prescriptions = $data->prescription;
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage());
         }
