@@ -47,7 +47,8 @@
                                         <th>Reg. Branch</th>
                                         <th>Fee</th>
                                         <th>Pay. Terms</th>
-                                        <th>Status</th>
+                                        <th>V.Status</th>
+                                        <th>Del.Status</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
@@ -64,6 +65,7 @@
                                         <td>{{ $vehicle->branch?->name }}</td>
                                         <td>{{ $vehicle->fee }}</td>
                                         <td>{{ $vehicle->payment_terms }} Days</td>
+                                        <td class="text-center">{{ $vehicle->vstatus() }}</td>
                                         <td class="text-center">{!! $vehicle->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('vehicle.edit', encrypt($vehicle->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center"><a href="{{ route('vehicle.delete', encrypt($vehicle->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>

@@ -23,4 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('/order')->controller(ApiController::class)->group(function () {
     Route::get('/{id}/{secret}', 'getOrder')->name('get.order');
 });
+Route::prefix('/vehicle')->controller(ApiController::class)->group(function () {
+    Route::get('/{vcode}/{secret}', 'getVehicle')->name('get.vehicle');
+});
 //});

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,5 +26,10 @@ class Vehicle extends Model
     public function payment()
     {
         return $this->hasMany(VehiclePayment::class, 'vehicle_id', 'id')->latest();
+    }
+
+    public function vstatus()
+    {
+        return (Carbon::now()->diffInDays(Carbon::parse($this->payment()?->first()?->created_at)) < $this->payment_terms) ? 'Active' : 'Inactive';
     }
 }

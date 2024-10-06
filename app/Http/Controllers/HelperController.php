@@ -385,12 +385,4 @@ class HelperController extends Controller
         $vehicles = Vehicle::where('contact_number', $request->mobile)->latest()->get();
         return view("backend.extras.fetch-vehicle", compact('vehicles'));
     }
-
-    function generateVCodes()
-    {
-        $vehicles = Vehicle::all();
-        foreach ($vehicles as $key => $vehicle):
-            $vehicle->update(['vcode' => uniqueCode(Vehicle::class, 'vcode', '', 1000, 9999)]);
-        endforeach;
-    }
 }

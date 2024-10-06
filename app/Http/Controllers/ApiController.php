@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Branch;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -29,6 +30,29 @@ class ApiController extends Controller
                 ], 404);
             endif;
         else :
+            return response()->json([
+                'status' => false,
+                'data' => "Invalid Secret Key!"
+            ], 500);
+        endif;
+    }
+    function getVehicle($vcode, $secret)
+    {
+        if ($secret == apiSecret()) :
+            $vehicle = Vehicle::where('vcode', $vcode)->first();
+            if ($vehicle) :
+                return response()->json([
+                    'status' => true,
+                    'data' => $vehicle,
+                    'status' => $vehicle->vstatus(),
+                ], 200);
+            else :
+                return response()->json([
+                    'status' => false,
+                    'data' => "No Vehicle Found!"
+                ], 404);
+            endif;
+        else:
             return response()->json([
                 'status' => false,
                 'data' => "Invalid Secret Key!"
