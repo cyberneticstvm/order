@@ -42,6 +42,7 @@
                                         <th>Owner Name</th>
                                         <th>Contact Number</th>
                                         <th>Reg. number</th>
+                                        <th>VCode</th>
                                         <th>Reg. Date</th>
                                         <th>Reg. Branch</th>
                                         <th>Fee</th>
@@ -58,6 +59,7 @@
                                         <td>{{ $vehicle->owner_name }}</td>
                                         <td>{{ $vehicle->contact_number }}</td>
                                         <td><a href="{{ route('vehicle.payment', encrypt($vehicle->id)) }}">{{ $vehicle->reg_number }}</a></td>
+                                        <td>{{ $vehicle->vcode }}</td>
                                         <td>{{ $vehicle->created_at->format('d.M.Y') }}</td>
                                         <td>{{ $vehicle->branch?->name }}</td>
                                         <td>{{ $vehicle->fee }}</td>

@@ -44,6 +44,7 @@ class AdvertisementController extends Controller
             'payment_terms' => 'required',
         ]);
         $input = $request->all();
+        $input['vcode'] = uniqueCode(Vehicle::class, 'vcode', '', 1000, 9999);
         $input['branch_id'] = Session::get('branch');
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;

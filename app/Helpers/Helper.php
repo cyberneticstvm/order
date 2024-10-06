@@ -32,6 +32,7 @@ use App\Models\VehiclePayment;
 use App\Models\Voucher;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -101,6 +102,15 @@ function procedures()
 function branch()
 {
     return Branch::findOrFail(Session::get('branch'));
+}
+
+function uniqueCode($model, $col, $str, $min, $max)
+{
+    do {
+        $code = $str . random_int($min, $max);
+    } while ($model::where($col, $code)->first());
+
+    return $code;
 }
 
 function isExpenseLimitReached($amount, $ded = 0)
