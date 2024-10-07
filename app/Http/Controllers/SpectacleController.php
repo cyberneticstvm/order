@@ -64,7 +64,7 @@ class SpectacleController extends Controller
         $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', $customer->mrn)->first();
         $mrns = DB::connection('mysql1')->table('patient_medical_records')->where('patient_id', $mrecord->patient_id ?? 0)->pluck('id');
         $hospital_prescriptions = DB::connection('mysql1')->table('spectacles')->selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->whereIn('medical_record_id', $mrns)->get();
-        /*try {
+        try {
             $secret = apiSecret();
             $mrn = $customer->mrn;
             $url = api_url() . "/api/mrecord/" . $mrn . "/" . $secret;
@@ -73,7 +73,7 @@ class SpectacleController extends Controller
             $hospital_prescriptions = $data->prescription;
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage());
-        }*/
+        }
         return view('backend.spectacle.create', compact('registration', 'optometrists', 'doctors', 'powers', 'spectacle', 'hospital_prescriptions'));
     }
 
