@@ -103,7 +103,7 @@ class CustomerController extends Controller
 
 
             $val = decrypt($id);
-            $url = api_url() . "/api/mrecord/" . $val . "/" . $this->secret;
+            $url = api_url() . "/api/customer/" . $val . "/" . $this->secret;
             $json = file_get_contents($url);
             $data = json_decode($json);
             $mrecord = $data->mrecord;
