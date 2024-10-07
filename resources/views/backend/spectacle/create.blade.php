@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">Hospital Prescription</label>
-                                    {{ html()->select('spectacle_id', empty($hospital_prescriptions) ?? $hospital_prescriptions?->pluck('mrn', 'id'), '')->class('form-control select2 changePresc')->attribute('data-source', 'hospital')->placeholder('Select') }}
+                                    {{ html()->select('spectacle_id', empty($hospital_prescriptions) ? '' : $hospital_prescriptions?->pluck('mrn', 'id'), '')->class('form-control select2 changePresc')->attribute('data-source', 'hospital')->placeholder('Select') }}
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">Optometrist (Hospital)</label>
