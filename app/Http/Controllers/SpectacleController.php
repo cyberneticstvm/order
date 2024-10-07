@@ -61,9 +61,9 @@ class SpectacleController extends Controller
         $doctors = $this->doctors;
         $powers = $this->powers;
         $spectacle = [];
-        $mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', $customer->mrn)->first();
+        /*$mrecord = DB::connection('mysql1')->table('patient_medical_records')->where('id', $customer->mrn)->first();
         $mrns = DB::connection('mysql1')->table('patient_medical_records')->where('patient_id', $mrecord->patient_id ?? 0)->pluck('id');
-        $hospital_prescriptions = DB::connection('mysql1')->table('spectacles')->selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->whereIn('medical_record_id', $mrns)->get();
+        $hospital_prescriptions = DB::connection('mysql1')->table('spectacles')->selectRaw("CONCAT_WS(' / ', 'MRN', medical_record_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS mrn, id")->whereIn('medical_record_id', $mrns)->get();*/
         try {
             $secret = apiSecret();
             $mrn = $customer->mrn;
