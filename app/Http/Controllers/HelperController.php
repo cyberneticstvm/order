@@ -385,4 +385,10 @@ class HelperController extends Controller
         $vehicles = Vehicle::where('contact_number', $request->mobile)->latest()->get();
         return view("backend.extras.fetch-vehicle", compact('vehicles'));
     }
+
+    function asd()
+    {
+        $products = getInventory(Session::get('branch'), 0, 'frame');
+        dd($products);
+    }
 }
