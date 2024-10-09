@@ -626,7 +626,7 @@ function addStoreOrderRow(category) {
                 $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="solution" name="product_id[]" required><option></option></select></td><td><input type="hidden" class="form-control" placeholder="Bach Number" name="batch_number[]" /></td><td><input type="hidden" class="form-control" placeholder="" name="expiry_date[]" /></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
             }
             var xdata = $.map(res, function (obj) {
-                obj.text = (category === 'frame') ? obj.product_name || obj.product_id : obj.name || obj.id;
+                obj.text = obj.name || obj.id;
                 return obj;
             });
             //$('.selPdct').last().select2().empty();                      
