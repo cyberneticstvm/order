@@ -45,10 +45,10 @@ class StoreOrderController extends Controller
 
             $this->padvisers = User::leftJoin('user_branches as ub', 'users.id', 'ub.user_id')->select('users.id', 'users.name')->where('ub.branch_id', Session::get('branch'))->role('Sales Advisor')->get();
 
+            $this->products = getInventory(Session::get('branch'), 0, 'frame')->where('balanceQty', '>', 0);
+
             return $next($request);
         });
-
-        $this->products = Product::whereIn('category', ['lens', 'frame', 'service'])->orderBy('name')->get();
         $this->pmodes = PaymentMode::orderBy('name')->get();
     }
     public function index()
@@ -62,7 +62,8 @@ class StoreOrderController extends Controller
      */
     public function create($id, $type)
     {
-        $products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['lens', 'frame', 'service'])->orderBy('name')->get();
+        $products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['lens', 'service'])->orderBy('name')->get();
+        $frames = $this->products;
         $pmodes = $this->pmodes;
         $padvisers = $this->padvisers;
         $states = State::all();
@@ -71,7 +72,7 @@ class StoreOrderController extends Controller
         $spectacle = Spectacle::where('registration_id', $registration->id)->latest()->first();
         $powers = Power::all();
         $store_prescriptions = Spectacle::where('customer_id', $patient->id)->selectRaw("CONCAT_WS(' / ', 'CID', customer_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS cid, id")->get();
-        return view(($type == 1) ? 'backend.order.store.create' : 'backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'powers', 'states', 'registration', 'store_prescriptions', 'spectacle'));
+        return view(($type == 1) ? 'backend.order.store.create' : 'backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'powers', 'states', 'registration', 'store_prescriptions', 'spectacle', 'frames'));
     }
 
     public function fetch(Request $request)
@@ -243,12 +244,13 @@ class StoreOrderController extends Controller
     {
         $order = Order::where('id', decrypt($id))->whereNull('invoice_number')->firstOrFail();
         $products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['lens', 'frame', 'service'])->orderBy('name')->get();
+        $frames = $this->products;
         $pmodes = $this->pmodes;
         $padvisers = $this->padvisers;
         $store_prescriptions = Spectacle::where('customer_id', $order->customer_id)->selectRaw("CONCAT_WS(' / ', 'CID', customer_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS cid, id")->get();
         $powers = Power::all();
         $states = State::all();
-        return view('backend.order.store.edit', compact('products', 'pmodes', 'padvisers', 'order', 'powers', 'states', 'store_prescriptions'));
+        return view('backend.order.store.edit', compact('products', 'pmodes', 'padvisers', 'order', 'powers', 'states', 'store_prescriptions', 'frames'));
     }
 
     /**
@@ -273,7 +275,7 @@ class StoreOrderController extends Controller
             DB::transaction(function () use ($request, $id, $msg) {
                 $order = Order::findOrFail($id);
                 //if (isProductChanged($order->id, $request->product_id)) :
-                    //LabOrder::where('order_id', $order->id)->delete();
+                //LabOrder::where('order_id', $order->id)->delete();
                 //endif;
                 Order::findOrFail($id)->update([
                     'spectacle_id' => $request->spectacle_id,
@@ -395,7 +397,7 @@ class StoreOrderController extends Controller
                         'created_by' => $request->user()->id,
                         'updated_by' => $request->user()->id,
                     ]);
-                endif;                
+                endif;
                 LabOrder::where('order_id', $id)->delete();
                 recordOrderEvent($order->id, $msg);
             });
