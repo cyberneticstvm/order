@@ -63,7 +63,11 @@ class StoreOrderController extends Controller
     public function create($id, $type)
     {
         $products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['lens', 'service'])->orderBy('name')->get();
-        $frames = $this->products;
+        if (Session::get('branch') != 1):
+            $frames = $this->products;
+        else:
+            $frames = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['frame'])->orderBy('name')->get();
+        endif;
         $pmodes = $this->pmodes;
         $padvisers = $this->padvisers;
         $states = State::all();

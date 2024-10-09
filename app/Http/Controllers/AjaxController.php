@@ -43,7 +43,7 @@ class AjaxController extends Controller
     public function getProductsByCategory($category)
     {
         $products = Product::where('category', $category)->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
-        if ($category == 'frame'):
+        if ($category == 'frame' && Session::get('branch') != 1):
             $products = getInventory(Session::get('branch'), 0, $category)->where('balanceQty', '>', 0);
         endif;
         return response()->json($products);
