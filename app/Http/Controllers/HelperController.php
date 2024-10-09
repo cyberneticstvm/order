@@ -388,7 +388,7 @@ class HelperController extends Controller
 
     function asd()
     {
-        $products = getInventory(Session::get('branch'), 0, 'frame');
+        $products = getInventory(Session::get('branch'), 0, 'frame')->where('balanceQty', '>', 0);
         dd($products);
     }
 }
