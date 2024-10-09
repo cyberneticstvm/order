@@ -451,7 +451,7 @@ function addMedicineRow(category, attribute) {
 function addPurchaseRowPharmacy(category, type) {
     $.ajax({
         type: 'GET',
-        url: '/ajax/product/' + category,
+        url: '/ajax/product/' + category + '/' + type,
         dataType: 'json',
         success: function (res) {
             $(".tblPharmacyPurchaseBody").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="form-control select2 selPdct" name="product_id[]" required><option></option></select></td><td><input type="text" name='batch_nmber[]' class="w-100 border-0 text-center" placeholder="Batch Number" required /></td><td><input type="date" name='expiry_date[]' class="w-100 border-0 text-center" value="" required /></td>
@@ -472,7 +472,7 @@ function addPurchaseRowPharmacy(category, type) {
 function addTransferRow(category, type) {
     $.ajax({
         type: 'GET',
-        url: '/ajax/product/' + category,
+        url: '/ajax/product/' + category + '/' + type,
         dataType: 'json',
         success: function (res) {
             if (category == 'pharmacy') {
@@ -496,7 +496,7 @@ function addTransferRow(category, type) {
 function addPurchaseRowFrame(category, type) {
     $.ajax({
         type: 'GET',
-        url: '/ajax/product/' + category,
+        url: '/ajax/product/' + category + '/' + type,
         dataType: 'json',
         success: function (res) {
             $(".tblPharmacyPurchaseBody").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="form-control select2 selPdct" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end pQty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='mrp[]' class="w-100 border-0 text-end pMrp" placeholder="0.00" min='1' step="any" required /></td><td><input type="number" name='purchase_price[]' class="w-100 border-0 text-end pPPrice" placeholder="0.00" min='1' step="any" required /></td><td><input type="number" name='selling_price[]' class="w-100 border-0 text-end pSPrice" placeholder="0.00" min='1' step="any" required /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end pTotal" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
@@ -516,7 +516,7 @@ function addPurchaseRowFrame(category, type) {
 function addStoreOrderRow(category, type) {
     $.ajax({
         type: 'GET',
-        url: '/ajax/product/' + category,
+        url: '/ajax/product/' + category + '/' + type,
         dataType: 'json',
         success: function (res) {
             if (category === 'lens') {
