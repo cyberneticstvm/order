@@ -629,6 +629,7 @@ function addStoreOrderRow(category) {
                 obj.text = obj.name || obj.id;
                 return obj;
             });
+            console.log(xdata);
             //$('.selPdct').last().select2().empty();                      
             $('.selPdct').last().select2({
                 placeholder: 'Select',
