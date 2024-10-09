@@ -97,8 +97,8 @@
                                     @forelse($data as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $item->product_name }}</td>
-                                        <td>{{ $item->product_id }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->id }}</td>
                                         <td>{{ $item->pcode }}</td>
                                         <td>{{ $item->item_tot }}</td>
                                         <td>{{ $item->soldQty }}</td>
