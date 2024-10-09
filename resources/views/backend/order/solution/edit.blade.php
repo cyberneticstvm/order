@@ -149,8 +149,8 @@
                                         <div class="btn-group">
                                             <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Add New Row</button>
                                             <ul class="dropdown-menu dropdown-block">
-                                                <li><a class="dropdown-item txt-dark" href="javascript:void(0)" onclick="addStoreOrderRow('solution')"><i class="fa fa-eye txt-danger fw-bold"></i> Solution</a></li>
-                                                <li><a class="dropdown-item txt-dark" href="javascript:void(0)" onclick="addStoreOrderRow('accessory')"><i class="fa fa-square-o txt-success fw-bold"></i> Accessory</a></li>
+                                                <li><a class="dropdown-item txt-dark" href="javascript:void(0)" onclick="addStoreOrderRow('solution', 'order')"><i class="fa fa-eye txt-danger fw-bold"></i> Solution</a></li>
+                                                <li><a class="dropdown-item txt-dark" href="javascript:void(0)" onclick="addStoreOrderRow('accessory', 'order')"><i class="fa fa-square-o txt-success fw-bold"></i> Accessory</a></li>
                                             </ul>
                                         </div>
                                     </div>

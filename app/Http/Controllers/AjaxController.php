@@ -40,10 +40,10 @@ class AjaxController extends Controller
         return response()->json($arr);
     }
 
-    public function getProductsByCategory($category)
+    public function getProductsByCategory($category, $type)
     {
         $products = Product::where('category', $category)->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
-        if ($category == 'frame' && Session::get('branch') != 1):
+        if ($category == 'frame' && $type == 'order' && Session::get('branch') != 1):
             $products = getInventory(Session::get('branch'), 0, $category)->where('balanceQty', '>', 0);
         endif;
         return response()->json($products);

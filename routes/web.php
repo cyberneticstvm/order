@@ -152,7 +152,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/chart/order/comparison/{bid}', 'getOrderComparisonData')->name('ajax.chart.order.comparison');
         Route::get('/chart/sales/comparison/{bid}/{month}/{year}/', 'getSalesComparisonData')->name('ajax.chart.sales.comparison');
         Route::post('/appointment/time', 'getAppointmentTime')->name('ajax.appointment.time');
-        Route::get('/product/{category}', 'getProductsByCategory')->name('ajax.product.get');
+        Route::get('/product/{category}/{type}', 'getProductsByCategory')->name('ajax.product.get');
         Route::get('/productprice/{product}/{category}/{batch}', 'getProductPrice')->name('ajax.productprice.get');
         Route::get('/product/batch/{branch}/{product}/{category}', 'getProductBatch')->name('ajax.productbatch.get');
         Route::get('/product/type/{category}/{attribute}', 'getProductTypes')->name('ajax.product.type');

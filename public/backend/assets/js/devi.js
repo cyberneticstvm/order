@@ -448,7 +448,7 @@ function addMedicineRow(category, attribute) {
     });
 }
 
-function addPurchaseRowPharmacy(category) {
+function addPurchaseRowPharmacy(category, type) {
     $.ajax({
         type: 'GET',
         url: '/ajax/product/' + category,
@@ -469,7 +469,7 @@ function addPurchaseRowPharmacy(category) {
     });
 }
 
-function addTransferRow(category) {
+function addTransferRow(category, type) {
     $.ajax({
         type: 'GET',
         url: '/ajax/product/' + category,
@@ -493,7 +493,7 @@ function addTransferRow(category) {
     });
 }
 
-function addPurchaseRowFrame(category) {
+function addPurchaseRowFrame(category, type) {
     $.ajax({
         type: 'GET',
         url: '/ajax/product/' + category,
@@ -513,7 +513,7 @@ function addPurchaseRowFrame(category) {
     });
 }
 
-function addStoreOrderRow(category) {
+function addStoreOrderRow(category, type) {
     $.ajax({
         type: 'GET',
         url: '/ajax/product/' + category,

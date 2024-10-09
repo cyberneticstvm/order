@@ -60,7 +60,7 @@
                                 <div class="row g-4 table-responsive">
                                     <div class="col text-end">
                                         <div class="btn-group">
-                                            <button class="btn btn-primary" type="button" onclick="addTransferRow('pharmacy')">Add New Row</button>
+                                            <button class="btn btn-primary" type="button" onclick="addTransferRow('pharmacy', 'transfer')">Add New Row</button>
                                         </div>
                                     </div>
                                     <div class="col-12">

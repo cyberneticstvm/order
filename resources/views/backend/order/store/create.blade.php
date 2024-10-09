@@ -154,9 +154,9 @@
                                         <div class="btn-group">
                                             <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Add New Row</button>
                                             <ul class="dropdown-menu dropdown-block">
-                                                <li><a class="dropdown-item txt-dark" href="javascript:void(0)" onclick="addStoreOrderRow('lens')"><i class="fa fa-eye txt-danger fw-bold"></i> Lens</a></li>
-                                                <li><a class="dropdown-item txt-dark" href="javascript:void(0)" onclick="addStoreOrderRow('frame')"><i class="fa fa-square-o txt-success fw-bold"></i> Frame</a></li>
-                                                <li><a class="dropdown-item txt-dark" href="javascript:void(0)" onclick="addStoreOrderRow('service')"><i class="icofont icofont-businesswoman txt-muted fw-bold"></i> Service</a></li>
+                                                <li><a class="dropdown-item txt-dark" href="javascript:void(0)" onclick="addStoreOrderRow('lens', 'order')"><i class="fa fa-eye txt-danger fw-bold"></i> Lens</a></li>
+                                                <li><a class="dropdown-item txt-dark" href="javascript:void(0)" onclick="addStoreOrderRow('frame', 'order')"><i class="fa fa-square-o txt-success fw-bold"></i> Frame</a></li>
+                                                <li><a class="dropdown-item txt-dark" href="javascript:void(0)" onclick="addStoreOrderRow('service', 'order')"><i class="icofont icofont-businesswoman txt-muted fw-bold"></i> Service</a></li>
                                             </ul>
                                         </div>
                                     </div>
