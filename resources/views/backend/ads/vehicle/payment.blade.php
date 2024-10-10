@@ -94,7 +94,7 @@
                                         <td>{{ $payment->vehicle->reg_number }}</td>
                                         <td>{{ $payment->amount }}</td>
                                         <td>{{ $payment->paymentmode->name }}</td>
-                                        <td>{{ $payment->vehicle->created_at->format('d.M.Y') }}</td>
+                                        <td>{{ $payment->created_at->format('d.M.Y') }}</td>
                                         <td class="text-center">{!! $payment->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('payment.delete', encrypt($payment->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
                                     </tr>
