@@ -96,7 +96,7 @@
                                         <td>{{ $payment->paymentmode->name }}</td>
                                         <td>{{ $payment->created_at->format('d.M.Y') }}</td>
                                         <td class="text-center">{!! $payment->status() !!}</td>
-                                        <td class="text-center"><a href="{{ route('payment.delete', encrypt($payment->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
+                                        <td class="text-center"><a href="{{ route('vehicle.payment.delete', encrypt($payment->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
                                     </tr>
                                     @empty
                                     @endforelse
