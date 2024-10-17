@@ -30,7 +30,7 @@ class Vehicle extends Model
 
     public function vstatus()
     {
-        return (Carbon::now()->diffInDays(Carbon::parse($this->payment()?->first()?->created_at)) < $this->payment_terms) ? 'Active' : 'Inactive';
+        return (Carbon::now()->diffInDays(Carbon::parse($this->payment()?->first()?->created_at)) < $this->payment_terms) ? "<span class='badge badge-success'>Active</span>" : "<span class='badge badge-danger'>Inactive</span>";
     }
 
     public function daysLeft()
