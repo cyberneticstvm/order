@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('vcode', 10)->unique()->nullable();
             $table->string('owner_name', 100);
             $table->string('reg_number', 15)->unique();
+            $table->string('place', 100)->nullable();
             $table->string('contact_number', 15);
             $table->decimal('fee', 5, 2)->default(0);
             $table->integer('payment_terms')->comment('in days')->default(0);

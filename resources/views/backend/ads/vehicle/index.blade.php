@@ -47,6 +47,7 @@
                                         <th>Reg. Branch</th>
                                         <th>Fee</th>
                                         <th>Pay. Terms</th>
+                                        <th>Days Left</th>
                                         <th>V.Status</th>
                                         <th>Del.Status</th>
                                         <th>Edit</th>
@@ -65,6 +66,7 @@
                                         <td>{{ $vehicle->branch?->name }}</td>
                                         <td>{{ $vehicle->fee }}</td>
                                         <td>{{ $vehicle->payment_terms }} Days</td>
+                                        <td>{{ $vehicle->daysLeft }} Days</td>
                                         <td class="text-center">{{ $vehicle->vstatus() }}</td>
                                         <td class="text-center">{!! $vehicle->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('vehicle.edit', encrypt($vehicle->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>

@@ -39,6 +39,7 @@ class AdvertisementController extends Controller
         $this->validate($request, [
             'owner_name' => 'required',
             'reg_number' => 'required|unique:vehicles,reg_number',
+            'place' => 'required',
             'contact_number' => 'required|numeric|digits:10',
             'fee' => 'required',
             'payment_terms' => 'required',
@@ -63,6 +64,7 @@ class AdvertisementController extends Controller
         $this->validate($request, [
             'owner_name' => 'required',
             'reg_number' => 'required|unique:vehicles,reg_number,' . $id,
+            'place' => 'required',
             'contact_number' => 'required|numeric|digits:10',
             'fee' => 'required',
             'payment_terms' => 'required',
