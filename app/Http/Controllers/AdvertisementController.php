@@ -43,6 +43,7 @@ class AdvertisementController extends Controller
             'contact_number' => 'required|numeric|digits:10',
             'fee' => 'required',
             'payment_terms' => 'required',
+            'card_issued' => 'required',
         ]);
         $input = $request->all();
         $input['vcode'] = uniqueCode(Vehicle::class, 'vcode', '', 1000, 9999);
@@ -68,6 +69,7 @@ class AdvertisementController extends Controller
             'contact_number' => 'required|numeric|digits:10',
             'fee' => 'required',
             'payment_terms' => 'required',
+            'card_issued' => 'required',
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;

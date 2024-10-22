@@ -74,6 +74,13 @@
                                     <small class="text-danger">{{ $errors->first('payment_terms') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-2">
+                                    <label class="form-label req">Card Issued</label>
+                                    {{ html()->select($name = 'card_issued', array('1' => 'Yes', '0' => 'No'), '')->class('form-control') }}
+                                    @error('card_issued')
+                                    <small class="text-danger">{{ $errors->first('card_issued') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                                     <button class="btn btn-submit btn-success" type="submit">Save</button>
