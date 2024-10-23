@@ -122,6 +122,9 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/adv/customer/payment/{id}', 'payment')->name('vehicle.payment');
         Route::post('/adv/customer/payment/{id}', 'paymentSave')->name('vehicle.payment.save');
         Route::get('/adv/customer/payment/delete/{id}', 'paymentDelete')->name('vehicle.payment.delete');
+
+        Route::get('/adv/customer/fetch/payment', 'vehicleFetchForPayment')->name('vehicle.payment.fetch');
+        Route::post('/adv/customer/fetch/payment', 'vehicleFetchForPaymentUpdate')->name('vehicle.payment.fetch.update');
     });
 });
 

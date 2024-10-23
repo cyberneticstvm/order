@@ -33,6 +33,11 @@ class Vehicle extends Model
         return (Carbon::now()->diffInDays(Carbon::parse($this->payment()?->first()?->created_at)) < $this->payment_terms) ? "<span class='text-success'>Active</span>" : "<span class='text-danger'>Inactive</span>";
     }
 
+    public function isVehicleActive()
+    {
+        return (Carbon::now()->diffInDays(Carbon::parse($this->payment()?->first()?->created_at)) < $this->payment_terms) ? true : false;
+    }
+
     public function daysLeft()
     {
         return $this->payment_terms - Carbon::now()->diffInDays(Carbon::parse($this->payment()?->first()?->created_at));

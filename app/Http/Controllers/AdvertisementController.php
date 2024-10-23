@@ -21,6 +21,7 @@ class AdvertisementController extends Controller
         $this->middleware('permission:vehicle-delete', ['only' => ['destroy']]);
         $this->middleware('permission:vehicle-payment-create', ['only' => ['payment', 'paymentSave']]);
         $this->middleware('permission:vehicle-payment-delete', ['only' => ['paymentDelete']]);
+        $this->middleware('permission:fetch-vehicle-for-payment', ['only' => ['vehicleFetchForPayment', 'vehicleFetchForPaymentUpdate']]);
     }
 
     function index()
@@ -121,5 +122,28 @@ class AdvertisementController extends Controller
     {
         VehiclePayment::findOrFail(decrypt($id))->delete();
         return redirect()->route('vehicles')->with("success", "Payment deleted successfully");
+    }
+
+    function vehicleFetchForPayment()
+    {
+        $vehicles = collect();
+        return view('backend.ads.vehicle.fetch', compact('vehicles'));
+    }
+
+    function vehicleFetchForPaymentUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'search_term' => 'required',
+        ]);
+        try {
+            $inputs = array($request->search_term);
+            $vehicles = Vehicle::where('vcode', $request->search_term)->orWhere('reg_number', $request->search_term)->orWhere('contact_number', $request->search_term)->get();
+            if ($vehicles->isEmpty()):
+                throw new Exception("No records found!");
+            endif;
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
+        return view('backend.ads.vehicle.fetch', compact('vehicles', 'inputs'));
     }
 }

@@ -392,7 +392,8 @@
             </a>
             {{
                 Menu::new()->addClass('sidebar-submenu')
-                ->linkIfCan('vehicle-list', route('vehicles'), 'Vehicle List');
+                ->linkIfCan('vehicle-list', route('vehicles'), 'Vehicle List')
+                ->linkIfCan('fetch-vehicle-for-payment', route('vehicle.payment.fetch'), 'Payment');
             }}
         </li>
         <li class="sidebar-main-title">
