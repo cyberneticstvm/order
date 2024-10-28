@@ -75,8 +75,9 @@ class StoreOrderController extends Controller
         $patient = Customer::findOrFail($registration->customer_id);
         $spectacle = Spectacle::where('registration_id', $registration->id)->latest()->first();
         $powers = Power::all();
+        $camps = $this->getCamps();
         $store_prescriptions = Spectacle::where('customer_id', $patient->id)->selectRaw("CONCAT_WS(' / ', 'CID', customer_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS cid, id")->get();
-        return view(($type == 1) ? 'backend.order.store.create' : 'backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'powers', 'states', 'registration', 'store_prescriptions', 'spectacle', 'frames'));
+        return view(($type == 1) ? 'backend.order.store.create' : 'backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'powers', 'states', 'registration', 'store_prescriptions', 'spectacle', 'frames', 'camps'));
     }
 
     public function fetch(Request $request)
@@ -159,6 +160,7 @@ class StoreOrderController extends Controller
                     'company_name' => $request->company_name,
                     'type' => $request->type,
                     'state' => $request->state,
+                    'camp' => $request->camp ?? NULL,
                     'created_by' => $request->user()->id,
                     'updated_by' => $request->user()->id,
                 ]);
@@ -254,7 +256,8 @@ class StoreOrderController extends Controller
         $store_prescriptions = Spectacle::where('customer_id', $order->customer_id)->selectRaw("CONCAT_WS(' / ', 'CID', customer_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS cid, id")->get();
         $powers = Power::all();
         $states = State::all();
-        return view('backend.order.store.edit', compact('products', 'pmodes', 'padvisers', 'order', 'powers', 'states', 'store_prescriptions', 'frames'));
+        $camps = $this->getCamps();
+        return view('backend.order.store.edit', compact('products', 'pmodes', 'padvisers', 'order', 'powers', 'states', 'store_prescriptions', 'frames', 'camps'));
     }
 
     /**
@@ -314,6 +317,7 @@ class StoreOrderController extends Controller
                     'gstin' => $request->gstin,
                     'company_name' => $request->company_name,
                     'type' => $request->type,
+                    'camp' => $request->camp ?? NULL,
                     'state' => $request->state,
                     'updated_by' => $request->user()->id,
                 ]);
@@ -423,5 +427,14 @@ class StoreOrderController extends Controller
             cancelOrder($order->id);
             return redirect()->back()->with('success', 'Order has been deleted successfully!');
         endif;
+    }
+
+    function getCamps()
+    {
+        $secret = apiSecret();
+        $url = api_url() . "/api/camp/order/" . $secret;
+        $json = file_get_contents($url);
+        $data = json_decode($json);
+        return $data->camps;
     }
 }

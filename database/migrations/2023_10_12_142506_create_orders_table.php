@@ -57,6 +57,7 @@ return new class extends Migration
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
             $table->foreign('branch_id')->references('id')->on('branches');
+            $table->string('camp')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->dateTime('stock_updated_at')->nullable();
