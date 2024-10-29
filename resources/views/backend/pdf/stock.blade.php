@@ -32,7 +32,7 @@
                 @forelse($stock->where('balanceQty', '>', 0) as $key => $item)
                 <tr>
                     <td>{{ $c++ }}</td>
-                    <td>{{ $item->product_name }}</td>
+                    <td>{{ $item->name }}</td>
                     <td>{{ $item->product_id }}</td>
                     <td>{{ $item->pcode }}</td>
                     <td>{{ $item->soldQty }}</td>
