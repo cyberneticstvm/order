@@ -33,7 +33,7 @@
                 <tr>
                     <td>{{ $c++ }}</td>
                     <td>{{ $item->name }}</td>
-                    <td>{{ $item->product_id }}</td>
+                    <td>{{ $item->id }}</td>
                     <td>{{ $item->pcode }}</td>
                     <td>{{ $item->soldQty }}</td>
                     <td>{{ $item->billedQty }}</td>
