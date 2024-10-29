@@ -29,7 +29,7 @@ class StockStatusReportExport implements FromCollection, WithMapping, WithHeadin
         return $stock->map(function ($data, $key) {
             return [
                 'item_serial' =>  $key + 1,
-                'product_name' => $data->product_name,
+                'product_name' => $data->name,
                 'product_code' => $data->pcode,
                 'booked' => $data->soldQty,
                 'billed' => $data->billedQty,
