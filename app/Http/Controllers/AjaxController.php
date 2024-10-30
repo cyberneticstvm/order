@@ -19,6 +19,7 @@ use App\Models\PurchaseDetail;
 use App\Models\Spectacle;
 use App\Models\Transfer;
 use App\Models\TransferDetails;
+use App\Models\VehiclePayment;
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -339,6 +340,27 @@ class AjaxController extends Controller
                 endforeach;
                 $op .= '</tbody><tfoot><tr><td colspan="6" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('amount'), 2) . '</td></tr></tfoot></table>';
                 $op .= '</div><div class="drawer-footer">Voucher Payments</div>';
+                break;
+            case 'ads':
+                $data = VehiclePayment::whereBetween('created_at', [$fdate, $tdate])->when($request->branch > 0, function ($q) use ($request) {
+                    return $q->where('branch_id', $request->branch);
+                })->get();
+                $op = '<div class="drawer-header">
+                        <h6 class="drawer-title" id="drawer-3-title">Vehicle Payment Detailed</h6></div><div class="drawer-body table-responsive">';
+                $op .= '<table class="table table-bordered table-striped"><thead><tr><th>SL No</th><th>Vehicle Number</th><th>Branch Name</th><th>Date</th><th>Notes</th><th>P.mode</th><th>Amount</th></tr></thead><tbody>';
+                foreach ($data as $key => $item) :
+                    $op .= "<tr>";
+                    $op .= '<td>' . $key + 1 . '</td>';
+                    $op .= '<td>' . $item->vehicle->reg_number . '</td>';
+                    $op .= '<td>' . $item->branch->name . '</td>';
+                    $op .= '<td>' . $item->created_at->format('d, M Y h:i a') . '</td>';
+                    $op .= '<td>' . $item->notes . '</td>';
+                    $op .= '<td>' . $item->paymentmode->name . '</td>';
+                    $op .= '<td class="text-end">' . number_format($item->amount, 2) . '</td>';
+                    $op .= "</tr>";
+                endforeach;
+                $op .= '</tbody><tfoot><tr><td colspan="6" class="text-end fw-bold">Total</td><td class="text-end fw-bold">' . number_format($data->sum('amount'), 2) . '</td></tr></tfoot></table>';
+                $op .= '</div><div class="drawer-footer">Ad Payments</div>';
                 break;
             default:
                 $op = "No records found";

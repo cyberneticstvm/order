@@ -152,7 +152,7 @@
                                     <tr>
                                         <td>Ad Payment</td>
                                         <td class="text-end">0.00</td>
-                                        <td class="text-end">{{ number_format($data->vehicle_payment_total_cash + $data->vehicle_payment_total_upi, 2) }}</td>
+                                        <td class="text-end"><a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="ads" data-mode="5" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->vehicle_payment_total_cash + $data->vehicle_payment_total_upi, 2) }}</a></td>
                                         <td class="text-end">{{ number_format($data->vehicle_payment_total_cash, 2) }}</td>
                                         <td class="text-end">0.00</td>
                                         <td class="text-end">0.00</td>
