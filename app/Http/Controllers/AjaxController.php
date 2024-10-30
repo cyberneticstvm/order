@@ -353,7 +353,7 @@ class AjaxController extends Controller
                     $op .= '<td>' . $key + 1 . '</td>';
                     $op .= '<td>' . $item->vehicle->reg_number . '</td>';
                     $op .= '<td>' . $item->branch->name . '</td>';
-                    $op .= '<td>' . $item->created_at->format('d, M Y h:i a') . '</td>';
+                    $op .= '<td>' . $item->created_at->format('d, M Y') . '</td>';
                     $op .= '<td>' . $item->notes . '</td>';
                     $op .= '<td>' . $item->paymentmode->name . '</td>';
                     $op .= '<td class="text-end">' . number_format($item->amount, 2) . '</td>';
