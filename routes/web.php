@@ -20,6 +20,7 @@ use App\Http\Controllers\IncomeExpenseController;
 use App\Http\Controllers\LabController;
 use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\MedicalRecordController;
+use App\Http\Controllers\OfferController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientProcedureController;
 use App\Http\Controllers\PaymentController;
@@ -146,6 +147,15 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/ord/{id}', 'viewArr')->name('view.arr');
 
         Route::get('/frames/available', 'asd')->name('get.available.frames');
+    });
+
+    Route::prefix('/offer')->controller(OfferController::class)->group(function () {
+        Route::get('/category', 'index')->name('offer.category.list');
+        Route::get('/category/create', 'create')->name('offer.category.create');
+        Route::post('/category/create', 'store')->name('offer.category.save');
+        Route::get('/category/edit/{id}', 'edit')->name('offer.category.edit');
+        Route::post('/category/edit/{id}', 'update')->name('offer.category.update');
+        Route::get('/category/delete/{id}', 'destroy')->name('offer.category.delete');
     });
 
     Route::prefix('/ajax')->controller(AjaxController::class)->group(function () {
