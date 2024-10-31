@@ -229,6 +229,95 @@ $(function () {
         $("#" + drawer).drawer('toggle');
     });
 
+    $(document).on("click", ".dltOfferPdct", function(e){
+        e.preventDefault();
+        var pid = $(this).data('pid');
+        var row = $(this).closest('tr');
+        if(confirm('Are you sure want to delete this product?')){
+            $.ajax({
+                type: 'GET',
+                url: '/ajax/offer/product/remove',
+                data: { 'pid': pid },
+                success: function (res) {
+                    if(res.type == 'success'){
+                        row.remove();
+                        success({
+                            'success': res.msg
+                        })
+                    }else{
+                        console.log(res)
+                        failed({
+                            'error': res.msg
+                        })
+                    }
+                },
+                error: function (err) {
+                    console.log(err)
+                }
+            });
+        }else{
+            return false;
+        }       
+    });
+
+    $(document).on("click", ".btnAddOfferProduct", function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/ajax/offer/product/save',
+            data: { 'oid': $("#offer_id").val(), 'pid': $(".selOfferPdct").val() },
+            success: function (res) {
+                if(res.type == 'success'){
+                    $(".tblContent").html(res.content);
+                    success({
+                        'success': res.msg
+                    })
+                }else{
+                    failed({
+                        'error': res.msg
+                    })
+                }
+            },
+            beforeSend: function(){
+                $(".btn-submit").html("Adding...<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>");
+            },
+            complete: function(){
+                $(".btn-submit").html("Add");
+            },
+            error: function (err) {
+                error(err);
+            }
+        });
+    });
+
+    $(document).on("click", ".offer", function () {
+        var drawer = $(this).data('drawer');
+        var branch = $(this).data('branch');
+        var oid = $(this).data('oid');
+        $("#offer_id").val(oid);        
+        $(".offerid").html($(this).data('oname'));        
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/offer/products',
+            data: { 'branch': branch, 'oid': oid },
+            success: function (res) {
+                var xdata = $.map(res.products, function (obj) {
+                    obj.text = obj.name || obj.id;
+                    return obj;
+                });                    
+                $('.selOfferPdct').select2({
+                    dropdownParent: $("#" + drawer),
+                    data: xdata,
+                });
+                $("#" + drawer).drawer('toggle');
+                $(".tblContent").html(res.content);
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        });
+    });
+
     $(document).on("click", ".frameCount", function () {
         var drawer = $(this).data('drawer');
         var fdate = $(this).data('from-date');

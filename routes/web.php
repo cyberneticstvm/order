@@ -185,6 +185,10 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/booked/product/details', 'getBookedProductDetails')->name('ajax.get.booked.product.details');
         Route::get('/transferin/product/details', 'transferInProductDetails')->name('ajax.get.transfer.in.product.details');
         Route::get('/transferout/product/details', 'transferOutProductDetails')->name('ajax.get.transfer.in.product.details');
+
+        Route::get('/offer/products', 'getProductsForOffer')->name('ajax.get.offer.products');
+        Route::get('/offer/product/remove', 'removeOfferProduct')->name('ajax.offer.product.remove');
+        Route::post('/offer/product/save', 'saveProductForOffer')->name('ajax.offer.product.save');
     });
 
     Route::prefix('/backend')->controller(HelperController::class)->group(function () {

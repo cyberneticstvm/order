@@ -56,7 +56,7 @@
                                     @forelse($categories as $key => $category)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td><a href="">{{ $category->name }}</a></td>
+                                        <td><a href="javascript:void(0)" class="offer" data-type="offer" data-oid="{{ $category->id }}" data-oname="{{ $category->name }}" data-branch="{{ $category->branch_id }}" data-drawer="offerDrawer">{{ $category->name }}</a></td>
                                         <td>{{ $category->discount_percentage }}</td>
                                         <td>{{ $category->buy_number }}</td>
                                         <td>{{ $category->get_number }}</td>
@@ -79,9 +79,6 @@
         </div>
     </div>
     <!-- Container-fluid Ends-->
-</div>
-<div class="drawer drawer-right slide" tabindex="-1" role="dialog" aria-labelledby="drawer-3-title" aria-hidden="true" id="offerDrawer">
-    <div class="drawer-content drawer-content-scrollable" role="document"></div>
 </div>
 @include("backend.misc.offer-drawer")
 @endsection

@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\OfferCategory;
+use App\Models\Product;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 
 class OfferController extends Controller
 {
-    private $branches;
+    private $branches, $products;
 
     function __construct()
     {
@@ -20,12 +21,14 @@ class OfferController extends Controller
         $this->middleware('permission:offer-category-delete', ['only' => ['destroy']]);
 
         $this->branches = Branch::where('type', 'branch')->get();
+        $this->products = Product::whereIn('category', ['frame'])->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->pluck('name', 'id');
     }
 
     function index()
     {
         $categories = OfferCategory::withTrashed()->get();
-        return view('backend.offer.category.index', compact('categories'));
+        $products = $this->products;
+        return view('backend.offer.category.index', compact('categories', 'products'));
     }
 
     function create()

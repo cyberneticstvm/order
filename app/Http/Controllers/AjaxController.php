@@ -8,6 +8,8 @@ use App\Models\Consultation;
 use App\Models\IncomeExpense;
 use App\Models\LabOrderNote;
 use App\Models\Month;
+use App\Models\OfferCategory;
+use App\Models\OfferProduct;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\PatientProcedure;
@@ -39,6 +41,69 @@ class AjaxController extends Controller
     {
         $arr = getAppointmentTimeList($request->date, $request->doctor_id, $request->branch_id);
         return response()->json($arr);
+    }
+
+    public function content($branch, $oid)
+    {
+        $existing = OfferProduct::where('branch_id', $branch)->where('offer_category_id', $oid)->orderByDesc('id')->get();
+        $tbl = "<table class='table table-bordered tblPdct'><thead><tr><th>SL No.</th><th>Product</th><th>Remove</th></tr></thead><tbody>";
+        foreach ($existing as $key => $item):
+            $tbl .= "<tr>";
+            $tbl .= "<td>" . $key + 1 . "</td>";
+            $tbl .= "<td>" . $item->product->name . "</td>";
+            $tbl .= "<td class='text-center'><a href='/ajax/offer/product/remove/' class='dltOfferPdct' data-pid='" . $item->id . "'><i class='fa fa-trash text-danger fa-lg'></i></a></td>";
+            $tbl .= "</tr>";
+        endforeach;
+        $tbl .= "</tbody></table>";
+        return $tbl;
+    }
+
+    public function removeOfferProduct(Request $request)
+    {
+        $pdct = OfferProduct::findOrFail($request->pid);
+        $pdct->forceDelete();
+        return response()->json([
+            'msg' => 'Product removed successfully!',
+            'type' => 'success',
+        ]);
+    }
+
+    public function getProductsForOffer(Request $request)
+    {
+        $offer = OfferCategory::findOrFail($request->oid);
+        $existing = OfferProduct::where('branch_id', $offer->branch_id)->where('offer_category_id', $offer->id)->get();
+        $products = Product::whereIn('category', ['frame'])->whereNotIn('id', $existing->pluck('product_id'))->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
+        $tbl = $this->content($offer->branch_id, $offer->id);
+        return response()->json([
+            'offer' => $offer,
+            'products' => $products,
+            'content' => $tbl,
+        ]);
+    }
+
+    public function saveProductForOffer(Request $request)
+    {
+        $offer = OfferCategory::findOrFail($request->oid);
+        if ($request->pid):
+            OfferProduct::insert([
+                'offer_category_id' => $offer->id,
+                'branch_id' => $offer->branch_id,
+                'product_id' => $request->pid,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+            $tbl = $this->content($offer->branch_id, $offer->id);
+            return response()->json([
+                'msg' => 'Product added successfully!',
+                'type' => 'success',
+                'content' => $tbl,
+            ]);
+        else:
+            return response()->json([
+                'msg' => 'Please select a product',
+                'type' => 'error',
+            ]);
+        endif;
     }
 
     public function getProductsByCategory($category, $type)
