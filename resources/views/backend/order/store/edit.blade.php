@@ -158,9 +158,9 @@
                                         <div class="btn-group">
                                             <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Add New Row</button>
                                             <ul class="dropdown-menu dropdown-block">
-                                                <li><a class="dropdown-item txt-dark" href="javascript:void(0)" onclick="addStoreOrderRow('lens', 'order')"><i class="fa fa-eye txt-danger fw-bold"></i> Lens</a></li>
-                                                <li><a class="dropdown-item txt-dark" href="javascript:void(0)" onclick="addStoreOrderRow('frame', 'order')"><i class="fa fa-square-o txt-success fw-bold"></i> Frame</a></li>
-                                                <li><a class="dropdown-item txt-dark" href="javascript:void(0)" onclick="addStoreOrderRow('service', 'order')"><i class="icofont icofont-businesswoman txt-muted fw-bold"></i> Service</a></li>
+                                                <li><a class="dropdown-item txt-dark" href="javascript:void(0)" onclick="addStoreOrderRow('lens', 'order', 0)"><i class="fa fa-eye txt-danger fw-bold"></i> Lens</a></li>
+                                                <li><a class="dropdown-item txt-dark" href="javascript:void(0)" onclick="addStoreOrderRow('frame', 'order', 0)"><i class="fa fa-square-o txt-success fw-bold"></i> Frame</a></li>
+                                                <li><a class="dropdown-item txt-dark" href="javascript:void(0)" onclick="addStoreOrderRow('service', 'order', 0)"><i class="icofont icofont-businesswoman txt-muted fw-bold"></i> Service</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -275,7 +275,7 @@
                                                             return $q->where('category', 'frame');
                                                         })->when(in_array($item->eye, ['service']), function($q){
                                                             return $q->where('category', 'service');
-                                                        })->pluck('name', 'id'), $item->product_id)->class('border-0 select2 selPdct')->attribute('id', $item->id)->placeholder('Select')->required() }}
+                                                        })->pluck('name', 'id'), $item->product_id)->class('border-0 select2 selPdct offerPdct')->attribute('id', $item->id)->placeholder('Select')->required() }}
                                                     </td>
                                                     <td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" value="{{ $item->qty }}" required /></td>
                                                     <td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' value="{{ $item->unit_price }}" step="any" required readonly /></td>

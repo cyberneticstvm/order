@@ -106,13 +106,52 @@ class AjaxController extends Controller
         endif;
     }
 
-    public function getProductsByCategory($category, $type)
+    public function getOfferedProducts($pid)
+    {
+        $products = NULL;
+        $item = OfferProduct::where('product_id', $pid)->first();
+        if ($item):
+            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->where('id', $item->offer_category_id)->where('buy_number', '>', 0)->where('get_number', '>', 0)->first();
+            if ($offer):
+                $pdcts = OfferProduct::where('offer_category_id', $offer->id)->pluck('product_id');
+                $products = Product::whereIn('category', ['frame'])->whereIn('id', $pdcts)->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
+            endif;
+        endif;
+        return array('products' => $products, 'getnumber' => $offer?->get_number ?? 0);
+    }
+
+    public function getOfferProducts($pid)
+    {
+        $products = $this->getOfferedProducts($pid)['products'] ?? NULL;
+        $discount = 0;
+        $get_number = $this->getOfferedProducts($pid)['getnumber'];
+        $item = OfferProduct::where('product_id', $pid)->first();
+        if ($item):
+            $product = Product::find($pid);
+            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->where('id', $item->offer_category_id)->where('discount_percentage', '>', 0)->first();
+            if ($offer && $offer->discount_percentage > 0 && $product->selling_price > 0):
+                $discount = ($product->selling_price * $offer->discount_percentage) / 100;
+            endif;
+        endif;
+        return response()->json([
+            'get_number' => $get_number,
+            'products' => $products,
+            'discount' => $discount,
+        ]);
+    }
+
+    public function getProductsByCategory($category, $type, $product)
     {
         $products = Product::where('category', $category)->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
-        if ($category == 'frame' && $type == 'order' && Session::get('branch') != 1):
+        if ($category == 'frame' && $type == 'order' && $product == 0 && Session::get('branch') != 1):
             $products = getInventory(Session::get('branch'), 0, $category)->where('balanceQty', '>', 0);
         endif;
-        return response()->json($products);
+        if ($product > 0):
+            $products = $this->getOfferedProducts($product)['products'];
+        endif;
+        return response()->json([
+            'products' => $products,
+        ]);
     }
 
     public function getProductsByType($type)
