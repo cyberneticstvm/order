@@ -491,7 +491,7 @@ $(function () {
             url: '/ajax/pdct/offer/' + pid,
             dataType: 'json',
             success: function (res) {
-                if(res.products){   
+                if(res.products && dis.hasClass('offerPdct')){   
                     if(res.get_number > 0){
                         for(var i = 0; i < res.get_number; i++)
                             addStoreOrderRow('frame', 'order', pid);
