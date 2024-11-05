@@ -137,6 +137,7 @@ class AjaxController extends Controller
             'get_number' => $get_number,
             'products' => $products,
             'discount' => $discount,
+            'item' => $item,
         ]);
     }
 
