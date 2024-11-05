@@ -580,10 +580,10 @@ function addPurchaseRowPharmacy(category, type) {
     });
 }
 
-function addTransferRow(category, type, product=0) {
+function addTransferRow(category, type) {
     $.ajax({
         type: 'GET',
-        url: '/ajax/product/' + category + '/' + type + '/'+ product,
+        url: '/ajax/product/' + category + '/' + type,
         dataType: 'json',
         success: function (res) {
             if (category == 'pharmacy') {
