@@ -117,12 +117,12 @@ class AjaxController extends Controller
                 $products = Product::whereIn('category', ['frame'])->whereIn('id', $pdcts)->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
             endif;
         endif;
-        //return array('products' => $products, 'getnumber' => $offer?->get_number ?? 0);
+        return array('products' => $products, 'getnumber' => $offer?->get_number ?? 0);
     }
 
     public function getOfferProducts($pid)
     {
-        /*$products = $this->getOfferedProducts($pid)['products'] ?? NULL;
+        $products = $this->getOfferedProducts($pid)['products'] ?? NULL;
         $discount = 0;
         $get_number = $this->getOfferedProducts($pid)['getnumber'];
         $item = OfferProduct::where('product_id', $pid)->first();
@@ -132,16 +132,12 @@ class AjaxController extends Controller
             if ($offer && $offer->discount_percentage > 0 && $product->selling_price > 0):
                 $discount = ($product->selling_price * $offer->discount_percentage) / 100;
             endif;
-        endif;*/
-        $item = OfferProduct::where('product_id', $pid)->first();
-        dd($item);
-        die;
-        /*return response()->json([
+        endif;
+        return response()->json([
             'get_number' => $get_number,
             'products' => $products,
             'discount' => $discount,
-            'item' => $item,
-        ]);*/
+        ]);
     }
 
     public function getProductsByCategory($category, $type, $product = 0)
@@ -154,7 +150,7 @@ class AjaxController extends Controller
             $products = $this->getOfferedProducts($product)['products'];
         endif;
         return response()->json([
-            'products1' => $products,
+            'products' => $products,
         ]);
     }
 
