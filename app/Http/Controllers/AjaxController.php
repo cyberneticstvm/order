@@ -136,12 +136,12 @@ class AjaxController extends Controller
         $item = OfferProduct::where('product_id', $pid)->first();
         dd($item);
         die;
-        return response()->json([
+        /*return response()->json([
             'get_number' => $get_number,
             'products' => $products,
             'discount' => $discount,
             'item' => $item,
-        ]);
+        ]);*/
     }
 
     public function getProductsByCategory($category, $type, $product = 0)
