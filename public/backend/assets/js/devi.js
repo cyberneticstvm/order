@@ -495,6 +495,7 @@ $(function () {
                     if(res.get_number > 0){
                         for(var i = 0; i < res.get_number; i++)
                             addStoreOrderRow('frame', 'order', pid);
+                            $(".powerbox tr:last").find('.selPdct').removeClass('offerPdct');
                     }                   
                 }else if(parseFloat(res.discount) > 0){
                     $(".discount").val(parseFloat(res.discount).toFixed(2))
@@ -723,9 +724,7 @@ function addStoreOrderRow(category, type, product) {
                 });
             }
             if (category === 'frame') {
-                var cls = (product > 0) ? 'offerPdct' : '';
-                console.log(cls)
-                $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td colspan="5"><select class="border-0" name="eye[]"><option value="frame">Frame</option></select><div class="d-none"><input type="hidden" name="sph[]" /><input type="hidden" name="cyl[]" /><input type="hidden" name="axis[]" /><input type="hidden" name="add[]" /><input type="hidden" name="ipd[]" /><input type="hidden" name="va[]" /></div></td><td colspan="2"><select class="border-0" name="fitting[]"><option value="0">Select</option><option value="1">Fitting</option></select></td><td><select class="form-control select2 selPdct ${cls}" data-batch="NA" data-category="frame" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
+                $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td colspan="5"><select class="border-0" name="eye[]"><option value="frame">Frame</option></select><div class="d-none"><input type="hidden" name="sph[]" /><input type="hidden" name="cyl[]" /><input type="hidden" name="axis[]" /><input type="hidden" name="add[]" /><input type="hidden" name="ipd[]" /><input type="hidden" name="va[]" /></div></td><td colspan="2"><select class="border-0" name="fitting[]"><option value="0">Select</option><option value="1">Fitting</option></select></td><td><select class="form-control select2 selPdct offerPdct" data-batch="NA" data-category="frame" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
             }
             if (category === 'service') {
                 $(".powerbox").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td colspan="5"><select class="border-0" name="eye[]"><option value="service">Service</option></select><div class="d-none"><input type="hidden" name="sph[]" /><input type="hidden" name="cyl[]" /><input type="hidden" name="axis[]" /><input type="hidden" name="add[]" />
