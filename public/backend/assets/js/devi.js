@@ -567,7 +567,7 @@ function addPurchaseRowPharmacy(category, type) {
         success: function (res) {
             $(".tblPharmacyPurchaseBody").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="form-control select2 selPdct" name="product_id[]" required><option></option></select></td><td><input type="text" name='batch_nmber[]' class="w-100 border-0 text-center" placeholder="Batch Number" required /></td><td><input type="date" name='expiry_date[]' class="w-100 border-0 text-center" value="" required /></td>
             <td><input type="number" name='qty[]' class="w-100 border-0 text-end pQty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='mrp[]' class="w-100 border-0 text-end pMrp" placeholder="0.00" min='1' step="any" required /></td><td><input type="number" name='purchase_price[]' class="w-100 border-0 text-end pPPrice" placeholder="0.00" min='1' step="any" required /></td><td><input type="number" name='selling_price[]' class="w-100 border-0 text-end pSPrice" placeholder="0.00" min='1' step="any" required /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end pTotal" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
-            var xdata = $.map(res, function (obj) {
+            var xdata = $.map(res.products, function (obj) {
                 obj.text = obj.name || obj.id;
                 return obj;
             });
@@ -591,7 +591,7 @@ function addTransferRow(category, type) {
             } else {
                 $(".tblPharmacyTransferBody").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="form-control select2 selPdctForTransfer" name="product_id[]" data-category="frame" required><option></option></select></td><td class='qtyAvailable text-end'>0</td><td><input type="number" name='qty[]' class="w-100 border-0 qtyMax text-end pQty" placeholder="0" min='1' step="1" required /></td></tr>`);
             }
-            var xdata = $.map(res, function (obj) {
+            var xdata = $.map(res.products, function (obj) {
                 obj.text = obj.name || obj.id;
                 return obj;
             });
@@ -611,7 +611,7 @@ function addPurchaseRowFrame(category, type) {
         dataType: 'json',
         success: function (res) {
             $(".tblPharmacyPurchaseBody").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="form-control select2 selPdct" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end pQty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='mrp[]' class="w-100 border-0 text-end pMrp" placeholder="0.00" min='1' step="any" required /></td><td><input type="number" name='purchase_price[]' class="w-100 border-0 text-end pPPrice" placeholder="0.00" min='1' step="any" required /></td><td><input type="number" name='selling_price[]' class="w-100 border-0 text-end pSPrice" placeholder="0.00" min='1' step="any" required /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end pTotal" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
-            var xdata = $.map(res, function (obj) {
+            var xdata = $.map(res.products, function (obj) {
                 obj.text = obj.name || obj.id;
                 return obj;
             });
