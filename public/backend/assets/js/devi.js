@@ -488,7 +488,7 @@ $(function () {
         var pid = dis.val();
         $.ajax({
             type: 'GET',
-            url: '/ajax/product/offer/' + pid,
+            url: '/ajax/pdct/offer/' + pid,
             dataType: 'json',
             success: function (res) {
                 if(res.products){   
