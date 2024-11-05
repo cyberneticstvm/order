@@ -122,7 +122,7 @@ class AjaxController extends Controller
 
     public function getOfferProducts($pid)
     {
-        $products = $this->getOfferedProducts($pid)['products'] ?? NULL;
+        /*$products = $this->getOfferedProducts($pid)['products'] ?? NULL;
         $discount = 0;
         $get_number = $this->getOfferedProducts($pid)['getnumber'];
         $item = OfferProduct::where('product_id', $pid)->first();
@@ -132,7 +132,8 @@ class AjaxController extends Controller
             if ($offer && $offer->discount_percentage > 0 && $product->selling_price > 0):
                 $discount = ($product->selling_price * $offer->discount_percentage) / 100;
             endif;
-        endif;
+        endif;*/
+        $item = OfferProduct::where('product_id', $pid)->first();
         dd($item);
         die;
         return response()->json([
