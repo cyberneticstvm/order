@@ -491,11 +491,12 @@ $(function () {
             url: '/ajax/product/offer/' + pid,
             dataType: 'json',
             success: function (res) {
-                if(res.products){   
+                if(res.products){
+                    console.log(res.products)   
                     if(res.get_number > 0){
                         for(var i = 0; i < res.get_number; i++)
                             addStoreOrderRow('frame', 'order', pid);
-                            $(".powerbox").find('.offerPdct').last().removeClass('offerPdct');
+                            //$(".powerbox").find('.offerPdct').last().removeClass('offerPdct');
                     }                   
                 }else if(parseFloat(res.discount) > 0){
                     $(".discount").val(parseFloat(res.discount).toFixed(2))
