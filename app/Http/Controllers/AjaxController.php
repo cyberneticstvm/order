@@ -140,7 +140,7 @@ class AjaxController extends Controller
         ]);
     }
 
-    public function getProductsByCategory($category, $type, $product)
+    public function getProductsByCategory($category, $type, $product = 0)
     {
         $products = Product::where('category', $category)->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
         if ($category == 'frame' && $type == 'order' && $product == 0 && Session::get('branch') != 1):
