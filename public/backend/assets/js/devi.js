@@ -495,7 +495,7 @@ $(function () {
                     if(res.get_number > 0){
                         for(var i = 0; i < res.get_number; i++)
                             addStoreOrderRow('frame', 'order', pid);
-                            $(".powerbox tr:last").find('.selPdct').removeClass('offerPdct');
+                            $(".powerbox .selPdct:last").removeClass('offerPdct');
                     }                   
                 }else if(parseFloat(res.discount) > 0){
                     $(".discount").val(parseFloat(res.discount).toFixed(2))
