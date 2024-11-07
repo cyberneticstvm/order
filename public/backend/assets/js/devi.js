@@ -60,7 +60,14 @@ $(function () {
             dataType: 'json',
             success: function (res) {
                 dis.parent().parent().find(".qty").val('1');
-                dis.parent().parent().find(".price, .total").val(parseFloat(res.selling_price).toFixed(2));
+                if(dis.hasClass('offerredPdct')){
+                    dis.parent().parent().find(".price, .total").val(0.00);
+                    $('.discount').val(0);
+                    $('.discount').attr('readonly', true);
+                }else{
+                    dis.parent().parent().find(".price, .total").val(parseFloat(res.selling_price).toFixed(2));
+                    $('.discount').attr('readonly', false);
+                }                
                 if (dis.hasClass('pdctFirst')) {
                     $('.pdctSecond').val(dis.val());
                     $(".pdctSecond").select2();
@@ -491,13 +498,24 @@ $(function () {
             url: '/ajax/pdct/offer/' + pid,
             dataType: 'json',
             success: function (res) {
-                if(res.products && !dis.hasClass('offerredPdct')){   
+                if(res.products && !dis.hasClass('offerredPdct')){  
+                    dis.removeClass('discOffer'); 
+                    $(".discount").val(0)
+                    $(".discount").attr('readonly', false);
                     if(res.get_number > 0){
                         for(var i = 0; i < res.get_number; i++)
                             addStoreOrderRow('frame', 'order', pid);
+                        $(".discount").attr('readonly', true);
                     }                   
                 }else if(parseFloat(res.discount) > 0){
-                    $(".discount").val(parseFloat(res.discount).toFixed(2))
+                    dis.addClass('discOffer');
+                    var disc = (parseFloat($(".discount").val()) > 0) ? parseFloat($(".discount").val()) + parseFloat(res.discount) : parseFloat(res.discount);
+                    $(".discount").val(disc.toFixed(2));
+                    $(".discount").attr('readonly', true);
+                }else{
+                    dis.removeClass('discOffer');
+                    $(".discount").val(0)
+                    $(".discount").attr('readonly', false);
                 }
                 calculateTotal(); 
             }

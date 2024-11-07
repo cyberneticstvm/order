@@ -101,6 +101,29 @@
         let disc = parseFloat(frm['discount'].value);
         let ord_tot = parseFloat(frm['order_total'].value);
         let disc_allowed = parseFloat((ord_tot * disc_per) / 100);
+        let offerproduct = $('#orderForm .offerPdct').length ?? 0;
+        let offerredproduct = $('#orderForm .offerredPdct').length ?? 0;
+        let discfferproduct = $('#orderForm .discOffer').length ?? 0;
+        let bogoffer = offerredproduct - discfferproduct;
+
+        if (bogoffer > 0 && discfferproduct > 0) {
+            failed({
+                'error': 'Only one offer is allowed for one order'
+            })
+            return false;
+        }
+        if (bogoffer > 0 && disc > 0) {
+            failed({
+                'error': 'Please remove discount'
+            })
+            return false;
+        }
+        if (offerproduct > 0 && offerredproduct == 0) {
+            failed({
+                'error': 'Please add a product'
+            })
+            return false;
+        }
         if (frm['advance'].value > 0 && frm['payment_mode'].value == '') {
             failed({
                 'error': 'Please select advance payment mode!'
