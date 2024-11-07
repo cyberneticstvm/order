@@ -118,12 +118,12 @@
             })
             return false;
         }
-        if (offerproduct > 0 && offerredproduct == 0 && discfferproduct == 0) {
+        /*if (offerproduct > 0 && offerredproduct == 0 && discfferproduct == 0) {
             failed({
                 'error': 'Please add a product'
             })
             return false;
-        }
+        }*/
         if (frm['advance'].value > 0 && frm['payment_mode'].value == '') {
             failed({
                 'error': 'Please select advance payment mode!'
