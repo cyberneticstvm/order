@@ -499,6 +499,7 @@ $(function () {
             dataType: 'json',
             success: function (res) {
                 if(res.products && !dis.hasClass('offerredPdct')){  
+                    dis.addClass('bogo');
                     dis.removeClass('discOffer'); 
                     $(".discount").val(0)
                     $(".discount").attr('readonly', false);
@@ -509,10 +510,12 @@ $(function () {
                     }                   
                 }else if(parseFloat(res.discount) > 0){
                     dis.addClass('discOffer');
+                    dis.removeClass('bogo');
                     var disc = (parseFloat($(".discount").val()) > 0) ? parseFloat($(".discount").val()) + parseFloat(res.discount) : parseFloat(res.discount);
                     $(".discount").val(disc.toFixed(2));
                     $(".discount").attr('readonly', true);
                 }else{
+                    dis.removeClass('bogo');
                     dis.removeClass('discOffer');
                     $(".discount").val(0)
                     $(".discount").attr('readonly', false);

@@ -104,6 +104,7 @@
         let offerproduct = $('#orderForm .offerPdct').length ?? 0;
         let offerredproduct = $('#orderForm .offerredPdct').length ?? 0;
         let discfferproduct = $('#orderForm .discOffer').length ?? 0;
+        let bogo = $('#orderForm .bogo').length ?? 0;
         let bogoffer = offerredproduct - discfferproduct;
 
         if (bogoffer > 0 && discfferproduct > 0) {
@@ -118,12 +119,12 @@
             })
             return false;
         }
-        /*if (offerproduct > 0 && offerredproduct == 0 && discfferproduct == 0) {
+        if (bogo > 0 && offerredproduct == 0 && discfferproduct == 0) {
             failed({
                 'error': 'Please add a product'
             })
             return false;
-        }*/
+        }
         if (frm['advance'].value > 0 && frm['payment_mode'].value == '') {
             failed({
                 'error': 'Please select advance payment mode!'
