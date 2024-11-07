@@ -40,6 +40,7 @@ class AdvertisementController extends Controller
         $this->validate($request, [
             'owner_name' => 'required',
             'reg_number' => 'required|unique:vehicles,reg_number',
+            'vcode' => 'required',
             'place' => 'required',
             'contact_number' => 'required|numeric|digits:10',
             'fee' => 'required',
@@ -47,7 +48,7 @@ class AdvertisementController extends Controller
             'card_issued' => 'required',
         ]);
         $input = $request->all();
-        $input['vcode'] = uniqueCode(Vehicle::class, 'vcode', '', 1000, 9999);
+        //$input['vcode'] = uniqueCode(Vehicle::class, 'vcode', '', 1000, 9999);
         $input['branch_id'] = Session::get('branch');
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
@@ -66,6 +67,7 @@ class AdvertisementController extends Controller
         $this->validate($request, [
             'owner_name' => 'required',
             'reg_number' => 'required|unique:vehicles,reg_number,' . $id,
+            'vcode' => 'required',
             'place' => 'required',
             'contact_number' => 'required|numeric|digits:10',
             'fee' => 'required',
