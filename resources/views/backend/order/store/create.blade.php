@@ -43,12 +43,6 @@
                                 <input type="hidden" name="registration_id" value="{{ $registration?->id ?? 0 }}" />
                                 <input type="hidden" name="customer_id" id="customer_id" value="{{ $patient?->id ?? 0 }}" />
                                 <input type="hidden" name="disc_per" value="{{ branch()->discount_limit_percentage }}" />
-                                <div class="col-md-3">
-                                    <label class="form-label">Camp Name</label>
-                                    {{ html()->select('camp', $camps, old('camp'))->class('form-control select2')->if(Session::get('branch') != 17, function($el){
-                                        return $el->attribute('disabled', 'true');
-                                    })->placeholder('Select') }}
-                                </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Order Date</label>
                                     {{ html()->date($name = 'order_date', $value = date('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}
@@ -150,6 +144,12 @@
                                 <div class="col-md-3">
                                     <label class="form-label">Company Name</label>
                                     {{ html()->text($name = 'company_name', $value = $patient?->company_name ?? old('company_name'))->class('form-control')->placeholder('Company Name') }}
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Camp Name</label>
+                                    {{ html()->select('camp', $camps, old('camp'))->class('form-control select2')->if(Session::get('branch') != 17, function($el){
+                                        return $el->attribute('disabled', 'true');
+                                    })->placeholder('Select') }}
                                 </div>
                                 <div class="row g-4 table-responsive">
                                     <div class="col-md-3">

@@ -41,12 +41,6 @@
                                 @csrf
                                 <input type="hidden" name="customer_id" id="customer_id" value="{{ $order?->customer_id ?? 0 }}" />
                                 <input type="hidden" name="disc_per" value="{{ branch()->discount_limit_percentage }}" />
-                                <div class="col-md-3">
-                                    <label class="form-label">Camp Name</label>
-                                    {{ html()->select('camp', $camps, $order->camp)->class('form-control select2')->if(Session::get('branch') != 17, function($el){
-                                        return $el->attribute('disabled', 'true');
-                                    })->placeholder('Select') }}
-                                </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Order Date</label>
                                     {{ html()->date($name = 'order_date', $value = $order->order_date?->format('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}
@@ -148,6 +142,12 @@
                                 <div class="col-md-3">
                                     <label class="form-label">Company Name</label>
                                     {{ html()->text($name = 'company_name', $value = $order->company_name)->class('form-control')->placeholder('Company Name') }}
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Camp Name</label>
+                                    {{ html()->select('camp', $camps, $order->camp)->class('form-control select2')->if(Session::get('branch') != 17, function($el){
+                                        return $el->attribute('disabled', 'true');
+                                    })->placeholder('Select') }}
                                 </div>
                                 <div class="row g-4 table-responsive">
                                     <div class="col-md-3">
