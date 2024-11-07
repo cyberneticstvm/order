@@ -121,7 +121,7 @@
         }
         if (bogo > 0 && offerredproduct == 0 && discfferproduct == 0) {
             failed({
-                'error': 'Please add a product'
+                'error': 'Please add an offer product'
             })
             return false;
         }
