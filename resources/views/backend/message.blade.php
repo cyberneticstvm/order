@@ -118,7 +118,7 @@
             })
             return false;
         }
-        if (offerproduct > 0 && offerredproduct == 0) {
+        if (offerproduct > 0 && offerredproduct == 0 && discfferproduct == 0) {
             failed({
                 'error': 'Please add a product'
             })
