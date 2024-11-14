@@ -30,7 +30,17 @@
                             <div class="col">
                                 <h5>Vehicle Register</h5><span>Vehicle Management</span>
                             </div>
-                            <div class="col text-end"><a href="{{ route('vehicle.create') }}" class="btn btn-primary" type="button">Add New</a></div>
+                            <div class="col text-end">
+                                <div class="btn-group">
+                                    <a href="{{ route('vehicle.create') }}" class="btn btn-primary" type="button">Add New</a>
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Export</button>
+                                    <ul class="dropdown-menu dropdown-block">
+                                        <li><a class="dropdown-item" href="{{ route('export.vehicle.excel') }}" target="_blank"><i class="icofont icofont-file-excel txt-success fw-bold"></i> Excel</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">

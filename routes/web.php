@@ -231,6 +231,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
 
         Route::get('/order/{fdate}/{tdate}/{status}/{branch}', 'exportOrder')->name('export.order');
         Route::get('/stock/{category}/{branch}', 'exportStockStatus')->name('export.stock.status.excel');
+        Route::get('/vehicle', 'exportVehicle')->name('export.vehicle.excel');
     });
 
     Route::prefix('/backend/import')->controller(ImportExportController::class)->group(function () {

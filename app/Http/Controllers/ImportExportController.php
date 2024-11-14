@@ -13,6 +13,7 @@ use App\Exports\ProductLensExport;
 use App\Exports\ProductPharmacyExport;
 use App\Exports\ProductSolutionExport;
 use App\Exports\StockStatusReportExport;
+use App\Exports\VehicleExport;
 use App\Models\Branch;
 use App\Imports\FrameImport;
 use App\Imports\LensImport;
@@ -49,6 +50,8 @@ class ImportExportController extends Controller
         $this->middleware('permission:import-new-lenses', ['only' => ['importLenses', 'importLensesUpdate']]);
         $this->middleware('permission:import-product-transfer', ['only' => ['importTransfer', 'importTransferUpdate']]);
         $this->middleware('permission:stock-comparison', ['only' => ['stockComparison', 'stockComparisonUpdate']]);
+
+        $this->middleware('permission:export-vehicle-excel', ['only' => ['exportVehicle']]);
 
         $this->middleware(function ($request, $next) {
 
@@ -90,6 +93,11 @@ class ImportExportController extends Controller
     public function exportProductAccessory(Request $request)
     {
         return Excel::download(new ProductAccessoryExport($request), 'accessory_products.xlsx');
+    }
+
+    public function exportVehicle(Request $request)
+    {
+        return Excel::download(new VehicleExport(), 'vehicle.xlsx');
     }
 
     public function importProductPurchase()
