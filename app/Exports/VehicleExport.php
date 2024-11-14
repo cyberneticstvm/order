@@ -24,15 +24,15 @@ class VehicleExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
                 'vehicle_number' => $data->reg_number,
                 'vehicle_code' => $data->vcode,
                 'stand_name' => $data->place,
-                'active_status' => $data->vstatus(),
-                'delete_status' => $data->status(),
+                'active_status' => $data->isVehicleActive() ? 'Yes' : 'No',
+                'card_issued' => $data->card_issued == 1 ? 'Yes' : 'No',
             ];
         });
     }
 
     public function headings(): array
     {
-        return ['SL No', 'Owner Name', 'Vehicle Number', 'Vehicle Code', 'Stand Name', 'Active Status', 'Delete Status'];
+        return ['SL No', 'Owner Name', 'Vehicle Number', 'Vehicle Code', 'Stand Name', 'Active Status', 'Card Issued'];
     }
 
     public function styles(Worksheet $sheet)
