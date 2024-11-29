@@ -45,6 +45,7 @@ class ReportController extends Controller
         $this->middleware('permission:report-purchase', ['only' => ['purchase', 'fetchPurchase']]);
         $this->middleware('permission:export-order', ['only' => ['exportOrder']]);
         $this->middleware('permission:report-order-by-price', ['only' => ['orderByPrice', 'orderByPriceFetch']]);
+        $this->middleware('permission:report-stock-movement', ['only' => ['stockMovement', 'stockMovementFetch']]);
 
         $this->middleware(function ($request, $next) {
             $brs = Branch::selectRaw("0 as id, 'All / Main Branch' as name");
@@ -364,5 +365,32 @@ class ReportController extends Controller
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
         return view('backend.report.order-by-price', compact('records', 'inputs', 'categories', 'branches'));
+    }
+
+    function stockMovement()
+    {
+        $inputs = [date('Y-m-d'), date('Y-m-d'), 0, Session::get('branch')];
+        $branches = $this->branches;
+        $products = Product::whereIn('category', ['frame', 'solution'])->get();
+        $data = collect();
+        return view('backend.report.stock-movement', compact('data', 'inputs', 'branches', 'products'));
+    }
+
+    function stockMovementFetch(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required',
+            'to_date' => 'required',
+            'branch' => 'required',
+        ]);
+        $inputs = [$request->from_date, $request->to_date, $request->product, $request->branch];
+        $branches = $this->branches;
+        $products = Product::whereIn('category', ['frame', 'solution'])->get();
+        $data = OrderDetail::leftJoin('orders AS o', 'o.id', 'order_details.order_id')->leftJoin('products AS p', 'p.id', 'order_details.product_id')->whereIn('p.category', ['frame', 'solution'])->whereBetween('o.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->selectRaw("order_details.product_id, COUNT(order_details.qty) AS soldQty")->when($request->product > 0, function ($q) use ($request) {
+            return $q->where('order_details.product_id', $request->product);
+        })->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('o.branch_id', $request->branch);
+        })->groupBy("order_details.product_id")->orderByDesc("soldQty")->get();
+        return view('backend.report.stock-movement', compact('data', 'inputs', 'branches', 'products'));
     }
 }

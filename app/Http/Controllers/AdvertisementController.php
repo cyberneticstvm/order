@@ -47,12 +47,16 @@ class AdvertisementController extends Controller
             'payment_terms' => 'required',
             'card_issued' => 'required',
         ]);
-        $input = $request->all();
-        //$input['vcode'] = uniqueCode(Vehicle::class, 'vcode', '', 1000, 9999);
-        $input['branch_id'] = Session::get('branch');
-        $input['created_by'] = $request->user()->id;
-        $input['updated_by'] = $request->user()->id;
-        Vehicle::create($input);
+        try {
+            $input = $request->all();
+            //$input['vcode'] = uniqueCode(Vehicle::class, 'vcode', '', 1000, 9999);
+            $input['branch_id'] = Session::get('branch');
+            $input['created_by'] = $request->user()->id;
+            $input['updated_by'] = $request->user()->id;
+            Vehicle::create($input);
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage())->withInput($request->all());
+        }
         return redirect()->route('vehicles')->with("success", "Vehicle created successfully");
     }
 
@@ -74,9 +78,14 @@ class AdvertisementController extends Controller
             'payment_terms' => 'required',
             'card_issued' => 'required',
         ]);
-        $input = $request->all();
-        $input['updated_by'] = $request->user()->id;
-        Vehicle::findOrFail($id)->update($input);
+        try {
+            $input = $request->all();
+            $input['updated_by'] = $request->user()->id;
+            Vehicle::findOrFail($id)->update($input);
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage())->withInput($request->all());
+        }
+
         return redirect()->route('vehicles')->with("success", "Vehicle updated successfully");
     }
 

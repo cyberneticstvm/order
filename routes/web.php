@@ -735,6 +735,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/order', 'fetchSales')->name('order.export.fetch');
         Route::get('/order/by/price', 'orderByPrice')->name('order.by.price');
         Route::post('/order/by/price', 'orderByPriceFetch')->name('order.by.price.fetch');
+        Route::get('/stock-movement', 'stockMovement')->name('report.stock.movement');
+        Route::post('/stock-movement', 'stockMovementFetch')->name('report.stock.movement.fetch');
     });
 
     Route::prefix('/backend/voucher')->controller(VoucherController::class)->group(function () {
