@@ -369,7 +369,7 @@ class ReportController extends Controller
 
     function stockMovement()
     {
-        $inputs = [date('Y-m-d'), date('Y-m-d'), 0, Session::get('branch')];
+        $inputs = [date('Y-m-d'), date('Y-m-d'), Session::get('branch')];
         $branches = $this->branches;
         $products = Product::whereIn('category', ['frame', 'solution'])->get();
         $data = collect();
@@ -383,7 +383,7 @@ class ReportController extends Controller
             'to_date' => 'required',
             'branch' => 'required',
         ]);
-        $inputs = [$request->from_date, $request->to_date, $request->product, $request->branch];
+        $inputs = [$request->from_date, $request->to_date, $request->branch];
         $branches = $this->branches;
         $products = Product::whereIn('category', ['frame', 'solution'])->get();
         /*$data = Product::selectRaw("products.id, products.code, products.name, products.category, products.type_id, products.selling_price, IFNULL(COUNT(od.qty), 0) AS soldQty")->leftJoin('order_details AS od', 'products.id', 'od.product_id')->leftJoin('orders AS o', 'o.id', 'od.order_id')->whereIn('products.category', ['frame', 'solution'])->whereBetween('o.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->product > 0, function ($q) use ($request) {

@@ -42,13 +42,9 @@
                                     <small class="text-danger">{{ $errors->first('to_date') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-2">
-                                    <label class="form-label">Product</label>
-                                    {{ html()->select($name = 'product', $products->pluck('name', 'id'), ($inputs[2]) ?? old('product'))->class('form-control select2')->placeholder('Select') }}
-                                </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Branch</label>
-                                    {{ html()->select($name = 'branch', $branches, ($inputs[3]) ?? old('branch'))->class('form-control select2')->placeholder('Select') }}
+                                    {{ html()->select($name = 'branch', $branches, ($inputs[2]) ?? old('branch'))->class('form-control select2')->placeholder('Select') }}
                                     @error('branch')
                                     <small class="text-danger">{{ $errors->first('branch') }}</small>
                                     @enderror
@@ -91,7 +87,7 @@
                                         <td>{{ $item->type?->name }}</td>
                                         <td>{{ $item->category }}</td>
                                         <td>{{ $item->selling_price }}</td>
-                                        <td class="fw-bold">{{ getStockMovement($item->id, $inputs[3], $inputs[0], $inputs[1])->soldQty }}</td>
+                                        <td class="fw-bold">{{ getStockMovement($item->id, $inputs[2], $inputs[0], $inputs[1])->soldQty }}</td>
                                     </tr>
                                     @empty
                                     @endforelse
