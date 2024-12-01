@@ -91,7 +91,7 @@
                                         <td>{{ $item->type?->name }}</td>
                                         <td>{{ $item->category }}</td>
                                         <td>{{ $item->selling_price }}</td>
-                                        <td class="fw-bold">{{ getStockMovement($item->id, $inputs[3], $inputs[0], $inputs[1])->soldQty }}</td>
+                                        <td class="fw-bold">{{ getStockMovement($item->id, $inputs[3], $inputs[0], $inputs[1]) }}</td>
                                     </tr>
                                     @empty
                                     @endforelse
