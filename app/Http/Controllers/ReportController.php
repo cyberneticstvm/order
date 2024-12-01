@@ -390,7 +390,7 @@ class ReportController extends Controller
             return $q->where('od.product_id', $request->product);
         })->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('o.branch_id', $request->branch);
-        })->groupBy("od.product_id, p.code, p.name, p.category, p.selling_price")->orderBy("soldQty")->get();
+        })->groupBy("p.id, p.code, p.name, p.category, p.selling_price")->orderBy("soldQty")->get();
         return view('backend.report.stock-movement', compact('data', 'inputs', 'branches', 'products'));
     }
 }
