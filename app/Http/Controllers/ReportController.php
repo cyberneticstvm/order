@@ -391,7 +391,7 @@ class ReportController extends Controller
         })->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('o.branch_id', $request->branch);
         })->groupBy("products.id", "products.code", "products.name", "products.category", "products.type_id", "products.selling_price")->orderBy("soldQty")->get();*/
-        $data = TransferDetails::leftJoin('transfers as t', 'transfer_details.transfer_id', 't.id')->selectRaw("transfer_details.product_id")->unique('transfer_details.product_id');
+        $data = TransferDetails::leftJoin('transfers as t', 'transfer_details.transfer_id', 't.id')->selectRaw("transfer_details.product_id")->get()->unique('transfer_details.product_id');
         return view('backend.report.stock-movement', compact('data', 'inputs', 'branches', 'products'));
     }
 }
