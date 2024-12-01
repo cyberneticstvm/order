@@ -386,11 +386,12 @@ class ReportController extends Controller
         $inputs = [$request->from_date, $request->to_date, $request->product, $request->branch];
         $branches = $this->branches;
         $products = Product::whereIn('category', ['frame', 'solution'])->get();
-        $data = Product::selectRaw("products.id, products.code, products.name, products.category, products.type_id, products.selling_price, IFNULL(COUNT(od.qty), 0) AS soldQty")->leftJoin('order_details AS od', 'products.id', 'od.product_id')->leftJoin('orders AS o', 'o.id', 'od.order_id')->whereIn('products.category', ['frame', 'solution'])->when($request->product > 0, function ($q) use ($request) {
+        /*$data = Product::selectRaw("products.id, products.code, products.name, products.category, products.type_id, products.selling_price, IFNULL(COUNT(od.qty), 0) AS soldQty")->leftJoin('order_details AS od', 'products.id', 'od.product_id')->leftJoin('orders AS o', 'o.id', 'od.order_id')->whereIn('products.category', ['frame', 'solution'])->whereBetween('o.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->product > 0, function ($q) use ($request) {
             return $q->where('od.product_id', $request->product);
         })->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('o.branch_id', $request->branch);
-        })->groupBy("products.id", "products.code", "products.name", "products.category", "products.type_id", "products.selling_price")->orderBy("soldQty")->get();
+        })->groupBy("products.id", "products.code", "products.name", "products.category", "products.type_id", "products.selling_price")->orderBy("soldQty")->get();*/
+        $data = TransferDetails::leftJoin('transfers as t', 'transfer_details.transfer_id', 't.id')->selectRow("transfer_details.product_id")->unique('transfer_details.product_id');
         return view('backend.report.stock-movement', compact('data', 'inputs', 'branches', 'products'));
     }
 }
