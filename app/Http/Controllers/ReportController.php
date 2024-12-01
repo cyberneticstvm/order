@@ -386,11 +386,11 @@ class ReportController extends Controller
         $inputs = [$request->from_date, $request->to_date, $request->product, $request->branch];
         $branches = $this->branches;
         $products = Product::whereIn('category', ['frame', 'solution'])->get();
-        $data = OrderDetail::leftJoin('orders AS o', 'o.id', 'order_details.order_id')->leftJoin('products AS p', 'p.id', 'order_details.product_id')->whereIn('p.category', ['frame', 'solution'])->whereBetween('o.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->selectRaw("order_details.product_id, COUNT(order_details.qty) AS soldQty")->when($request->product > 0, function ($q) use ($request) {
-            return $q->where('order_details.product_id', $request->product);
+        $data = Product::leftJoin('order_details AS od', 'products.id', 'od.product_id')->leftJoin('orders AS o', 'o.id', 'od.order_id')->whereIn('products.category', ['frame', 'solution'])->whereBetween('o.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->selectRaw("od.product_id, IFNULL(COUNT(od.qty), 0) AS soldQty")->when($request->product > 0, function ($q) use ($request) {
+            return $q->where('od.product_id', $request->product);
         })->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('o.branch_id', $request->branch);
-        })->groupBy("order_details.product_id")->orderByDesc("soldQty")->get();
+        })->groupBy("od.product_id")->orderBy("soldQty")->get();
         return view('backend.report.stock-movement', compact('data', 'inputs', 'branches', 'products'));
     }
 }
