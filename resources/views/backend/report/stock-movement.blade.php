@@ -83,14 +83,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($data as $key => $item)
+                                    @forelse($products as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $item->product->name }}</td>
-                                        <td>{{ $item->product->code }}</td>
-                                        <td>{{ $item->product->type?->name }}</td>
-                                        <td>{{ $item->product->category }}</td>
-                                        <td>{{ $item->product->selling_price }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->code }}</td>
+                                        <td>{{ $item->type?->name }}</td>
+                                        <td>{{ $item->category }}</td>
+                                        <td>{{ $item->selling_price }}</td>
                                         <td class="fw-bold">0</td>
                                     </tr>
                                     @empty

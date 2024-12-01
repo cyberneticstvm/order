@@ -373,7 +373,7 @@ class ReportController extends Controller
         $branches = $this->branches;
         $products = Product::whereIn('category', ['frame', 'solution'])->get();
         $data = collect();
-        return view('backend.report.stock-movement', compact('data', 'inputs', 'branches', 'products'));
+        return view('backend.report.stock-movement', compact('inputs', 'branches', 'products'));
     }
 
     function stockMovementFetch(Request $request)
@@ -391,7 +391,7 @@ class ReportController extends Controller
         })->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('o.branch_id', $request->branch);
         })->groupBy("products.id", "products.code", "products.name", "products.category", "products.type_id", "products.selling_price")->orderBy("soldQty")->get();*/
-        $data = TransferDetails::leftJoin('transfers as t', 'transfer_details.transfer_id', 't.id')->leftJoin('products as p', 'p.id', 'transfer_details.product_id')->selectRaw("transfer_details.product_id")->whereIn('p.category', ['frame', 'solution'])->get()->unique('product_id');
-        return view('backend.report.stock-movement', compact('data', 'inputs', 'branches', 'products'));
+        /*$data = TransferDetails::leftJoin('transfers as t', 'transfer_details.transfer_id', 't.id')->leftJoin('products as p', 'p.id', 'transfer_details.product_id')->selectRaw("transfer_details.product_id")->whereIn('p.category', ['frame', 'solution'])->get()->unique('product_id');*/
+        return view('backend.report.stock-movement', compact('inputs', 'branches', 'products'));
     }
 }
