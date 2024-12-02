@@ -386,7 +386,7 @@ class ReportController extends Controller
         $inputs = [$request->from_date, $request->to_date, $request->branch];
         $branches = $this->branches;
         $products = Product::whereIn('category', ['frame', 'solution'])->get();
-        $data = Product::selectRaw("products.id, products.code, products.name, products.category, products.type_id, products.selling_price, IFNULL(COUNT(od.qty), 0) AS soldQty")->leftJoin('transfer_details as td', 'td.product_id', 'product.id')->leftJoin('order_details AS od', 'td.product_id', 'od.product_id')->leftJoin('orders AS o', 'o.id', 'od.order_id')->whereIn('products.category', ['frame', 'solution'])->whereBetween('o.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->product > 0, function ($q) use ($request) {
+        $data = Product::selectRaw("products.id, products.code, products.name, products.category, products.type_id, products.selling_price, IFNULL(COUNT(od.qty), 0) AS soldQty")->leftJoin('transfer_details as td', 'td.product_id', 'products.id')->leftJoin('order_details AS od', 'td.product_id', 'od.product_id')->leftJoin('orders AS o', 'o.id', 'od.order_id')->whereIn('products.category', ['frame', 'solution'])->whereBetween('o.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->product > 0, function ($q) use ($request) {
             return $q->where('od.product_id', $request->product);
         })->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('o.branch_id', $request->branch);
