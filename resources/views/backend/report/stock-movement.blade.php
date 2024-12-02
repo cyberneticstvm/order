@@ -79,7 +79,8 @@
                                         <th>Item Type</th>
                                         <th>Item Category</th>
                                         <th>Item Price</th>
-                                        <th class="">Sales Count</th>
+                                        <th>Sold Qty</th>
+                                        <th>Avl. Qty</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -92,6 +93,7 @@
                                         <td>{{ $item->category }}</td>
                                         <td>{{ $item->selling_price }}</td>
                                         <td class="fw-bold">{{ $item->soldQty }}</td>
+                                        <td class="fw-bold">{{ getInventory($inputs[3], $item->pid, $item->category)->sum('balanceQty') }}</td>
                                     </tr>
                                     @empty
                                     @endforelse
