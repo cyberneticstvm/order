@@ -79,7 +79,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($products as $key => $item)
+                                    @forelse($data as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->name }}</td>
@@ -87,7 +87,7 @@
                                         <td>{{ $item->type?->name }}</td>
                                         <td>{{ $item->category }}</td>
                                         <td>{{ $item->selling_price }}</td>
-                                        <td class="fw-bold">{{ getStockMovement($item->id, $inputs[2], $inputs[0], $inputs[1])->soldQty }}</td>
+                                        <td class="fw-bold">{{ $item->soldQty }}</td>
                                     </tr>
                                     @empty
                                     @endforelse
