@@ -633,13 +633,3 @@ function orderUpdateType($request, $id)
     endif;
     return $msg;
 }
-
-function getStockMovement($product, $branch, $from_date, $to_date)
-{
-    $qty = OrderDetail::selectRaw("IFNULL(COUNT(order_details.qty), 0) AS soldQty")->leftJoin('orders AS o', 'o.id', 'order_details.order_id')->whereBetween('o.created_at', [Carbon::parse($from_date)->startOfDay(), Carbon::parse($to_date)->endOfDay()])->when($product > 0, function ($q) use ($product) {
-        return $q->where('order_details.product_id', $product);
-    })->when($branch > 0, function ($q) use ($branch) {
-        return $q->where('o.branch_id', $branch);
-    })->first();
-    return $qty;
-}
