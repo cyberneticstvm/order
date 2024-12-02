@@ -24,6 +24,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class ReportController extends Controller
@@ -369,7 +370,7 @@ class ReportController extends Controller
 
     function stockMovement()
     {
-        $inputs = [date('Y-m-d'), date('Y-m-d'), Session::get('branch')];
+        $inputs = [date('Y-m-d'), date('Y-m-d'), 0, Session::get('branch')];
         $branches = $this->branches;
         $products = Product::whereIn('category', ['frame', 'solution'])->get();
         $data = collect();
@@ -383,15 +384,10 @@ class ReportController extends Controller
             'to_date' => 'required',
             'branch' => 'required',
         ]);
-        $inputs = [$request->from_date, $request->to_date, $request->branch];
+        $inputs = [$request->from_date, $request->to_date, $request->product, $request->branch];
         $branches = $this->branches;
         $products = Product::whereIn('category', ['frame', 'solution'])->get();
-        $data = Product::selectRaw("products.id, products.code, products.name, products.category, products.type_id, products.selling_price, IFNULL(COUNT(od.qty), 0) AS soldQty")->leftJoin('transfer_details as td', 'td.product_id', 'products.id')->leftJoin('order_details AS od', 'td.product_id', 'od.product_id')->leftJoin('orders AS o', 'o.id', 'od.order_id')->whereIn('products.category', ['frame', 'solution'])->whereBetween('o.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->product > 0, function ($q) use ($request) {
-            return $q->where('od.product_id', $request->product);
-        })->when($request->branch > 0, function ($q) use ($request) {
-            return $q->where('o.branch_id', $request->branch);
-        })->groupBy("products.id", "products.code", "products.name", "products.category", "products.type_id", "products.selling_price")->orderBy("soldQty")->get();
-        /*$data = TransferDetails::leftJoin('transfers as t', 'transfer_details.transfer_id', 't.id')->leftJoin('products as p', 'p.id', 'transfer_details.product_id')->selectRaw("transfer_details.product_id")->whereIn('p.category', ['frame', 'solution'])->get()->unique('product_id');*/
+        $data = collect(DB::select("SELECT tbl1.*, IFNULL(COUNT(CASE WHEN o.created_at BETWEEN ? AND ? THEN od.qty END), 0) AS soldQty FROM (SELECT DISTINCT(td.product_id) AS pid, p.name, p.code, p.category, ps.name AS type, p.selling_price FROM transfer_details td LEFT JOIN transfers t on t.id = td.transfer_id LEFT JOIN products p ON p.id = td.product_id LEFT JOIN product_subcategories ps ON p.type_id = ps.id WHERE IF(? > 0, t.to_branch_id = ?, 1) AND IF(? > 0, p.id = ?, 1)) AS tbl1 LEFT JOIN order_details od ON od.product_id = tbl1.pid LEFT JOIN orders o ON o.id = od.order_id GROUP BY pid ORDER BY soldQty", [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay(), $request->branch, $request->branch, $request->product, $request->product]));
         return view('backend.report.stock-movement', compact('inputs', 'branches', 'products', 'data'));
     }
 }

@@ -43,8 +43,12 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
+                                    <label class="form-label">Product</label>
+                                    {{ html()->select($name = 'product', $products->pluck('name', 'id'), ($inputs[2]) ?? old('product'))->class('form-control select2')->placeholder('Select') }}
+                                </div>
+                                <div class="col-md-3">
                                     <label class="form-label">Branch</label>
-                                    {{ html()->select($name = 'branch', $branches, ($inputs[2]) ?? old('branch'))->class('form-control select2')->placeholder('Select') }}
+                                    {{ html()->select($name = 'branch', $branches, ($inputs[3]) ?? old('branch'))->class('form-control select2')->placeholder('Select') }}
                                     @error('branch')
                                     <small class="text-danger">{{ $errors->first('branch') }}</small>
                                     @enderror
@@ -84,7 +88,7 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->code }}</td>
-                                        <td>{{ $item->type?->name }}</td>
+                                        <td>{{ $item->type }}</td>
                                         <td>{{ $item->category }}</td>
                                         <td>{{ $item->selling_price }}</td>
                                         <td class="fw-bold">{{ $item->soldQty }}</td>
