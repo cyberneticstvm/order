@@ -86,7 +86,6 @@
                                 <tbody>
                                     @forelse($data as $key => $item)
                                     @php($qty = getInventory($inputs[3], $item->pid, $item->category)->sum('balanceQty'))
-                                    @if($item->soldQty != 0 && $qty != 0)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->name }}</td>
@@ -97,7 +96,6 @@
                                         <td class="fw-bold">{{ $item->soldQty }}</td>
                                         <td class="fw-bold">{{ $qty }}</td>
                                     </tr>
-                                    @endif
                                     @empty
                                     @endforelse
                                 </tbody>
