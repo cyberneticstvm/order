@@ -77,7 +77,7 @@ function settings()
 
 function hsn()
 {
-    return array('lens' => '9001', 'frame' => '9003', 're' => '9001', 'le' => '9001', 'solution' => '9003', 'accessory' => '9003', 'service' => '');
+    return array('lens' => '9001', 'frame' => '9003', 're' => '9001', 'le' => '9001', 'solution' => '9003', 'accessory' => '9003', 'service' => '9405');
 }
 
 function title()
