@@ -111,13 +111,13 @@ class AjaxController extends Controller
         $products = NULL;
         $item = OfferProduct::where('product_id', $pid)->where('branch_id', Session::get('branch'))->first();
         if ($item):
-            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::now())->whereDate('valid_to', '>=', Carbon::now())->where('id', $item->offer_category_id)->where('buy_number', '>', 0)->where('get_number', '>', 0)->first();
+            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->where('id', $item->offer_category_id)->where('buy_number', '>', 0)->where('get_number', '>', 0)->first();
             if ($offer):
                 $pdcts = OfferProduct::where('offer_category_id', $offer->id)->pluck('product_id');
                 $products = Product::whereIn('category', ['frame'])->whereIn('id', $pdcts)->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
             endif;
         endif;
-        return array('products' => Session::get('branch'), 'getnumber' => $offer?->get_number ?? 0);
+        return array('products' => $item->offer_category_id, 'getnumber' => $offer?->get_number ?? 0);
     }
 
     public function getOfferProducts($pid)
