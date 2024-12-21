@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\OfferCategory;
+use App\Models\OfferProduct;
 use App\Models\Product;
 use Carbon\Carbon;
 use Exception;
@@ -92,6 +93,7 @@ class OfferController extends Controller
     function destroy(string $id)
     {
         OfferCategory::findOrFail(decrypt($id))->delete();
+        OfferProduct::where('offer_category_id', decrypt($id))->delete();
         return redirect()->route('offer.category.list')->with('success', 'Offer category deleted successfully!');
     }
 }
