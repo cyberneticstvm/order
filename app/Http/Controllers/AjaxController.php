@@ -117,7 +117,7 @@ class AjaxController extends Controller
                 $products = Product::whereIn('category', ['frame'])->whereIn('id', $pdcts)->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
             endif;
         endif;
-        return array('item' => $item, 'products' => $products, 'getnumber' => $offer?->get_number ?? 0);
+        return array('products' => $products, 'getnumber' => $offer?->get_number ?? 0);
     }
 
     public function getOfferProducts($pid)
@@ -137,6 +137,7 @@ class AjaxController extends Controller
             'get_number' => $get_number,
             'products' => $products,
             'discount' => $discount,
+            'item' => $item,
         ]);
     }
 
