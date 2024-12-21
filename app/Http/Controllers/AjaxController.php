@@ -109,7 +109,7 @@ class AjaxController extends Controller
     public function getOfferedProducts($pid)
     {
         $products = NULL;
-        $item = OfferProduct::where('product_id', $pid)->first();
+        $item = OfferProduct::where('product_id', $pid)->where('branch_id', Session::get('branch'))->first();
         if ($item):
             $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->where('id', $item->offer_category_id)->where('buy_number', '>', 0)->where('get_number', '>', 0)->first();
             if ($offer):
@@ -125,7 +125,7 @@ class AjaxController extends Controller
         $products = $this->getOfferedProducts($pid)['products'] ?? NULL;
         $discount = 0;
         $get_number = $this->getOfferedProducts($pid)['getnumber'];
-        $item = OfferProduct::where('product_id', $pid)->first();
+        $item = OfferProduct::where('product_id', $pid)->where('branch_id', Session::get('branch'))->first();
         if ($item):
             $product = Product::find($pid);
             $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->where('id', $item->offer_category_id)->where('discount_percentage', '>', 0)->first();
@@ -137,6 +137,7 @@ class AjaxController extends Controller
             'get_number' => $get_number,
             'products' => $products,
             'discount' => $discount,
+            'item' => $item,
         ]);
     }
 
