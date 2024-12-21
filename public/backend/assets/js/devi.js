@@ -498,6 +498,7 @@ $(function () {
             url: '/ajax/pdct/offer/' + pid,
             dataType: 'json',
             success: function (res) {
+                console.log(res);
                 if(res.products && !dis.hasClass('offerredPdct')){  
                     dis.addClass('bogo');
                     dis.removeClass('discOffer'); 
