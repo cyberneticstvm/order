@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\Storage;
 
 function api_url()
 {
-    return "https://hospital.speczone.net";
+    return "https://devihospitals.in";
 }
 
 function apiSecret()
