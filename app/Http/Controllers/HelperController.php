@@ -51,7 +51,7 @@ class HelperController extends Controller
     function getclosing()
     {
         $branches = Branch::where('type', 'branch')->get();
-        foreach ($branches as $key => $branch) :
+        /*foreach ($branches as $key => $branch) :
             $payments = getPaidTotalByMode(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id, $mode = [1]);
             $expense = getExpenseTotal(Carbon::today(), Carbon::today(), $branch->id);
             $vehicle_payment_total = getVehiclePaymentTotal(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id, $mode = [1]);
@@ -68,7 +68,7 @@ class HelperController extends Controller
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
-        endforeach;
+        endforeach;*/
         echo "success";
     }
 
