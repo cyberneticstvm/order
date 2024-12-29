@@ -41,7 +41,7 @@ class Kernel extends ConsoleKernel
                     'updated_at' => Carbon::now(),
                 ]);
             endforeach;
-        })->dailyAt('08:30');
+        })->dailyAt('23:30');
 
         $schedule->call(function () {
             OrderHistory::whereIn('order_id', Order::where('order_status', 'delivered')->whereDate('invoice_generated_at', '<=', Carbon::now()->subDays(7))->pluck('id'))->forcedelete();
