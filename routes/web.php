@@ -92,6 +92,7 @@ Route::middleware(['web'])->group(function () {
     });
 
     Route::controller(HelperController::class)->group(function () {
+        Route::get('closing', 'getclosing')->name('closing');
         Route::get('/bill/details/{id}', 'billDetails')->name('bill.details');
         Route::get('/backend/adv/customer/fetch', 'fetchVehicle')->name('vehicle.fetch');
         Route::post('/backend/adv/customer/fetch', 'fetchVehicleDetails')->name('vehicle.fetch.details');

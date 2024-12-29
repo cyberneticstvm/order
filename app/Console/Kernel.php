@@ -22,7 +22,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('snapshot:create ' . time())->hourly();
         $schedule->command('snapshot:cleanup --keep=5')->hourly();
         $schedule->call(function () {
-            $branches = Branch::all();
+            $branches = Branch::where('type', 'branch')->get();
             foreach ($branches as $key => $branch) :
                 $payments = getPaidTotalByMode(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id, $mode = [1]);
                 $expense = getExpenseTotal(Carbon::today(), Carbon::today(), $branch->id);
