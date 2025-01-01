@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\Storage;
 
 function api_url()
 {
-    return "https://devihospitals.in";
+    return "https://emr.devihospitals.in";
 }
 
 function apiSecret()
