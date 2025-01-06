@@ -335,7 +335,11 @@
                                                     <td class="text-end fw-bold border-0"><input type="number" name='discount' class="w-100 border-0 text-end discount" placeholder="0.00" step="any" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="11" class="text-end fw-bold border-0">
+                                                    <td>RPD</td>
+                                                    <td>{{ html()->text('rpd', '')->class('w-100 border-0 text-center')->maxlength(3)->placeholder('RPD') }}</td>
+                                                    <td>LPD</td>
+                                                    <td>{{ html()->text('lpd', '')->class('w-100 border-0 text-center')->maxlength(3)->placeholder('LPD') }}</td>
+                                                    <td colspan="7" class="text-end fw-bold border-0">
                                                         Total After Discount
                                                         @error('invoice_total')
                                                         <br /><small class="text-danger">{{ $errors->first('invoice_total') }}</small>

@@ -31,6 +31,8 @@ return new class extends Migration
             $table->string('ed', 3)->nullable();
             $table->string('vd', 3)->nullable();
             $table->string('w_angle', 3)->nullable();
+            $table->string('rpd', 5)->nullable();
+            $table->string('lpd', 5)->nullable();
             $table->text('special_lab_note')->nullable();
             $table->string('invoice_number')->unique()->nullable();
             $table->dateTime('invoice_generated_at')->nullable();
