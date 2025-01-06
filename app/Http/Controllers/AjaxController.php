@@ -404,6 +404,8 @@ class AjaxController extends Controller
                 $op .= "<tr><th>Invoice Note</th><td>" . $order->invoice_note . "</td></tr>";
                 $op .= "<tr><th>Lab Note</th><td>" . $order->lab_note . "</td></tr>";
                 $op .= "<tr><th>Special Lab Note</th><td>" . $order->special_lab_note . "</td></tr>";
+                $op .= "<tr><th>LPD</th><td>" . $order->lpd . "</td></tr>";
+                $op .= "<tr><th>RPD</th><td>" . $order->rpd . "</td></tr>";
                 $op .= "<tr><th><br></th><td></td></tr>";
                 $op .= "</tbody></table>";
                 $op .= "<table class='table table-bordered'><thead><th>Eye</th><th>Product</th><th>Qty</th><th>Sph</th><th>Cyl</th><th>Axis</th><th>Add</th><th>pd</th><th>Price</th></thead><tbody>";
