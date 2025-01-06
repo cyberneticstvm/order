@@ -404,6 +404,14 @@ class AjaxController extends Controller
                 $op .= "<tr><th>Invoice Note</th><td>" . $order->invoice_note . "</td></tr>";
                 $op .= "<tr><th>Lab Note</th><td>" . $order->lab_note . "</td></tr>";
                 $op .= "<tr><th>Special Lab Note</th><td>" . $order->special_lab_note . "</td></tr>";
+                $op .= "<tr><th>Int. Add</th><td>" . $order->int_add . "</td></tr>";
+                $op .= "<tr><th>A Size</th><td>" . $order->a_size . "</td></tr>";
+                $op .= "<tr><th>B Size</th><td>" . $order->b_size . "</td></tr>";
+                $op .= "<tr><th>DBL</th><td>" . $order->dbl . "</td></tr>";
+                $op .= "<tr><th>FH</th><td>" . $order->fh . "</td></tr>";
+                $op .= "<tr><th>ED</th><td>" . $order->ed . "</td></tr>";
+                $op .= "<tr><th>VD</th><td>" . $order->vd . "</td></tr>";
+                $op .= "<tr><th>W Angle</th><td>" . $order->w_angle . "</td></tr>";
                 $op .= "<tr><th>LPD</th><td>" . $order->lpd . "</td></tr>";
                 $op .= "<tr><th>RPD</th><td>" . $order->rpd . "</td></tr>";
                 $op .= "<tr><th><br></th><td></td></tr>";
