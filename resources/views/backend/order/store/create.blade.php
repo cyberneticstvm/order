@@ -285,6 +285,16 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
+                                                    <th colspan="2">Int. Add</th>
+                                                    <th>A Size</th>
+                                                    <th>B Size</th>
+                                                    <th>DBL</th>
+                                                    <th>FH</th>
+                                                    <th>ED</th>
+                                                    <th>VD</th>
+                                                    <th colspan="4"></th>
+                                                </tr>
+                                                <tr>
                                                     <td colspan="2">
                                                         {{ html()->text('int_add', '')->class('w-100 border-0 text-center int_add')->maxlength(6)->placeholder('Int.Add') }}
                                                     </td>
