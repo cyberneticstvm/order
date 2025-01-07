@@ -336,9 +336,9 @@
                                                 </tr>
                                                 <tr>
                                                     <td>RPD</td>
-                                                    <td>{{ html()->text('rpd', '')->class('w-100 border-0 text-center')->maxlength(3)->placeholder('RPD') }}</td>
+                                                    <td>{{ html()->text('rpd', $spectacle?->rpd ?? '')->class('w-100 border-0 text-center fIpd')->maxlength(3)->placeholder('RPD') }}</td>
                                                     <td>LPD</td>
-                                                    <td>{{ html()->text('lpd', '')->class('w-100 border-0 text-center')->maxlength(3)->placeholder('LPD') }}</td>
+                                                    <td>{{ html()->text('lpd', $spectacle?->lpd ?? '')->class('w-100 border-0 text-center sIpd')->maxlength(3)->placeholder('LPD') }}</td>
                                                     <td colspan="7" class="text-end fw-bold border-0">
                                                         Total After Discount
                                                         @error('invoice_total')
