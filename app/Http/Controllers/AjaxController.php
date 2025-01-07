@@ -407,6 +407,7 @@ class AjaxController extends Controller
                 $op .= "<tr><th>W Angle</th><td>" . $order->w_angle . "</td></tr>";
                 $op .= "<tr><th><br></th><td></td></tr>";
                 $op .= "</tbody></table>";
+                $op .= "<h5 class='mt-3 mb-3'>Values</h5>";
                 $op .= "<table class='table table-bordered'><thead><th>Int. Add</th><th>A</th><th>B</th><th>DBL</th><th>FH</th><th>ED</th><th>VD</th><th>LPD</th><th>RPD</th></thead><tbody>";
                 $op .= "<tr><td>" . $order->int_add . "</td><td>" . $order->a_size . "</td><td>" . $order->b_size . "</td><td>" . $order->dbl . "</td><td>" . $order->fh . "</td><td>" . $order->ed . "</td><td>" . $order->vd . "</td><td>" . $order->lpd . "</td><td>" . $order->rpd . "</td></tr>";
                 $op .= "</tbody></table>";
