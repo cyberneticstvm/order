@@ -97,7 +97,7 @@
                                     @forelse($data as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $item?->product_name }}</td>
+                                        <td>{{ $item?->name }}</td>
                                         <td>
                                             {{ html()->text('pid[]', $item->product_id)->class('form-control')->attribute('readonly', 'true') }}
                                         </td>
