@@ -99,7 +99,7 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item?->name }}</td>
                                         <td>
-                                            {{ html()->text('pid[]', $item->product_id)->class('form-control')->attribute('readonly', 'true') }}
+                                            {{ html()->text('pid[]', $item->id)->class('form-control')->attribute('readonly', 'true') }}
                                         </td>
                                         <td>{{ $item->soldQty }}</td>
                                         <td>{{ $item->purchasedQty }}</td>
