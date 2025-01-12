@@ -47,13 +47,6 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="form-label req">Vehicle Code</label>
-                                    {{ html()->text($name = 'vcode', $value = old('vcode'))->class('form-control')->maxLength(15)->placeholder('Vehicle code') }}
-                                    @error('vcode')
-                                    <small class="text-danger">{{ $errors->first('vcode') }}</small>
-                                    @enderror
-                                </div>
-                                <div class="col-md-2">
                                     <label class="form-label req">Stand / Place</label>
                                     {{ html()->text($name = 'place', $value = old('place'))->class('form-control')->placeholder('Stand / Place') }}
                                     @error('place')
