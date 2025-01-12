@@ -21,6 +21,7 @@ return new class extends Migration
             $table->decimal('fee', 5, 2)->default(0);
             $table->integer('payment_terms')->comment('in days')->default(0);
             $table->boolean('card_issued')->default(0);
+            $table->date('card_issued_date')->nullable();
             $table->unsignedBigInteger('branch_id');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
