@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Vehicle Code</label>
-                                    {{ html()->text($name = 'vcode', $value = $vehicle->vcode)->class('form-control')->maxLength(15)->placeholder('Vehicle code')->readnly() }}
+                                    {{ html()->text($name = 'vcode', $value = $vehicle->vcode)->class('form-control')->maxLength(15)->placeholder('Vehicle code')->attribute('readonly', true) }}
                                     @error('vcode')
                                     <small class="text-danger">{{ $errors->first('vcode') }}</small>
                                     @enderror
