@@ -88,6 +88,10 @@
                                     <small class="text-danger">{{ $errors->first('card_issued') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Card Issued Date</label>
+                                    {{ html()->date($name = 'card_issued_date', $value = $vehicle->card_issued_date)->class('form-control') }}
+                                </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                                     <button class="btn btn-submit btn-success" type="submit">Update</button>
