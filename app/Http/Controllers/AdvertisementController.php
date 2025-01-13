@@ -107,7 +107,7 @@ class AdvertisementController extends Controller
         $fee = $vehicle->fee;
         if ($days < 0) {
             $days = abs($days);
-            $fee = $fee + ($fee / 30) * $days;
+            $fee = number_format($fee + ($fee / 30) * $days, 2);
         }
         return view('backend.ads.vehicle.payment', compact('vehicle', 'diff', 'payments', 'pmodes', 'fee'));
     }
