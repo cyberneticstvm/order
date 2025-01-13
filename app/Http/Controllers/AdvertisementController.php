@@ -103,7 +103,13 @@ class AdvertisementController extends Controller
         endif;*/
         $payments = VehiclePayment::withTrashed()->where('vehicle_id', $vehicle->id)->latest()->get();
         $pmodes = PaymentMode::orderBy('name')->get();
-        return view('backend.ads.vehicle.payment', compact('vehicle', 'diff', 'payments', 'pmodes'));
+        $days = $vehicle->daysLeft();
+        $fee = $vehicle->fee;
+        if ($days < 0) {
+            $days = abs($days);
+            $fee = $fee + (($fee * 30) / 100) * $days;
+        }
+        return view('backend.ads.vehicle.payment', compact('vehicle', 'diff', 'payments', 'pmodes', 'fee'));
     }
 
     function paymentSave(Request $request, string $id)
