@@ -13,6 +13,8 @@ class Vehicle extends Model
 
     protected $guarded = [];
 
+    protected $casts = ['card_issued_date' => 'datetime'];
+
     public function status()
     {
         return ($this->deleted_at) ? "<span class='badge badge-danger'>Deleted</span>" : "<span class='badge badge-success'>Active</span>";
