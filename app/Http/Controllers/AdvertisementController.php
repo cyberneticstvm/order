@@ -108,7 +108,7 @@ class AdvertisementController extends Controller
         if ($days < 0) {
             $days = abs($days);
             $tot = $fee + (($fee * 30) / 100) * $days;
-            $fee = $tot;
+            $fee = $fee * 30 / 100;
         }
         return view('backend.ads.vehicle.payment', compact('vehicle', 'diff', 'payments', 'pmodes', 'fee'));
     }
