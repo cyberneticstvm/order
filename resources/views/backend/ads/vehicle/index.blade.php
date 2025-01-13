@@ -58,6 +58,7 @@
                                         <th>Fee</th>
                                         <th>Pay. Terms</th>
                                         <th>Days Left</th>
+                                        <th>Last Payment</th>
                                         <th>V.Status</th>
                                         <th>Card Status</th>
                                         <th>Status</th>
@@ -78,6 +79,7 @@
                                         <td>{{ $vehicle->fee }}</td>
                                         <td>{{ $vehicle->payment_terms }} Days</td>
                                         <td class="text-success">{{ $vehicle->daysLeft() }} Days</td>
+                                        <td>{{ $vehicle->payment->first()->created_at->format('d.M.Y') }}</td>
                                         <td class="text-center">{!! $vehicle->vstatus() !!}</td>
                                         <td>{{ $vehicle->card_issued == 0 ? 'No' : 'Yes' }} - {{ $vehicle->card_issued_date?->format('d.M.Y') }}</td>
                                         <td class="text-center">{!! $vehicle->status() !!}</td>
