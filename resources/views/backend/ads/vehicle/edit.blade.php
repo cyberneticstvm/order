@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Card Issued</label>
-                                    {{ html()->select($name = 'card_issued', array('' => 'select', '1' => 'Yes', '0' => 'No'), old('card_issued'))->class('form-control') }}
+                                    {{ html()->select($name = 'card_issued', array('' => 'select', '1' => 'Yes', '0' => 'No'), $vehicle->card_issued)->class('form-control') }}
                                     @error('card_issued')
                                     <small class="text-danger">{{ $errors->first('card_issued') }}</small>
                                     @enderror
