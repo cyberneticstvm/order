@@ -79,7 +79,7 @@
                                         <td>{{ $vehicle->payment_terms }} Days</td>
                                         <td class="text-success">{{ $vehicle->daysLeft() }} Days</td>
                                         <td class="text-center">{!! $vehicle->vstatus() !!}</td>
-                                        <td>{{ $vehicle->card_issued == 0 ? 'No' : 'Yes' }} - {{ $vehicle->card_issued_date->format('d.M.Y') }}</td>
+                                        <td>{{ $vehicle->card_issued == 0 ? 'No' : 'Yes' }} - {{ $vehicle->card_issued_date?->format('d.M.Y') }}</td>
                                         <td class="text-center">{!! $vehicle->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('vehicle.edit', encrypt($vehicle->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center"><a href="{{ route('vehicle.delete', encrypt($vehicle->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
