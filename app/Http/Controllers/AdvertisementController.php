@@ -121,7 +121,7 @@ class AdvertisementController extends Controller
         $vehicle = Vehicle::findOrFail($id);
         $payment = VehiclePayment::where('vehicle_id', $vehicle->id)->latest()->first();
         $diff = Carbon::now()->diffInDays(Carbon::parse($payment?->created_at));
-        if ($payment && $diff < $vehicle->payment_terms):
+        if ($payment && $diff < $vehicle->payment_terms && $vehicle->daysLeft() > 0):
             return redirect()->back()->with("error", $vehicle->payment_terms - $diff . " days left to make the next payment");
         endif;
         $input = $request->all();

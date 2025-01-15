@@ -34,7 +34,7 @@
                                 @csrf
                                 <div class="col-md-2">
                                     <label class="form-label req">Amount</label>
-                                    {{ html()->number($name = 'amount', $value = $fee, '1', '', '')->class('form-control')->attribute('readonly', 'true') }}
+                                    {{ html()->number($name = 'amount', $value = $vehicle->fee, '1', '', '')->class('form-control')->attribute('readonly', 'true') }}
                                     @error('amount')
                                     <small class="text-danger">{{ $errors->first('amount') }}</small>
                                     @enderror
