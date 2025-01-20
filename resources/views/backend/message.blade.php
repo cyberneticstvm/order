@@ -145,7 +145,7 @@
             let c = confirm("You haven't entered any prescription details. proceed?")
             if (!c) return false
         }
-        if (frm['credit_used'].value > frm['available_credit'].value) {
+        if (parseFloat(frm['credit_used'].value) > parseFloat(frm['available_credit'].value)) {
             failed({
                 'error': 'Credit used is greater than available credit!'
             })
