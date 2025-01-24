@@ -296,7 +296,8 @@ function getDayBook($fdate, $tdate, $branch)
     $to_date = Carbon::parse($tdate)->endOfDay();
     $order_total = getOrderTotal($fdate, $tdate, $branch);
     $paid_total = getPaidTotal($from_date, $to_date, $branch);
-    $expense_total = getExpenseTotal($fdate, $tdate, $branch);
+    $expense_total = getExpenseTotal($fdate, $tdate, $branch, 0);
+    $expense_total_cash = getExpenseTotal($fdate, $tdate, $branch, 1);
     $income_total = getIncomeTotal($fdate, $tdate, $branch);
     $income_total_cash = getIncomeTotalByMode($fdate, $tdate, $branch, $mode = [1]);
     $income_total_bank = getIncomeTotalByMode($fdate, $tdate, $branch, $mode = [4]);
@@ -330,6 +331,7 @@ function getDayBook($fdate, $tdate, $branch)
         'order_total' => $order_total,
         'paid_total' => $paid_total,
         'expense_total' => $expense_total,
+        'expense_total_cash' => $expense_total_cash,
         'income_total' => $income_total,
         'income_total_cash' => $income_total_cash,
         'income_total_bank' => $income_total_bank,
@@ -467,10 +469,12 @@ function getPaidTotal($from_date, $to_date, $branch)
         return $q->where('branch_id', $branch);
     })->sum('amount');
 }
-function getExpenseTotal($from_date, $to_date, $branch)
+function getExpenseTotal($from_date, $to_date, $branch, $mode)
 {
     return IncomeExpense::whereBetween('date', [$from_date, $to_date])->where('category', 'expense')->when($branch > 0, function ($q) use ($branch) {
         return $q->where('branch_id', $branch);
+    })->when($mode > 0, function ($q) use ($mode) {
+        return $q->where('payment_mode', $mode);
     })->sum('amount');
 }
 

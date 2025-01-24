@@ -211,7 +211,7 @@
                                             Day Closing
                                         </td>
                                         <td class="text-end fw-bold text-success">
-                                            {{ number_format(($data->paid_total_cash + $data->income_total_cash + $data->voucher_income_total_cash + $opening_balance) - ($data->expense_total + $data->bank_transfer_total + $data->voucher_paid_total_cash + $data->vehicle_payment_total_cash), 2) }}
+                                            {{ number_format(($data->paid_total_cash + $data->income_total_cash + $data->voucher_income_total_cash + $opening_balance) - ($data->expense_total_cash + $data->bank_transfer_total + $data->voucher_paid_total_cash + $data->vehicle_payment_total_cash), 2) }}
                                         </td>
                                         <td></td>
                                         <td colspan="5"></td>

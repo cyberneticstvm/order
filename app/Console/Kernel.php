@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
             $branches = Branch::where('type', 'branch')->get();
             foreach ($branches as $key => $branch) :
                 $payments = getPaidTotalByMode(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id, $mode = [1]);
-                $expense = getExpenseTotal(Carbon::today(), Carbon::today(), $branch->id);
+                $expense = getExpenseTotal(Carbon::today(), Carbon::today(), $branch->id, 1);
                 $vehicle_payment_total = getVehiclePaymentTotal(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id, $mode = [1]);
                 $income = getIncomeTotalByMode(Carbon::today(), Carbon::today(), $branch->id, $mode = [1]);
                 $bank = getBankTransferTotal(Carbon::today()->startOfDay(), Carbon::today()->endOfDay(), $branch->id, null);
