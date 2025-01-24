@@ -191,7 +191,8 @@
                                         <td class="text-end text-secondary">
                                             <a href="javascript:void(0)" class="dayBook" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-type="expense" data-mode="0" data-branch="{{ $inputs[2] }}" data-drawer="daybookDrawer">{{ number_format($data->expense_total, 2) }}</a>
                                         </td>
-                                        <td colspan="5"></td>
+                                        <td class="text-end">{{ number_format($data->expense_total_cash, 2) }}</td>
+                                        <td colspan="4"></td>
                                     </tr>
                                     <tr>
                                         <td class="text-end">
