@@ -150,6 +150,7 @@
             </tr>
         </table>
     </div>
+    <p>Invoice Note: {{ $invoice->invoice_note ?? 'Na' }}</p>
     <div class="col text-end mt-50">
         <p>For DEVI OPTICIANS</p>
         <br />
