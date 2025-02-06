@@ -67,9 +67,9 @@
                                         <td>{!! $category->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('offer.category.edit', encrypt($category->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         @if($category->deleted_at)
-                                        <td class="text-center"><a href="{{ route('offer.category.restore', encrypt($category->id)) }}" class="proceed"><i class="fa fa-recycle text-success fa-lg"></i></a></td>
+                                        <td class="text-center"><a href="{{ route('offer.category.restore', encrypt($category->id)) }}" class="proceed" title="Restore"><i class="fa fa-recycle text-success fa-lg"></i></a></td>
                                         @else
-                                        <td class="text-center"><a href="{{ route('offer.category.delete', encrypt($category->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
+                                        <td class="text-center"><a href="{{ route('offer.category.delete', encrypt($category->id)) }}" class="dlt" title="Delete"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
                                         @endif
                                     </tr>
                                     @empty
