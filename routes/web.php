@@ -157,6 +157,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/category/edit/{id}', 'edit')->name('offer.category.edit');
         Route::post('/category/edit/{id}', 'update')->name('offer.category.update');
         Route::get('/category/delete/{id}', 'destroy')->name('offer.category.delete');
+        Route::get('/category/restore/{id}', 'restore')->name('offer.category.restore');
     });
 
     Route::prefix('/ajax')->controller(AjaxController::class)->group(function () {

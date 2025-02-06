@@ -96,4 +96,11 @@ class OfferController extends Controller
         OfferProduct::where('offer_category_id', decrypt($id))->delete();
         return redirect()->route('offer.category.list')->with('success', 'Offer category deleted successfully!');
     }
+
+    function restore(string $id)
+    {
+        OfferCategory::withTrashed()->find(decrypt($id))->restore();
+        OfferProduct::where('offer_category_id', decrypt($id))->restore();
+        return redirect()->route('offer.category.list')->with('success', 'Offer category restored successfully!');
+    }
 }
