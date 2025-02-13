@@ -33,10 +33,8 @@ class UserController extends Controller
 
     public function login()
     {
-        $res = sendWAMessage();
-        dd($res);
-        die;
-        return view('backend.login', compact('res'));
+        //$res = sendWAMessage();
+        return view('backend.login');
     }
 
     public function signin(Request $request)
