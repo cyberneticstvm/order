@@ -33,6 +33,7 @@ class UserController extends Controller
 
     public function login()
     {
+        //sendWAMessage();
         return view('backend.login');
     }
 

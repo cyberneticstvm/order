@@ -42,6 +42,48 @@ function api_url()
     return "https://emr.devihospitals.in";
 }
 
+function sendWAMessage()
+{
+    //EAAN7uMpo4zIBO2Czzs1Ut2nuwHutuzPh0xghZB1JFELOk2bqXGZBQqHwqyhfxwW14Q9EZCrwr1Azz3QBalAzZB13FSKHPZCKZBhiH2ZAJG0vZAu9VcfSXy84fxJRaU91G2ujwX9CfnuODDuX8OQ8tj0DDg3cZA4QIAeBeKvR6a5hjCsFgWijROJ0cH9VCFQ4FvO6c1wZDZD
+    $config = [
+        "messaging_product" => "whatsapp",
+        "to" => "919188848860",
+        "type" => "template",
+        "template" => [
+            "name" => "order_confirmation",
+            "language" => ["code" => "en"],
+            "components" => [
+                [
+                    "type" => "body",
+                    "parameters" => [
+                        ["type" => "text", "text" => "123"],
+                        ["type" => "text", "text" => "456"],
+                    ]
+                ]
+            ]
+        ]
+    ];
+    $curl = curl_init();
+    $data_string = json_encode($config);
+    $ch = curl_init('https://graph.facebook.com/v22.0/582117608311757/messages');
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt(
+        $ch,
+        CURLOPT_HTTPHEADER,
+        array(
+            'Authorization: Bearer EAAN7uMpo4zIBO2Czzs1Ut2nuwHutuzPh0xghZB1JFELOk2bqXGZBQqHwqyhfxwW14Q9EZCrwr1Azz3QBalAzZB13FSKHPZCKZBhiH2ZAJG0vZAu9VcfSXy84fxJRaU91G2ujwX9CfnuODDuX8OQ8tj0DDg3cZA4QIAeBeKvR6a5hjCsFgWijROJ0cH9VCFQ4FvO6c1wZDZD',
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data_string)
+        )
+    );
+    $result = curl_exec($ch);
+    $res = json_decode($result, true);
+    //return ($res['code'] == 200) ? 200 : $res['code'];
+    return $res;
+}
+
 function apiSecret()
 {
     return 'fdjsvsgdf4dhgf687f4bg54g4hf787';
