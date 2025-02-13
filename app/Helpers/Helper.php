@@ -34,6 +34,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -44,7 +45,7 @@ function api_url()
 
 function sendWAMessage()
 {
-    //EAAN7uMpo4zIBO2Czzs1Ut2nuwHutuzPh0xghZB1JFELOk2bqXGZBQqHwqyhfxwW14Q9EZCrwr1Azz3QBalAzZB13FSKHPZCKZBhiH2ZAJG0vZAu9VcfSXy84fxJRaU91G2ujwX9CfnuODDuX8OQ8tj0DDg3cZA4QIAeBeKvR6a5hjCsFgWijROJ0cH9VCFQ4FvO6c1wZDZD
+    $token = Config::get('myconfig.whatsapp.token');
     $config = [
         "messaging_product" => "whatsapp",
         "to" => "919188848860",
@@ -73,7 +74,7 @@ function sendWAMessage()
         $ch,
         CURLOPT_HTTPHEADER,
         array(
-            'Authorization: Bearer EAAN7uMpo4zIBO2Czzs1Ut2nuwHutuzPh0xghZB1JFELOk2bqXGZBQqHwqyhfxwW14Q9EZCrwr1Azz3QBalAzZB13FSKHPZCKZBhiH2ZAJG0vZAu9VcfSXy84fxJRaU91G2ujwX9CfnuODDuX8OQ8tj0DDg3cZA4QIAeBeKvR6a5hjCsFgWijROJ0cH9VCFQ4FvO6c1wZDZD',
+            'Authorization: Bearer ' . $token,
             'Content-Type: application/json',
             'Content-Length: ' . strlen($data_string)
         )
