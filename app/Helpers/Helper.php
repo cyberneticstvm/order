@@ -57,7 +57,7 @@ function sendWAMessage($order)
                 [
                     "type" => "body",
                     "parameters" => [
-                        ["type" => "text", "text" => "Vijo"],
+                        ["type" => "text", "text" => $order->name],
                         ["type" => "text", "text" => $order->ono()],
                         ["type" => "text", "text" => "+91 9388611622"],
                     ]
