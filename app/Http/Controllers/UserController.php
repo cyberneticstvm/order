@@ -31,9 +31,14 @@ class UserController extends Controller
         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
     }
 
+    public function wa()
+    {
+        $res = sendWAMessage();
+        dd($res);
+    }
+
     public function login()
     {
-        //$res = sendWAMessage();
         return view('backend.login');
     }
 

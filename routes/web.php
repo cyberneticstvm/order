@@ -89,6 +89,7 @@ Route::middleware(['web'])->group(function () {
         Route::get('/login', 'login')->name('login');
         Route::post('/login', 'signin')->name('user.login');
         Route::get('/logout', 'logout')->name('logout')->middleware('auth');
+        Route::get('/wa', 'wa')->name('wa');
     });
 
     Route::controller(HelperController::class)->group(function () {

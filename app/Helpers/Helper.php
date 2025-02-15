@@ -83,7 +83,7 @@ function sendWAMessage()
     $result = curl_exec($ch);
     $res = json_decode($result, true);
     //return ($res['code'] == 200) ? 200 : $res['code'];
-    //return $res;
+    return $res;
 }
 
 function apiSecret()
