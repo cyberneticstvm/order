@@ -48,7 +48,7 @@ function sendWAMessage($order)
     $token = Config::get('myconfig.whatsapp.token');
     $config = [
         "messaging_product" => "whatsapp",
-        "to" => "919188848860",
+        "to" => "+91" . $order->mobile,
         "type" => "template",
         "template" => [
             "name" => "order_confirmation",
@@ -59,7 +59,7 @@ function sendWAMessage($order)
                     "parameters" => [
                         ["type" => "text", "text" => "Vijo"],
                         ["type" => "text", "text" => $order->ono()],
-                        ["type" => "text", "text" => "+91" . $order->mobile],
+                        ["type" => "text", "text" => "+91 9388611622"],
                     ]
                 ]
             ]
