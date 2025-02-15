@@ -67,7 +67,7 @@ function sendWAMessage($order)
     ];
     $curl = curl_init();
     $data_string = json_encode($config);
-    $ch = curl_init('https://graph.facebook.com/v21.0/546111608589065/messages');
+    $ch = curl_init('https://graph.facebook.com/v21.0/543653938835557/messages');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
