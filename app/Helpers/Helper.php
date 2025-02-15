@@ -57,8 +57,9 @@ function sendWAMessage()
                 [
                     "type" => "body",
                     "parameters" => [
-                        ["type" => "text", "text" => "123"],
-                        ["type" => "text", "text" => "456"],
+                        ["type" => "text", "text" => "Vijo"],
+                        ["type" => "text", "text" => "VAR2/14545"],
+                        ["type" => "text", "text" => "+91 9388611622"],
                     ]
                 ]
             ]
@@ -66,7 +67,7 @@ function sendWAMessage()
     ];
     $curl = curl_init();
     $data_string = json_encode($config);
-    $ch = curl_init('https://graph.facebook.com/v22.0/582117608311757/messages');
+    $ch = curl_init('https://graph.facebook.com/v21.0/546111608589065/messages');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -82,7 +83,7 @@ function sendWAMessage()
     $result = curl_exec($ch);
     $res = json_decode($result, true);
     //return ($res['code'] == 200) ? 200 : $res['code'];
-    return $res;
+    //return $res;
 }
 
 function apiSecret()
