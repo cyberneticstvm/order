@@ -33,8 +33,9 @@ class UserController extends Controller
 
     public function wa()
     {
-        $res = sendWAMessage();
-        dd($res);
+        /*$res = sendWAMessage();
+        dd($res);*/
+        echo "hello";
     }
 
     public function login()

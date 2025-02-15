@@ -43,7 +43,7 @@ function api_url()
     return "https://emr.devihospitals.in";
 }
 
-function sendWAMessage()
+function sendWAMessage($order)
 {
     $token = Config::get('myconfig.whatsapp.token');
     $config = [
@@ -58,8 +58,8 @@ function sendWAMessage()
                     "type" => "body",
                     "parameters" => [
                         ["type" => "text", "text" => "Vijo"],
-                        ["type" => "text", "text" => "VAR2/14545"],
-                        ["type" => "text", "text" => "+91 9388611622"],
+                        ["type" => "text", "text" => $order->ono()],
+                        ["type" => "text", "text" => "+91" . $order->mobile],
                     ]
                 ]
             ]
