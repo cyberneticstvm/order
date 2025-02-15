@@ -184,10 +184,10 @@
     </div>
     <table class="border-0 mt-30" width="100%">
         <tr>
-            <td colspan="2">Remarks / Notes: {{ $spectacle?->notes }}</td>
+            <td colspan="2" class="border-0">Remarks / Notes: {{ $spectacle?->notes }}</td>
         </tr>
         <tr>
-            <td colspan="2">Advice: {{ $spectacle?->advice }}</td>
+            <td colspan="2" class="border-0">Advice: {{ $spectacle?->advice }}</td>
         </tr>
         <tr>
             <td class="border-0">
