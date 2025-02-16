@@ -97,7 +97,7 @@ function sendWAMessage($data, $type)
     endif;
     if ($type == 'status'):
         $order = $data;
-        $paid = Payment::where('order_id', $order->id)->get();
+        $paid = Payment::where('order_id', $order->id)->get() ?? 0;
         $bal = number_format($order->invoice_toal - $paid->sum('amount'), 2);
         $config = [
             "messaging_product" => "whatsapp",
@@ -114,7 +114,7 @@ function sendWAMessage($data, $type)
                             ["type" => "text", "text" => $order->ono()],
                             ["type" => "text", "text" => $order->invoice_toal],
                             ["type" => "text", "text" => $paid->sum('amount')],
-                            ["type" => "text", "text" => $bal],
+                            ["type" => "text", "text" => $bal ?? '0.00'],
                             ["type" => "text", "text" => "+91 9388611622"],
                         ]
                     ]
