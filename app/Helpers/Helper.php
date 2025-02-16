@@ -43,6 +43,36 @@ function api_url()
     return "https://emr.devihospitals.in";
 }
 
+
+
+function updateWAProfile()
+{
+    $token = Config::get('myconfig.whatsapp.token');
+    $config = [
+        "messaging_product" => "whatsapp",
+        "profile_picture_handle" => "HANDLE_OF_PROFILE_PICTURE"
+    ];
+    $curl = curl_init();
+    $data_string = json_encode($config);
+    $ch = curl_init('https://graph.facebook.com/v22.0/543653938835557/messages');
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt(
+        $ch,
+        CURLOPT_HTTPHEADER,
+        array(
+            'Authorization: Bearer ' . $token,
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data_string)
+        )
+    );
+    $result = curl_exec($ch);
+    $res = json_decode($result, true);
+    //return ($res['code'] == 200) ? 200 : $res['code'];
+    return $res;
+}
+
 function sendWAMessage($data, $type)
 {
     $token = Config::get('myconfig.whatsapp.token');
@@ -98,7 +128,7 @@ function sendWAMessage($data, $type)
     if ($type == 'status'):
         $order = $data;
         $paid = Payment::where('order_id', $order->id)->get() ?? 0;
-        $bal = number_format($order->invoice_toal - $paid->sum('amount'), 2);
+        $bal = number_format($order->invoice_total - $paid->sum('amount'), 2);
         $config = [
             "messaging_product" => "whatsapp",
             "to" => "+91" . $order->mobile,
