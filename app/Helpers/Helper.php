@@ -61,9 +61,9 @@ function sendWAMessage($data, $type)
                         "parameters" => [
                             ["type" => "text", "text" => $order->name],
                             ["type" => "text", "text" => $order->ono()],
-                            ["type" => "text", "text" => $order->invoice_toal],
-                            ["type" => "text", "text" => $order->advance],
-                            ["type" => "text", "text" => $order->balance],
+                            ["type" => "text", "text" => number_format($order->invoice_toal, 2)],
+                            ["type" => "text", "text" => number_format($order->advance, 2)],
+                            ["type" => "text", "text" => number_format($order->balance, 2)],
                             ["type" => "text", "text" => $order->expected_delivery_date->format('d.M.Y')],
                             ["type" => "text", "text" => "+91 9388611622"],
                         ]
@@ -86,7 +86,7 @@ function sendWAMessage($data, $type)
                         "type" => "body",
                         "parameters" => [
                             ["type" => "text", "text" => $order->name],
-                            ["type" => "text", "text" => $data->amount],
+                            ["type" => "text", "text" => number_format($data->amount, 2)],
                             ["type" => "text", "text" => $order->ono()],
                             ["type" => "text", "text" => "+91 9388611622"],
                         ]
@@ -112,8 +112,8 @@ function sendWAMessage($data, $type)
                         "parameters" => [
                             ["type" => "text", "text" => $order->name],
                             ["type" => "text", "text" => $order->ono()],
-                            ["type" => "text", "text" => $order->invoice_toal],
-                            ["type" => "text", "text" => $paid->sum('amount')],
+                            ["type" => "text", "text" => number_format($order->invoice_toal, 2)],
+                            ["type" => "text", "text" => number_format($paid->sum('amount'), 2)],
                             ["type" => "text", "text" => $bal ?? '0.00'],
                             ["type" => "text", "text" => "+91 9388611622"],
                         ]
@@ -124,7 +124,7 @@ function sendWAMessage($data, $type)
     endif;
     $curl = curl_init();
     $data_string = json_encode($config);
-    $ch = curl_init('https://graph.facebook.com/v21.0/543653938835557/messages');
+    $ch = curl_init('https://graph.facebook.com/v22.0/543653938835557/messages');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -140,7 +140,7 @@ function sendWAMessage($data, $type)
     $result = curl_exec($ch);
     $res = json_decode($result, true);
     //return ($res['code'] == 200) ? 200 : $res['code'];
-    //return $res;
+    return $res;
 }
 
 function apiSecret()
