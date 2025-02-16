@@ -61,7 +61,7 @@ function sendWAMessage($data, $type)
                         "parameters" => [
                             ["type" => "text", "text" => $order->name],
                             ["type" => "text", "text" => $order->ono()],
-                            ["type" => "text", "text" => number_format($order->invoice_toal, 2)],
+                            ["type" => "text", "text" => number_format($order->invoice_total, 2)],
                             ["type" => "text", "text" => number_format($order->advance, 2)],
                             ["type" => "text", "text" => number_format($order->balance, 2)],
                             ["type" => "text", "text" => $order->expected_delivery_date->format('d.M.Y')],
@@ -112,7 +112,7 @@ function sendWAMessage($data, $type)
                         "parameters" => [
                             ["type" => "text", "text" => $order->name],
                             ["type" => "text", "text" => $order->ono()],
-                            ["type" => "text", "text" => number_format($order->invoice_toal, 2)],
+                            ["type" => "text", "text" => number_format($order->invoice_total, 2)],
                             ["type" => "text", "text" => number_format($paid->sum('amount'), 2)],
                             ["type" => "text", "text" => $bal ?? '0.00'],
                             ["type" => "text", "text" => "+91 9388611622"],
