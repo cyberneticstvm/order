@@ -51,7 +51,7 @@ function sendWAMessage($order)
         "to" => "+91" . $order->mobile,
         "type" => "template",
         "template" => [
-            "name" => "order_confirmation",
+            "name" => "order_confirmation_v1",
             "language" => ["code" => "en"],
             "components" => [
                 [
@@ -59,6 +59,10 @@ function sendWAMessage($order)
                     "parameters" => [
                         ["type" => "text", "text" => $order->name],
                         ["type" => "text", "text" => $order->ono()],
+                        ["type" => "text", "text" => $order->invoice_toal],
+                        ["type" => "text", "text" => $order->advance],
+                        ["type" => "text", "text" => $order->balance],
+                        ["type" => "text", "text" => $order->expected_delivery_date->format('d.M.Y')],
                         ["type" => "text", "text" => "+91 9388611622"],
                     ]
                 ]
