@@ -43,32 +43,57 @@ function api_url()
     return "https://emr.devihospitals.in";
 }
 
-function sendWAMessage($order)
+function sendWAMessage($data, $type)
 {
     $token = Config::get('myconfig.whatsapp.token');
-    $config = [
-        "messaging_product" => "whatsapp",
-        "to" => "+91" . $order->mobile,
-        "type" => "template",
-        "template" => [
-            "name" => "order_confirmation_v1",
-            "language" => ["code" => "en"],
-            "components" => [
-                [
-                    "type" => "body",
-                    "parameters" => [
-                        ["type" => "text", "text" => $order->name],
-                        ["type" => "text", "text" => $order->ono()],
-                        ["type" => "text", "text" => $order->invoice_toal],
-                        ["type" => "text", "text" => $order->advance],
-                        ["type" => "text", "text" => $order->balance],
-                        ["type" => "text", "text" => $order->expected_delivery_date->format('d.M.Y')],
-                        ["type" => "text", "text" => "+91 9388611622"],
+    if ($type == 'order'):
+        $config = [
+            "messaging_product" => "whatsapp",
+            "to" => "+91" . $data->mobile,
+            "type" => "template",
+            "template" => [
+                "name" => "order_confirmation_v1",
+                "language" => ["code" => "en"],
+                "components" => [
+                    [
+                        "type" => "body",
+                        "parameters" => [
+                            ["type" => "text", "text" => $data->name],
+                            ["type" => "text", "text" => $data->ono()],
+                            ["type" => "text", "text" => $data->invoice_toal],
+                            ["type" => "text", "text" => $data->advance],
+                            ["type" => "text", "text" => $data->balance],
+                            ["type" => "text", "text" => $data->expected_delivery_date->format('d.M.Y')],
+                            ["type" => "text", "text" => "+91 9388611622"],
+                        ]
                     ]
                 ]
             ]
-        ]
-    ];
+        ];
+    endif;
+    if ($type == 'payment'):
+        $order = Order::where('id', $data->order_id)->first();
+        $config = [
+            "messaging_product" => "whatsapp",
+            "to" => "+91" . $order->mobile,
+            "type" => "template",
+            "template" => [
+                "name" => "payment_confirmation",
+                "language" => ["code" => "en"],
+                "components" => [
+                    [
+                        "type" => "body",
+                        "parameters" => [
+                            ["type" => "text", "text" => $order->name],
+                            ["type" => "text", "text" => $data->amount],
+                            ["type" => "text", "text" => $order->ono()],
+                            ["type" => "text", "text" => "+91 9388611622"],
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    endif;
     $curl = curl_init();
     $data_string = json_encode($config);
     $ch = curl_init('https://graph.facebook.com/v21.0/543653938835557/messages');
@@ -87,7 +112,7 @@ function sendWAMessage($order)
     $result = curl_exec($ch);
     $res = json_decode($result, true);
     //return ($res['code'] == 200) ? 200 : $res['code'];
-    return $res;
+    //return $res;
 }
 
 function apiSecret()

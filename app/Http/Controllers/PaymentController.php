@@ -89,7 +89,7 @@ class PaymentController extends Controller
                 Session::put('geninv', $request->input());
                 return redirect()->back()->with("warning", "One or more items are pending from Lab. Do you want to procced?");
             endif;
-            Payment::create([
+            $payment = Payment::create([
                 'consultation_id' => $request->consultation_id,
                 'patient_id' => 0,
                 'order_id' => $request->order_id,
@@ -114,6 +114,7 @@ class PaymentController extends Controller
             endif;
             recordOrderEvent($request->order_id, 'Payment received');
             Session::forget('geninv');
+            sendWAMessage($payment, 'payment');
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }

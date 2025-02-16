@@ -230,7 +230,7 @@ class StoreOrderController extends Controller
                     ]);
                 endif;
                 recordOrderEvent($order->id, 'Order has been created');
-                sendWAMessage($order);
+                sendWAMessage($order, 'order');
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
