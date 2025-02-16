@@ -104,7 +104,7 @@ function sendWAMessage($data, $type)
             "to" => "+91" . $order->mobile,
             "type" => "template",
             "template" => [
-                "name" => "payment_confirmation",
+                "name" => "order_ready",
                 "language" => ["code" => "en"],
                 "components" => [
                     [
