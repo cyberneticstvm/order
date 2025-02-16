@@ -287,6 +287,9 @@ class HelperController extends Controller
                 recordOrderEvent($order->id, 'Order status has been updated to ' . $request->order_status . ' with notes ' . $request->status_note);
             endif;
             Session::forget('geninv');
+            if ($request->order_status == 'ready-for-delivery'):
+                sendWAMessage($order, 'status');
+            endif;
             return redirect()->route('search.order')->with("success", "Status updated successfully");
         else :
             return redirect()->back()->with("error", "Cannot update status for the order which has invoice number already been generated");

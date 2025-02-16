@@ -47,9 +47,10 @@ function sendWAMessage($data, $type)
 {
     $token = Config::get('myconfig.whatsapp.token');
     if ($type == 'order'):
+        $order = $data;
         $config = [
             "messaging_product" => "whatsapp",
-            "to" => "+91" . $data->mobile,
+            "to" => "+91" . $order->mobile,
             "type" => "template",
             "template" => [
                 "name" => "order_confirmation_v1",
@@ -58,12 +59,12 @@ function sendWAMessage($data, $type)
                     [
                         "type" => "body",
                         "parameters" => [
-                            ["type" => "text", "text" => $data->name],
-                            ["type" => "text", "text" => $data->ono()],
-                            ["type" => "text", "text" => $data->invoice_toal],
-                            ["type" => "text", "text" => $data->advance],
-                            ["type" => "text", "text" => $data->balance],
-                            ["type" => "text", "text" => $data->expected_delivery_date->format('d.M.Y')],
+                            ["type" => "text", "text" => $order->name],
+                            ["type" => "text", "text" => $order->ono()],
+                            ["type" => "text", "text" => $order->invoice_toal],
+                            ["type" => "text", "text" => $order->advance],
+                            ["type" => "text", "text" => $order->balance],
+                            ["type" => "text", "text" => $order->expected_delivery_date->format('d.M.Y')],
                             ["type" => "text", "text" => "+91 9388611622"],
                         ]
                     ]
@@ -87,6 +88,33 @@ function sendWAMessage($data, $type)
                             ["type" => "text", "text" => $order->name],
                             ["type" => "text", "text" => $data->amount],
                             ["type" => "text", "text" => $order->ono()],
+                            ["type" => "text", "text" => "+91 9388611622"],
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    endif;
+    if ($type == 'status'):
+        $order = $data;
+        $paid = Payment::where('order_id', $order->id)->get();
+        $bal = number_format($order->invoice_toal - $paid->sum('amount'), 2);
+        $config = [
+            "messaging_product" => "whatsapp",
+            "to" => "+91" . $order->mobile,
+            "type" => "template",
+            "template" => [
+                "name" => "payment_confirmation",
+                "language" => ["code" => "en"],
+                "components" => [
+                    [
+                        "type" => "body",
+                        "parameters" => [
+                            ["type" => "text", "text" => $order->name],
+                            ["type" => "text", "text" => $order->ono()],
+                            ["type" => "text", "text" => $order->invoice_toal],
+                            ["type" => "text", "text" => $paid->sum('amount')],
+                            ["type" => "text", "text" => $bal],
                             ["type" => "text", "text" => "+91 9388611622"],
                         ]
                     ]
