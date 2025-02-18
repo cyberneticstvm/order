@@ -45,6 +45,7 @@ function api_url()
 
 function sendWAMessageWithLink($order, $type)
 {
+    $oid = encrypt($order->id);
     $token = Config::get('myconfig.whatsapp.token_vijo');
     if ($type == 'receipt'):
         $config = [
@@ -67,7 +68,7 @@ function sendWAMessageWithLink($order, $type)
                         "sub_type" => "url",
                         "index" => 0,
                         "parameters" => [
-                            ["type" => "text", "text" => encrypt($order->id)],
+                            ["type" => "text", "text" => $oid],
                         ]
                     ]
                 ]
