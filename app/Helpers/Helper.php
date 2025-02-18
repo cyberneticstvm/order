@@ -67,7 +67,7 @@ function sendWAMessageWithLink($order, $type)
                         "sub_type" => "url",
                         "index" => 0,
                         "parameters" => [
-                            ["type" => "text", "text" => $order->id],
+                            ["type" => "text", "text" => encrypt($order->id)],
                         ]
                     ]
                 ]

@@ -195,7 +195,7 @@ class PdfController extends Controller
 
     public function exportOrderReceiptForWa($id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::findOrFail(decrypt($id));
         $advance = $order->payments->where('payment_type', 'advance1')->sum('amount');
         $pn = $order->name . ' - ' . $order->branch->code;
         $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('upi://pay?pa=9995050149@okbizaxis&pn=' . $pn . '&tn=' . $order->id . '&am=' . $order->balance . '&cu=INR'));
