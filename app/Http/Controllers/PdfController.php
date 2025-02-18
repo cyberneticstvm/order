@@ -195,7 +195,7 @@ class PdfController extends Controller
 
     public function exportOrderReceiptForWa($id)
     {
-        echo $id;
+        echo decrypt($id);
         die;
         $order = Order::findOrFail(decrypt($id));
         $advance = $order->payments->where('payment_type', 'advance1')->sum('amount');
