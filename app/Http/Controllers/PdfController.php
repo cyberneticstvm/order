@@ -193,6 +193,16 @@ class PdfController extends Controller
         return $pdf->stream('ORDER-' . $order->id . '.pdf');
     }
 
+    public function exportOrderReceiptForWa($id)
+    {
+        $order = Order::findOrFail(decrypt($id));
+        $advance = $order->payments->where('payment_type', 'advance1')->sum('amount');
+        $pn = $order->name . ' - ' . $order->branch->code;
+        $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('upi://pay?pa=9995050149@okbizaxis&pn=' . $pn . '&tn=' . $order->id . '&am=' . $order->balance . '&cu=INR'));
+        $pdf = PDF::loadView('/backend/pdf/store-order-receipt-public', compact('order', 'qrcode', 'advance'));
+        return $pdf->stream('ORDER-' . $order->id . '.pdf');
+    }
+
     public function exportOrderPrescription($id)
     {
         $order = Order::findOrFail(decrypt($id));

@@ -43,18 +43,40 @@ function api_url()
     return "https://emr.devihospitals.in";
 }
 
-
-
-function updateWAProfile()
+function sendWAMessageWithLink($order, $type)
 {
-    $token = Config::get('myconfig.whatsapp.token');
-    $config = [
-        "messaging_product" => "whatsapp",
-        "profile_picture_handle" => "HANDLE_OF_PROFILE_PICTURE"
-    ];
+    $token = Config::get('myconfig.whatsapp.token_vijo');
+    if ($type == 'receipt'):
+        $config = [
+            "messaging_product" => "whatsapp",
+            "to" => "+91" . $order->mobile,
+            "type" => "template",
+            "template" => [
+                "name" => "order_confirmation_v1",
+                "language" => ["code" => "en"],
+                "components" => [
+                    [
+                        "type" => "body",
+                        "parameters" => [
+                            ["type" => "text", "text" => $order->name],
+                            ["type" => "text", "text" => $order->ono()],
+                        ]
+                    ],
+                    [
+                        "type" => "button",
+                        "sub_type" => "url",
+                        "index" => 0,
+                        "parameters" => [
+                            ["type" => "text", "text" => encrypt($order->id)],
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    endif;
     $curl = curl_init();
     $data_string = json_encode($config);
-    $ch = curl_init('https://graph.facebook.com/v22.0/543653938835557/messages');
+    $ch = curl_init('https://graph.facebook.com/v22.0/582117608311757/messages');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -69,7 +91,6 @@ function updateWAProfile()
     );
     $result = curl_exec($ch);
     $res = json_decode($result, true);
-    //return ($res['code'] == 200) ? 200 : $res['code'];
     return $res;
 }
 

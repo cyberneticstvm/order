@@ -98,6 +98,10 @@ Route::middleware(['web'])->group(function () {
         Route::get('/backend/adv/customer/fetch', 'fetchVehicle')->name('vehicle.fetch');
         Route::post('/backend/adv/customer/fetch', 'fetchVehicleDetails')->name('vehicle.fetch.details');
     });
+
+    Route::prefix('wa')->controller(PdfController::class)->group(function () {
+        Route::get('/order/receipt/{id}', 'exportOrderReceiptForWa')->name('store.order.receipt.wa');
+    });
 });
 
 Route::middleware(['web', 'auth', 'branch'])->group(function () {
