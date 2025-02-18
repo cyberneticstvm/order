@@ -178,7 +178,7 @@ class SolutionOrderController extends Controller
                 endif;
                 Registration::where('id', $request->registration_id)->update(['order_id' => $order->id]);
                 recordOrderEvent($order->id, 'Order has been created');
-                sendWAMessage($order, 'order');
+                sendWAMessageWithLink($order, 'receipt');
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());

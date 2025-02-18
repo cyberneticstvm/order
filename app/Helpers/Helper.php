@@ -45,21 +45,38 @@ function api_url()
 
 function sendWAMessageWithLink($order, $type)
 {
-    $token = Config::get('myconfig.whatsapp.token_vijo');
+    $token = Config::get('myconfig.whatsapp.token');
     if ($type == 'receipt'):
         $config = [
             "messaging_product" => "whatsapp",
             "to" => "+91" . $order->mobile,
             "type" => "template",
             "template" => [
-                "name" => "order_confirmation_v1",
+                "name" => "order_confirmation_v2",
                 "language" => ["code" => "en"],
                 "components" => [
+                    [
+                        "type" => "header",
+                        "parameters" => [
+                            [
+                                "type" => "image",
+                                "image" =>
+                                [
+                                    "link" => "https://store.devihospitals.in/public/backend/assets/images/logo/devi-logo.png",
+                                ],
+                            ],
+                        ]
+                    ],
                     [
                         "type" => "body",
                         "parameters" => [
                             ["type" => "text", "text" => $order->name],
                             ["type" => "text", "text" => $order->ono()],
+                            ["type" => "text", "text" => number_format($order->invoice_total, 2)],
+                            ["type" => "text", "text" => number_format($order->advance, 2)],
+                            ["type" => "text", "text" => number_format($order->balance, 2)],
+                            ["type" => "text", "text" => $order->expected_delivery_date->format('d.M.Y')],
+                            ["type" => "text", "text" => "+91 9388611622"],
                         ]
                     ],
                     [
@@ -76,7 +93,7 @@ function sendWAMessageWithLink($order, $type)
     endif;
     $curl = curl_init();
     $data_string = json_encode($config);
-    $ch = curl_init('https://graph.facebook.com/v22.0/582117608311757/messages');
+    $ch = curl_init('https://graph.facebook.com/v22.0/543653938835557/messages');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
