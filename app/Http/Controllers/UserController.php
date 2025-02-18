@@ -33,11 +33,11 @@ class UserController extends Controller
 
     public function wa()
     {
-        $order = Order::findOrFail(36);
+        //$order = Order::findOrFail(36);
         //$res = sendWAMessage($order, 'order');
-        $res = sendWAMessageWithLink($order, 'receipt');
-        dd($res);
-        die;
+        //$res = sendWAMessageWithLink($order, 'receipt');
+        //dd($res);
+        //die;
     }
 
     public function login()
