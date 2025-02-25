@@ -77,8 +77,8 @@
             margin-bottom: 50px;
         }
 
-        .ms-20 {
-            margin-left: 20px;
+        .ms-10 {
+            margin-left: 10px;
         }
 
         .h-50>tr>td {
@@ -126,7 +126,7 @@
                             @else
                             <img src="./backend/assets/images/logo/hospital-logo.jpeg" width='30%' />
                             @endif
-                            <div class="ms-20">{!! nl2br($po->branch_address) !!}</div>
+                            <div class="ms-10">{!! nl2br($po->branch_address) !!}</div>
                         </td>
                         <td class="no-border">
                             <h4 class="text-end">PURCHASE ORDER</h4>
