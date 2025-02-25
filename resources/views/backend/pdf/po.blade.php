@@ -77,6 +77,10 @@
             margin-bottom: 50px;
         }
 
+        .ms-20 {
+            margin-left: 20px;
+        }
+
         .h-50>tr>td {
             height: 50px;
         }
@@ -119,6 +123,7 @@
                 @else
                 <img src="./backend/assets/images/logo/hospital-logo.jpeg" width='25%' />
                 @endif
+                <p class="ms-20">{!! nl2br($po->branch_address) !!}</p>
             </div>
         </div>
         <div class="row">
@@ -132,19 +137,20 @@
                     PO NO: {{ $po->po_number }}<br />
                     DATE: {{ $po->date->format('d.M.Y') }}
                 </h5>
+                <p class="text-end">{!! nl2br($po->for) !!}</p>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <table width=100%>
                     <tr>
-                        <td class="no-border">
+                        <td class="no-border" width="50%">
                             <h3>TO</h3>
                             {!! nl2br($po->to) !!}
                         </td>
                         <td class="no-border">
-                            <h3>FOR</h3>
-                            {!! nl2br($po->for) !!}
+                            <h3>Shipping Address</h3>
+                            {!! nl2br($po->shipping_address) !!}
                         </td>
                     </tr>
                 </table>
@@ -205,6 +211,10 @@
             </div>
             <div class="col text-end mt-50">
                 <p class="fw-bold">Authorised Signatory</p>
+            </div>
+            <div class="col mt-10">
+                <p class="fw-bold">Notes</p>
+                {!! nl2br($po->notes) !!}
             </div>
             <div class="col mt-10">
                 <p class="fw-bold">Terms & Conditions</p>

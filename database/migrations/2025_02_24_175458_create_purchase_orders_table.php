@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('po_number', 25)->unique();
             $table->text('to')->nullable();
             $table->text('for')->nullable();
+            $table->text('shipping_address')->nullable();
+            $table->text('branch_address')->nullable();
             $table->decimal('sub_total', 10, 2)->default(0);
             $table->decimal('shipping', 10, 2)->default(0);
             $table->decimal('discount', 10, 2)->default(0);
@@ -25,6 +27,7 @@ return new class extends Migration
             $table->decimal('total', 10, 2)->default(0);
             $table->decimal('advance', 10, 2)->default(0);
             $table->decimal('balance', 10, 2)->default(0);
+            $table->text('notes')->nullable();
             $table->longText('terms')->nullable();
             $table->string('discount_remarks')->nullable();
             $table->string('additional_expense_remarks')->nullable();

@@ -37,6 +37,20 @@
                             <form class="row g-3" method="post" action="{{ route('po.save') }}" name="poForm" id="poForm">
                                 @csrf
                                 <div class="col-md-6">
+                                    <label class="form-label req">Branch Address</label>
+                                    {{ html()->textarea($name = 'branch_address', old('branch_address'))->class('form-control')->placeholder('Branch Address')->required() }}
+                                    @error('branch_address')
+                                    <small class="text-danger">{{ $errors->first('branch_address') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label req">Shipping Address</label>
+                                    {{ html()->textarea($name = 'shipping_address', old('shipping_address'))->class('form-control')->placeholder('Shipping Address')->required() }}
+                                    @error('shipping_address')
+                                    <small class="text-danger">{{ $errors->first('shipping_address') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
                                     <label class="form-label req">To</label>
                                     {{ html()->textarea($name = 'to', old('to'))->class('form-control')->placeholder('To')->required() }}
                                     @error('to')
@@ -167,6 +181,13 @@
                                                 </tr>
                                             </tfoot>
                                         </table>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label">Notes</label>
+                                        {{ html()->textarea($name = 'notes', old('notes'))->class('form-control')->placeholder('Notes') }}
+                                        @error('notes')
+                                        <small class="text-danger">{{ $errors->first('notes') }}</small>
+                                        @enderror
                                     </div>
                                     <div class="col-md-12">
                                         <label class="form-label req">Terms & Conditions</label>
