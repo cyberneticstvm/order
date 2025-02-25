@@ -157,7 +157,7 @@
         <p>Authorised Signatory</p>
     </div>
     <footer>
-        <p>E & OE. Goods once sold will not be taken back. Thank You and Visit Again..</p>
+        <p>Goods once sold will not be taken back. This Invoice is system-generated and does not require a signature for validation. Thank you for your business!</p>
     </footer>
 </div>
 @endsection
