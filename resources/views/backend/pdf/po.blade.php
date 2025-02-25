@@ -226,7 +226,7 @@
             </div>
         </div>
         <footer>
-            <p>E & OE. Goods once sold will not be taken back. Thank You and Visit Again..</p>
+            <p>This PO is system-generated and does not require a signature for validation.</p>
         </footer>
     </div>
 </body>
