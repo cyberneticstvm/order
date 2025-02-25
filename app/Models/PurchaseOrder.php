@@ -19,6 +19,11 @@ class PurchaseOrder extends Model
         return ($this->deleted_at) ? "<span class='badge badge-danger'>Deleted</span>" : "<span class='badge badge-success'>Active</span>";
     }
 
+    public function pmode()
+    {
+        return $this->belongsTo(PaymentMode::class, 'advance_pmode', 'id');
+    }
+
     public function details()
     {
         return $this->hasMany(PurchaseOrderDetail::class, 'po_id', 'id');

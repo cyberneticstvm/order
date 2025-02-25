@@ -246,7 +246,7 @@ class PdfController extends Controller
     {
         $po = PurchaseOrder::findOrFail(decrypt($id));
         $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
-        $pdf = PDF::loadView('/backend/pdf/po', compact('po'));
+        $pdf = PDF::loadView('/backend/pdf/po', compact('po', 'qrcode'));
         return $pdf->stream($po->po_number . '.pdf');
     }
 
