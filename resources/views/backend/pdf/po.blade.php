@@ -122,9 +122,9 @@
                     <tr>
                         <td class="no-border" width="50%">
                             @if($po->customer == 'store')
-                            <img src="./backend/assets/images/logo/devi-logo.png" width='30%' />
+                            <img src="./backend/assets/images/logo/devi-logo.png" width='50%' />
                             @else
-                            <img src="./backend/assets/images/logo/hospital-logo.jpeg" width='30%' />
+                            <img src="./backend/assets/images/logo/hospital-logo.jpeg" width='50%' />
                             @endif
                             <div class="ms-10">{!! nl2br($po->branch_address) !!}</div>
                         </td>
