@@ -126,7 +126,7 @@
                             @else
                             <img src="./backend/assets/images/logo/hospital-logo.jpeg" width='30%' />
                             @endif
-                            <p>{!! nl2br($po->branch_address) !!}</p>
+                            <div class="ms-20">{!! nl2br($po->branch_address) !!}</div>
                         </td>
                         <td class="no-border">
                             <h4 class="text-end">PURCHASE ORDER</h4>
