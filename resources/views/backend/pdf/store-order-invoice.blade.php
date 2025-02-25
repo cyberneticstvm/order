@@ -157,7 +157,7 @@
         <p>Authorised Signatory</p>
     </div>
     <footer>
-        <p>This Invoice is system-generated and does not require a signature for validation. Thank you for your business!<br />Goods once sold will not be taken back. </p>
+        This Invoice is system-generated and does not require a signature for validation. Thank you for your business!<br />Goods once sold will not be taken back.
     </footer>
 </div>
 @endsection
