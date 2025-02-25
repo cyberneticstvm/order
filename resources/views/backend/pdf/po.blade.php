@@ -128,10 +128,10 @@
         </div>
         <div class="row">
             <div class="col">
-                <h2 class="text-end">
+                <h3 class="text-end">
                     PO NO: {{ $po->po_number }}<br />
                     DATE: {{ $po->date->format('d.M.Y') }}
-                </h2>
+                </h3>
             </div>
         </div>
         <div class="row">
