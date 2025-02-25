@@ -115,23 +115,23 @@
         <div class="row">
             <div class="col">
                 @if($po->customer == 'store')
-                <img src="./backend/assets/images/logo/devi-logo.png" width='40%' />
+                <img src="./backend/assets/images/logo/devi-logo.png" width='25%' />
                 @else
-                <img src="./backend/assets/images/logo/hospital-logo.jpeg" width='40%' />
+                <img src="./backend/assets/images/logo/hospital-logo.jpeg" width='25%' />
                 @endif
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <h1 class="text-end">PURCHASE ORDER</h1>
+                <h4 class="text-end">PURCHASE ORDER</h4>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <h3 class="text-end">
+                <h5 class="text-end">
                     PO NO: {{ $po->po_number }}<br />
                     DATE: {{ $po->date->format('d.M.Y') }}
-                </h3>
+                </h5>
             </div>
         </div>
         <div class="row">
