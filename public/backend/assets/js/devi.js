@@ -771,6 +771,10 @@ function addStoreOrderRow(category, type, product) {
     });
 }
 
+function addPurchaseOrderRow(){
+    $(".poTbl").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><input type="text" name="products[]" class="w-100 border-0 text-start" placeholder="Product" /></td><td><input type="number" name="qty[]" class="w-100 border-0 text-end" value="1" min="" max="" step="any" placeholder="" /></td><td><input type="number" name="rate[]" class="w-100 border-0 text-end" min="" max="" step="any" placeholder="0.00" /></td><td><input type="number" name="tax_percentage[]" class="w-100 border-0 text-end" min="" max="" step="any" placeholder="0%" /></td><td><input type="number" name="tax_amount[]" class="w-100 border-0 text-end" min="" max="" step="any" placeholder="0.00" /></td><td><input type="number" name="total[]" class="w-100 border-0 text-end" min="" max="" step="any" placeholder="0.00" /></td></tr>`);
+}
+
 
 
 function calculateTotal() {

@@ -37,6 +37,7 @@ use App\Http\Controllers\ProductSolutionController;
 use App\Http\Controllers\PurchaseAccessoryController;
 use App\Http\Controllers\PurchaseFrameController;
 use App\Http\Controllers\PurchaseLensController;
+use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\PurchasePharmacyController;
 use App\Http\Controllers\PurchaseSolutionController;
 use App\Http\Controllers\ReportController;
@@ -291,6 +292,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/customer/prescription/{id}', 'exportCustomerPrescription')->name('customer.order.prescription');
         Route::get('/order/{fdate}/{tdate}/{status}/{branch}', 'exportOrder')->name('export.order.pdf');
         Route::get('/order/{category}/{branch}', 'exportStockStatus')->name('export.stock.status.pdf');
+        Route::get('/po/{id}', 'exportPurchaseOrder')->name('pdf.po.receipt');
     });
 
     Route::prefix('/backend/bank/transfer')->controller(BankTransferController::class)->group(function () {
@@ -441,6 +443,15 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/edit/{id}', 'edit')->name('supplier.edit');
         Route::post('/edit/{id}', 'update')->name('supplier.update');
         Route::get('/delete/{id}', 'destroy')->name('supplier.delete');
+    });
+
+    Route::prefix('/backend/po')->controller(PurchaseOrderController::class)->group(function () {
+        Route::get('/', 'index')->name('po');
+        Route::get('/create', 'create')->name('po.create');
+        Route::post('/create', 'store')->name('po.save');
+        Route::get('/edit/{id}', 'edit')->name('po.edit');
+        Route::post('/edit/{id}', 'update')->name('po.update');
+        Route::get('/delete/{id}', 'destroy')->name('po.delete');
     });
 
     Route::prefix('/backend/manufacturer')->controller(ManufacturerController::class)->group(function () {

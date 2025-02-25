@@ -11,6 +11,7 @@ use App\Models\MedicalRecord;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\PurchaseOrder;
 use App\Models\Spectacle;
 use App\Models\Transfer;
 use Carbon\Carbon;
@@ -239,6 +240,14 @@ class PdfController extends Controller
         $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
         $pdf = PDF::loadView('/backend/pdf/stock', compact('stock', 'qrcode', 'request', 'branch'));
         return $pdf->stream('stock.pdf');
+    }
+
+    public function exportPurchaseOrder(string $id)
+    {
+        $po = PurchaseOrder::findOrFail(decrypt($id));
+        $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
+        $pdf = PDF::loadView('/backend/pdf/po', compact('po'));
+        return $pdf->stream($po->po_number . '.pdf');
     }
 
     public function NumberintoWords(float $number)
