@@ -121,7 +121,7 @@
                                                         Sub Total
                                                     </td>
                                                     <td>
-                                                        {{ html()->number('grand_total', old('sub_total'), '', '', '')->class('text-end border-0 w-100')->placeholder('0.00') }}
+                                                        {{ html()->number('sub_total', old('sub_total'), '', '', '')->class('text-end border-0 w-100')->placeholder('0.00') }}
                                                     </td>
                                                 </tr>
                                                 <tr>
