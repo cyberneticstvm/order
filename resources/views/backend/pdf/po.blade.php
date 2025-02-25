@@ -133,11 +133,11 @@
         </div>
         <div class="row">
             <div class="col">
-                <h5 class="text-end">
+                <p class="text-end">
                     PO NO: {{ $po->po_number }}<br />
                     DATE: {{ $po->date->format('d.M.Y') }}
-                </h5>
-                <p class="text-end">{!! nl2br($po->for) !!}</p>
+                </p>
+                <span class="text-end">For: {!! nl2br($po->for) !!}</span>
             </div>
         </div>
         <div class="row">
