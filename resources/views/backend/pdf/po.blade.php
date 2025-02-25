@@ -118,17 +118,21 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                @if($po->customer == 'store')
-                <img src="./backend/assets/images/logo/devi-logo.png" width='25%' />
-                @else
-                <img src="./backend/assets/images/logo/hospital-logo.jpeg" width='25%' />
-                @endif
-                <p class="ms-20">{!! nl2br($po->branch_address) !!}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <h4 class="text-end">PURCHASE ORDER</h4>
+                <table width=100%>
+                    <tr>
+                        <td class="no-border" width="50%">
+                            @if($po->customer == 'store')
+                            <img src="./backend/assets/images/logo/devi-logo.png" width='25%' />
+                            @else
+                            <img src="./backend/assets/images/logo/hospital-logo.jpeg" width='25%' />
+                            @endif
+                            {!! nl2br($po->branch_address) !!}
+                        </td>
+                        <td class="no-border">
+                            <h4 class="text-end">PURCHASE ORDER</h4>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
         <div class="row">
@@ -137,7 +141,7 @@
                     PO NO: {{ $po->po_number }}<br />
                     DATE: {{ $po->date->format('d.M.Y') }}
                 </p>
-                <span class="text-end">For: {!! nl2br($po->for) !!}</span>
+                <div class="text-end">For: {!! nl2br($po->for) !!}</div>
             </div>
         </div>
         <div class="row">
