@@ -152,7 +152,7 @@
                             <h3>TO</h3>
                             {!! nl2br($po->to) !!}
                         </td>
-                        <td class="no-border">
+                        <td class="no-border text-end">
                             <h3>Shipping Address</h3>
                             {!! nl2br($po->shipping_address) !!}
                         </td>
