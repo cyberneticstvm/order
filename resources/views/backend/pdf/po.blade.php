@@ -122,14 +122,18 @@
                     <tr>
                         <td class="no-border" width="50%">
                             @if($po->customer == 'store')
-                            <img src="./backend/assets/images/logo/devi-logo.png" width='25%' />
+                            <img src="./backend/assets/images/logo/devi-logo.png" width='30%' />
                             @else
-                            <img src="./backend/assets/images/logo/hospital-logo.jpeg" width='25%' />
+                            <img src="./backend/assets/images/logo/hospital-logo.jpeg" width='30%' />
                             @endif
                             <p>{!! nl2br($po->branch_address) !!}</p>
                         </td>
                         <td class="no-border">
                             <h4 class="text-end">PURCHASE ORDER</h4>
+                            <p class="text-end">
+                                PO NO: {{ $po->po_number }}<br />
+                                DATE: {{ $po->date->format('d.M.Y') }}
+                            </p>
                         </td>
                     </tr>
                 </table>
@@ -137,10 +141,6 @@
         </div>
         <div class="row">
             <div class="col">
-                <p class="text-end">
-                    PO NO: {{ $po->po_number }}<br />
-                    DATE: {{ $po->date->format('d.M.Y') }}
-                </p>
                 <div class="text-end">For: {!! nl2br($po->for) !!}</div>
             </div>
         </div>
