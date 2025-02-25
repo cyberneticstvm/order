@@ -152,10 +152,8 @@
     </div>
     <p>Invoice Note: {{ $order->invoice_note ?? 'Na' }}</p>
     <p>This Invoice is system-generated and does not require a signature for validation. Thank you for your business!<br />Goods once sold will not be taken back.</p>
-    <div class="col text-end mt-50">
+    <div class="col text-end mt-30">
         <p>For DEVI OPTICIANS</p>
-        <br />
-        <p>Authorised Signatory</p>
     </div>
 </div>
 @endsection
