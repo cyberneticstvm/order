@@ -225,6 +225,9 @@
                 {!! nl2br($po->terms) !!}
             </div>
         </div>
+        <footer>
+            <p>E & OE. Goods once sold will not be taken back. Thank You and Visit Again..</p>
+        </footer>
     </div>
 </body>
 
