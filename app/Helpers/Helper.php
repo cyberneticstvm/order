@@ -43,7 +43,7 @@ function api_url()
     return "https://emr.devihospitals.in";
 }
 
-function sendRequestedDocviaWa($mobile, $name, $id, $doc_type)
+function sendRequestedDocviaWa($mobile, $name, $oid, $doc_type)
 {
     $token = Config::get('myconfig.whatsapp.token');
     if ($doc_type == 'prescription'):
@@ -67,7 +67,7 @@ function sendRequestedDocviaWa($mobile, $name, $id, $doc_type)
                         "sub_type" => "url",
                         "index" => 0,
                         "parameters" => [
-                            ["type" => "text", "text" => encrypt($id)],
+                            ["type" => "text", "text" => encrypt($oid)],
                         ]
                     ]
                 ]
@@ -108,7 +108,7 @@ function sendRequestedDocviaWa($mobile, $name, $id, $doc_type)
                         "sub_type" => "url",
                         "index" => 0,
                         "parameters" => [
-                            ["type" => "text", "text" => encrypt($id)],
+                            ["type" => "text", "text" => encrypt($oid)],
                         ]
                     ]
                 ]
