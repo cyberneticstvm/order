@@ -114,6 +114,18 @@ function sendRequestedDocviaWa($mobile, $name, $id, $doc_type)
                 "language" => ["code" => "en"],
                 "components" => [
                     [
+                        "type" => "header",
+                        "parameters" => [
+                            [
+                                "type" => "image",
+                                "image" =>
+                                [
+                                    "link" => "https://store.devihospitals.in/public/backend/assets/images/logo/devi-logo.png",
+                                ],
+                            ],
+                        ]
+                    ],
+                    [
                         "type" => "body",
                         "parameters" => [
                             ["type" => "text", "text" => $name],

@@ -7,7 +7,7 @@
             <div class="row">
                 <form class="g-3" method="post" action="{{ route('wa.docs') }}">
                     @csrf
-                    <input type="hidden" name="order_id" id="order_id" value="" />
+                    <input type="hidden" name="order_id" id="order_id" class="ordId" value="" />
                     <div class="col-md-12">
                         <label class="form-label req">Mobile Number</label>
                         {{ html()->text($name = 'mobile', $value = old('mobile'))->class('form-control waMobile')->placeholder('Mobile Number')->maxlength(10)->required() }}
@@ -24,7 +24,7 @@
                         {{ html()->checkbox($name = 'receipt', $checked=false, '1')->class('form-check-input')->attribute('id', 'receipt') }}
                         <label class="form-check-label">Order</label>
                     </div>
-                    <div class="col-md-12 presc">
+                    <div class="col-md-12 mt-3 presc">
                         {{ html()->checkbox($name = 'prescription', $checked=false, '1')->class('form-check-input')->attribute('id', 'prescription') }}
                         <label class="form-check-label">Spectacle Prescription</label>
                     </div>

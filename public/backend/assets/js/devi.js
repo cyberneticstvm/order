@@ -231,7 +231,7 @@ $(function () {
 
     $(document).on("click", ".wa", function () {
         var drawer = $(this).data('drawer');
-        $("#order_id").val($(this).data('oid'));        
+        $(".ordId").val($(this).data('oid'));        
         $(".waMobile").val($(this).data('mobile'));  
         if($(this).data('type') == 'wa-presc'){
             $(".ord").addClass('d-none');

@@ -102,9 +102,9 @@ Route::middleware(['web'])->group(function () {
 
     Route::prefix('wa')->controller(PdfController::class)->group(function () {
         Route::get('/order/receipt/{id}', 'exportOrderReceipt')->name('store.order.receipt.wa');
-        Route::get('/order/payment/{id}', 'exportOrderPayment')->name('store.order.payment.wa');
-        Route::get('/order/invoice/{id}', 'exportOrderInvoice')->name('store.order.invoice.wa');
-        Route::get('/order/prescription/{id}', 'exportOrderPrescription')->name('store.order.prescription.wa');
+        Route::get('/order/payment/{id}', 'exportOrderPaymentForWa')->name('store.order.payment.wa');
+        Route::get('/order/invoice/{id}', 'exportOrderInvoiceForWa')->name('store.order.invoice.wa');
+        Route::get('/order/prescription/{id}', 'exportOrderPrescriptionForWa')->name('store.order.prescription.wa');
     });
 });
 

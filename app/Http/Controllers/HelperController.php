@@ -385,7 +385,7 @@ class HelperController extends Controller
         try {
             if ($request->invoice):
                 $order = Order::findOrFail($request->order_id);
-                sendRequestedDocviaWa($request->mobile, $order->name, $order->id, 'invoice');
+                $wa = sendRequestedDocviaWa($request->mobile, $order->name, $order->id, 'invoice');
                 WaDocsRequest::create([
                     'doc_type' => 'invoice',
                     'doc_id' => $order->id,
@@ -395,7 +395,7 @@ class HelperController extends Controller
             endif;
             if ($request->receipt):
                 $order = Order::findOrFail($request->order_id);
-                sendRequestedDocviaWa($request->mobile, $order->name, $order->id, 'receipt');
+                $wa = sendRequestedDocviaWa($request->mobile, $order->name, $order->id, 'receipt');
                 WaDocsRequest::create([
                     'doc_type' => 'receipt',
                     'doc_id' => $order->id,
@@ -406,7 +406,7 @@ class HelperController extends Controller
             if ($request->prescription):
                 $spectacle = Spectacle::findOrFail($request->order_id);
                 $customer = Customer::findOrFail($spectacle->customer_id);
-                sendRequestedDocviaWa($request->mobile, $customer->name, $spectacle->id, 'prescription');
+                $wa = sendRequestedDocviaWa($request->mobile, $customer->name, $spectacle->id, 'prescription');
                 WaDocsRequest::create([
                     'doc_type' => 'prescription',
                     'doc_id' => $spectacle->id,
