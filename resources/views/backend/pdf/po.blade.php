@@ -162,7 +162,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <table width=100% class="mt-30" cellspacing="0" cellpadding="0">
+                <table width=100% class="mt-10" cellspacing="0" cellpadding="0">
                     <tr>
                         <td>SL No</td>
                         <td>Description</td>
@@ -213,7 +213,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="col text-end mt-50">
+            <div class="col text-end mt-30">
                 <p class="fw-bold">Authorised Signatory</p>
             </div>
             <div class="col mt-10">
