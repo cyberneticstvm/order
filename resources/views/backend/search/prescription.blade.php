@@ -65,6 +65,7 @@
                                         <th>Optometrist</th>
                                         <th>Branch</th>
                                         <th>Time</th>
+                                        <th>WA</th>
                                         <th>Print</th>
                                         <th>Edit</th>
                                     </tr>
@@ -81,6 +82,7 @@
                                         <td>{{ $spec->optometrists?->name }}</td>
                                         <td>{{ $spec->branch->name }}</td>
                                         <td>{{ $spec->created_at->format('d.M.Y h:i a') }}</td>
+                                        <td class="text-center"><a href="javascript:void(0)" data-mobile="{{ $spec->customer->mobile }}" class="wa" data-type="wa-presc" data-oid="{{ $spec->id }}" data-branch="" data-drawer="waDrawer"><i class="fa fa-whatsapp text-success"></i></a></td>
                                         <td class="text-center"><a href="{{ route('customer.order.prescription', encrypt($spec->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-success fa-lg"></i></td>
                                         <td class="text-center"><a href="{{ route('spectacle.edit', encrypt($spec->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                     </tr>
@@ -96,4 +98,5 @@
     </div>
     <!-- Container-fluid Ends-->
 </div>
+@include("backend.misc.wa-drawer")
 @endsection

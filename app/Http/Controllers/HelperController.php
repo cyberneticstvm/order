@@ -22,6 +22,7 @@ use App\Models\Transfer;
 use App\Models\TransferDetails;
 use App\Models\UserBranch;
 use App\Models\Vehicle;
+use App\Models\WaDocsRequest;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Exception;
@@ -374,6 +375,49 @@ class HelperController extends Controller
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }
         return redirect()->route('edit.dispatched.order')->with("success", "Record updated successfully");
+    }
+
+    public function waDocs(Request $request)
+    {
+        $this->validate($request, [
+            'mobile' => 'required|numeric|digits:10',
+        ]);
+        try {
+            if ($request->invoice):
+                $order = Order::findOrFail($request->order_id);
+                sendRequestedDocviaWa($request->mobile, $order->name, $order->id, 'invoice');
+                WaDocsRequest::create([
+                    'doc_type' => 'invoice',
+                    'doc_id' => $order->id,
+                    'sent_to' => $request->mobile,
+                    'sent_by' => $request->user()->id,
+                ]);
+            endif;
+            if ($request->receipt):
+                $order = Order::findOrFail($request->order_id);
+                sendRequestedDocviaWa($request->mobile, $order->name, $order->id, 'receipt');
+                WaDocsRequest::create([
+                    'doc_type' => 'receipt',
+                    'doc_id' => $order->id,
+                    'sent_to' => $request->mobile,
+                    'sent_by' => $request->user()->id,
+                ]);
+            endif;
+            if ($request->prescription):
+                $spectacle = Spectacle::findOrFail($request->order_id);
+                $customer = Customer::findOrFail($spectacle->customer_id);
+                sendRequestedDocviaWa($request->mobile, $customer->name, $spectacle->id, 'prescription');
+                WaDocsRequest::create([
+                    'doc_type' => 'prescription',
+                    'doc_id' => $spectacle->id,
+                    'sent_to' => $request->mobile,
+                    'sent_by' => $request->user()->id,
+                ]);
+            endif;
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
+        return redirect()->back()->with("success", "Whatsapp sent successfully");
     }
 
     public function emailDocs(Request $request)

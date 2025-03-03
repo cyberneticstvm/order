@@ -194,15 +194,37 @@ class PdfController extends Controller
         return $pdf->stream('ORDER-' . $order->id . '.pdf');
     }
 
+    /*public function exportOrderPrescriptionForWa($id)
+    {
+        $spectacle = Spectacle::findOrFail(decrypt($id));
+        $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
+        $pdf = PDF::loadView('/backend/pdf/spectacle', compact('spectacle', 'qrcode'));
+        return $pdf->stream('spectacle.pdf');
+    }
+
+    public function exportOrderInvoiceForWa($id)
+    {
+        $order = Order::findOrFail(decrypt($id));
+        if ($order->invoice_number) :
+            $oid = $order->id * 100;
+            $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://store.devihospitals.in/bill/details/' . $oid));
+            $nums = $this->NumberintoWords($order->invoice_total);
+            $pdf = PDF::loadView('/backend/pdf/store-order-invoice', compact('order', 'qrcode', 'nums'));
+            return $pdf->stream($order->invoice_number . '.pdf');
+        else :
+            return redirect()->back()->with("error", "Invoice yet to be generated");
+        endif;
+    }
+
     public function exportOrderReceiptForWa($id)
     {
         $order = Order::findOrFail(decrypt($id));
         $advance = $order->payments->where('payment_type', 'advance1')->sum('amount');
         $pn = $order->name . ' - ' . $order->branch->code;
         $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('upi://pay?pa=9995050149@okbizaxis&pn=' . $pn . '&tn=' . $order->id . '&am=' . $order->balance . '&cu=INR'));
-        $pdf = PDF::loadView('/backend/pdf/store-order-receipt-public', compact('order', 'qrcode', 'advance'));
+        $pdf = PDF::loadView('/backend/pdf/store-order-receipt', compact('order', 'qrcode', 'advance'));
         return $pdf->stream('ORDER-' . $order->id . '.pdf');
-    }
+    }*/
 
     public function exportOrderPrescription($id)
     {

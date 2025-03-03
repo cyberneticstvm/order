@@ -229,6 +229,21 @@ $(function () {
         });
     });
 
+    $(document).on("click", ".wa", function () {
+        var drawer = $(this).data('drawer');
+        if($(this).data('type') == 'wa-presc'){
+            $(".ord").addClass('d-none');
+            $(".presc").removeClass('d-none');
+        }else{
+            $(".ord").removeClass('d-none');
+            $(".presc").addClass('d-none');
+        }
+        $("#order_id").val($(this).data('oid'));        
+        $(".waMobile").val($(this).data('mobile'));        
+        $(".ono").html($(this).data('ono'));        
+        $("#" + drawer).drawer('toggle');
+    });
+
     $(document).on("click", ".email", function () {
         var drawer = $(this).data('drawer');
         $("#order_id").val($(this).data('oid'));        

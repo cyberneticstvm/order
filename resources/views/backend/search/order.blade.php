@@ -70,6 +70,7 @@
                                         <th>Order</th>
                                         <th>Invoice</th>
                                         <th>Order Status</th>
+                                        <th>WA</th>
                                         <th>E-mail</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
@@ -96,6 +97,7 @@
                                         @else
                                         <td><a href="{{ route('order.status', encrypt($item->id)) }}">{{ $item->order_status }}</a></td>
                                         @endif
+                                        <td class="text-center"><a href="javascript:void(0)" data-mobile="{{ $item->mobile }}" class="wa" data-ono="{{ $item->ono() }}" data-type="wa-order" data-oid="{{ $item->id }}" data-branch="" data-drawer="waDrawer"><i class="fa fa-whatsapp text-success"></i></a></td>
                                         <td class="text-center"><a href="javascript:void(0)" class="email" data-ono="{{ $item->ono() }}" data-type="email" data-oid="{{ $item->id }}" data-branch="" data-drawer="emailDrawer"><i class="fa fa-envelope text-success"></i></a></td>
                                         <td class="text-center"><a href="{{ route(($item->category == 'store') ? 'store.order.edit' : 'solution.order.edit', encrypt($item->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center"><a href="{{ route(($item->category == 'store') ? 'store.order.delete' : 'solution.order.delete', encrypt($item->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
@@ -116,4 +118,5 @@
     <div class="drawer-content drawer-content-scrollable" role="document"></div>
 </div>
 @include("backend.misc.email-drawer")
+@include("backend.misc.wa-drawer")
 @endsection

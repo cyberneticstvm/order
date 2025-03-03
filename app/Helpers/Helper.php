@@ -43,6 +43,116 @@ function api_url()
     return "https://emr.devihospitals.in";
 }
 
+function sendRequestedDocviaWa($mobile, $name, $id, $doc_type)
+{
+    $token = Config::get('myconfig.whatsapp.token');
+    if ($doc_type == 'prescription'):
+        $config = [
+            "messaging_product" => "whatsapp",
+            "to" => "+91" . $mobile,
+            "type" => "template",
+            "template" => [
+                "name" => "prescription_f",
+                "language" => ["code" => "en"],
+                "components" => [
+                    [
+                        "type" => "body",
+                        "parameters" => [
+                            ["type" => "text", "text" => $name],
+                            ["type" => "text", "text" => "+91 9388611622"],
+                        ]
+                    ],
+                    [
+                        "type" => "button",
+                        "sub_type" => "url",
+                        "index" => 0,
+                        "parameters" => [
+                            ["type" => "text", "text" => encrypt($id)],
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    endif;
+
+    if ($doc_type == 'receipt'):
+        $config = [
+            "messaging_product" => "whatsapp",
+            "to" => "+91" . $mobile,
+            "type" => "template",
+            "template" => [
+                "name" => "order_reference",
+                "language" => ["code" => "en"],
+                "components" => [
+                    [
+                        "type" => "body",
+                        "parameters" => [
+                            ["type" => "text", "text" => $name],
+                            ["type" => "text", "text" => "+91 9388611622"],
+                        ]
+                    ],
+                    [
+                        "type" => "button",
+                        "sub_type" => "url",
+                        "index" => 0,
+                        "parameters" => [
+                            ["type" => "text", "text" => encrypt($id)],
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    endif;
+
+    if ($doc_type == 'invoice'):
+        $config = [
+            "messaging_product" => "whatsapp",
+            "to" => "+91" . $mobile,
+            "type" => "template",
+            "template" => [
+                "name" => "invoice_reference",
+                "language" => ["code" => "en"],
+                "components" => [
+                    [
+                        "type" => "body",
+                        "parameters" => [
+                            ["type" => "text", "text" => $name],
+                            ["type" => "text", "text" => "+91 9388611622"],
+                        ]
+                    ],
+                    [
+                        "type" => "button",
+                        "sub_type" => "url",
+                        "index" => 0,
+                        "parameters" => [
+                            ["type" => "text", "text" => encrypt($id)],
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    endif;
+
+    $curl = curl_init();
+    $data_string = json_encode($config);
+    $ch = curl_init('https://graph.facebook.com/v22.0/543653938835557/messages');
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt(
+        $ch,
+        CURLOPT_HTTPHEADER,
+        array(
+            'Authorization: Bearer ' . $token,
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data_string)
+        )
+    );
+    $result = curl_exec($ch);
+    $res = json_decode($result, true);
+    return $res;
+}
+
 function sendWAMessageWithLink($order, $type)
 {
     $token = Config::get('myconfig.whatsapp.token');
