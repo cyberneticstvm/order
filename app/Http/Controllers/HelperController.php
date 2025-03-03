@@ -396,8 +396,6 @@ class HelperController extends Controller
             if ($request->receipt):
                 $order = Order::findOrFail($request->order_id);
                 $wa = sendRequestedDocviaWa($request->mobile, $order->name, $order->id, 'receipt');
-                dd($wa);
-                die;
                 WaDocsRequest::create([
                     'doc_type' => 'receipt',
                     'doc_id' => $order->id,
