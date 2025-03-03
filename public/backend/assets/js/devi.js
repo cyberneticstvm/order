@@ -229,7 +229,7 @@ $(function () {
         });
     });
 
-    $(document).on("click", ".wa", function () {
+    $(document).on("click", ".wa", function () {alert($(this).data('oid'));
         var drawer = $(this).data('drawer');
         if($(this).data('type') == 'wa-presc'){
             $(".ord").addClass('d-none');
