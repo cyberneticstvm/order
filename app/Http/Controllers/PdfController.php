@@ -196,8 +196,6 @@ class PdfController extends Controller
 
     public function exportOrderPrescriptionForWa($id)
     {
-        dd($id);
-        die;
         $spectacle = Spectacle::findOrFail(decrypt($id));
         $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
         $pdf = PDF::loadView('/backend/pdf/spectacle', compact('spectacle', 'qrcode'));
