@@ -199,7 +199,7 @@ class PdfController extends Controller
         $spectacle = Spectacle::findOrFail(decrypt($id));
         $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
         $pdf = PDF::loadView('/backend/pdf/spectacle', compact('spectacle', 'qrcode'));
-        return $pdf->stream('spectacle.pdf');
+        return $pdf->stream($spectacle->id . '.pdf');
     }
 
     public function exportOrderInvoiceForWa($id)
@@ -223,7 +223,7 @@ class PdfController extends Controller
         $pn = $order->name . ' - ' . $order->branch->code;
         $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('upi://pay?pa=9995050149@okbizaxis&pn=' . $pn . '&tn=' . $order->id . '&am=' . $order->balance . '&cu=INR'));
         $pdf = PDF::loadView('/backend/pdf/store-order-receipt-public', compact('order', 'qrcode', 'advance'));
-        return $pdf->stream('ORDER-' . $order->id . '.pdf');
+        return $pdf->stream($order->id . '.pdf');
     }
 
     public function exportOrderPrescription($id)
