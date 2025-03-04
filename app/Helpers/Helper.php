@@ -149,7 +149,7 @@ function sendRequestedDocviaWa($mobile, $name, $oid, $doc_type)
                         "sub_type" => "url",
                         "index" => 0,
                         "parameters" => [
-                            ["type" => "text", "text" => encrypt($id)],
+                            ["type" => "text", "text" => encrypt($oid)],
                         ]
                     ]
                 ]
