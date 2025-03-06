@@ -13,19 +13,23 @@
                 <h6 class="lan-1">General</h6>
             </div>
         </li>
-        <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
+        <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                 <svg class="stroke-icon">
-                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-learning') }}"></use>
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                 </svg>
                 <svg class="fill-icon">
-                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#fill-learning') }}"></use>
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#fill-home') }}"></use>
                 </svg>
-                <span>Stock / Inventory</span>
+                <span class="lan-3">Dashboard </span>
             </a>
+            <!--<ul class="sidebar-submenu">
+                <li><a class="" href="{{ route('dashboard') }}">Dashboard</a></li>
+            </ul>-->
             {{
                 Menu::new()->addClass('sidebar-submenu')
-                ->linkIfCan('stock-comparison', route('stock.preview'), 'Stock Comparison');
+                ->link(route('dashboard'), 'Dashboard')
+                ->linkIfCan('admin-dashboard', route('ajax.admin.dashboard'), 'Admin Dashboard');
             }}
         </li>
         <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
@@ -46,25 +50,6 @@
                 ->linkIfCan('lab-job-completed-orders', route('job.completed.lab.orders'), 'Job Completed')
                 ->linkIfCan('lab-under-process-orders', route('under.process.lab.orders'), 'Under Process')
                 ->linkIfCan('lab-main-branch-orders', route('main.branch.lab.orders'), 'Main Branch');
-            }}
-        </li>
-        <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
-            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                <svg class="stroke-icon">
-                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
-                </svg>
-                <svg class="fill-icon">
-                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#fill-home') }}"></use>
-                </svg>
-                <span class="lan-3">Dashboard </span>
-            </a>
-            <!--<ul class="sidebar-submenu">
-                <li><a class="" href="{{ route('dashboard') }}">Dashboard</a></li>
-            </ul>-->
-            {{
-                Menu::new()->addClass('sidebar-submenu')
-                ->link(route('dashboard'), 'Dashboard')
-                ->linkIfCan('admin-dashboard', route('ajax.admin.dashboard'), 'Admin Dashboard');
             }}
         </li>
         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
@@ -100,47 +85,6 @@
                 ->linkIfCan('search-prescription', route('search.prescription'), 'Prescription');
             }}
         </li>
-        <li class="sidebar-main-title">
-            <div>
-                <h6 class="">Operations</h6>
-            </div>
-        </li>
-        @if(auth()?->user()?->can('user-list') || auth()?->user()?->can('user-create') || auth()?->user()?->can('user-edit') || auth()?->user()?->can('user-delete') || auth()?->user()?->can('role-list') || auth()?->user()?->can('role-create') || auth()?->user()?->can('role-edit') || auth()?->user()?->can('role-delete') || auth()?->user()?->can('branch-opto-list'))
-        <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
-            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                <svg class="stroke-icon">
-                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#customers') }}"></use>
-                </svg>
-                <svg class="fill-icon">
-                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#customers') }}"></use>
-                </svg>
-                <span>User & Roles</span>
-            </a>
-            {{
-                Menu::new()->addClass('sidebar-submenu')
-                ->linkIfCan('user-list', route('users'), 'User Register')
-                ->linkIfCan('role-list', route('roles'), 'Roles & Permissions')
-                ->linkIfCan('branch-opto-list', route('bo'), 'Branch & Opto');
-            }}
-        </li>
-        @endif
-        @if(auth()?->user()?->can('branch-list') || auth()?->user()?->can('branch-create') || auth()?->user()?->can('branch-edit') || auth()?->user()?->can('branch-delete'))
-        <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
-            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                <svg class="stroke-icon">
-                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-learning') }}"></use>
-                </svg>
-                <svg class="fill-icon">
-                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#fill-learning') }}"></use>
-                </svg>
-                <span>Branch Management</span>
-            </a>
-            {{
-                Menu::new()->addClass('sidebar-submenu')
-                ->linkIfCan('branch-list', route('branches'), 'Branch Register');
-            }}
-        </li>
-        @endif
         @if(auth()?->user()?->can('customer-list') || auth()?->user()?->can('customer-create') || auth()?->user()?->can('customer-edit') || auth()?->user()?->can('customer-delete') || auth()?->user()?->can('spectacle-list'))
         <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
@@ -159,21 +103,6 @@
             }}
         </li>
         @endif
-        <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
-            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                <svg class="stroke-icon">
-                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#star') }}"></use>
-                </svg>
-                <svg class="fill-icon">
-                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#star') }}"></use>
-                </svg>
-                <span>Offers</span>
-            </a>
-            {{
-                Menu::new()->addClass('sidebar-submenu')
-                ->linkIfCan('offer-category-list', route('offer.category.list'), 'Offer Category Register');                
-            }}
-        </li>
         <li class="sidebar-main-title">
             <div>
                 <h6>Order</h6>
@@ -259,6 +188,83 @@
                 ->linkIfCan('bank-transfer-list', route('bank.transfers'), 'Bank Transfer');
             }}
         </li>
+        <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
+            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                <svg class="stroke-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-learning') }}"></use>
+                </svg>
+                <svg class="fill-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#fill-learning') }}"></use>
+                </svg>
+                <span>Stock / Inventory</span>
+            </a>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('stock-comparison', route('stock.preview'), 'Stock Comparison');
+            }}
+        </li>
+
+
+
+
+        <li class="sidebar-main-title">
+            <div>
+                <h6 class="">Operations</h6>
+            </div>
+        </li>
+        @if(auth()?->user()?->can('user-list') || auth()?->user()?->can('user-create') || auth()?->user()?->can('user-edit') || auth()?->user()?->can('user-delete') || auth()?->user()?->can('role-list') || auth()?->user()?->can('role-create') || auth()?->user()?->can('role-edit') || auth()?->user()?->can('role-delete') || auth()?->user()?->can('branch-opto-list'))
+        <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
+            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                <svg class="stroke-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#customers') }}"></use>
+                </svg>
+                <svg class="fill-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#customers') }}"></use>
+                </svg>
+                <span>User & Roles</span>
+            </a>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('user-list', route('users'), 'User Register')
+                ->linkIfCan('role-list', route('roles'), 'Roles & Permissions')
+                ->linkIfCan('branch-opto-list', route('bo'), 'Branch & Opto');
+            }}
+        </li>
+        @endif
+        @if(auth()?->user()?->can('branch-list') || auth()?->user()?->can('branch-create') || auth()?->user()?->can('branch-edit') || auth()?->user()?->can('branch-delete'))
+        <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
+            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                <svg class="stroke-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-learning') }}"></use>
+                </svg>
+                <svg class="fill-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#fill-learning') }}"></use>
+                </svg>
+                <span>Branch Management</span>
+            </a>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('branch-list', route('branches'), 'Branch Register');
+            }}
+        </li>
+        @endif
+
+        <li class="sidebar-list"><i class="fa fa-thumb-tack"> </i>
+            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                <svg class="stroke-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#star') }}"></use>
+                </svg>
+                <svg class="fill-icon">
+                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#star') }}"></use>
+                </svg>
+                <span>Offers</span>
+            </a>
+            {{
+                Menu::new()->addClass('sidebar-submenu')
+                ->linkIfCan('offer-category-list', route('offer.category.list'), 'Offer Category Register');                
+            }}
+        </li>
+
         <li class="sidebar-main-title">
             <div>
                 <h6>Inventory</h6>
