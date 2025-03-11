@@ -51,32 +51,32 @@ class PurchaseOrderController extends Controller
             'date' => 'required',
             'po_number' => 'required|unique:purchase_orders,po_number',
         ]);
-        try {
-            DB::transaction(function () use ($request) {
-                $input = $request->except(array('products', 'qty', 'rate', 'tax_percentage', 'tax_amount', 'total'));
-                $data = [];
-                $input['branch_id'] = Session::get('branch');
-                $input['created_by'] = $request->user()->id;
-                $input['updated_by'] = $request->user()->id;
-                $po = PurchaseOrder::create($input);
-                foreach ($request->products as $key => $item):
-                    $data[] = [
-                        'po_id' => $po->id,
-                        'product' => $item,
-                        'qty' => $request->qty[$key],
-                        'rate' => $request->rate[$key] ?? 0,
-                        'tax_percentage' => $request->tax_percentage[$key] ?? 0,
-                        'tax_amount' => $request->tax_amount[$key] ?? 0,
-                        'total' => $request->total[$key] ?? 0,
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ];
-                endforeach;
-                PurchaseOrderDetail::insert($data);
-            });
-        } catch (Exception $e) {
-            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
-        }
+        //try {
+        DB::transaction(function () use ($request) {
+            $input = $request->except(array('products', 'qty', 'rate', 'tax_percentage', 'tax_amount', 'total'));
+            $data = [];
+            $input['branch_id'] = Session::get('branch');
+            $input['created_by'] = $request->user()->id;
+            $input['updated_by'] = $request->user()->id;
+            $po = PurchaseOrder::create($input);
+            foreach ($request->products as $key => $item):
+                $data[] = [
+                    'po_id' => $po->id,
+                    'product' => $item,
+                    'qty' => $request->qty[$key],
+                    'rate' => $request->rate[$key] ?? 0,
+                    'tax_percentage' => $request->tax_percentage[$key] ?? 0,
+                    'tax_amount' => $request->tax_amount[$key] ?? 0,
+                    'total' => $request->total[$key] ?? 0,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ];
+            endforeach;
+            PurchaseOrderDetail::insert($data);
+        });
+        //} catch (Exception $e) {
+        //return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        //}
         return redirect()->route('po')->with("success", "PO created successfully!");
     }
 
