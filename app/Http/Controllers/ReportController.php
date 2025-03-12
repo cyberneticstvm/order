@@ -118,8 +118,6 @@ class ReportController extends Controller
             return $q->where('branch_id', $request->branch);
         })->when($request->order_status != 'all', function ($q) use ($request) {
             return $q->where('order_status', $request->order_status);
-        })->when($request->order_status == 'cancelled', function ($q) use ($request) {
-            return $q->whereNotNull('deleted_at');
         })->orderBy('order_sequence', 'ASC')->get();
         return view(($request->redir == 'sales') ? 'backend.report.sales' : 'backend.report.order', compact('sales', 'inputs', 'branches'));
     }
