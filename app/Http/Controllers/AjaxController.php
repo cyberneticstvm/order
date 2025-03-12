@@ -492,8 +492,8 @@ class AjaxController extends Controller
     {
         $bid = ($bid > 0) ? $bid : Session::get('branch');
         $orders = Month::leftJoin('orders as o', function ($q) use ($bid) {
-            $q->on('o.created_at', '>=', DB::raw('LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH'));
-            $q->on('o.created_at', '<', DB::raw('LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH + INTERVAL 1 MONTH'))->where('o.branch_id', $bid);
+            $q->on('o.order_date', '>=', DB::raw('LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH'));
+            $q->on('o.order_date', '<', DB::raw('LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH + INTERVAL 1 MONTH'))->where('o.branch_id', $bid);
         })->select(DB::raw("LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH AS date, COUNT(o.id) AS order_count, COUNT(CASE WHEN order_status = 'delivered' THEN o.id END) AS dcount, COUNT(o.id) - COUNT(CASE WHEN order_status = 'delivered' THEN o.id END) AS bcount, CONCAT_WS('/', DATE_FORMAT(LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH, '%b'), DATE_FORMAT(LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH, '%y')) AS month"))->groupBy('date', 'months.id')->orderByDesc('date')->get();
         return json_encode([
             'ord' => $orders,
