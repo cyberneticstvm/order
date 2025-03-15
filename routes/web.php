@@ -129,6 +129,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/adv/customer/edit/{id}', 'edit')->name('vehicle.edit');
         Route::post('/adv/customer/edit/{id}', 'update')->name('vehicle.update');
         Route::get('/adv/customer/delete/{id}', 'destroy')->name('vehicle.delete');
+        Route::get('/adv/customer/restore/{id}', 'restore')->name('vehicle.restore');
 
         Route::get('/adv/customer/payment/{id}', 'payment')->name('vehicle.payment');
         Route::post('/adv/customer/payment/{id}', 'paymentSave')->name('vehicle.payment.save');

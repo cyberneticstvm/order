@@ -93,6 +93,12 @@ class AdvertisementController extends Controller
         return redirect()->route('vehicles')->with("success", "Vehicle deleted successfully");
     }
 
+    function restore(string $id)
+    {
+        Vehicle::withTrashed()->where('id', decrypt($id))->restore();
+        return redirect()->route('vehicles')->with("success", "Vehicle restored successfully");
+    }
+
     function payment(string $id)
     {
         $vehicle = Vehicle::findOrFail(decrypt($id));

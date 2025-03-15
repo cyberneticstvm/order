@@ -84,7 +84,13 @@
                                         <td>{{ $vehicle->card_issued == 0 ? 'No' : 'Yes' }} - {{ $vehicle->card_issued_date?->format('d.M.Y') }}</td>
                                         <td class="text-center">{!! $vehicle->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('vehicle.edit', encrypt($vehicle->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
-                                        <td class="text-center"><a href="{{ route('vehicle.delete', encrypt($vehicle->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
+                                        <td class="text-center">
+                                            @if($vehicle->deleted_at)
+                                            <a href="{{ route('vehicle.restore', encrypt($vehicle->id)) }}" class="proceed" title="Restore"><i class="fa fa-undo text-success fa-lg"></i></a>
+                                            @else
+                                            <a href="{{ route('vehicle.delete', encrypt($vehicle->id)) }}" class="dlt" title="Delete"><i class="fa fa-trash text-danger fa-lg"></i></a>
+                                            @endif
+                                        </td>
                                     </tr>
                                     @empty
                                     @endforelse
