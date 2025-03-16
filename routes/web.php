@@ -245,6 +245,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/order/{fdate}/{tdate}/{status}/{branch}', 'exportOrder')->name('export.order');
         Route::get('/stock/{category}/{branch}', 'exportStockStatus')->name('export.stock.status.excel');
         Route::get('/vehicle', 'exportVehicle')->name('export.vehicle.excel');
+        Route::get('/vehicle/report', 'exportVehicleReport')->name('report.export.vehicle.excel');
     });
 
     Route::prefix('/backend/import')->controller(ImportExportController::class)->group(function () {
@@ -295,6 +296,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/order/{fdate}/{tdate}/{status}/{branch}', 'exportOrder')->name('export.order.pdf');
         Route::get('/order/{category}/{branch}', 'exportStockStatus')->name('export.stock.status.pdf');
         Route::get('/po/{id}', 'exportPurchaseOrder')->name('pdf.po.receipt');
+        Route::get('/vehicle', 'exportVehicle')->name('report.export.vehicle.pdf');
     });
 
     Route::prefix('/backend/bank/transfer')->controller(BankTransferController::class)->group(function () {
@@ -760,6 +762,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/order/by/price', 'orderByPriceFetch')->name('order.by.price.fetch');
         Route::get('/stock-movement', 'stockMovement')->name('report.stock.movement');
         Route::post('/stock-movement', 'stockMovementFetch')->name('report.stock.movement.fetch');
+        Route::get('/vehicle', 'exportVehicle')->name('vehicle.export');
+        Route::post('/vehicle', 'fetchVehicle')->name('vehicle.export.fetch');
     });
 
     Route::prefix('/backend/voucher')->controller(VoucherController::class)->group(function () {

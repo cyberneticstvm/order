@@ -20,6 +20,8 @@ use App\Models\SalesReturn;
 use App\Models\Transfer;
 use App\Models\TransferDetails;
 use App\Models\User;
+use App\Models\Vehicle;
+use App\Models\VehiclePayment;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -47,6 +49,7 @@ class ReportController extends Controller
         $this->middleware('permission:export-order', ['only' => ['exportOrder']]);
         $this->middleware('permission:report-order-by-price', ['only' => ['orderByPrice', 'orderByPriceFetch']]);
         $this->middleware('permission:report-stock-movement', ['only' => ['stockMovement', 'stockMovementFetch']]);
+        $this->middleware('permission:report-vehicle-export', ['only' => ['exportVehicle', 'fetchVehicle']]);
 
         $this->middleware(function ($request, $next) {
             $brs = Branch::selectRaw("0 as id, 'All / Main Branch' as name");
@@ -395,5 +398,34 @@ class ReportController extends Controller
         $products = Product::whereIn('category', ['frame', 'solution'])->get();
         $data = collect(DB::select("SELECT tbl1.*, IFNULL(COUNT(CASE WHEN o.created_at BETWEEN ? AND ? THEN od.qty END), 0) AS soldQty FROM (SELECT DISTINCT(td.product_id) AS pid, p.name, p.code, p.category, ps.name AS type, p.selling_price FROM transfer_details td LEFT JOIN transfers t on t.id = td.transfer_id LEFT JOIN products p ON p.id = td.product_id LEFT JOIN product_subcategories ps ON p.type_id = ps.id WHERE IF(? > 0, t.to_branch_id = ?, 1) AND IF(? > 0, p.id = ?, 1)) AS tbl1 LEFT JOIN order_details od ON od.product_id = tbl1.pid LEFT JOIN orders o ON o.id = od.order_id WHERE IF(? > 0, o.branch_id = ?, 1) GROUP BY pid, `name`, code, category, `type`, selling_price ORDER BY soldQty", [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay(), $request->branch, $request->branch, $request->product, $request->product, $request->branch, $request->branch]));
         return view('backend.report.stock-movement', compact('inputs', 'branches', 'products', 'data'));
+    }
+
+    public function exportVehicle()
+    {
+        $inputs = [date('Y-m-d'), date('Y-m-d'), 'all', Session::get('branch')];
+        $branches = $this->branches;
+        $records = collect();
+        return view('backend.report.vehicle', compact('records', 'inputs', 'branches'));
+    }
+
+    public function fetchVehicle(Request $request)
+    {
+        $this->validate($request, [
+            'from_date' => 'required',
+            'to_date' => 'required',
+            'status' => 'required',
+            'branch' => 'required',
+        ]);
+        $inputs = [$request->from_date, $request->to_date, $request->status, $request->branch];
+        $branches = $this->branches;
+        $records = Vehicle::whereBetween('created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('branch_id', $request->branch);
+        })->get();
+        /*->when($request->status == 'active', function ($q) use ($request) {
+            return $q->where(Carbon::now()->diffInDays(Carbon::parse(VehiclePayment::where('vehicle_id', 'vehicles.id')->latest()->first()->created_at ?? Carbon::today()), '<', 'vehicles.payment_terms'));
+        })->when($request->status == 'inactive', function ($q) use ($request) {
+            return $q->where(Carbon::now()->diffInDays(Carbon::parse(VehiclePayment::where('vehicle_id', 'vehicles.id')->latest()->first()->created_at ?? Carbon::today()), '>', 'vehicles.payment_terms'));
+        })*/
+        return view('backend.report.vehicle', compact('records', 'inputs', 'branches'));
     }
 }

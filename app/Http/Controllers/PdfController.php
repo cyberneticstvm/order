@@ -14,6 +14,7 @@ use App\Models\Product;
 use App\Models\PurchaseOrder;
 use App\Models\Spectacle;
 use App\Models\Transfer;
+use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -270,6 +271,16 @@ class PdfController extends Controller
         $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
         $pdf = PDF::loadView('/backend/pdf/po', compact('po', 'qrcode'));
         return $pdf->stream($po->po_number . '.pdf');
+    }
+
+    public function exportVehicle(Request $request)
+    {
+        $records = Vehicle::whereBetween('created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+            return $q->where('branch_id', $request->branch);
+        })->get();
+        $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
+        $pdf = PDF::loadView('/backend/pdf/vehicle', compact('records', 'qrcode'));
+        return $pdf->stream('vehicle.pdf');
     }
 
     public function NumberintoWords(float $number)

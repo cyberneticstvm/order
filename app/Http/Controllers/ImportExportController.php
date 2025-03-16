@@ -14,6 +14,7 @@ use App\Exports\ProductPharmacyExport;
 use App\Exports\ProductSolutionExport;
 use App\Exports\StockStatusReportExport;
 use App\Exports\VehicleExport;
+use App\Exports\VehicleReportExport;
 use App\Models\Branch;
 use App\Imports\FrameImport;
 use App\Imports\LensImport;
@@ -388,5 +389,10 @@ class ImportExportController extends Controller
     public function exportStockStatus(Request $request)
     {
         return Excel::download(new StockStatusReportExport($request), 'stock.xlsx');
+    }
+
+    public function exportVehicleReport(Request $request)
+    {
+        return Excel::download(new VehicleReportExport($request), 'vehicles.xlsx');
     }
 }

@@ -16,8 +16,8 @@ class VehicleExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
      */
     public function collection()
     {
-        $products = Vehicle::withTrashed()->orderBy('owner_name')->get();
-        return $products->map(function ($data, $key) {
+        $vehicles = Vehicle::withTrashed()->orderBy('owner_name')->get();
+        return $vehicles->map(function ($data, $key) {
             return [
                 'item_serial' =>  $key + 1,
                 'owner_name' => $data->owner_name,

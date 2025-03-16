@@ -395,7 +395,8 @@
                 ->linkIfCan('report-purchase', route('report.purchase'), 'Purchases')
                 ->linkIfCan('export-order', route('order.export'), 'Export Order / Invoice')
                 ->linkIfCan('report-order-by-price', route('order.by.price'), 'Order by Price')
-                ->linkIfCan('report-stock-movement', route('report.stock.movement'), 'Stock Movement');
+                ->linkIfCan('report-stock-movement', route('report.stock.movement'), 'Stock Movement')
+                ->linkIfCan('report-vehicle-export', route('vehicle.export'), 'Vehicle Export');
             }}
         </li>
         <li class="sidebar-main-title">
