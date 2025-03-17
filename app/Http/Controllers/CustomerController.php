@@ -153,12 +153,16 @@ class CustomerController extends Controller
                             'company_name' => $request->company_name,
                             'branch_id' => Session::get('branch'),
                             'mrn' => $request->mrn,
+                            'created_by' => $request->user()->id,
+                            'updated_by' => $request->user()->id,
                         ]);
                         $cid = $customer->id;
                     endif;
                     Registration::create([
                         'customer_id' => $cid,
                         'branch_id' => Session::get('branch'),
+                        'created_by' => $request->user()->id,
+                        'updated_by' => $request->user()->id,
                     ]);
                 });
             endif;
@@ -192,12 +196,16 @@ class CustomerController extends Controller
                         'company_name' => $data['company_name'],
                         'branch_id' => Session::get('branch'),
                         'mrn' => $data['mrn'],
+                        'created_by' => $request->user()->id,
+                        'updated_by' => $request->user()->id,
                     ]);
                     $cid = $customer->id;
                 endif;
                 Registration::create([
                     'customer_id' => $cid,
                     'branch_id' => Session::get('branch'),
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
                 ]);
                 Session::forget('cdata');
             else :
@@ -229,6 +237,12 @@ class CustomerController extends Controller
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
         Customer::findOrFail($id)->update($input);
+        Order::where('customer_id', $id)->update([
+            'name' => $request->name,
+            'age' => $request->age,
+            'place' => $request->address,
+            'mobile' => $request->mobile,
+        ]);
         return redirect()->route('customer.register')->with("success", "Customer updated successfully!");
     }
 
