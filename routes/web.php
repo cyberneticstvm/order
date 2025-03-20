@@ -807,5 +807,9 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/stock', 'stockAdjustmentSetting')->name('setting.stock.adjustment');
         Route::post('/stock', 'stockAdjustmentSettingFetch')->name('setting.stock.adjustment.fetch');
         Route::post('/stock/update', 'stockAdjustmentSettingUpdate')->name('setting.stock.adjustment.update');
+
+        Route::get('/royalty/card', 'rcardSetting')->name('settings.royalty.card');
+        Route::post('/royalty/card', 'rcardSettingFetch')->name('settings.royalty.card.fetch');
+        Route::post('/royalty/card/update', 'rcardSettingsUpdate')->name('settings.royalty.card.update');
     });
 });

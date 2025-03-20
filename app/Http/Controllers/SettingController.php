@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Branch;
 use App\Models\Closing;
 use App\Models\ProductDamage;
+use App\Models\ProductSubcategory;
+use App\Models\RoyaltyCardSetting;
 use App\Models\SalesReturn;
 use App\Models\Setting;
 use App\Models\Transfer;
@@ -24,7 +26,8 @@ class SettingController extends Controller
     {
         $this->middleware('permission:setting-account-adjustment', ['only' => ['accountSetting', 'accountSettingUpdate']]);
         $this->middleware('permission:setting-stock-adjustment', ['only' => ['stockAdjustmentSetting', 'stockAdjustmentSettingFetch', 'stockAdjustmentSettingUpdate']]);
-        $this->middleware('permission:settings-extra', ['only' => ['extraSetting', 'extraSettingsUpdate']]);
+        $this->middleware('permission:settings-royalty-card', ['only' => ['rcardSetting', 'rcardSettingsUpdate']]);
+        $this->middleware('permission:settings-extra', ['only' => ['extraSetting', 'rcardSettingFetch', 'extraSettingsUpdate']]);
 
         $this->middleware(function ($request, $next) {
             $brs = Branch::selectRaw("0 as id, 'All / Main Branch' as name");
@@ -176,5 +179,48 @@ class SettingController extends Controller
             return redirect()->back()->with("error", $e->getMessage());
         }
         return redirect()->back()->with("success", "Stock updated successfully");
+    }
+
+    function rcardSetting()
+    {
+        $cards = ProductSubcategory::where('category', 'rcard')->where('attribute', 'type')->orderBy('name')->pluck('name', 'id');
+        $cats = collect();
+        $data = collect();
+        $card = 0;
+        return view('backend.settings.royalty-card', compact('cards', 'cats', 'data', 'card'));
+    }
+
+    function rcardSettingFetch(Request $request)
+    {
+        $request->validate([
+            'card_type' => 'required',
+        ]);
+        $card = $request->card_type;
+        $cards = ProductSubcategory::where('category', 'rcard')->where('attribute', 'type')->orderBy('name')->pluck('name', 'id');
+        $cats = array('1' => 'Frame', '2' => 'Lens', '3' => 'Contact Lense');
+        $data = RoyaltyCardSetting::where('card_id', $card)->get();
+        return view('backend.settings.royalty-card', compact('cards', 'cats', 'data', 'card'));
+    }
+
+    function rcardSettingsUpdate(Request $request)
+    {
+        $request->validate([
+            'cardType' => 'required',
+        ]);
+        if ($request->categories):
+            RoyaltyCardSetting::where('card_id', $request->cardType)->delete();
+            foreach ($request->categories as $key => $item):
+                RoyaltyCardSetting::insert([
+                    'discount_percentage' => $request->discounts[$key],
+                    'card_id' => $request->cardType,
+                    'category' => $item,
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+            endforeach;
+        endif;
+        return redirect()->back()->with("success", "Card settings updated successfully");
     }
 }
