@@ -197,7 +197,7 @@ class SettingController extends Controller
         ]);
         $card = $request->card_type;
         $cards = ProductSubcategory::where('category', 'rcard')->where('attribute', 'type')->orderBy('name')->pluck('name', 'id');
-        $cats = array('1' => 'Frame', '2' => 'Lens', '3' => 'Contact Lense');
+        $cats = array('1' => 'Frame', '2' => 'Lens');
         $data = RoyaltyCardSetting::where('card_id', $card)->get();
         return view('backend.settings.royalty-card', compact('cards', 'cats', 'data', 'card'));
     }
