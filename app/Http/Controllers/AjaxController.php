@@ -18,9 +18,11 @@ use App\Models\Power;
 use App\Models\Product;
 use App\Models\ProductSubcategory;
 use App\Models\PurchaseDetail;
+use App\Models\RoyaltyCardSetting;
 use App\Models\Spectacle;
 use App\Models\Transfer;
 use App\Models\TransferDetails;
+use App\Models\Vehicle;
 use App\Models\VehiclePayment;
 use App\Models\Voucher;
 use Carbon\Carbon;
@@ -79,6 +81,49 @@ class AjaxController extends Controller
             'products' => $products,
             'content' => $tbl,
         ]);
+    }
+
+    public function validateRoyaltyCard(Request $request)
+    {
+        $rctype = $request->ctype;
+        $rcnumber = $request->cnumber;
+        $order_total = $request->order_total;
+        $products = $request->products;
+        $pdctTotal = $request->pdctTotal;
+        $type = ProductSubcategory::find($rctype)->name;
+        $card = null;
+        $discount = 0;
+        if ($type == 'Vehicle'):
+            $card = Vehicle::where('vcode', $rcnumber)->first();
+            foreach ($products as $key => $item):
+                if ($item != ''):
+                    $product = Product::find($item);
+                    $discSetting = RoyaltyCardSetting::where('category', $product->category)->where('card_id', $rctype)->first();
+                    $taxAmount = $product->taxamount($pdctTotal[$key]);
+                    $pdctValue = $pdctTotal[$key] - $taxAmount;
+                    $discount += ($pdctValue > 0 && $discSetting?->discount_percentage) ? ($pdctValue * $discSetting?->discount_percentage) / 100 : 0;
+                endif;
+            endforeach;
+        endif;
+        if ($card && $discount):
+            return response()->json([
+                'message' => 'Royalty Card Validated Successfully!',
+                'type' => 'success',
+                'discount' => $discount,
+            ]);
+        elseif ($card && $discount == 0):
+            return response()->json([
+                'message' => 'No discount applicable for provided card!' . $taxAmount,
+                'type' => 'warning',
+                'discount' => $discount,
+            ]);
+        else:
+            return response()->json([
+                'message' => 'Invalid Card!',
+                'type' => 'error',
+                'discount' => $discount,
+            ]);
+        endif;
     }
 
     public function saveProductForOffer(Request $request)

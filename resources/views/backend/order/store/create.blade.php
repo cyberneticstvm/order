@@ -348,6 +348,16 @@
                                                     <td class="border-0"><input type="number" name="invoice_total" class="text-end border-0 fw-bold w-100 nettotal readOnly" min="1" step="any" placeholder="0.00" /></td>
                                                 </tr>
                                                 <tr>
+                                                    <td colspan="2" class="text-end fw-bold border-0">Royalty Card</td>
+                                                    <td colspan="1">
+                                                        {{ html()->select('card_type', $cards, old('card_type'))->class('border-0')->attribute('id', 'ctype')->placeholder('Card Type') }}
+                                                    </td>
+                                                    <td class="fw-bold border-0" colspan="2"><input type="text" name='card_number' class="w-100 border-0" placeholder="Card Number" value="{{ old('card_number') }}" /></td>
+                                                    <td><button class="btn btn-primary" onclick="return validateRoyaltyCard();">Validate</button></td>
+                                                    <td colspan="5" class="text-end">Royalty Card Discount</td>
+                                                    <td class="text-end fw-bold border-0"><input type="number" name='royalty_discount' class="w-100 border-0 text-end royalty_discount" placeholder="0.00" step="any" value="0.00" readonly /></td>
+                                                </tr>
+                                                <tr>
                                                     <td colspan="9" class="text-end fw-bold border-0">Advance</td>
                                                     <td colspan="2">
                                                         {{ html()->select('payment_mode', $pmodes->pluck('name', 'id'), old('payment_mode'))->class('border-0')->attribute('id', 'pmode')->placeholder('Payment Mode') }}

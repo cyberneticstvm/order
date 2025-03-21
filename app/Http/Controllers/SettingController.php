@@ -213,7 +213,7 @@ class SettingController extends Controller
                 RoyaltyCardSetting::insert([
                     'discount_percentage' => $request->discounts[$key],
                     'card_id' => $request->cardType,
-                    'category' => $item,
+                    'category' => strtolower($item),
                     'created_by' => $request->user()->id,
                     'updated_by' => $request->user()->id,
                     'created_at' => Carbon::now(),

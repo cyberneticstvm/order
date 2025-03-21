@@ -203,6 +203,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/offer/products', 'getProductsForOffer')->name('ajax.get.offer.products');
         Route::get('/offer/product/remove', 'removeOfferProduct')->name('ajax.offer.product.remove');
         Route::post('/offer/product/save', 'saveProductForOffer')->name('ajax.offer.product.save');
+        Route::post('/validate/royalcard', 'validateRoyaltyCard')->name('ajax.validate.royalty.card');
     });
 
     Route::prefix('/backend')->controller(HelperController::class)->group(function () {

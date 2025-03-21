@@ -99,6 +99,7 @@
         let frm = document.forms["orderForm"];
         let disc_per = parseInt(frm['disc_per'].value);
         let disc = parseFloat(frm['discount'].value);
+        let royal_disc = parseFloat(frm['royalty_discount'].value);
         let ord_tot = parseFloat(frm['order_total'].value);
         let disc_allowed = parseFloat((ord_tot * disc_per) / 100);
         let offerproduct = $('#orderForm .offerPdct').length ?? 0;
@@ -106,6 +107,13 @@
         let discfferproduct = $('#orderForm .discOffer').length ?? 0;
         let bogo = $('#orderForm .bogo').length ?? 0;
         let bogoffer = offerredproduct - discfferproduct;
+
+        if (disc > 0 && royal_disc > 0 || royal_disc > 0 && offerredproduct > 0) {
+            failed({
+                'error': 'It seems like you have applied multiple offers in single order. Please recheck and try again'
+            })
+            return false;
+        }
 
         if (bogoffer > 0 && discfferproduct > 0) {
             failed({
@@ -218,6 +226,68 @@
             return false;
         }
         return true;
+    }
+
+    function validateRoyaltyCard() {
+        let frm = document.forms["orderForm"];
+        let card_type = frm['card_type'].value;
+        let card_number = frm['card_number'].value;
+        let disc = parseFloat(frm['discount'].value);
+        let pcount = parseInt($('#orderForm .offerredPdct').length);
+        let order_total = parseFloat(frm['order_total'].value);
+        let products = $('[name="product_id[]"]').map(function() {
+            return $(this).val();
+        }).get();
+        let pdctTotal = $('[name="total[]"]').map(function() {
+            return $(this).val();
+        }).get();
+
+        if (!card_type || !card_number) {
+            $(".royalty_discount").val(0.00);
+            failed({
+                'error': 'Card Type and Card Number should not be blank'
+            })
+        } else {
+            if (disc > 0) {
+                $(".royalty_discount").val(0.00);
+                failed({
+                    'error': 'Some discounts are already applied. Remove it and try again'
+                })
+            } else if (pcount > 0) {
+                $(".royalty_discount").val(0.00);
+                failed({
+                    'error': 'Some offer products are already applied. Remove it and try again'
+                })
+            } else {
+                $.ajax({
+                    url: '/ajax/validate/royalcard',
+                    type: 'post',
+                    data: {
+                        'ctype': card_type,
+                        'cnumber': card_number,
+                        'order_total': order_total,
+                        'products': products,
+                        'pdctTotal': pdctTotal,
+                    },
+                    success: function(response) {
+                        if (response.type == 'success') {
+                            success({
+                                'success': response.message
+                            })
+                        } else if (response.type == 'warning') {
+                            notify(response.message);
+                        } else {
+                            failed({
+                                'error': response.message
+                            })
+                        }
+                        $(".royalty_discount").val(parseFloat(response.discount).toFixed(2));
+                        calculateTotal();
+                    }
+                });
+            }
+        }
+        return false;
     }
 
     $(document).on('click', '.dlt', function(e) {

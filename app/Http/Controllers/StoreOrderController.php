@@ -13,6 +13,7 @@ use App\Models\Payment;
 use App\Models\PaymentMode;
 use App\Models\Power;
 use App\Models\Product;
+use App\Models\ProductSubcategory;
 use App\Models\Registration;
 use App\Models\Spectacle;
 use App\Models\State;
@@ -76,8 +77,9 @@ class StoreOrderController extends Controller
         $spectacle = Spectacle::where('registration_id', $registration->id)->latest()->first();
         $powers = Power::all();
         $camps = $this->getCamps();
+        $cards = ProductSubcategory::where('category', 'rcard')->where('attribute', 'type')->orderBy('name')->pluck('name', 'id');
         $store_prescriptions = Spectacle::where('customer_id', $patient->id)->selectRaw("CONCAT_WS(' / ', 'CID', customer_id, DATE_FORMAT(created_at, '%d/%b/%Y')) AS cid, id")->get();
-        return view(($type == 1) ? 'backend.order.store.create' : 'backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'powers', 'states', 'registration', 'store_prescriptions', 'spectacle', 'frames', 'camps'));
+        return view(($type == 1) ? 'backend.order.store.create' : 'backend.order.solution.create', compact('products', 'patient', 'pmodes', 'padvisers', 'powers', 'states', 'registration', 'store_prescriptions', 'spectacle', 'frames', 'camps', 'cards'));
     }
 
     public function fetch(Request $request)
@@ -146,6 +148,9 @@ class StoreOrderController extends Controller
                     'category' => 'store',
                     'branch_id' => branch()->id,
                     'order_total' => $request->order_total,
+                    'card_type' => $request->card_type,
+                    'card_number' => $request->card_number,
+                    'royalty_discount' => $request->royalty_discount,
                     'invoice_total' => $request->invoice_total,
                     'discount' => $request->discount,
                     'advance' => $request->advance,
@@ -260,7 +265,8 @@ class StoreOrderController extends Controller
         $powers = Power::all();
         $states = State::all();
         $camps = $this->getCamps();
-        return view('backend.order.store.edit', compact('products', 'pmodes', 'padvisers', 'order', 'powers', 'states', 'store_prescriptions', 'frames', 'camps'));
+        $cards = ProductSubcategory::where('category', 'rcard')->where('attribute', 'type')->orderBy('name')->pluck('name', 'id');
+        return view('backend.order.store.edit', compact('products', 'pmodes', 'padvisers', 'order', 'powers', 'states', 'store_prescriptions', 'frames', 'camps', 'cards'));
     }
 
     /**
@@ -307,6 +313,9 @@ class StoreOrderController extends Controller
                     'lpd' => $request->lpd,
                     'special_lab_note' => $request->special_lab_note,
                     'order_total' => $request->order_total,
+                    'card_type' => $request->card_type,
+                    'card_number' => $request->card_number,
+                    'royalty_discount' => $request->royalty_discount,
                     'invoice_total' => $request->invoice_total,
                     'discount' => $request->discount,
                     'advance' => $request->advance,

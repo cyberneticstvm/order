@@ -40,6 +40,9 @@ return new class extends Migration
             $table->enum('category', ['store', 'pharmacy', 'service', 'other', 'solution']);
             $table->unsignedBigInteger('branch_id');
             $table->decimal('order_total', 9, 2)->default(0);
+            $table->unsignedBigInteger('card_type')->nullable();
+            $table->string('card_number', 25)->nullable();
+            $table->decimal('royalty_discount', 7, 2)->nullable();
             $table->decimal('discount', 7, 2)->nullable();
             $table->decimal('invoice_total', 9, 2)->comment('total-discount')->default(0);
             $table->decimal('advance', 9, 2)->nullable();
