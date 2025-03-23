@@ -119,7 +119,7 @@ class AjaxController extends Controller
             ]);
         elseif ($card && Carbon::parse($card->payment?->created_at)->format('Y-m-d') == Carbon::today()):
             return response()->json([
-                'message' => 'Royalty card under 24 Hrs Cooling Period.',
+                'message' => 'Royalty card under 12 Hrs Cooling Period.',
                 'type' => 'warning',
                 'discount' => $discount,
             ]);
