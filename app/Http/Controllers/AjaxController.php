@@ -113,7 +113,13 @@ class AjaxController extends Controller
             ]);
         elseif ($card && $discount == 0):
             return response()->json([
-                'message' => 'No discount applicable for provided card!' . $taxAmount,
+                'message' => 'No discount applicable for provided card!',
+                'type' => 'warning',
+                'discount' => $discount,
+            ]);
+        elseif ($card && Carbon::parse($card->payment->created_at)->format('Y-m-d') == Carbon::today()):
+            return response()->json([
+                'message' => 'Royalty card under 24 Hrs Cooling Period.',
                 'type' => 'warning',
                 'discount' => $discount,
             ]);
