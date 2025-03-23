@@ -44,6 +44,7 @@ class ApiController extends Controller
                 return response()->json([
                     'status' => true,
                     'data' => $vehicle,
+                    'last_payment_date' => $vehicle->payment->created_at,
                     'vstatus' => $vehicle->vstatus(),
                 ], 200);
             else :
