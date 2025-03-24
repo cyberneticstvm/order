@@ -400,7 +400,7 @@ function branches()
 
 function userBranches()
 {
-    return Branch::whereIn('id', UserBranch::where('user_id', Auth::id())->pluck('branch_id'))->get();
+    return Branch::whereIn('id', UserBranch::where('user_id', Auth::id())->where('type', 'branch')->pluck('branch_id'))->get();
 }
 
 function procedures()

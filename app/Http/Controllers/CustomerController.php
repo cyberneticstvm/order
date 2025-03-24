@@ -144,7 +144,7 @@ class CustomerController extends Controller
                 DB::transaction(function () use ($request, $cid) {
                     if ($request->cid == 0) :
                         $customer = Customer::create([
-                            'name' => $request->name,
+                            'name' => strtoupper($request->name),
                             'age' => $request->age,
                             'address' => $request->address,
                             'mobile' => ($request->mobile) ?? $this->mobile,
@@ -187,7 +187,7 @@ class CustomerController extends Controller
                 if ($cid == 0) :
                     $data = Session::get('cdata');
                     $customer = Customer::create([
-                        'name' => $data['name'],
+                        'name' => strtoupper($data['name']),
                         'age' => $data['age'],
                         'address' => $data['address'],
                         'mobile' => ($data['mobile']) ?? $this->mobile,
@@ -238,7 +238,7 @@ class CustomerController extends Controller
         $input['updated_by'] = $request->user()->id;
         Customer::findOrFail($id)->update($input);
         Order::where('customer_id', $id)->update([
-            'name' => $request->name,
+            'name' => strtoupper($request->name),
             'age' => $request->age,
             'place' => $request->address,
             'mobile' => $request->mobile,
