@@ -119,7 +119,7 @@ class AjaxController extends Controller
             ]);
         elseif ($card && $discount):
             return response()->json([
-                'message' => 'Royalty Card Validated Successfully!' . Carbon::today()->format('Y-m-d'),
+                'message' => 'Royalty Card Validated Successfully! ' . Carbon::parse($card->payment->first()?->created_at)->addHour(settings()->royalty_card_cooling_period),
                 'type' => 'success',
                 'discount' => $discount,
             ]);
