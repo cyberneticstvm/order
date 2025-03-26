@@ -107,7 +107,7 @@ class AjaxController extends Controller
         endif;
         if ($card && $discount):
             return response()->json([
-                'message' => 'Royalty Card Validated Successfully!',
+                'message' => 'Royalty Card Validated Successfully!' . $card->payment->first()?->created_at,
                 'type' => 'success',
                 'discount' => $discount,
             ]);
