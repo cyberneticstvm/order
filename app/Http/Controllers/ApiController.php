@@ -41,14 +41,14 @@ class ApiController extends Controller
     {
         if ($secret == apiSecret()) :
             $vehicle = Vehicle::where('vcode', $vcode)->first();
-            if ($vehicle && Carbon::parse($vehicle->payment->first()?->created_at)->addHour(settings()->royalty_card_cooling_period) >= Carbon::now()) :
+            if ($vehicle && Carbon::parse($vehicle->payment->first()?->created_at)->addHour(settings()->royalty_card_cooling_period) <= Carbon::now()) :
                 return response()->json([
                     'status' => true,
                     'data' => $vehicle,
                     'last_payment_date' => $vehicle->payment->first()->created_at,
                     'vstatus' => strip_tags($vehicle->vstatus()),
                 ], 200);
-            elseif ($vehicle && Carbon::parse($vehicle->payment->first()?->created_at)->addHour(settings()->royalty_card_cooling_period) <= Carbon::now()):
+            elseif ($vehicle && Carbon::parse($vehicle->payment->first()?->created_at)->addHour(settings()->royalty_card_cooling_period) >= Carbon::now()):
                 return response()->json([
                     'status' => false,
                     'data' => "Royalty card under " . settings()->royalty_card_cooling_period . " Hrs Cooling Period.",
