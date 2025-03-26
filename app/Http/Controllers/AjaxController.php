@@ -109,7 +109,7 @@ class AjaxController extends Controller
             return response()->json([
                 'message' => "Royalty card under " . settings()->royalty_card_cooling_period . " Hrs Cooling Period.",
                 'type' => 'warning',
-                'discount' => $discount,
+                'discount' => 0,
             ]);
         elseif ($card && $discount == 0):
             return response()->json([
@@ -127,7 +127,7 @@ class AjaxController extends Controller
             return response()->json([
                 'message' => 'Invalid Card!',
                 'type' => 'error',
-                'discount' => $discount,
+                'discount' => 0,
             ]);
         endif;
     }
