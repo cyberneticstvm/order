@@ -107,7 +107,7 @@ class AjaxController extends Controller
         endif;
         if ($card && $discount):
             return response()->json([
-                'message' => 'Royalty Card Validated Successfully!' . Carbon::parse($card->payment->first()?->created_at)->format('Y-m-d'),
+                'message' => 'Royalty Card Validated Successfully!' . Carbon::today(),
                 'type' => 'success',
                 'discount' => $discount,
             ]);
