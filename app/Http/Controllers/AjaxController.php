@@ -105,10 +105,10 @@ class AjaxController extends Controller
                 endif;
             endforeach;
         endif;
-        if ($card && $discount):
+        if ($card && Carbon::parse($card->payment->first()?->created_at)->format('Y-m-d') == Carbon::today()->format('Y-m-d')):
             return response()->json([
-                'message' => 'Royalty Card Validated Successfully!' . Carbon::today()->format('Y-m-d'),
-                'type' => 'success',
+                'message' => 'Royalty card under 12 Hrs Cooling Period.',
+                'type' => 'warning',
                 'discount' => $discount,
             ]);
         elseif ($card && $discount == 0):
@@ -117,10 +117,10 @@ class AjaxController extends Controller
                 'type' => 'warning',
                 'discount' => $discount,
             ]);
-        elseif ($card && Carbon::parse($card->payment->first()?->created_at)->format('Y-m-d') == Carbon::today()->format('Y-m-d')):
+        elseif ($card && $discount):
             return response()->json([
-                'message' => 'Royalty card under 12 Hrs Cooling Period.',
-                'type' => 'warning',
+                'message' => 'Royalty Card Validated Successfully!' . Carbon::today()->format('Y-m-d'),
+                'type' => 'success',
                 'discount' => $discount,
             ]);
         else:
