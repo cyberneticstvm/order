@@ -50,7 +50,8 @@ class ApiController extends Controller
                 ], 200);
             elseif ($vehicle && Carbon::parse($vehicle->payment->first()?->created_at)->addHour(settings()->royalty_card_cooling_period) >= Carbon::now()):
                 return response()->json([
-                    'status' => false,
+                    'status' => true,
+                    'vstatus' => 'Cooling',
                     'data' => "Royalty card under " . settings()->royalty_card_cooling_period . " Hrs Cooling Period.",
                 ], 503);
             else :
