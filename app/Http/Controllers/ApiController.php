@@ -6,6 +6,7 @@ use App\Models\Branch;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Vehicle;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -40,13 +41,18 @@ class ApiController extends Controller
     {
         if ($secret == apiSecret()) :
             $vehicle = Vehicle::where('vcode', $vcode)->first();
-            if ($vehicle) :
+            if ($vehicle && Carbon::parse($vehicle->payment->first()?->created_at)->addHour(settings()->royalty_card_cooling_period) >= Carbon::now()) :
                 return response()->json([
                     'status' => true,
                     'data' => $vehicle,
                     'last_payment_date' => $vehicle->payment->first()->created_at,
                     'vstatus' => strip_tags($vehicle->vstatus()),
                 ], 200);
+            elseif ($vehicle && Carbon::parse($vehicle->payment->first()?->created_at)->addHour(settings()->royalty_card_cooling_period) <= Carbon::now()):
+                return response()->json([
+                    'status' => false,
+                    'data' => "Royalty card under " . settings()->royalty_card_cooling_period . " Hrs Cooling Period.",
+                ], 503);
             else :
                 return response()->json([
                     'status' => false,
