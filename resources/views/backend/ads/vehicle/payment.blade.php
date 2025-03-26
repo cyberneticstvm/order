@@ -81,6 +81,7 @@
                                         <th>Amount</th>
                                         <th>Pmode</th>
                                         <th>Paid Date</th>
+                                        <th>Notes</th>
                                         <th>Status</th>
                                         <th>Delete</th>
                                     </tr>
@@ -95,6 +96,7 @@
                                         <td>{{ $payment->amount }}</td>
                                         <td>{{ $payment->paymentmode->name }}</td>
                                         <td>{{ $payment->created_at->format('d.M.Y') }}</td>
+                                        <td>{{ $payment->notes }}</td>
                                         <td class="text-center">{!! $payment->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('vehicle.payment.delete', encrypt($payment->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
                                     </tr>
