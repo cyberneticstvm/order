@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('currency')->default('₹')->nullable();
             $table->decimal('daily_expense_limit')->default(0);
             $table->boolean('enable_ip_info')->default(0);
+            $table->integer('royalty_card_cooling_period')->default(0);
         });
     }
 

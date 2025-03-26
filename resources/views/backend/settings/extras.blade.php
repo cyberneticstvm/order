@@ -32,6 +32,10 @@
                                     {{ html()->checkbox($name = 'enable_ip_info', $checked=(settings()->enable_ip_info == 1) ? true : false, $value = 1)->class('form-check-input') }}
                                     <label class="form-check-label">Enable IP Info</label>
                                 </div>
+                                <div class="col-md-3">
+                                    <label>Royalty Card Cooling Period (Hrs)</label>
+                                    {{ html()->number('royalty_card_cooling_period', settings()->royalty_card_cooling_period)->class('form-control')->placeholder('0') }}
+                                </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                                     <button class="btn btn-submit btn-success" type="submit">Update</button>

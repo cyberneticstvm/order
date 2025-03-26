@@ -50,6 +50,7 @@ class SettingController extends Controller
         try {
             Setting::findOrFail(1)->update([
                 'enable_ip_info' => $request->enable_ip_info ?? 0,
+                'royalty_card_cooling_period' => $request->royalty_card_cooling_period ?? 0,
             ]);
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage());
