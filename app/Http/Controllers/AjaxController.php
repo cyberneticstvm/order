@@ -117,7 +117,7 @@ class AjaxController extends Controller
                 'type' => 'warning',
                 'discount' => $discount,
             ]);
-        elseif ($card && Carbon::parse($card->payment->first()?->created_at)->format('Y-m-d') == Carbon::today()):
+        elseif ($card && Carbon::parse($card->payment->first()?->created_at)->format('Y-m-d') == Carbon::today()->format('Y-m-d')):
             return response()->json([
                 'message' => 'Royalty card under 12 Hrs Cooling Period.',
                 'type' => 'warning',
