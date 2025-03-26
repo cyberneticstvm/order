@@ -45,7 +45,7 @@ class ApiController extends Controller
                     'status' => true,
                     'data' => $vehicle,
                     'last_payment_date' => $vehicle->payment->first()->created_at,
-                    'vstatus' => htmlentities($vehicle->vstatus()),
+                    'vstatus' => strip_tags($vehicle->vstatus()),
                 ], 200);
             else :
                 return response()->json([
