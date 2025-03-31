@@ -802,6 +802,7 @@ function calculateTotal() {
     });
     $(".subtotal").val(parseFloat(subtotal).toFixed(2));
     var discount = parseFloat($(".discount").val()) + parseFloat($(".royalty_discount").val());
+    console.log(discount);
     nettot = (discount > 0) ? subtotal - discount : subtotal;
     $(".nettotal").val(parseFloat(nettot).toFixed(2));
     var advance = parseFloat($(".advance").val());
