@@ -110,7 +110,6 @@ $(function () {
     });
 
     $(document).on("keyup", ".qty, .discount, .advance, .price, .total, .credit_used", function () {
-        console.log('sdf')
         calculateTotal();
     });
 
@@ -802,7 +801,7 @@ function calculateTotal() {
         subtotal += (total > 0) ? total : 0;
     });
     $(".subtotal").val(parseFloat(subtotal).toFixed(2));
-    var discount = parseFloat($(".discount").val()) + parseFloat($(".royalty_discount").val());
+    var discount = parseFloat($(".discount").val()) + parseFloat($(".royalty_discount").val() ?? 0);
     console.log(discount);
     nettot = (discount > 0) ? subtotal - discount : subtotal;
     $(".nettotal").val(parseFloat(nettot).toFixed(2));
