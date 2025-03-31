@@ -110,6 +110,7 @@ $(function () {
     });
 
     $(document).on("keyup", ".qty, .discount, .advance, .price, .total, .credit_used", function () {
+        console.log('sdf')
         calculateTotal();
     });
 
