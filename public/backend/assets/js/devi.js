@@ -801,8 +801,10 @@ function calculateTotal() {
         subtotal += (total > 0) ? total : 0;
     });
     $(".subtotal").val(parseFloat(subtotal).toFixed(2));
-    console.log($(".royalty_discount").val());
-    var discount = parseFloat($(".discount").val()) + parseFloat($(".royalty_discount").val() ?? 0);    
+    var rc_disc = parseFloat($(".royalty_discount").val()) > 0 ? parseFloat($(".royalty_discount").val()) : 0;
+    var disc = parseFloat($(".discount").val());    
+    var discount = disc + rc_disc;
+    console.log(discount);
     nettot = (discount > 0) ? subtotal - discount : subtotal;
     $(".nettotal").val(parseFloat(nettot).toFixed(2));
     var advance = parseFloat($(".advance").val());
