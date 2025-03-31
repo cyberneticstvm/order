@@ -804,7 +804,7 @@ function calculateTotal() {
     var rc_disc = parseFloat($(".royalty_discount").val()) > 0 ? parseFloat($(".royalty_discount").val()) : 0;
     var disc = parseFloat($(".discount").val());    
     var discount = disc + rc_disc;
-    console.log(discount);
+    //console.log(discount);
     nettot = (discount > 0) ? subtotal - discount : subtotal;
     $(".nettotal").val(parseFloat(nettot).toFixed(2));
     var advance = parseFloat($(".advance").val());
