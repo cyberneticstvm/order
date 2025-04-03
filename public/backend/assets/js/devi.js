@@ -434,7 +434,7 @@ $(function () {
                     } else {
                         $(".credit_used").attr('readonly', 'true')
                     }
-                    console.log(res);
+                    //console.log(res);
                 },
                 beforeSend: function (jqXHR) {
                     $(".avCr").text("Loading..");
