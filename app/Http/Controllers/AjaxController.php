@@ -121,7 +121,7 @@ class AjaxController extends Controller
             return response()->json([
                 'message' => 'Royalty Card Validated Successfully! ',
                 'type' => 'success',
-                'discount' => $discount,
+                'discount' => getFloorVal($discount, 10),
             ]);
         else:
             return response()->json([

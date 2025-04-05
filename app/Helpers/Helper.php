@@ -345,6 +345,13 @@ function sendWAMessage($data, $type)
     return $res;
 }
 
+function getFloorVal($value, $base)
+{
+    $val =  floor($value);
+    $reminder = $val % $base;
+    return $val - $reminder;
+}
+
 function apiSecret()
 {
     return 'fdjsvsgdf4dhgf687f4bg54g4hf787';
