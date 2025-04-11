@@ -9,6 +9,7 @@ use App\Models\Consultation;
 use App\Models\Customer;
 use App\Models\CustomerAccount;
 use App\Models\LabOrderNote;
+use App\Models\LoginLog;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\OrderStatusNote;
@@ -47,6 +48,12 @@ class HelperController extends Controller
         $this->middleware('permission:search-prescription', ['only' => ['searchPrescription', 'searchPrescriptionFetch']]);
         $this->middleware('permission:update-delivered-order', ['only' => ['editDispatechedOrder', 'editDispatechedOrderUpdate']]);
         $this->middleware('permission:admin-dashboard', ['only' => ['adminDashboard']]);
+    }
+
+    function getUserLocationMap(Request $request)
+    {
+        $login = LoginLog::findOrFail(decrypt($request->lid));
+        return view('backend.user-location-map', compact('login'));
     }
 
     function getclosing()

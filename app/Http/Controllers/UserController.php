@@ -15,6 +15,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use DB;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -51,6 +52,12 @@ class UserController extends Controller
             'username' => 'required',
             'password' => 'required',
         ]);
+        if (!$request->place_id):
+            return redirect()->back()->with("error", "Denied!!! You dont have enabled an active location. Please enable your location and try again.");
+        else:
+            Cookie::forget('location');
+            Cookie::queue('location', $request->place_id, time() + 60 * 60 * 24 * 365);
+        endif;
         if (Auth::attempt($cred, $request->remember)) :
             if (Str::contains($request->userAgent(), ['iPhone', 'Android', 'Linux', 'Macintosh']) && !Auth::user()->mobile_access) :
                 Auth::logout();
@@ -84,6 +91,10 @@ class UserController extends Controller
             'device' => Str::contains($request->userAgent(), ['iPhone', 'Android']) ? 'Mobile' : 'Computer',
             'latitude' => $coordinates[0],
             'longitude' => $coordinates[1],
+            'address' => $request->address,
+            'place_id' => $request->place_id,
+            'lat' => $request->lat,
+            'lng' => $request->lng,
             'logged_in' => Carbon::now()
         ]);
     }

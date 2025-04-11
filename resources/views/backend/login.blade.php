@@ -46,6 +46,10 @@
             <div class="login-main">
               <form class="theme-form" method="post" action="{{ route('login') }}">
                 @csrf
+                <input type="hidden" name="lat" id="lat" value="" />
+                <input type="hidden" name="lng" id="lng" value="" />
+                <input type="hidden" name="address" id="address" value="" />
+                <input type="hidden" name="place_id" id="place_id" value="" />
                 <h4>Sign in to account</h4>
                 <p>Enter your username & password to login</p>
                 <div class="form-group">
@@ -95,10 +99,43 @@
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="{{ asset('/backend/assets/js/script.js') }}"></script>
+    <script async
+      src="https://maps.googleapis.com/maps/api/js?key={{config('app.gpak')}}&loading=async&libraries=places">
+    </script>
     <script>
       $(function() {
         $(".uname").focus();
       })
+      var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+      };
+
+      window.addEventListener('load', initialize);
+
+      function initialize() {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            $('#lat').val(position.coords.latitude);
+            $('#lng').val(position.coords.longitude);
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                var address = JSON.parse(this.responseText)
+                $('#address').val(address.results[0].formatted_address);
+                $('#place_id').val(address.results[0].place_id);
+              }
+            };
+            xhttp.open("GET", "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + position.coords.latitude + "," + position.coords.longitude + "&key={{config('app.gpak')}}", true);
+            xhttp.send();
+          },
+          function errorCallback(error) {
+            console.log(error)
+          },
+          options
+        );
+      }
     </script>
   </div>
   @include("backend.message")

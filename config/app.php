@@ -195,4 +195,6 @@ return [
         'Image' => Intervention\Image\Facades\Image::class
     ])->toArray(),
 
+    'gpak' => env('GOOGLE_PLACES_API_KEY', ''),
+
 ];

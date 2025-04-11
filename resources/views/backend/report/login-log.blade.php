@@ -72,7 +72,7 @@
                                         <th>SL No</th>
                                         <th>User</th>
                                         <th>Device</th>
-                                        <th>Location</th>
+                                        <th>Address</th>
                                         <th>Logged In</th>
                                         <th>Logged Out</th>
                                         <th>Status</th>
@@ -84,7 +84,7 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->user->name }}</td>
                                         <td>{{ $item->device }}</td>
-                                        <td>{{ $item->city_name }}</td>
+                                        <td><a href="{{ route('user.location.map', ['lid' => encrypt($item->id)]) }}" target="_blank">{{ $item->address }}</a></td>
                                         <td>{{ $item->logged_in->format('d.M.Y h:i a') }}</td>
                                         <td>{{ $item->logged_out?->format('d.M.Y h:i a') }}</td>
                                         <td>{!! $item->status() !!}</td>

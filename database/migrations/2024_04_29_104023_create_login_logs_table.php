@@ -23,6 +23,10 @@ return new class extends Migration
             $table->string('zip_code', 100)->nullable();
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();
+            $table->string('address')->nullable();
+            $table->string('place_id', 150)->nullable();
+            $table->double('lat')->nullable();
+            $table->double('lng')->nullable();
             $table->dateTime('logged_in')->nullable();
             $table->dateTime('logged_out')->nullable();
             $table->timestamps();
