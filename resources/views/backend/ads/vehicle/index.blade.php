@@ -55,8 +55,7 @@
                                         <th>VCode</th>
                                         <th>Reg. Date</th>
                                         <th>Reg. Branch</th>
-                                        <th>Fee</th>
-                                        <th>Pay. Terms</th>
+                                        <th>Credit</th>
                                         <th>Days Left</th>
                                         <th>Last Payment</th>
                                         <th>V.Status</th>
@@ -76,8 +75,7 @@
                                         <td>{{ $vehicle->vcode }}</td>
                                         <td>{{ $vehicle->created_at->format('d.M.Y') }}</td>
                                         <td>{{ $vehicle->branch?->name }}</td>
-                                        <td>{{ $vehicle->fee }}</td>
-                                        <td>{{ $vehicle->payment_terms }} Days</td>
+                                        <td>{{ number_format($vehicle->totalCredit(), 2) }}</td>
                                         <td class="text-success">{{ $vehicle->daysLeft() }} Days</td>
                                         <td>{{ $vehicle->payment?->first()?->created_at?->format('d.M.Y') }}</td>
                                         <td class="text-center">{!! $vehicle->vstatus() !!}</td>
