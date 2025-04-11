@@ -76,21 +76,15 @@ class UserController extends Controller
     {
         $sid = Str::random(25);
         $ip = ($request->ip() == '127.0.0.1') ? '59.89.235.2' : $request->ip();
-        $data = file_get_contents("https://ipinfo.io/$ip?token=38fa67afac8600");
-        $obj = json_decode($data);
-        $coordinates = explode(",", $obj->loc);
+        //$data = file_get_contents("https://ipinfo.io/$ip?token=38fa67afac8600");
+        //$obj = json_decode($data);
+        //$coordinates = explode(",", $obj->loc);
         User::where('id', Auth::id())->update(['session_id' => $sid]);
         LoginLog::create([
             'user_id' => Auth::id(),
             'session_id' => $sid,
             'ip' => $request->ip(),
-            'city_name' => $obj->city,
-            'region_name' => $obj->region,
-            'country_name' => $obj->country,
-            'zip_code' => $obj->postal,
             'device' => Str::contains($request->userAgent(), ['iPhone', 'Android']) ? 'Mobile' : 'Computer',
-            'latitude' => $coordinates[0],
-            'longitude' => $coordinates[1],
             'address' => $request->address,
             'place_id' => $request->place_id,
             'lat' => $request->lat,
