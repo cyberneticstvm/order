@@ -42,13 +42,14 @@ class AdvertisementController extends Controller
             'reg_number' => 'required|unique:vehicles,reg_number',
             'place' => 'required',
             'contact_number' => 'required|numeric|digits:10',
-            'fee' => 'required',
-            'payment_terms' => 'required',
             'card_issued' => 'required',
         ]);
         try {
             $input = $request->all();
             $input['vcode'] = uniqueCode(Vehicle::class, 'vcode', '', 1000, 9999);
+            $input['fee'] = 0;
+            $input['payment_terms'] = 0;
+            $input['branch_id'] = Session::get('branch');
             $input['branch_id'] = Session::get('branch');
             $input['created_by'] = $request->user()->id;
             $input['updated_by'] = $request->user()->id;
@@ -72,8 +73,6 @@ class AdvertisementController extends Controller
             'reg_number' => 'required|unique:vehicles,reg_number,' . $id,
             'place' => 'required',
             'contact_number' => 'required|numeric|digits:10',
-            'fee' => 'required',
-            'payment_terms' => 'required',
             'card_issued' => 'required',
         ]);
         try {

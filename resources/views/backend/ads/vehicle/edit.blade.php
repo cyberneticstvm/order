@@ -67,7 +67,7 @@
                                     <small class="text-danger">{{ $errors->first('contact_number') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-2">
+                                <!--<div class="col-md-2">
                                     <label class="form-label req">Fee</label>
                                     {{ html()->number($name = 'fee', $value = $vehicle->fee, '1', '', '')->class('form-control')->placeholder('0.00') }}
                                     @error('fee')
@@ -80,7 +80,7 @@
                                     @error('payment_terms')
                                     <small class="text-danger">{{ $errors->first('payment_terms') }}</small>
                                     @enderror
-                                </div>
+                                </div>-->
                                 <div class="col-md-2">
                                     <label class="form-label req">Card Issued</label>
                                     {{ html()->select($name = 'card_issued', array('' => 'select', '1' => 'Yes', '0' => 'No'), $vehicle->card_issued)->class('form-control') }}
