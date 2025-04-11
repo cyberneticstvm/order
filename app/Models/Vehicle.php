@@ -15,12 +15,12 @@ class Vehicle extends Model
 
     protected $casts = ['card_issued_date' => 'datetime'];
 
-    private $per_day_cost;
+    /*private $per_day_cost;
 
     public function __construct()
     {
         $this->per_day_cost = 3.33;
-    }
+    }*/
 
     public function status()
     {
@@ -62,6 +62,6 @@ class Vehicle extends Model
     public function daysLeft()
     {
         //return $this->payment_terms - Carbon::now()->diffInDays(Carbon::parse($this->payment()?->first()?->created_at));
-        return $this->totalCredit() > 0 ? floor($this->totalCredit() / $this->per_day_cost) - $this->totalDays() : 0;
+        return $this->totalCredit() > 0 ? floor($this->totalCredit() / 3.3) - $this->totalDays() : 0;
     }
 }
