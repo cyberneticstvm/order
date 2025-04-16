@@ -324,6 +324,28 @@ function sendWAMessage($data, $type)
             ]
         ];
     endif;
+    if ($type == 'cancel'):
+        $order = $data;
+        $config = [
+            "messaging_product" => "whatsapp",
+            "to" => "+91" . $order->mobile,
+            "type" => "template",
+            "template" => [
+                "name" => "order_cancel",
+                "language" => ["code" => "en"],
+                "components" => [
+                    [
+                        "type" => "body",
+                        "parameters" => [
+                            ["type" => "text", "text" => $order->name],
+                            ["type" => "text", "text" => $order->ono()],
+                            ["type" => "text", "text" => "+91 9388611622"],
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    endif;
     $curl = curl_init();
     $data_string = json_encode($config);
     $ch = curl_init('https://graph.facebook.com/v22.0/543653938835557/messages');
@@ -901,6 +923,7 @@ function cancelOrder($oid)
             endif;
         });
     endif;
+    sendWAMessage($order, 'cancel');
     recordOrderEvent($oid, 'Order has been deleted / cancelled');
 }
 
