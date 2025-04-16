@@ -545,7 +545,7 @@ class AjaxController extends Controller
         $orders = Month::leftJoin('orders as o', function ($q) use ($bid) {
             $q->on('o.order_date', '>=', DB::raw('LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH'));
             $q->on('o.order_date', '<', DB::raw('LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH + INTERVAL 1 MONTH'))->where('o.branch_id', $bid);
-        })->select(DB::raw("LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH AS date, COUNT(CASE WHEN o.deleted_at IS NOT NULL THEN o.id END) AS order_count, COUNT(CASE WHEN order_status = 'delivered' THEN o.id END) AS dcount, COUNT(o.id) - COUNT(CASE WHEN order_status = 'delivered' THEN o.id END) AS bcount, CONCAT_WS('/', DATE_FORMAT(LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH, '%b'), DATE_FORMAT(LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH, '%y')) AS month"))->groupBy('date', 'months.id')->orderByDesc('date')->get();
+        })->select(DB::raw("LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH AS date, COUNT(CASE WHEN o.deleted_at IS NULL THEN o.id END) AS order_count, COUNT(CASE WHEN order_status = 'delivered' THEN o.id END) AS dcount, COUNT(o.id) - COUNT(CASE WHEN order_status = 'delivered' THEN o.id END) AS bcount, CONCAT_WS('/', DATE_FORMAT(LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH, '%b'), DATE_FORMAT(LAST_DAY(CURRENT_DATE) + INTERVAL 1 DAY - INTERVAL months.id MONTH, '%y')) AS month"))->groupBy('date', 'months.id')->orderByDesc('date')->get();
         return json_encode([
             'ord' => $orders,
         ]);
