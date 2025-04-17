@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\PromotionContact;
 use App\Models\PromotionSchedule;
 use Illuminate\Http\Request;
@@ -28,7 +29,8 @@ class PromotionController extends Controller
 
     function createContact()
     {
-        return view('backend.promotion.contact.create');
+        $branches = Branch::where('type', 'branch')->pluck('name', 'id');
+        return view('backend.promotion.contact.create', compact('branches'));
     }
 
     function saveContact(Request $request)
@@ -49,7 +51,8 @@ class PromotionController extends Controller
     function editContact(string $id)
     {
         $contact = PromotionContact::findOrFail(decrypt($id));
-        return view('backend.promotion.contact.edit', compact('contact'));
+        $branches = Branch::where('type', 'branch')->pluck('name', 'id');
+        return view('backend.promotion.contact.edit', compact('contact', 'branches'));
     }
 
     function updateContact(Request $request, string $id)

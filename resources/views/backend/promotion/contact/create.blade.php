@@ -59,6 +59,13 @@
                                     <small class="text-danger">{{ $errors->first('entity') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-3">
+                                    <label class="form-label req">Branch</label>
+                                    {{ html()->select('branch_id', $branches, old('branch_id'))->class('form-control select2')->placeholder('Select') }}
+                                    @error('branch_id')
+                                    <small class="text-danger">{{ $errors->first('branch_id') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                                     <button class="btn btn-submit btn-success" type="submit">Save</button>
