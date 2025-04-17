@@ -47,6 +47,7 @@
                                     <tr>
                                         <th>SL No</th>
                                         <th>Date</th>
+                                        <th>Branch</th>
                                         <th>Entity</th>
                                         <th>Type</th>
                                         <th>Name</th>
@@ -61,6 +62,7 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $contact->created_at->format('d.M.Y') }}</td>
+                                        <td>{{ $contact->branch->name }}</td>
                                         <td>{{ ucfirst($contact->entity) }}</td>
                                         <td class="{{ ($contact->type == 'include') ? 'text-success' : 'text-danger' }}">{{ ucfirst($contact->type) }}</td>
                                         <td>{{ $contact->name }}</td>
