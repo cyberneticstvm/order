@@ -197,7 +197,7 @@ function sendWaPromotion($schedule_id, $name, $mobile)
                             "type" => "image",
                             "image" =>
                             [
-                                "link" => "https://store.devihospitals.in/public/backend/assets/images/logo/devi-logo.png",
+                                "link" => ($schedule->entity == 'store') ? "https://store.devihospitals.in/public/backend/assets/images/logo/devi-logo.png" : "https://store.devihospitals.in/public/backend/assets/images/logo/devi-hospital-logo.png",
                             ],
                         ],
                     ]
