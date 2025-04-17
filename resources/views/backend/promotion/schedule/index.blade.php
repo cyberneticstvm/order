@@ -52,6 +52,7 @@
                                         <th>Tamplate ID</th>
                                         <th>Language</th>
                                         <th>Limit</th>
+                                        <th>Processed</th>
                                         <th>Status</th>
                                         <th>Status</th>
                                         <th>Edit</th>
@@ -68,6 +69,7 @@
                                         <td>{{ $schedule->template_id }}</td>
                                         <td>{{ $schedule->template_language }}</td>
                                         <td>{{ $schedule->sms_limit_per_hour }}</td>
+                                        <td>{{ $schedule->waSmsProcessedCount() }}</td>
                                         <td>{{ ucfirst($schedule->status) }}</td>
                                         <td>{!! $schedule->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('promotion.schedule.edit', encrypt($schedule->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>

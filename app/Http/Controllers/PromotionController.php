@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use App\Models\Order;
 use App\Models\PromotionContact;
 use App\Models\PromotionSchedule;
 use Illuminate\Http\Request;
