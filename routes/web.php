@@ -34,6 +34,7 @@ use App\Http\Controllers\ProductLensController;
 use App\Http\Controllers\ProductPharmacyController;
 use App\Http\Controllers\ProductServiceController;
 use App\Http\Controllers\ProductSolutionController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\PurchaseAccessoryController;
 use App\Http\Controllers\PurchaseFrameController;
 use App\Http\Controllers\PurchaseLensController;
@@ -233,6 +234,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
 
         Route::post('/email/docs', 'emailDocs')->name('email.docs');
         Route::post('/wa/docs', 'waDocs')->name('wa.docs');
+        Route::post('/wa/promotion', 'waSendPromotion')->name('wa.send.promotion');
     });
 
     Route::prefix('/backend/export')->controller(ImportExportController::class)->group(function () {
@@ -813,5 +815,23 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/royalty/card', 'rcardSetting')->name('settings.royalty.card');
         Route::post('/royalty/card', 'rcardSettingFetch')->name('settings.royalty.card.fetch');
         Route::post('/royalty/card/update', 'rcardSettingsUpdate')->name('settings.royalty.card.update');
+    });
+
+    Route::prefix('/backend/promotion')->controller(PromotionController::class)->group(function () {
+        Route::get('/contact/list', 'contactList')->name('promotion.contact.list');
+        Route::get('/contact/list/create', 'createContact')->name('promotion.contact.create');
+        Route::post('/contact/list/create', 'saveContact')->name('promotion.contact.save');
+        Route::get('/contact/list/edit/{id}', 'editContact')->name('promotion.contact.edit');
+        Route::post('/contact/list/edit/{id}', 'updateContact')->name('promotion.contact.update');
+        Route::get('/contact/list/delete/{id}', 'deleteContact')->name('promotion.contact.delete');
+        Route::get('/contact/list/restore/{id}', 'restoreContact')->name('promotion.contact.restore');
+
+        Route::get('/schedule/list', 'scheduleList')->name('promotion.schedule.list');
+        Route::get('/schedule/list/create', 'createSchedule')->name('promotion.schedule.create');
+        Route::post('/schedule/list/create', 'saveSchedule')->name('promotion.schedule.save');
+        Route::get('/schedule/list/edit/{id}', 'editSchedule')->name('promotion.schedule.edit');
+        Route::post('/schedule/list/edit/{id}', 'updateSchedule')->name('promotion.schedule.update');
+        Route::get('/schedule/list/delete/{id}', 'deleteSchedule')->name('promotion.schedule.delete');
+        Route::get('/schedule/list/restore/{id}', 'restoreSchedule')->name('promotion.schedule.restore');
     });
 });

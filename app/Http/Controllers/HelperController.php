@@ -18,6 +18,7 @@ use App\Models\Payment;
 use App\Models\PaymentMode;
 use App\Models\Product;
 use App\Models\ProductDamage;
+use App\Models\PromotionSchedule;
 use App\Models\Spectacle;
 use App\Models\Transfer;
 use App\Models\TransferDetails;
@@ -463,6 +464,17 @@ class HelperController extends Controller
         ]);
         $vehicles = Vehicle::where('contact_number', $request->mobile)->latest()->get();
         return view("backend.extras.fetch-vehicle", compact('vehicles'));
+    }
+
+    function waSendPromotion(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'schedule_id' => 'required',
+            'mobile' => 'required|numeric|digits:10',
+        ]);
+        sendWaPromotion($request->schedule_id, $request->name, $request->mobile);
+        return redirect()->back()->with("success", "Message sent successfully");
     }
 
     function asd()

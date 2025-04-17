@@ -244,6 +244,12 @@ $(function () {
         $("#" + drawer).drawer('toggle');
     });
 
+    $(document).on("click", ".waPro", function () {
+        var drawer = $(this).data('drawer');
+        $(".schedId").val($(this).data('proid'));           
+        $("#" + drawer).drawer('toggle');
+    });
+
     $(document).on("click", ".email", function () {
         var drawer = $(this).data('drawer');
         $("#order_id").val($(this).data('oid'));        
