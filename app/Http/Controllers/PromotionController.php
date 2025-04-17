@@ -40,6 +40,7 @@ class PromotionController extends Controller
             'contact_number' => 'required|numeric|digits:10|unique:promotion_contacts,contact_number',
             'entity' => 'required',
             'type' => 'required',
+            'branch_id' => 'required',
         ]);
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
@@ -62,6 +63,7 @@ class PromotionController extends Controller
             'contact_number' => 'required|numeric|digits:10|unique:promotion_contacts,contact_number,' . $id,
             'entity' => 'required',
             'type' => 'required',
+            'branch_id' => 'required',
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
