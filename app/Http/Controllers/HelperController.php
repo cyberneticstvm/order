@@ -18,6 +18,7 @@ use App\Models\Payment;
 use App\Models\PaymentMode;
 use App\Models\Product;
 use App\Models\ProductDamage;
+use App\Models\PromotionContact;
 use App\Models\PromotionSchedule;
 use App\Models\Spectacle;
 use App\Models\Transfer;
@@ -473,7 +474,8 @@ class HelperController extends Controller
             'schedule_id' => 'required',
             'mobile' => 'required|numeric|digits:10',
         ]);
-        sendWaPromotion($request->schedule_id, $request->name, $request->mobile);
+        $schedule = PromotionSchedule::findOrFail($request->schedule_id);
+        sendWaPromotion($schedule, $request->name, $request->mobile);
         return redirect()->back()->with("success", "Message sent successfully");
     }
 

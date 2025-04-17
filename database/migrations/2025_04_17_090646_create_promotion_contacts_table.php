@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('contact_number', 15)->unique()->nullable();
             $table->enum('type', ['include', 'exclude']);
             $table->enum('entity', ['hospital', 'store', 'lab']);
-            $table->string('sms_status', 5)->nullable();
+            $table->string('wa_sms_status', 5)->nullable();
+            $table->unsignedBigInteger('branch_id');
+            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
             $table->timestamps();

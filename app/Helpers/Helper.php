@@ -178,9 +178,8 @@ function sendRequestedDocviaWa($mobile, $name, $oid, $doc_type)
     return $res;
 }
 
-function sendWaPromotion($schedule_id, $name, $mobile)
+function sendWaPromotion($schedule, $name, $mobile)
 {
-    $schedule = PromotionSchedule::findOrFail($schedule_id);
     $token = Config::get('myconfig.whatsapp.token');
     $config = [
         "messaging_product" => "whatsapp",

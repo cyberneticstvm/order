@@ -6,6 +6,8 @@ use App\Models\Branch;
 use App\Models\Closing;
 use App\Models\Order;
 use App\Models\OrderHistory;
+use App\Models\PromotionContact;
+use App\Models\PromotionSchedule;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -45,6 +47,31 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function () {
             OrderHistory::whereIn('order_id', Order::where('order_status', 'delivered')->whereDate('invoice_generated_at', '<=', Carbon::now()->subDays(7))->pluck('id'))->forcedelete();
+        })->dailyAt('23:30');
+
+        $schedule->call(function () {
+            $promo = PromotionSchedule::whereDate('scheduled_date', Carbon::today())->where('status', 'publish')->latest()->first();
+            if ($promo):
+                $clist = PromotionContact::selectRaw("id, name, contact_number as mobile, 'clist' as type")->whereNull('wa_sms_status')->where('entity', $promo->entity)->where('type', 'include')->orderBy('id');
+                $cdata = null;
+                if ($promo->entity == 'store'):
+                    $cdata = Order::selectRaw("id, name, mobile, 'ord' as type ")->whereNull('wa_sms_status')->limit($promo->sms_limit_per_hour)->union($clist)->orderBy('id')->get()->unique('mobile');
+                endif;
+                if ($cdata):
+                    foreach ($cdata as $key => $item):
+                        sendWaPromotion($promo, $item->name, $item->mobile);
+                        if ($item->type == 'clist'):
+                            PromotionContact::where('id', $item->id)->update(['wa_sms_status' => 'yes']);
+                        else:
+                            Order::where('id', $item->id)->update(['wa_sms_status' => 'yes']);
+                        endif;
+                    endforeach;
+                endif;
+            endif;
+        })->hourly();
+
+        $schedule->call(function () {
+            PromotionContact::update(['wa_sms_status' => null]);
         })->dailyAt('23:30');
     }
 

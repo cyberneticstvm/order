@@ -67,6 +67,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->dateTime('stock_updated_at')->nullable();
             $table->dateTime('prescription_updated_at')->nullable();
+            $table->string('wa_sms_status', 5)->nullable();
         });
     }
 
