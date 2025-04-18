@@ -76,6 +76,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function () {
             PromotionContact::update(['wa_sms_status' => null]);
+            Order::update(['wa_sms_status' => null]);
         })->dailyAt('23:30');
     }
 
