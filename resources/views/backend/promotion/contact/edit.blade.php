@@ -59,7 +59,7 @@
                                     <small class="text-danger">{{ $errors->first('entity') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label class="form-label req">Branch</label>
                                     {{ html()->select('branch_id', $branches, $contact->branch_id)->class('form-control select2')->placeholder('Select') }}
                                     @error('branch_id')
