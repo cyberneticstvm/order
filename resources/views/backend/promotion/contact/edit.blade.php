@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Entity</label>
-                                    {{ html()->select('entity', array('hospital' => 'Hospital', 'store' => 'Store', 'lab' => 'Lab'), $contact->entity)->class('form-control select2')->placeholder('Select') }}
+                                    {{ html()->select('entity', array('store' => 'Store'), $contact->entity)->class('form-control select2')->placeholder('Select') }}
                                     @error('entity')
                                     <small class="text-danger">{{ $errors->first('entity') }}</small>
                                     @enderror
