@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\PromotionContact;
 use App\Models\PromotionSchedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PromotionController extends Controller
 {
@@ -92,7 +93,8 @@ class PromotionController extends Controller
 
     function createSchedule()
     {
-        return view('backend.promotion.schedule.create');
+        $branches = Branch::where('type', 'branch')->union(DB::table('branches')->selectRaw("'All' AS name, 0 AS id"))->pluck('name', 'id');
+        return view('backend.promotion.schedule.create', compact('branches'));
     }
 
     function saveSchedule(Request $request)
@@ -103,6 +105,7 @@ class PromotionController extends Controller
             'template_id' => 'required|unique:promotion_schedules,template_id',
             'entity' => 'required',
             'sms_limit_per_hour' => 'required|numeric|min:1',
+            'branch_id' => 'required',
         ]);
         $input = $request->all();
         $input['created_by'] = $request->user()->id;
@@ -114,7 +117,8 @@ class PromotionController extends Controller
     function editSchedule(string $id)
     {
         $schedule = PromotionSchedule::findOrFail(decrypt($id));
-        return view('backend.promotion.schedule.edit', compact('schedule'));
+        $branches = Branch::where('type', 'branch')->union(DB::table('branches')->selectRaw("'All' AS name, 0 AS id"))->pluck('name', 'id');
+        return view('backend.promotion.schedule.edit', compact('schedule', 'branches'));
     }
 
     function updateSchedule(Request $request, string $id)
@@ -125,6 +129,7 @@ class PromotionController extends Controller
             'template_id' => 'required|unique:promotion_schedules,template_id,' . $id,
             'entity' => 'required',
             'sms_limit_per_hour' => 'required|numeric|min:1',
+            'branch_id' => 'required',
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;

@@ -52,10 +52,14 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $promo = PromotionSchedule::whereDate('scheduled_date', Carbon::today())->where('status', 'publish')->latest()->first();
             if ($promo):
-                $clist = PromotionContact::selectRaw("id, name, contact_number as mobile, 'clist' as type")->whereNull('wa_sms_status')->where('entity', $promo->entity)->where('type', 'include')->orderBy('id');
+                $clist = PromotionContact::selectRaw("id, name, contact_number as mobile, 'clist' as type")->whereNull('wa_sms_status')->where('entity', $promo->entity)->where('type', 'include')->when($promo->branch_id > 0, function ($q) use ($promo) {
+                    return $q->where('branch_id', $promo->branch_id);
+                })->orderBy('id');
                 $cdata = null;
                 if ($promo->entity == 'store'):
-                    $cdata = Order::selectRaw("id, name, mobile, 'ord' as type ")->whereNull('wa_sms_status')->limit($promo->sms_limit_per_hour)->union($clist)->orderBy('id')->get()->unique('mobile');
+                    $cdata = Order::selectRaw("id, name, mobile, 'ord' as type ")->whereNull('wa_sms_status')->when($promo->branch_id > 0, function ($q) use ($promo) {
+                        return $q->where('branch_id', $promo->branch_id);
+                    })->limit($promo->sms_limit_per_hour)->union($clist)->orderBy('id')->get()->unique('mobile');
                 endif;
                 if ($cdata):
                     foreach ($cdata as $key => $item):

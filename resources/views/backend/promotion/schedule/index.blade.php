@@ -48,7 +48,7 @@
                                         <th>SL No</th>
                                         <th>Schedule Name</th>
                                         <th>Scheduled Date</th>
-                                        <th>Entity</th>
+                                        <th>Branch</th>
                                         <th>Tamplate ID</th>
                                         <th>Language</th>
                                         <th>Limit</th>
@@ -65,7 +65,7 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td><a href="javascript:void(0)" class="waPro" data-drawer="waPromotionDrawer" data-proid="{{ $schedule->id }}">{{ $schedule->name }}</a></td>
                                         <td>{{ $schedule->created_at->format('d.M.Y') }}</td>
-                                        <td>{{ ucfirst($schedule->entity) }}</td>
+                                        <td>{{ $schedule->branch?->name ?? 'All' }}</td>
                                         <td>{{ $schedule->template_id }}</td>
                                         <td>{{ $schedule->template_language }}</td>
                                         <td>{{ $schedule->sms_limit_per_hour }}</td>
