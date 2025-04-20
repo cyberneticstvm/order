@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('scheduled_date');
             $table->enum('entity', ['hospital', 'store', 'lab']);
             $table->integer('sms_limit_per_hour');
+            $table->integer('sms_count')->default(0);
             $table->unsignedBigInteger('branch_id')->default(0);
             $table->enum('status', ['publish', 'draft']);
             $table->unsignedBigInteger('created_by');
