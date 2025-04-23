@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Product</label>
-                                    {{ html()->select($name = 'product', $products->pluck('name', 'id'), ($inputs[2]) ?? old('product'))->class('form-control select2')->placeholder('Select') }}
+                                    {{ html()->select($name = 'product', $products, ($inputs[2]) ?? old('product'))->class('form-control select2')->placeholder('Select') }}
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Branch</label>
