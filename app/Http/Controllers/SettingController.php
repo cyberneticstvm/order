@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Closing;
+use App\Models\Order;
 use App\Models\ProductDamage;
 use App\Models\ProductSubcategory;
 use App\Models\RoyaltyCardSetting;
@@ -174,6 +175,7 @@ class SettingController extends Controller
                     Transfer::where('category', $request->product_category)->where('to_branch_id', $request->branch_id)->delete();
                     SalesReturn::where('returned_branch', $request->branch_id)->delete();
                     ProductDamage::where('from_branch', $request->branch_id)->delete();
+                    //Order::where('branch_id', $request->branch_id)->where('order_status', 'delivered')->update(['stock_updated_at' => Carbon::now()]);
                 });
             endif;
         } catch (Exception $e) {
