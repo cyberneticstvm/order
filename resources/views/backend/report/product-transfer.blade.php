@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">Product Type</label>
-                                    {{ html()->select($name = 'product_type', array('all' => 'All', 'frame' => 'Frame', 'lens' => 'Lens'), ($inputs[6]) ?? old('product_type'))->class('form-control select2')->placeholder('Select') }}
+                                    {{ html()->select($name = 'product_type', array('all' => 'All', 'frame' => 'Frame', 'lens' => 'Lens', 'solution' => 'Solution', 'accessory' => 'Accessory'), ($inputs[6]) ?? old('product_type'))->class('form-control select2')->placeholder('Select') }}
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">Product</label>

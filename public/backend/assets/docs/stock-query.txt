@@ -1,0 +1,14 @@
+SELECT t.transfer_number, t.category, sum(td.qty) FROM `transfer_details` td left join transfers t ON t.id = td.transfer_id WHERE t.to_branch_id = 4 AND t.category = 'frame' AND t.deleted_at IS NULL AND t.transfer_status = 1;
+
+SELECT t.transfer_number, t.category, sum(td.qty) FROM `transfer_details` td left join transfers t ON t.id = td.transfer_id WHERE t.from_branch_id = 4 AND t.category = 'frame' AND t.deleted_at IS NULL AND t.transfer_status = 1;
+
+SELECT sum(srd.returned_qty) FROM sales_return_details srd left join sales_returns sr ON sr.id = srd.return_id LEFT JOIN orders o ON o.id = sr.order_id LEFT JOIN order_details od ON o.id = od.order_id AND od.product_id = srd.product_id WHERE sr.returned_branch = 4 AND sr.deleted_at IS NULL AND o.deleted_at IS NULL AND od.eye = 'frame';
+
+
+SELECT sum(qty) FROM `product_damages` WHERE category = 'frame' AND from_branch = 4 AND approved_status = 1 AND deleted_at IS NULL;
+
+
+
+select SUM(od.qty) FROM orders o LEFT JOIN order_details od ON o.id = od.order_id WHERE o.branch_id = 4 AND o.deleted_at IS NULL AND o.order_status = 'delivered' AND o.stock_updated_at IS NULL AND od.eye='frame';
+
+select SUM(od.qty) FROM orders o LEFT JOIN order_details od ON o.id = od.order_id WHERE o.branch_id = 4 AND o.deleted_at IS NULL AND o.order_status NOT IN('delivered', 'cancelled') AND o.stock_updated_at IS NULL AND od.eye='frame';
