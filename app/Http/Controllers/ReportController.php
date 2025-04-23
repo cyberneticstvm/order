@@ -381,7 +381,8 @@ class ReportController extends Controller
     {
         $inputs = [date('Y-m-d'), date('Y-m-d'), 0, Session::get('branch')];
         $branches = $this->branches;
-        $products = Product::whereIn('category', ['frame', 'solution'])->get();
+        //$products = Product::whereIn('category', ['frame', 'solution'])->get();
+        $products = $this->products;
         $data = collect();
         return view('backend.report.stock-movement', compact('inputs', 'branches', 'products', 'data'));
     }
@@ -395,7 +396,7 @@ class ReportController extends Controller
         ]);
         $inputs = [$request->from_date, $request->to_date, $request->product, $request->branch];
         $branches = $this->branches;
-        $products = Product::whereIn('category', ['frame', 'solution'])->get();
+        $products = $this->products;
         $data = collect(DB::select("SELECT tbl1.*, IFNULL(COUNT(CASE WHEN o.created_at BETWEEN ? AND ? THEN od.qty END), 0) AS soldQty FROM (SELECT DISTINCT(td.product_id) AS pid, p.name, p.code, p.category, ps.name AS type, p.selling_price FROM transfer_details td LEFT JOIN transfers t on t.id = td.transfer_id LEFT JOIN products p ON p.id = td.product_id LEFT JOIN product_subcategories ps ON p.type_id = ps.id WHERE IF(? > 0, t.to_branch_id = ?, 1) AND IF(? > 0, p.id = ?, 1)) AS tbl1 LEFT JOIN order_details od ON od.product_id = tbl1.pid LEFT JOIN orders o ON o.id = od.order_id WHERE IF(? > 0, o.branch_id = ?, 1) GROUP BY pid, `name`, code, category, `type`, selling_price ORDER BY soldQty", [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay(), $request->branch, $request->branch, $request->product, $request->product, $request->branch, $request->branch]));
         return view('backend.report.stock-movement', compact('inputs', 'branches', 'products', 'data'));
     }
