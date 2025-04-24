@@ -134,7 +134,7 @@ $(function () {
     });
 
     $(document).on("change", ".selPdctForTransfer, .selPdct", function () {
-        var dis = $(this); var product = dis.val(); var category = dis.data('category');
+        var dis = $(this); var product = dis.val(); var category = dis.data('category');alert(product)
         var branch = $("#from_branch_id").val();
         if (product && category && branch) {
             $.ajax({
