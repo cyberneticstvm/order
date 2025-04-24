@@ -38,11 +38,13 @@ class SolutionOrderController extends Controller
 
             $this->padvisers = User::leftJoin('user_branches as ub', 'users.id', 'ub.user_id')->select('users.id', 'users.name')->where('ub.branch_id', Session::get('branch'))->role('Sales Advisor')->get();
 
+            $this->products = getInventory(Session::get('branch'), 0, 'solution')->where('balanceQty', '>', 0);
+
             return $next($request);
         });
 
-        $this->products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['solution', 'accessory'])->orderBy('name')->get();
-        //$this->products = getInventory(Session::get('branch'), 0, 'solution')->where('balanceQty', '>', 0);
+        //$this->products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['solution', 'accessory'])->orderBy('name')->get();
+
         $this->pmodes = PaymentMode::orderBy('name')->get();
     }
 
