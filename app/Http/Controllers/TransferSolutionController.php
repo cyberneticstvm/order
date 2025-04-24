@@ -41,10 +41,12 @@ class TransferSolutionController extends Controller
                 return $q->union($brs);
             })->orderBy('id')->pluck('name', 'id');
 
+            $this->products = getInventory(Session::get('branch'), 0, 'solution')->where('balanceQty', '>', 0);
+
             return $next($request);
         });
 
-        $this->products = Product::whereIn('category', ['solution'])->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->pluck('name', 'id');
+        //$this->products = Product::whereIn('category', ['solution'])->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->pluck('name', 'id');
     }
     public function index()
     {
