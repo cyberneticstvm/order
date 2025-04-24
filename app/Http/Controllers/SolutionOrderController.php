@@ -41,7 +41,8 @@ class SolutionOrderController extends Controller
             return $next($request);
         });
 
-        $this->products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['solution', 'accessory'])->orderBy('name')->get();
+        //$this->products = Product::selectRaw("id, category, CONCAT_WS('-', name, code) AS name")->whereIn('category', ['solution', 'accessory'])->orderBy('name')->get();
+        $this->products = getInventory(Session::get('branch'), 0, 'solution')->where('balanceQty', '>', 0);
         $this->pmodes = PaymentMode::orderBy('name')->get();
     }
 
