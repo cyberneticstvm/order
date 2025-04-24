@@ -142,6 +142,7 @@ $(function () {
                 url: '/ajax/product/batch/' + branch + '/' + product + '/' + category,
                 dataType: 'json',
                 success: function (res) {
+                    console.log(res);
                     dis.parent().parent().find(".qtyAvailable").text(res[0].balanceQty);
                     dis.parent().parent().find(".qtyMax").attr("max", res[0].balanceQty);
                     console.log(res);
