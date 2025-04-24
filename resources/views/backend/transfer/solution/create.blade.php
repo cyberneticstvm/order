@@ -80,7 +80,7 @@
                                                         <a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a>
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('product_id[]', $products->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdctForTransfer')->attribute('data-category', 'frame')->attribute('id', '')->placeholder('Select')->required() }}
+                                                        {{ html()->select('product_id[]', $products->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdctForTransfer')->attribute('data-category', 'solution')->attribute('id', '')->placeholder('Select')->required() }}
                                                     </td>
                                                     <td class='qtyAvailable text-end'>0</td>
                                                     <td><input type="number" name='qty[]' class="w-100 border-0 qtyMax text-end" placeholder="0" min='1' step="1" required /></td>
