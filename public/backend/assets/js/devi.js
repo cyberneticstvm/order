@@ -137,15 +137,14 @@ $(function () {
         var dis = $(this); var product = dis.val(); var category = dis.data('category');
         var branch = $("#from_branch_id").val();
         if (product && category && branch) {
+            console.log(product, category, branch)
             $.ajax({
                 type: 'GET',
                 url: '/ajax/product/batch/' + branch + '/' + product + '/' + category,
                 dataType: 'json',
                 success: function (res) {
-                    console.log(res);
                     dis.parent().parent().find(".qtyAvailable").text(res[0].balanceQty);
                     dis.parent().parent().find(".qtyMax").attr("max", res[0].balanceQty);
-                    console.log(res);
                 },
                 error: function (err) {
                     console.log(err);
