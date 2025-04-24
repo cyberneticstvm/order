@@ -57,6 +57,8 @@ class SolutionOrderController extends Controller
     public function create($id, $type)
     {
         $products = $this->products;
+        dd($products);
+        die;
         $pmodes = $this->pmodes;
         $padvisers = $this->padvisers;
         $states = State::all();
