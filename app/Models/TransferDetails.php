@@ -11,8 +11,6 @@ class TransferDetails extends Model
 
     protected $guarded = [];
 
-    protected $casts = ['transfer_date' => 'datetime', 'accepted_at' => 'datetime', 'created_at' => 'datetime'];
-
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
