@@ -50,6 +50,7 @@
                                 <thead>
                                     <tr>
                                         <th>SL No</th>
+                                        <th>Product ID</th>
                                         <th>Product Name</th>
                                         <th>Product Code</th>
                                         <th>Manufacturer</th>
@@ -66,6 +67,7 @@
                                     @forelse($products as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
+                                        <td>{{ $item->id }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->code }}</td>
                                         <td>{{ $item->manufacturer?->name }}</td>
