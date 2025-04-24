@@ -298,10 +298,10 @@ class ReportController extends Controller
         })->when($request->status != '', function ($q) use ($request) {
             return $q->where('t.transfer_status', $request->status);
         })->orderByDesc('transfer_details.id')->get();*/
-        $data = Transfer::leftJoin('transfer_details as td', 'td.transfer_id', 'transfers.id')->selectRaw("transfers.id, transfers.transfer_date, transfers.transfer_number, transfers.from_branch_id, transfers.to_branch_id, transfers.transfer_note, transfers.transfer_status, transfers.accepted_by, transfers.accepted_at")->whereBetween('transfers.transfer_date', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+        $data = TransferDetails::leftJoin('transfers', 'transfer_details.transfer_id', 'transfers.id')->selectRaw("transfers.id, transfers.transfer_date, transfers.transfer_number, transfers.from_branch_id, transfers.to_branch_id, transfers.transfer_note, transfers.transfer_status, transfers.accepted_by, transfers.accepted_at")->whereBetween('transfers.transfer_date', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('transfers.to_branch_id', $request->branch);
         })->when($request->product > 0, function ($q) use ($request) {
-            return $q->where('td.product_id', $request->product);
+            return $q->where('transfer_details.product_id', $request->product);
         })->when($request->status != 'all', function ($q) use ($request) {
             return $q->where('transfers.transfer_status', $request->status);
         })->when($request->product_type != 'all', function ($q) use ($request) {
