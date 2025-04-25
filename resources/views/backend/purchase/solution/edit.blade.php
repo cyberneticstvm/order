@@ -46,14 +46,21 @@
                                     <small class="text-danger">{{ $errors->first('delivery_date') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-3">
+                                    <label class="form-label req">Branch</label>
+                                    {{ html()->select('branch_id', $branches, $purchase->branch_id)->class('form-control select2')->placeholder('Select')->required() }}
+                                    @error('branch_id')
+                                    <small class="text-danger">{{ $errors->first('branch_id') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-3">
                                     <label class="form-label req">Supplier</label>
                                     {{ html()->select('supplier_id', $suppliers, $purchase->supplier_id)->class('form-control select2')->placeholder('Select')->required() }}
                                     @error('supplier_id')
                                     <small class="text-danger">{{ $errors->first('supplier_id') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label class="form-label req">Purchase Invoice Number</label>
                                     {{ html()->text($name = 'purchase_invoice_number', $value = $purchase->purchase_invoice_number)->class('form-control')->placeholder('Purchase Invoice Number')->required() }}
                                     @error('purchase_invoice_number')
