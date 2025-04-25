@@ -67,6 +67,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse($vehicles as $key => $vehicle)
+                                    @if($status == 'Active' && $vehicle->isVehicleActive() || $status == 'Inactive' && !$vehicle->isVehicleActive())
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $vehicle->owner_name }}</td>
@@ -90,6 +91,7 @@
                                             @endif
                                         </td>
                                     </tr>
+                                    @endif
                                     @empty
                                     @endforelse
                                 </tbody>
