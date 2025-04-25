@@ -102,12 +102,12 @@
                                         <td>{{ $item->pcode }}</td>
                                         <td>{{ $item->item_tot ?? 0 }}</td>
                                         <td>{{ $item->soldQty ?? 0}}</td>
-                                        <td>{{ $item->billedQty }}</td>
-                                        <td>{{ $item->purchasedQty }}</td>
-                                        <td>{{ $item->transferredQty }}</td>
-                                        <td>{{ $item->returnedQty }} </td>
-                                        <td>{{ $item->damagedQty }}</td>
-                                        <td>{{ $item->balanceQty }} </td>
+                                        <td>{{ $item->billedQty ?? 0 }}</td>
+                                        <td>{{ $item->purchasedQty ?? 0 }}</td>
+                                        <td>{{ $item->transferredQty ?? 0 }}</td>
+                                        <td>{{ $item->returnedQty ?? 0 }} </td>
+                                        <td>{{ $item->damagedQty ?? 0 }}</td>
+                                        <td>{{ $item->balanceQty ?? 0 }} </td>
                                     </tr>
                                     @empty
                                     @endforelse
