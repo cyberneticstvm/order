@@ -60,7 +60,7 @@
                                     <small class="text-danger">{{ $errors->first('supplier_id') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label class="form-label req">Purchase Invoice Number</label>
                                     {{ html()->text($name = 'purchase_invoice_number', $value = old('purchase_invoice_number'))->class('form-control')->placeholder('Purchase Invoice Number')->required() }}
                                     @error('purchase_invoice_number')
