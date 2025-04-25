@@ -42,7 +42,7 @@ class PurchaseFrameController extends Controller
     {
         $suppliers = $this->suppliers;
         $products = $this->products;
-        $branches = Branch::where('ho_master', 1)->first()->pluck('name', 'id');
+        $branches = Branch::where('ho_master', 1)->pluck('name', 'id');
         return view('backend.purchase.frame.create', compact('suppliers', 'products', 'branches'));
     }
 
@@ -110,7 +110,7 @@ class PurchaseFrameController extends Controller
         $suppliers = $this->suppliers;
         $products = $this->products;
         $purchase = Purchase::findOrFail(decrypt($id));
-        $branches = Branch::where('ho_master', 1)->first()->pluck('name', 'id');
+        $branches = Branch::where('ho_master', 1)->pluck('name', 'id');
         return view('backend.purchase.frame.edit', compact('suppliers', 'products', 'purchase', 'branches'));
     }
 
