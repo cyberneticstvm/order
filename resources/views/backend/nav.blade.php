@@ -434,15 +434,17 @@
                 <li><a class="submenu-title" href="javascript:void(0)">Vehicle<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
                     {{
                         Menu::new()->addClass('nav-sub-childmenu submenu-content')
-                        ->linkIfCan('vehicle-list', route('vehicles', 'active'), 'Active')
-                        ->linkIfCan('vehicle-list', route('vehicles', 'inactive'), 'Inactive');
+                        ->linkIfCan('vehicle-list', route('vehicles', 'Active'), 'Active')
+                        ->linkIfCan('vehicle-list', route('vehicles', 'Inactive'), 'Inactive');
+                    }}
+                </li>
+                <li><a class="submenu-title" href="javascript:void(0)">Payment<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+                    {{
+                        Menu::new()->addClass('nav-sub-childmenu submenu-content')
+                        ->linkIfCan('fetch-vehicle-for-payment', route('vehicle.payment.fetch'), 'Payment');
                     }}
                 </li>
             </ul>
-            {{
-                Menu::new()->addClass('sidebar-submenu')
-                ->linkIfCan('fetch-vehicle-for-payment', route('vehicle.payment.fetch'), 'Payment');
-            }}
         </li>
         <li class="sidebar-main-title">
             <div>
