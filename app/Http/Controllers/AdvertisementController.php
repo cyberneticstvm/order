@@ -57,7 +57,7 @@ class AdvertisementController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage())->withInput($request->all());
         }
-        return redirect()->route('vehicles')->with("success", "Vehicle created successfully");
+        return redirect()->route('vehicles', 'Active')->with("success", "Vehicle created successfully");
     }
 
     public function edit(string $id)
@@ -83,7 +83,7 @@ class AdvertisementController extends Controller
             return redirect()->back()->with('error', $e->getMessage())->withInput($request->all());
         }
 
-        return redirect()->route('vehicles')->with("success", "Vehicle updated successfully");
+        return redirect()->route('vehicles', 'Active')->with("success", "Vehicle updated successfully");
     }
 
     function destroy(string $id)
@@ -95,7 +95,7 @@ class AdvertisementController extends Controller
     function restore(string $id)
     {
         Vehicle::withTrashed()->where('id', decrypt($id))->restore();
-        return redirect()->route('vehicles')->with("success", "Vehicle restored successfully");
+        return redirect()->route('vehicles', 'Active')->with("success", "Vehicle restored successfully");
     }
 
     function payment(string $id)
@@ -135,13 +135,13 @@ class AdvertisementController extends Controller
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
         VehiclePayment::create($input);
-        return redirect()->route('vehicles')->with("success", "Payment recorded successfully");
+        return redirect()->route('vehicles', 'Active')->with("success", "Payment recorded successfully");
     }
 
     function paymentDelete(string $id)
     {
         VehiclePayment::findOrFail(decrypt($id))->delete();
-        return redirect()->route('vehicles')->with("success", "Payment deleted successfully");
+        return redirect()->route('vehicles', 'Inactive')->with("success", "Payment deleted successfully");
     }
 
     function vehicleFetchForPayment()
