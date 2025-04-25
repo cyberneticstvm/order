@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('transfer_date')->nullable();
             $table->text('transfer_note')->nullable();
             $table->boolean('transfer_status')->comment('1-accepted, 0-pending')->default('0');
+            $table->unsignedBigInteger('purchase_id')->nullable();
             $table->unsignedBigInteger('accepted_by')->nullable();
             $table->datetime('accepted_at')->nullable();
             $table->text('remarks')->nullable();

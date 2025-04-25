@@ -440,6 +440,11 @@ function getYears()
     return Order::selectRaw("YEAR(created_at) AS id, YEAR(created_at) AS name")->get()->unique("id")->pluck('name', 'id');
 }
 
+function masterBranch()
+{
+    return Branch::where('ho_master', 1)->first();
+}
+
 function unpaidTotal($branch, $month, $year, $current_month)
 {
     //current month exclude if 0

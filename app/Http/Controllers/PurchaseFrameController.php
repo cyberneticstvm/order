@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
 use App\Models\Supplier;
+use App\Models\Transfer;
+use App\Models\TransferDetails;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -69,6 +71,7 @@ class PurchaseFrameController extends Controller
                     'supplier_id' => $request->supplier_id,
                     'purchase_invoice_number' => $request->purchase_invoice_number,
                     'purchase_note' => $request->purchase_note,
+                    'branch_id' => $request->branch_id,
                     'created_by' => $request->user()->id,
                     'updated_by' => $request->user()->id,
                 ]);
@@ -87,6 +90,29 @@ class PurchaseFrameController extends Controller
                     ];
                 endforeach;
                 PurchaseDetail::insert($data);
+                $transfer = Transfer::create([
+                    'transfer_number' => transferId('frame')->tid,
+                    'category' => 'frame',
+                    'transfer_date' => Carbon::today(),
+                    'from_branch_id' => 0,
+                    'to_branch_id' => $request->branch_id,
+                    'transfer_note' => $request->purchase_note,
+                    'transfer_status' => 1,
+                    'purchase_id' => $purchase->id,
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
+                ]);
+                $data = [];
+                foreach ($request->product_id as $key => $item) :
+                    $data[] = [
+                        'transfer_id' => $transfer->id,
+                        'product_id' => $item,
+                        'qty' => $request->qty[$key],
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endforeach;
+                TransferDetails::insert($data);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
@@ -135,6 +161,7 @@ class PurchaseFrameController extends Controller
                     'supplier_id' => $request->supplier_id,
                     'purchase_invoice_number' => $request->purchase_invoice_number,
                     'purchase_note' => $request->purchase_note,
+                    'branch_id' => $request->branch_id,
                     'updated_by' => $request->user()->id,
                 ]);
                 $data = [];
@@ -153,6 +180,32 @@ class PurchaseFrameController extends Controller
                 endforeach;
                 PurchaseDetail::where('purchase_id', $id)->delete();
                 PurchaseDetail::insert($data);
+                $t = Transfer::where('purchase_id', $id)->first();
+                TransferDetails::where('transfer_id', $t->id)->delete();
+                $t->delete();
+                $transfer = Transfer::create([
+                    'transfer_number' => transferId('frame')->tid,
+                    'category' => 'frame',
+                    'transfer_date' => Carbon::today(),
+                    'from_branch_id' => 0,
+                    'to_branch_id' => $request->branch_id,
+                    'transfer_note' => $request->purchase_note,
+                    'transfer_status' => 1,
+                    'purchase_id' => $id,
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
+                ]);
+                $data = [];
+                foreach ($request->product_id as $key => $item) :
+                    $data[] = [
+                        'transfer_id' => $transfer->id,
+                        'product_id' => $item,
+                        'qty' => $request->qty[$key],
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endforeach;
+                TransferDetails::insert($data);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
