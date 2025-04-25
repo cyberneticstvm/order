@@ -430,9 +430,17 @@
                 </svg>
                 <span>Vehicles</span>
             </a>
+            <ul class="sidebar-submenu">
+                <li><a class="submenu-title" href="javascript:void(0)">Vehicle<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>
+                    {{
+                        Menu::new()->addClass('nav-sub-childmenu submenu-content')
+                        ->linkIfCan('vehicle-list', route('vehicles'), 'Active')
+                        ->linkIfCan('vehicle-list', route('vehicles'), 'Inactive');
+                    }}
+                </li>
+            </ul>
             {{
                 Menu::new()->addClass('sidebar-submenu')
-                ->linkIfCan('vehicle-list', route('vehicles'), 'Vehicle List')
                 ->linkIfCan('fetch-vehicle-for-payment', route('vehicle.payment.fetch'), 'Payment');
             }}
         </li>
