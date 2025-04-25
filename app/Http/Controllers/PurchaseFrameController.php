@@ -220,7 +220,6 @@ class PurchaseFrameController extends Controller
     {
         $p = Purchase::findOrFail(decrypt($id));
         $t = Transfer::where('purchase_id', $p->id);
-        TransferDetails::where('transfer_id', $t->id)->delete();
         $p->delete();
         $t->delete();
         return redirect()->back()->with('success', 'Purchase has been deleted successfully!');
