@@ -100,8 +100,8 @@
                                         <td>{{ $item?->name ?? '' }}</td>
                                         <td>{{ $item?->id ?? '' }}</td>
                                         <td>{{ $item->pcode }}</td>
-                                        <td>{{ $item->item_tot }}</td>
-                                        <td>{{ $item->soldQty }}</td>
+                                        <td>{{ $item->item_tot ?? 0 }}</td>
+                                        <td>{{ $item->soldQty ?? 0}}</td>
                                         <td>{{ $item->billedQty }}</td>
                                         <td>{{ $item->purchasedQty }}</td>
                                         <td>{{ $item->transferredQty }}</td>
