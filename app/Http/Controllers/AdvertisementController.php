@@ -24,10 +24,10 @@ class AdvertisementController extends Controller
         $this->middleware('permission:fetch-vehicle-for-payment', ['only' => ['vehicleFetchForPayment', 'vehicleFetchForPaymentUpdate']]);
     }
 
-    function index()
+    function index($status)
     {
         $vehicles = Vehicle::where('branch_id', Session::get('branch'))->withTrashed()->latest()->get();
-        return view('backend.ads.vehicle.index', compact('vehicles'));
+        return view('backend.ads.vehicle.index', compact('vehicles', 'status'));
     }
 
     function create()
