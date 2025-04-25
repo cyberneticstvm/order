@@ -32,7 +32,7 @@ class TransferFrameController extends Controller
                 return $q->where('from_branch_id', Session::get('branch'));
             })->where('transfer_status', 0)->where('category', 'frame')->withTrashed()->latest()->get();
 
-            $brs = Branch::selectRaw("0 as id, 'Main Branch' as name");
+            $brs = Branch::where('ho_master', 1)->selectRaw("id, name");
             $this->branches = Branch::selectRaw("id, name")->where('id', Session::get('branch'))->when(in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO', 'Store Manager', 'Accounts']), function ($q) use ($brs) {
                 return $q->union($brs);
             })->orderBy('id')->pluck('name', 'id');

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', 125)->unique();
             $table->string('code', 15)->unique();
             $table->string('type', 25)->comment('branch, own-lab, outside-lab')->nullable();
+            $table->integer('ho_master')->default(0)->nullable();
             $table->string('phone', 25)->nullable();
             $table->string('email', 50)->nullable();
             $table->string('address')->nullable();

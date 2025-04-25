@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('delivery_date')->nullable();
             $table->string('purchase_invoice_number')->nullable();
             $table->text('purchase_note')->nullable();
+            $table->unsignedBigInteger('branch_id')->nullable();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
             $table->timestamps();

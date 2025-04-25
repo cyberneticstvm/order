@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
@@ -41,7 +42,8 @@ class PurchaseFrameController extends Controller
     {
         $suppliers = $this->suppliers;
         $products = $this->products;
-        return view('backend.purchase.frame.create', compact('suppliers', 'products'));
+        $branches = Branch::where('ho_master', 1)->first()->pluck('name', 'id');
+        return view('backend.purchase.frame.create', compact('suppliers', 'products', 'branches'));
     }
 
     /**
@@ -53,6 +55,7 @@ class PurchaseFrameController extends Controller
             'order_date' => 'required',
             'delivery_date' => 'required',
             'supplier_id' => 'required',
+            'branch_id' => 'required',
             'purchase_invoice_number' => 'required',
             'product_id' => 'present|array'
         ]);
@@ -107,7 +110,8 @@ class PurchaseFrameController extends Controller
         $suppliers = $this->suppliers;
         $products = $this->products;
         $purchase = Purchase::findOrFail(decrypt($id));
-        return view('backend.purchase.frame.edit', compact('suppliers', 'products', 'purchase'));
+        $branches = Branch::where('ho_master', 1)->first()->pluck('name', 'id');
+        return view('backend.purchase.frame.edit', compact('suppliers', 'products', 'purchase', 'branches'));
     }
 
     /**
@@ -119,6 +123,7 @@ class PurchaseFrameController extends Controller
             'order_date' => 'required',
             'delivery_date' => 'required',
             'supplier_id' => 'required',
+            'branch_id' => 'required',
             'purchase_invoice_number' => 'required',
             'product_id' => 'present|array'
         ]);
