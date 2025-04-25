@@ -98,7 +98,7 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item?->name ?? '' }}</td>
-                                        <td>{{ $item->id }}</td>
+                                        <td>{{ $item?->id ?? '' }}</td>
                                         <td>{{ $item->pcode }}</td>
                                         <td>{{ $item->item_tot }}</td>
                                         <td>{{ $item->soldQty }}</td>
