@@ -44,7 +44,8 @@ class TransferAccessoryController extends Controller
             return $next($request);
         });
 
-        $this->products = Product::whereIn('category', ['accessory'])->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->pluck('name', 'id');
+        //$this->products = Product::whereIn('category', ['accessory'])->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->pluck('name', 'id');
+        $this->products = getInventory(Session::get('branch'), 0, 'accessory')->where('balanceQty', '>', 0);
     }
     public function index()
     {
