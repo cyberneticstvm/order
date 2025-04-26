@@ -30,7 +30,7 @@ class TransferFrameController extends Controller
         $this->middleware(function ($request, $next) {
             $this->transfers = Transfer::when(!in_array(Auth::user()->roles->first()->name, array('Administrator', 'CEO', 'Store Manager')), function ($q) {
                 return $q->where('from_branch_id', Session::get('branch'));
-            })->where('category', 'frame')->withTrashed()->latest()->get();
+            })->where('transfer_status', 0)->where('category', 'frame')->withTrashed()->latest()->get();
 
             $brs = Branch::where('ho_master', 1)->selectRaw("id, name");
             $this->branches = Branch::selectRaw("id, name")->where('id', Session::get('branch'))->when(in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO', 'Store Manager', 'Accounts']), function ($q) use ($brs) {
