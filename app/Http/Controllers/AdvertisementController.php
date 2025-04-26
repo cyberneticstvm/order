@@ -89,7 +89,7 @@ class AdvertisementController extends Controller
     function destroy(string $id)
     {
         Vehicle::findOrFail(decrypt($id))->delete();
-        return redirect()->route('vehicles')->with("success", "Vehicle deleted successfully");
+        return redirect()->route('vehicles', 'Active')->with("success", "Vehicle deleted successfully");
     }
 
     function restore(string $id)
