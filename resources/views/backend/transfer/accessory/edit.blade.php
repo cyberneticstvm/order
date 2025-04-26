@@ -60,7 +60,7 @@
                                 <div class="row g-4 table-responsive">
                                     <div class="col text-end">
                                         <div class="btn-group">
-                                            <button class="btn btn-primary" type="button" onclick="addTransferRow('accessory', , 'transfer')">Add New Row</button>
+                                            <button class="btn btn-primary" type="button" onclick="addTransferRow('accessory', 'transfer')">Add New Row</button>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -81,7 +81,7 @@
                                                         <a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a>
                                                     </td>
                                                     <td>
-                                                        {{ html()->select('product_id[]', $products, $item->product_id)->class('border-0 select2 selPdctForTransfer')->attribute('data-category', 'frame')->attribute('id', '')->placeholder('Select')->required() }}
+                                                        {{ html()->select('product_id[]', $products, $item->product_id)->class('border-0 select2 selPdctForTransfer')->attribute('data-category', 'accessory')->attribute('id', '')->placeholder('Select')->required() }}
                                                     </td>
                                                     <td class='qtyAvailable text-end'>0</td>
                                                     <td><input type="number" name='qty[]' class="w-100 border-0 qtyMax text-end" placeholder="0" min='1' step="1" value="{{ $item->qty }}" required /></td>

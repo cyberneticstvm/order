@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
 use App\Models\Supplier;
+use App\Models\Transfer;
+use App\Models\TransferDetails;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -42,7 +45,8 @@ class PurchaseAccessoryController extends Controller
     {
         $suppliers = $this->suppliers;
         $products = $this->products;
-        return view('backend.purchase.accessory.create', compact('suppliers', 'products'));
+        $branches = Branch::where('ho_master', 1)->pluck('name', 'id');
+        return view('backend.purchase.accessory.create', compact('suppliers', 'products', 'branches'));
     }
 
     /**
@@ -85,6 +89,29 @@ class PurchaseAccessoryController extends Controller
                     ];
                 endforeach;
                 PurchaseDetail::insert($data);
+                $transfer = Transfer::create([
+                    'transfer_number' => transferId('accessory')->tid,
+                    'category' => 'accessory',
+                    'transfer_date' => Carbon::today(),
+                    'from_branch_id' => 0,
+                    'to_branch_id' => $request->branch_id,
+                    'transfer_note' => 'Purchase with id ' . $purchase->id,
+                    'transfer_status' => 1,
+                    'purchase_id' => $purchase->id,
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
+                ]);
+                $data = [];
+                foreach ($request->product_id as $key => $item) :
+                    $data[] = [
+                        'transfer_id' => $transfer->id,
+                        'product_id' => $item,
+                        'qty' => $request->qty[$key],
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endforeach;
+                TransferDetails::insert($data);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
@@ -108,7 +135,8 @@ class PurchaseAccessoryController extends Controller
         $suppliers = $this->suppliers;
         $products = $this->products;
         $purchase = Purchase::findOrFail(decrypt($id));
-        return view('backend.purchase.accessory.edit', compact('suppliers', 'products', 'purchase'));
+        $branches = Branch::where('ho_master', 1)->pluck('name', 'id');
+        return view('backend.purchase.accessory.edit', compact('suppliers', 'products', 'purchase', 'branches'));
     }
 
     /**
@@ -149,6 +177,32 @@ class PurchaseAccessoryController extends Controller
                 endforeach;
                 PurchaseDetail::where('purchase_id', $id)->delete();
                 PurchaseDetail::insert($data);
+                $t = Transfer::where('purchase_id', $id)->first();
+                TransferDetails::where('transfer_id', $t->id)->delete();
+                $t->delete();
+                $transfer = Transfer::create([
+                    'transfer_number' => transferId('accessory')->tid,
+                    'category' => 'accessory',
+                    'transfer_date' => Carbon::today(),
+                    'from_branch_id' => 0,
+                    'to_branch_id' => $request->branch_id,
+                    'transfer_note' => 'Purchase with id ' . $id,
+                    'transfer_status' => 1,
+                    'purchase_id' => $id,
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
+                ]);
+                $data = [];
+                foreach ($request->product_id as $key => $item) :
+                    $data[] = [
+                        'transfer_id' => $transfer->id,
+                        'product_id' => $item,
+                        'qty' => $request->qty[$key],
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endforeach;
+                TransferDetails::insert($data);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
@@ -161,7 +215,10 @@ class PurchaseAccessoryController extends Controller
      */
     public function destroy(string $id)
     {
-        Purchase::findOrFail(decrypt($id))->delete();
+        $p = Purchase::findOrFail(decrypt($id));
+        $t = Transfer::where('purchase_id', $p->id);
+        $p->delete();
+        $t->delete();
         return redirect()->back()->with('success', 'Purchase has been deleted successfully!');
     }
 }
