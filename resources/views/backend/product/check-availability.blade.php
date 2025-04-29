@@ -62,7 +62,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5>Available Qty in Shelf: {{ $data?->sum('shelfQty') }}</h5>
+                        <h5>Available Qty in Shelf: <span class="text-info">{{ $data?->sum('shelfQty') }}</span></h5>
                     </div>
                 </div>
             </div>
