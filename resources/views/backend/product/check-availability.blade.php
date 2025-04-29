@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-wrapper">
-                            <form class="row g-3" method="post" action="{{ route('report.stock.status.fetch') }}">
+                            <form class="row g-3" method="post" action="{{ route('check.product.availability.fetch') }}">
                                 @csrf
                                 <div class="col-md-3">
                                     <label class="form-label req">Product</label>
