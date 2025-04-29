@@ -50,7 +50,7 @@ class ImportExportController extends Controller
         $this->middleware('permission:import-new-frames', ['only' => ['importFrames', 'importFramesUpdate']]);
         $this->middleware('permission:import-new-lenses', ['only' => ['importLenses', 'importLensesUpdate']]);
         $this->middleware('permission:import-product-transfer', ['only' => ['importTransfer', 'importTransferUpdate']]);
-        $this->middleware('permission:stock-comparison', ['only' => ['stockComparison', 'stockComparisonUpdate']]);
+        $this->middleware('permission:stock-comparison', ['only' => ['compareStock', 'updateStockProceed']]);
 
         $this->middleware('permission:export-vehicle-excel', ['only' => ['exportVehicle']]);
 
