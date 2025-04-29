@@ -29,7 +29,7 @@
                         @if(Session::has('branch'))
                         <h5>Dashboard</h5><span>Hello <span class="text-primary"> {{ Auth::user()->name }}</span>, You are now logged into <span class="text-primary">{{ branches()->where('id', Session::get('branch'))->first()->name }}</span> branch!</span>
                         <p>Your Default Cash Sale Customer ID is <span class="fw-bold">{{ branches()->where('id', Session::get('branch'))->first()->cash_sales_id }}</span></p>
-                        <p><a href="{{ route('product.lens.price.list') }}">Product Lens Price List</a></p>
+                        <p><a href="{{ route('product.lens.price.list') }}">Product Lens Price List</a> | <a href="{{ route('check.product.availability') }}">Check Product Availability</a></p>
                         @endif
                     </div>
                 </div>

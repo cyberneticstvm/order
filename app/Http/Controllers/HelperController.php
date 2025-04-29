@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Crypt;
 
 class HelperController extends Controller
 {
+    protected $products;
     function __construct()
     {
         $this->middleware('permission:pending-transfer-list|pending-transfer-edit|product-damage-transfer-list|product-damage-transfer-update', ['only' => ['pendingTransfer', 'pendingTransferUpdate', 'pendingDamageTransfer', 'pendingDamageTransferUpdate']]);
@@ -50,6 +51,8 @@ class HelperController extends Controller
         $this->middleware('permission:search-prescription', ['only' => ['searchPrescription', 'searchPrescriptionFetch']]);
         $this->middleware('permission:update-delivered-order', ['only' => ['editDispatechedOrder', 'editDispatechedOrderUpdate']]);
         $this->middleware('permission:admin-dashboard', ['only' => ['adminDashboard']]);
+
+        $this->products = Product::selectRaw("id, CONCAT_WS('-', name, code) AS name")->pluck('name', 'id');
     }
 
     function getUserLocationMap(Request $request)
@@ -477,6 +480,25 @@ class HelperController extends Controller
         $schedule = PromotionSchedule::findOrFail($request->schedule_id);
         sendWaPromotion($schedule, $request->name, $request->mobile);
         return redirect()->back()->with("success", "Message sent successfully");
+    }
+
+    function checkProductAvailability()
+    {
+        $products = $this->products;
+        $branches = Branch::where('type', 'branch')->pluck('name', 'id');
+        $inputs = array('', Session::get('branch'));
+        $data = collect();
+        return view('backend.product.check-availability', compact('branches', 'products', 'inputs', 'data'));
+    }
+
+    function checkProductAvailabilityFetch(Request $request)
+    {
+        $product = Product::findOrFail($request->product);
+        $inputs = array($request->product, $request->branch);
+        $products = $this->products;
+        $branches = Branch::where('type', 'branch')->pluck('name', 'id');
+        $data = getInventory($request->branch, $request->product, $product->category);
+        return view('backend.product.check-availability', compact('branches', 'products', 'inputs', 'data'));
     }
 
     function asd()

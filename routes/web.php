@@ -119,6 +119,9 @@ Route::middleware(['web', 'auth', 'branch', 'location'])->group(function () {
         Route::get('/edit/dispatch/order/proceed', [HelperController::class, ''])->name('edit.dispatched.order.proceed');
         Route::get('/edit/dispatch/order/update/{id}', [HelperController::class, 'editDispatechedOrderGet'])->name('edit.dispatched.order.get');
         Route::post('/edit/dispatch/order/update/{id}', [HelperController::class, 'editDispatechedOrderUpdate'])->name('edit.dispatched.order.update');
+
+        Route::get('check/product/availability', 'checkProductAvailability')->name('check.product.availability');
+        Route::post('check/product/availability', 'checkProductAvailabilityFetch')->name('check.product.availability.fetch');
         /*Route::get('/update/invoice', 'updateInvoiceNumber')->name('update.invoice.number');*/
 
         /* Adv Controller */
