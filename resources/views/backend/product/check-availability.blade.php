@@ -31,7 +31,7 @@
                                 <div class="col-md-3">
                                     <label class="form-label req">Product</label>
                                     <div class="input-group">
-                                        {{ html()->select('product', $products, $inputs[1])->class('form-control select2') }}
+                                        {{ html()->select('product', $products, $inputs[0])->class('form-control select2') }}
                                     </div>
                                     @error('product')
                                     <small class="text-danger">{{ $errors->first('product') }}</small>
@@ -40,7 +40,7 @@
                                 <div class="col-md-3">
                                     <label class="form-label req">Branch</label>
                                     <div class="input-group">
-                                        {{ html()->select('branch', $branches, $inputs[0])->class('form-control select2') }}
+                                        {{ html()->select('branch', $branches, $inputs[1])->class('form-control select2') }}
                                     </div>
                                     @error('branch')
                                     <small class="text-danger">{{ $errors->first('branch') }}</small>
