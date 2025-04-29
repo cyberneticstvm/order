@@ -125,6 +125,7 @@
                                         <td class="fw-bold text-right">{{ $data->sum('returnedQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('damagedQty') }}</td>
                                         <td class="fw-bold text-right">{{ $data->sum('balanceQty') }}</td>
+                                        <td class="fw-bold text-right">{{ $data->sum('shelfQty') }}</td>
                                     </tr>
                                 </tfoot>
                             </table>
