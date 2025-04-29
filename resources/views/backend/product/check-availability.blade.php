@@ -5,7 +5,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Stock In Hand</h3>
+                    <h3>Available Qty</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
@@ -13,8 +13,8 @@
                                 <svg class="stroke-icon">
                                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg></a></li>
-                        <li class="breadcrumb-item">Inventory</li>
-                        <li class="breadcrumb-item active">Stock In Hand</li>
+                        <li class="breadcrumb-item">Stock</li>
+                        <li class="breadcrumb-item active">Available Qty in Shelf</li>
                     </ol>
                 </div>
             </div>

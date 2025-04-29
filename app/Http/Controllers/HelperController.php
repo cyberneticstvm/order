@@ -498,6 +498,8 @@ class HelperController extends Controller
         $products = $this->products;
         $branches = Branch::where('type', 'branch')->pluck('name', 'id');
         $data = getInventory($request->branch, $request->product, $product->category);
+        dd($data);
+        die;
         return view('backend.product.check-availability', compact('branches', 'products', 'inputs', 'data'));
     }
 
