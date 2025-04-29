@@ -51,6 +51,7 @@ class HelperController extends Controller
         $this->middleware('permission:search-prescription', ['only' => ['searchPrescription', 'searchPrescriptionFetch']]);
         $this->middleware('permission:update-delivered-order', ['only' => ['editDispatechedOrder', 'editDispatechedOrderUpdate']]);
         $this->middleware('permission:admin-dashboard', ['only' => ['adminDashboard']]);
+        $this->middleware('permission:check-product-availability', ['only' => ['checkProductAvailability', 'checkProductAvailabilityFetch']]);
 
         $this->products = Product::selectRaw("id, CONCAT_WS('-', name, code) AS name")->pluck('name', 'id');
     }
