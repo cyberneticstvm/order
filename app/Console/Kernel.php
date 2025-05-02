@@ -81,8 +81,8 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $promo = PromotionSchedule::whereDate('scheduled_date', Carbon::today())->where('status', 'publish')->latest()->first();
             $promo->update(['sms_count' => $promo->waSmsProcessedCount()]);
-            PromotionContact::update(['wa_sms_status' => null]);
-            Order::update(['wa_sms_status' => null]);
+            PromotionContact::query()->update(['wa_sms_status' => null]);
+            Order::query()->update(['wa_sms_status' => null]);
         })->dailyAt('23:30');
     }
 
