@@ -533,6 +533,6 @@ class HelperController extends Controller
             endif;
         endif;*/
         $promo = PromotionSchedule::whereDate('scheduled_date', Carbon::today())->where('status', 'publish')->latest()->first();
-        sendWaPromotion($promo, 'Vijo', '9188848860');
+        dd($promo);
     }
 }
