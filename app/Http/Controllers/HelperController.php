@@ -504,9 +504,9 @@ class HelperController extends Controller
 
     function asd()
     {
-        /*$products = getInventory(Session::get('branch'), 0, 'frame')->where('balanceQty', '>', 0);
-        dd($products);*/
-        $promo = PromotionSchedule::whereDate('scheduled_date', Carbon::today())->where('status', 'publish')->latest()->first();
+        $products = getInventory(Session::get('branch'), 0, 'frame')->where('balanceQty', '>', 0);
+        dd($products);
+        /*$promo = PromotionSchedule::whereDate('scheduled_date', Carbon::today())->where('status', 'publish')->latest()->first();
         if ($promo):
             $clist = PromotionContact::selectRaw("id, name, contact_number as mobile, 'clist' as type")->whereNull('wa_sms_status')->where('entity', $promo->entity)->where('type', 'include')->when($promo->branch_id > 0, function ($q) use ($promo) {
                 return $q->where('branch_id', $promo->branch_id);
@@ -517,7 +517,7 @@ class HelperController extends Controller
                     return $q->where('branch_id', $promo->branch_id);
                 })->whereNotIn('mobile', PromotionContact::where('type', 'exclude')->pluck('contact_number'))->limit($promo->sms_limit_per_hour)->union($clist)->orderBy('id')->get()->unique('mobile');
             endif;
-            /*if ($cdata):
+            if ($cdata):
                 $ids1 = [];
                 $ids2 = [];
                 foreach ($cdata as $key => $item):
@@ -530,13 +530,13 @@ class HelperController extends Controller
                 endforeach;
                 PromotionContact::whereIn('id', $ids1)->update(['wa_sms_status' => 'yes']);
                 Order::whereIn('id', $ids2)->update(['wa_sms_status' => 'yes']);
-            endif;*/
+            endif;
             $res = sendWaPromotion($promo, 'vijo', '9188848860');
             if (isset($res['messages']) &&  $res['messages'][0]['message_status'] == 'accepted'):
                 echo "true";
             else:
                 echo "false";
             endif;
-        endif;
+        endif;*/
     }
 }
