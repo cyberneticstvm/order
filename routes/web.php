@@ -162,7 +162,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/transfer/product/{category}/{branch}', 'transferProductBulk')->name('transfer.product.bulk');
         Route::get('/ord/{id}', 'viewArr')->name('view.arr');
 
-        Route::get('/frames/available', 'asd')->name('get.available.frames');
+        Route::get('/asd', 'asd')->name('asd');
     });
 
     Route::prefix('/offer')->controller(OfferController::class)->group(function () {
