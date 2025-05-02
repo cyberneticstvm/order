@@ -517,21 +517,20 @@ class HelperController extends Controller
                     return $q->where('branch_id', $promo->branch_id);
                 })->whereNotIn('mobile', PromotionContact::where('type', 'exclude')->pluck('contact_number'))->limit($promo->sms_limit_per_hour)->union($clist)->orderBy('id')->get()->unique('mobile');
             endif;
-            /*if ($cdata):
-                    $ids1 = [];
-                    $ids2 = [];
-                    foreach ($cdata as $key => $item):
-                        sendWaPromotion($promo, $item->name, $item->mobile);
-                        if ($item->type == 'clist'):
-                            array_push($ids1, $item->id);
-                        else:
-                            array_push($ids2, $item->id);
-                        endif;
-                    endforeach;
-                    PromotionContact::whereIn('id', $ids1)->update(['wa_sms_status' => 'yes']);
-                    Order::whereIn('id', $ids2)->update(['wa_sms_status' => 'yes']);
-                endif;*/
-            dd($cdata);
+            if ($cdata):
+                $ids1 = [];
+                $ids2 = [];
+                foreach ($cdata as $key => $item):
+                    //sendWaPromotion($promo, $item->name, $item->mobile);
+                    if ($item->type == 'clist'):
+                        array_push($ids1, $item->id);
+                    else:
+                        array_push($ids2, $item->id);
+                    endif;
+                endforeach;
+                PromotionContact::whereIn('id', $ids1)->update(['wa_sms_status' => 'yes']);
+                Order::whereIn('id', $ids2)->update(['wa_sms_status' => 'yes']);
+            endif;
         endif;
     }
 }
