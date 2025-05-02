@@ -537,7 +537,7 @@ class HelperController extends Controller
             else:
                 echo "false";
             endif;*/
-            echo $res['messages'];
+            dd($res['messages']);
         endif;
     }
 }
