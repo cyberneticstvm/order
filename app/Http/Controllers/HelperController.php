@@ -506,7 +506,7 @@ class HelperController extends Controller
     {
         /*$products = getInventory(Session::get('branch'), 0, 'frame')->where('balanceQty', '>', 0);
         dd($products);*/
-        $promo = PromotionSchedule::whereDate('scheduled_date', Carbon::today())->where('status', 'publish')->latest()->first();
+        /*$promo = PromotionSchedule::whereDate('scheduled_date', Carbon::today())->where('status', 'publish')->latest()->first();
         if ($promo):
             $clist = PromotionContact::selectRaw("id, name, contact_number as mobile, 'clist' as type")->whereNull('wa_sms_status')->where('entity', $promo->entity)->where('type', 'include')->when($promo->branch_id > 0, function ($q) use ($promo) {
                 return $q->where('branch_id', $promo->branch_id);
@@ -531,6 +531,8 @@ class HelperController extends Controller
                 PromotionContact::whereIn('id', $ids1)->update(['wa_sms_status' => 'yes']);
                 Order::whereIn('id', $ids2)->update(['wa_sms_status' => 'yes']);
             endif;
-        endif;
+        endif;*/
+        $promo = PromotionSchedule::whereDate('scheduled_date', Carbon::today())->where('status', 'publish')->latest()->first();
+        sendWaPromotion($promo, 'Vijo', '9188848860');
     }
 }
