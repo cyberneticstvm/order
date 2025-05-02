@@ -65,12 +65,15 @@ class Kernel extends ConsoleKernel
                     $ids1 = [];
                     $ids2 = [];
                     foreach ($cdata as $key => $item):
-                        if ($item->type == 'clist'):
-                            array_push($ids1, $item->id);
-                        else:
-                            array_push($ids2, $item->id);
-                        endif;
                         $res = sendWaPromotion($promo, $item->name, $item->mobile);
+                        ////$res['error']['code'] or $res['messages'][0]['message_status'] == 'accepted'
+                        if (isset($res['messages']) &&  $res['messages'][0]['message_status'] == 'accepted'):
+                            if ($item->type == 'clist'):
+                                array_push($ids1, $item->id);
+                            else:
+                                array_push($ids2, $item->id);
+                            endif;
+                        endif;
                     endforeach;
                     PromotionContact::whereIn('id', $ids1)->update(['wa_sms_status' => 'yes']);
                     Order::whereIn('id', $ids2)->update(['wa_sms_status' => 'yes']);
