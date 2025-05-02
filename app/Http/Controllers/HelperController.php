@@ -535,7 +535,7 @@ class HelperController extends Controller
             if ($res['messages'][0]['message_status'] == 'accepted'):
                 echo "true";
             else:
-                echo "false";
+                dd($res);
             endif;
         endif;
     }
