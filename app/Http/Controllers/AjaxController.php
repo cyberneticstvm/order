@@ -659,7 +659,7 @@ class AjaxController extends Controller
             $op .= "<td>" . $item->product?->code . "</td>";
             $op .= "<td>" . $item->product?->id . "</td>";
             $op .= "<td>" . $item->transfer?->created_at->format('d.M.Y') . "</td>";
-            $op .= "<td>" . $item->transfer?->to_branch?->name . "</td>";
+            $op .= "<td>" . $item->transfer?->tobranch?->name . "</td>";
             $op .= "<td class='text-end'>" . $item->qty . "</td>";
             $op .= "</tr>";
         endforeach;
