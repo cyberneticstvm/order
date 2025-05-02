@@ -521,7 +521,7 @@ class HelperController extends Controller
                 $ids1 = [];
                 $ids2 = [];
                 foreach ($cdata as $key => $item):
-                    //sendWaPromotion($promo, $item->name, $item->mobile);
+                    sendWaPromotion($promo, $item->name, $item->mobile);
                     if ($item->type == 'clist'):
                         array_push($ids1, $item->id);
                     else:
