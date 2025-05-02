@@ -521,12 +521,12 @@ class HelperController extends Controller
                 $ids1 = [];
                 $ids2 = [];
                 foreach ($cdata as $key => $item):
-                    sendWaPromotion($promo, $item->name, $item->mobile);
                     if ($item->type == 'clist'):
                         array_push($ids1, $item->id);
                     else:
                         array_push($ids2, $item->id);
                     endif;
+                //$res = sendWaPromotion($promo, $item->name, $item->mobile);
                 endforeach;
                 PromotionContact::whereIn('id', $ids1)->update(['wa_sms_status' => 'yes']);
                 Order::whereIn('id', $ids2)->update(['wa_sms_status' => 'yes']);
