@@ -532,8 +532,11 @@ class HelperController extends Controller
                 Order::whereIn('id', $ids2)->update(['wa_sms_status' => 'yes']);
             endif;*/
             $res = sendWaPromotion($promo, 'Vijo', '9995376774');
-            dd($res['messages']);
-            die;
+            if ($res['messages']['message_status'] == 'accepted'):
+                echo "true";
+            else:
+                echo "false";
+            endif;
         endif;
     }
 }
