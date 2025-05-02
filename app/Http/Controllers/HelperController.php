@@ -531,7 +531,8 @@ class HelperController extends Controller
                 PromotionContact::whereIn('id', $ids1)->update(['wa_sms_status' => 'yes']);
                 Order::whereIn('id', $ids2)->update(['wa_sms_status' => 'yes']);
             endif;*/
-            dd($cdata);
+            $res = sendWaPromotion($promo, 'Vijo', '9995376774');
+            dd($res);
             die;
         endif;
     }
