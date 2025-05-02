@@ -532,7 +532,6 @@ class HelperController extends Controller
                 Order::whereIn('id', $ids2)->update(['wa_sms_status' => 'yes']);
             endif;
         endif;*/
-        $promo = PromotionSchedule::whereDate('scheduled_date', Carbon::today())->where('status', 'publish')->latest()->first();
-        $promo->update(['sms_count' => 75]);
+        Order::query()->update(['wa_sms_status' => 'ye']);
     }
 }
