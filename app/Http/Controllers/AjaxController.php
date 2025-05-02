@@ -650,19 +650,20 @@ class AjaxController extends Controller
     {
         $c = 1;
         $transfers = TransferDetails::leftJoin('transfers as t', 't.id', 'transfer_details.transfer_id')->selectRaw("transfer_details.product_id, transfer_details.transfer_id, SUM(transfer_details.qty) AS qty")->where('t.from_branch_id', $request->branch)->where('t.transfer_status', 1)->where('t.category', $request->category)->whereNull('t.deleted_at')->groupBy('transfer_details.product_id', 'transfer_details.transfer_id')->get();
-        $op = "<table class='table table-bordered'><thead><tr><th>SL No</th><th>Transfer No</th><th>Product</th><th>Code</th><th>Qty</th><th>Date</th><th>To Branch</th></tr></thead><tbody>";
+        $op = "<table class='table table-bordered'><thead><tr><th>SL No</th><th>Transfer No</th><th>Product</th><th>PCode</th><th>PId</th><th>Qty</th><th>Date</th><th>To Branch</th></tr></thead><tbody>";
         foreach ($transfers->where('qty', '>', 0) as $key => $item) :
             $op .= "<tr>";
             $op .= "<td>" . $c++ . "</td>";
             $op .= "<td>" . $item->transfer?->transfer_number . "</td>";
             $op .= "<td>" . $item->product?->name . "</td>";
             $op .= "<td>" . $item->product?->code . "</td>";
+            $op .= "<td>" . $item->product?->id . "</td>";
             $op .= "<td class='text-end'>" . $item->qty . "</td>";
             $op .= "<td>" . $item->transfer?->created_at->format('d.M.Y') . "</td>";
             $op .= "<td>" . $item->transfer?->to_branch?->name . "</td>";
             $op .= "</tr>";
         endforeach;
-        $op .= "</tr><td colspan='3' class='text-end'>Total</td><td class='text-end fw-bold'>" . $transfers->sum('qty') . "</td><td></td></tr>";
+        $op .= "</tr><td colspan='5' class='text-end'>Total</td><td class='text-end fw-bold'>" . $transfers->sum('qty') . "</td><td></td></tr>";
         $op .= "</tbody></table>";
         echo $op;
     }
