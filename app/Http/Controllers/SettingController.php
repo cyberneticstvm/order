@@ -173,6 +173,9 @@ class SettingController extends Controller
             else :
                 DB::transaction(function () use ($request) {
                     Transfer::where('category', $request->product_category)->where('to_branch_id', $request->branch_id)->delete();
+                    Transfer::where('category', $request->category)->where('from_branch_id', $request->branch)->update([
+                        'stock_updated_at' => Carbon::now(),
+                    ]);
                     SalesReturn::where('returned_branch', $request->branch_id)->delete();
                     ProductDamage::where('from_branch', $request->branch_id)->delete();
                     //Order::where('branch_id', $request->branch_id)->where('order_status', 'delivered')->update(['stock_updated_at' => Carbon::now()]);
