@@ -26,7 +26,8 @@ return new class extends Migration
             $table->text('remarks')->nullable();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
-            $table->dateTime('stock_updated_at')->nullable();
+            $table->dateTime('stock_updated_out_at')->nullable();
+            $table->dateTime('stock_updated_in_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

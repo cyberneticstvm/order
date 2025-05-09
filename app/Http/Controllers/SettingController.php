@@ -172,9 +172,11 @@ class SettingController extends Controller
                 return redirect()->back()->with("error", "Some pending transfer yet to be accepted");
             else :
                 DB::transaction(function () use ($request) {
-                    Transfer::where('category', $request->product_category)->where('to_branch_id', $request->branch_id)->delete();
+                    Transfer::where('category', $request->product_category)->where('to_branch_id', $request->branch_id)->update([
+                        'stock_updated_in_at' => Carbon::now(),
+                    ]);
                     Transfer::where('category', $request->category)->where('from_branch_id', $request->branch)->update([
-                        'stock_updated_at' => Carbon::now(),
+                        'stock_updated_out_at' => Carbon::now(),
                     ]);
                     SalesReturn::where('returned_branch', $request->branch_id)->delete();
                     ProductDamage::where('from_branch', $request->branch_id)->delete();

@@ -328,9 +328,12 @@ class ImportExportController extends Controller
             else :
                 DB::transaction(function () use ($request, $products) {
                     $data = [];
-                    Transfer::where('category', $request->category)->where('to_branch_id', $request->branch)->delete();
+                    //Transfer::where('category', $request->category)->where('to_branch_id', $request->branch)->delete();
+                    Transfer::where('category', $request->product_category)->where('to_branch_id', $request->branch_id)->update([
+                        'stock_updated_in_at' => Carbon::now(),
+                    ]);
                     Transfer::where('category', $request->category)->where('from_branch_id', $request->branch)->update([
-                        'stock_updated_at' => Carbon::now(),
+                        'stock_updated_out_at' => Carbon::now(),
                     ]);
                     SalesReturn::where('returned_branch', $request->branch)->delete();
                     ProductDamage::where('from_branch', $request->branch)->delete();
