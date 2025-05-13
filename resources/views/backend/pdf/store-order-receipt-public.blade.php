@@ -77,7 +77,7 @@
             </tr>
             <tr>
                 <td colspan="4" class="text-right border-0"><b>Advance</b></td>
-                <td class="text-right border-0"><b>{{ ($order->advance + $advance) ? number_format($order->advance + $advance, 2) : '0.00' }}</b></td>
+                <td class="text-right border-0"><b>{{ number_format($advance, 0) }}</b></td>
             </tr>
             @if($order->credit_used > 0)
             <tr>
@@ -87,7 +87,7 @@
             @endif
             <tr>
                 <td colspan="4" class="text-right border-0"><b>Balance</b></td>
-                <td class="text-right border-0"><b>{{ number_format($order->balance - $advance, 2) }}</b></td>
+                <td class="text-right border-0"><b>{{ number_format($order->invoice_total - $advance, 2) }}</b></td>
             </tr>
         </tbody>
     </table>
