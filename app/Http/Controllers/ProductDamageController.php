@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductDamage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class ProductDamageController extends Controller
@@ -22,7 +23,9 @@ class ProductDamageController extends Controller
 
     public function index()
     {
-        $products = ProductDamage::withTrashed()->where('from_branch', Session::get('branch'))->latest()->get();
+        $products = ProductDamage::withTrashed()->when(!in_array(Auth::user()->roles->first()->name, ['Administrator']), function ($q) {
+            return $q->where('from_branch', Session::get('branch'));
+        })->latest()->get();
         return view('backend.order.damage.index', compact('products'));
     }
 
