@@ -22,7 +22,7 @@ class ProductDamageController extends Controller
 
     public function index()
     {
-        $products = ProductDamage::withTrashed()->where('from_branch', Session::get('branch'))->whereNull('approved_status')->latest()->get();
+        $products = ProductDamage::withTrashed()->where('from_branch', Session::get('branch'))->latest()->get();
         return view('backend.order.damage.index', compact('products'));
     }
 
