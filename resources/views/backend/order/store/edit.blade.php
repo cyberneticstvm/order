@@ -31,7 +31,7 @@
                                 <h5>Update Order</h5><span>Update Order</span>
                             </div>
                             <div class="col text-end">
-                                <h5>Available Credit: <span class="text-success avCr">{{ number_format(getAvailableCredit($order?->customer_id ?? 0) + $order->credit_used, 2) }}</span>&nbsp;&nbsp;<a href="javascript:void(0)" class="refreshAvailableCr"><i class="fa fa-refresh text-info"></i></a></h5>
+                                <h5>Available Credit: <span class="text-success avCr">{{ number_format(getAvailableCredit($order?->customer_id ?? 0), 2) }}</span>&nbsp;&nbsp;<a href="javascript:void(0)" class="refreshAvailableCr"><i class="fa fa-refresh text-info"></i></a></h5>
                             </div>
                         </div>
                     </div>
