@@ -87,7 +87,7 @@
             @endif
             <tr>
                 <td colspan="4" class="text-right border-0"><b>Balance</b></td>
-                <td class="text-right border-0"><b>{{ number_format($order->invoice_total - $advance, 2) }}</b></td>
+                <td class="text-right border-0"><b>{{ number_format($order->invoice_total - ($advance + $order->credit_used), 2) }}</b></td>
             </tr>
         </tbody>
     </table>
