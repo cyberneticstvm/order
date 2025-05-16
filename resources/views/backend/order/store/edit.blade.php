@@ -381,7 +381,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="11" class="text-end fw-bold border-0">Paid</td>
-                                                    <td class="border-0"><input type="text" name="balance" class="text-end border-0 fw-bold w-100 balance readOnly" placeholder="0.00" value="{{ number_format($order->invoice_total - ($order->payments->sum('amount') + $order->credit_used), 2) }}" /></td>
+                                                    <td class="border-0"><input type="text" name="balance" class="text-end border-0 fw-bold w-100 balance readOnly" placeholder="0.00" value="{{ number_format($order->payments->sum('amount') + $order->credit_used, 2) }}" /></td>
                                                 </tr>
                                             </tfoot>
                                         </table>
