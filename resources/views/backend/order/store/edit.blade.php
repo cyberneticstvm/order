@@ -380,7 +380,7 @@
                                                     <td class="border-0"><input type="text" name="balance" class="text-end border-0 fw-bold w-100 balance readOnly" placeholder="0.00" value="{{ number_format($order->balance + $order->credit_used, 2, '.', '') }}" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="11" class="text-end fw-bold border-0">Paid {{ $order->payments->sum('amount') }}</td>
+                                                    <td colspan="11" class="text-end fw-bold border-0">Paid</td>
                                                     <td class="border-0"><input type="text" name="balance" class="text-end border-0 fw-bold w-100 balance readOnly" placeholder="0.00" value="{{ number_format($order->payments->sum('amount') + $order->credit_used, 2) }}" /></td>
                                                 </tr>
                                                 <tr>
