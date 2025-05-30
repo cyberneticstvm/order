@@ -61,6 +61,8 @@
                                         <th>Contact Number</th>
                                         <th>Royalty Card No.</th>
                                         <th>Status</th>
+                                        <th>Days Left</th>
+                                        <th>Branch</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -72,6 +74,8 @@
                                         <td>{{ $vehicle->contact_number }}</td>
                                         <td>{{ $vehicle->vcode }}</td>
                                         <td>{!! $vehicle->vstatus() !!}</td>
+                                        <td class="text-success">{{ $vehicle->daysLeft() }} Days</td>
+                                        <td>{{ $vehicle->branch?->name }}</td>
                                     </tr>
                                     @empty
                                     @endforelse
