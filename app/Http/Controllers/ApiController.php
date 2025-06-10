@@ -90,6 +90,10 @@ class ApiController extends Controller
             Order::where('id', $storeorderid)->update([
                 'lab_order_number' => $labordernumber,
             ]);
+            return response()->json([
+                'status' => true,
+                'message' => "success",
+            ], 200);
         endif;
     }
 }
