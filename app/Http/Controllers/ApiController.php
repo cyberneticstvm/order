@@ -71,7 +71,7 @@ class ApiController extends Controller
     function getOrders($secret)
     {
         if ($secret == apiSecret()) :
-            $orders = Order::leftJoin('branches b', 'b.id', 'orders.branch_id')->selectRaw("orders.id, b.code, orders.name AS customer, orders.place")->whereDate('order_date', Carbon::today())->get();
+            $orders = Order::leftJoin('branches b', 'b.id', 'orders.branch_id')->selectRaw("orders.id, b.code, orders.name AS customer, orders.place")->whereDate('orders.order_date', Carbon::today())->get();
             return response()->json([
                 'status' => true,
                 'data' => $orders,
