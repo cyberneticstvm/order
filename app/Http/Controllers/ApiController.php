@@ -67,4 +67,20 @@ class ApiController extends Controller
             ], 500);
         endif;
     }
+
+    function getOrders($secret)
+    {
+        if ($secret == apiSecret()) :
+            $orders = Order::leftJoin('branches b', 'b.id', 'orders.branch_id')->selectRow("orders.id, b.code, orders.name AS customer, orders.place")->get();
+            return response()->json([
+                'status' => true,
+                'data' => $orders,
+            ], 200);
+        else:
+            return response()->json([
+                'status' => false,
+                'data' => "Invalid Secret Key!"
+            ], 500);
+        endif;
+    }
 }
