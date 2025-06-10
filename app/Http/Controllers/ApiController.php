@@ -71,7 +71,7 @@ class ApiController extends Controller
     function getOrders($secret)
     {
         if ($secret == apiSecret()) :
-            $orders = Order::leftJoin('branches AS b', 'b.id', 'orders.branch_id')->selectRaw("orders.id, b.code, orders.name AS customer, orders.place, DATE_FORMAT(orders.order_date, '%d.%M.%Y') AS odate")->whereDate('orders.order_date', Carbon::today())->orderBy('orders.branch_id')->get();
+            $orders = Order::leftJoin('branches AS b', 'b.id', 'orders.branch_id')->selectRaw("orders.id, b.code, orders.name AS customer, orders.place, DATE_FORMAT(orders.order_date, '%d.%M.%Y') AS odate")->whereDate('orders.order_date', Carbon::today())->whereNull('lab_order_number')->orderBy('orders.branch_id')->get();
             return response()->json([
                 'status' => true,
                 'data' => $orders,
@@ -81,6 +81,15 @@ class ApiController extends Controller
                 'status' => false,
                 'data' => "Invalid Secret Key!"
             ], 500);
+        endif;
+    }
+
+    function updateLabOrder(Request $request, string $storeorderid, string $labordernumber, string $secret)
+    {
+        if ($secret == apiSecret()) :
+            Order::where('id', $storeorderid)->update([
+                'lab_order_number' => $labordernumber,
+            ]);
         endif;
     }
 }

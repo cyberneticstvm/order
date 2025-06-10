@@ -29,4 +29,7 @@ Route::prefix('/vehicle')->controller(ApiController::class)->group(function () {
 Route::prefix('/orders')->controller(ApiController::class)->group(function () {
     Route::get('/{secret}', 'getOrders')->name('get.orders');
 });
+Route::prefix('/laborder')->controller(ApiController::class)->group(function () {
+    Route::post('/{storeorderid}/{labordernumber}/{secret}', 'updateLabOrder')->name('update.lab.order');
+});
 //});
