@@ -29,7 +29,7 @@ class ProductDamage extends Model
 
     public function status()
     {
-        return ($this->deleted_at) ? "<span class='badge badge-danger'>Deleted</span>" : (($this->approved_status == 1) ? "<span class='badge badge-success'>Accepted</span>" : "<span class='badge badge-primary'>Active</span>");
+        return ($this->deleted_at) ? "<span class='badge badge-danger'>Deleted</span>" : (($this->approved_status == 1) ? "<span class='badge badge-success'>Accepted</span>" : "<span class='badge badge-info'>Active</span>");
     }
 
     public function isTransferAccepted()
