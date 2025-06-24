@@ -279,8 +279,11 @@ $(function () {
                 var canvas = document.getElementById("qrCode");
                 var ctx = canvas.getContext("2d");
                 var image = new Image();
+                image.onload = function() {
+                    context.drawImage(this, 0, 0, canvas.width, canvas.height);
+                }
                 image.src = "data:image/png;base64," +res.qrCode;
-                ctx.drawImage(image, 0, 0);                
+              
             },
             beforeSend: function(){
                 $(".btn-generate-qr").html("Adding...<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>");
