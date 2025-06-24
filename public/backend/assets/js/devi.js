@@ -272,8 +272,10 @@ $(function () {
             data: {'mobile': $("#mobile").val(), 'vid': $("#vehicle_id").val()},
             success: function (res) {
                 //console.log(res.qrCode);
-                var img = $('<img/>').addClass('thumb').attr('src', 'data:image/png;base64, '+res.qrCode+''); //create image element 
-                $('.qrCode').append(img);
+                var image = new Image();
+                image.src = "data:image/png;base64," +res.qrCode;
+                console.log(image.src);
+                $('.qrCode').appendChild(image);
                 //$(".qrCode").html("<img src='data:image/png;base64, "+res.qrCode+"' />");
             },
             beforeSend: function(){
