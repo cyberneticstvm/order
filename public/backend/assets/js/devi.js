@@ -276,11 +276,9 @@ $(function () {
                 console.log(image.src);
                 $('.qrCode').append(image);*/
                 //$(".qrCode").html("<img src='data:image/png;base64, "+res.qrCode+"' />");
-                var imageData = "data:image/png;base64," +res.qrCode;
-                const blob = base64ToBlob(imageData, "image/png");
-                const src = URL.createObjectURL(blob);
-                console.log(src);
-                $(".qrCode").html("<img src='"+src+"' />");
+                var pbx = document.getElementById("qrCode").createElement('img');
+                pbx.src = "data:image/png;base64," +res.qrCode;
+                uCanvas.getContext('2d').drawImage(pbx, 0, 0);
             },
             beforeSend: function(){
                 $(".btn-generate-qr").html("Adding...<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>");

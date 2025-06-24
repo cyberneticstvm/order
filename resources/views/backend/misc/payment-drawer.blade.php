@@ -20,7 +20,7 @@
                         <button class="btn btn-generate-qr btn-success">Generate</button>
                     </div>
                 </form>
-                <div class="col-md-12 qrCode">
+                <div class="col-md-12 qrCode" id="qrCode">
 
                 </div>
             </div>
