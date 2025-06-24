@@ -674,7 +674,7 @@ class AjaxController extends Controller
 
     public function generatePaymentQr(Request $request)
     {
-        $vehicle = Vehicle::findOrFail($request->vid);
+        $vehicle = Vehicle::find($request->vid);
         $pn = $vehicle->reg_number;
         $tn = $request->mobile;
         $am = $vehicle->totalCredit();
