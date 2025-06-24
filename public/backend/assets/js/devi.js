@@ -271,19 +271,7 @@ $(function () {
             url: '/ajax/payment/qr',
             data: {'mobile': $("#mobile").val(), 'vid': $("#vehicle_id").val()},
             success: function (res) {
-                /*var image = new Image();
-                image.src = "data:image/png;base64," +res.qrCode;
-                console.log(image.src);
-                $('.qrCode').append(image);*/
-                //$(".qrCode").html("<img src='data:image/png;base64, "+res.qrCode+"' />");
-                var canvas = document.getElementById("qrCode");
-                var ctx = canvas.getContext("2d");
-                var image = new Image();
-                image.onload = function() {
-                    ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
-                }
-                image.src = "data:image/png;base64," +res.qrCode;
-                console.log(image.src)
+                $(".qrCode").find("img").attr("src", "data:image/png;base64," +res.qrCode);
             },
             beforeSend: function(){
                 $(".btn-generate-qr").html("Adding...<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>");
