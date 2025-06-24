@@ -10,7 +10,7 @@
                     <input type="hidden" name="vehicle_id" id="vehicle_id" value="" />
                     <div class="col-md-12">
                         <label class="form-label req">Mobile Number</label>
-                        {{ html()->text($name = 'mobile', null)->class('form-control')->maxlength(10)->placeholder('Mobile')->required() }}
+                        {{ html()->text($name = 'mobile', null)->class('form-control')->attribute('id', 'mobile')->maxlength(10)->placeholder('Mobile')->required() }}
                         @error('mobile')
                         <small class="text-danger">{{ $errors->first('mobile') }}</small>
                         @enderror

@@ -259,6 +259,7 @@ $(function () {
     $(document).on("click", ".payment", function () {
         var drawer = $(this).data('drawer');
         $("#vehicle_id").val($(this).data('vid'));        
+        $("#mobile").val($(this).data('mobile'));        
         $(".vno").html($(this).data('vno'));        
         $("#" + drawer).drawer('toggle');
     });
