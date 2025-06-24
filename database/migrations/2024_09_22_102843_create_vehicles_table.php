@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
             $table->string('vcode', 15)->unique()->nullable();
+            $table->string('vehicle_id', 5)->unique()->nullable();
             $table->string('owner_name', 100);
             $table->string('reg_number', 15)->unique();
             $table->string('place', 100)->nullable();
