@@ -106,8 +106,5 @@
     </div>
     <!-- Container-fluid Ends-->
 </div>
-<div class="drawer drawer-left slide" tabindex="-1" role="dialog" aria-labelledby="drawer-3-title" aria-hidden="true" id="paymentDrawer">
-    <div class="drawer-content drawer-content-scrollable" role="document"></div>
-</div>
 @include("backend.misc.payment-drawer")
 @endsection
