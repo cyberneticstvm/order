@@ -21,7 +21,7 @@
                     </div>
                 </form>
                 <div class="col-md-12">
-                    <canvas id="qrCode"></canvas>
+                    <canvas id="qrCode" />
                 </div>
             </div>
         </div>
