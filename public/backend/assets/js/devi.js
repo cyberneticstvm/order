@@ -272,7 +272,15 @@ $(function () {
             data: {'mobile': $("#mobile").val(), 'vid': $("#vehicle_id").val()},
             success: function (res) {
                 console.log(res.qrCode);
-                $(".qrCode").html("<img src='data:image/png;base64, "+res.qrCode+"' />");
+                var fRead = new FileReader();
+                fRead.onload = (function(file){ //trigger function on successful read
+                  return function(e) {
+                      var img = $('<img/>').addClass('thumb').attr('src', 'data:image/png;base64, '+res.qrCode+''); //create image element 
+                      $('.qrCode').append(img); //append image to output element
+                  };
+                  })(file);
+                  fRead.readAsDataURL(file); //URL representing the file's data.
+                //$(".qrCode").html("<img src='data:image/png;base64, "+res.qrCode+"' />");
             },
             beforeSend: function(){
                 $(".btn-generate-qr").html("Adding...<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>");
