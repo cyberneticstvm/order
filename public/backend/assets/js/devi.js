@@ -280,7 +280,7 @@ $(function () {
                 var ctx = canvas.getContext("2d");
                 var image = new Image();
                 image.onload = function() {
-                    context.drawImage(this, 0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
                 }
                 image.src = "data:image/png;base64," +res.qrCode;
               
