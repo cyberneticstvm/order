@@ -20,6 +20,9 @@
                         <button class="btn btn-generate-qr btn-success">Generate</button>
                     </div>
                 </form>
+                <div class="col-md-12 qrCode">
+
+                </div>
             </div>
         </div>
         <div class="drawer-footer">Generate Payment QR Code</div>

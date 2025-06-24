@@ -30,6 +30,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class AjaxController extends Controller
 {
@@ -673,6 +674,12 @@ class AjaxController extends Controller
 
     public function generatePaymentQr(Request $request)
     {
-        return response()->json($request->mobile);
+        $vehicle = Vehicle::findOrFail($request->vid);
+        $pn = $vehicle->reg_number;
+        $tn = $request->mobile;
+        $am = $vehicle->totalCredit();
+        return response()->josn([
+            'qrCode' => base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('upi://pay?pa=' . $request->mobile . '@okbizaxis&pn=' . $pn . '&tn=' . $tn . '&am=' . $am . '&cu=INR'))
+        ]);
     }
 }
