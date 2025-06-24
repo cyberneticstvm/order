@@ -267,7 +267,7 @@ $(function () {
     $(document).on("click", ".btn-generate-qr", function(e){
         e.preventDefault();
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             url: '/ajax/payment/qr',
             data: {'mobile': $("#mobile").val(), 'vid': $("#vehicle_id").val()},
             success: function (res) {
