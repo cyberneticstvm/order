@@ -268,6 +268,7 @@ $(function () {
         e.preventDefault();
         var form = document.getElementById('frmPaymentQr');
         var formData = new FormData(form);
+        console.log(formData);
         $.ajax({
             type: 'POST',
             url: '/ajax/payment/qr',
