@@ -1,13 +1,13 @@
 <div class="drawer drawer-right slide" tabindex="-1" role="dialog" aria-labelledby="drawer-3-title" aria-hidden="true" id="paymentDrawer">
     <div class="drawer-content drawer-content-scrollable" role="document">
         <div class="drawer-header">
-            <h6 class="drawer-title" id="drawer-3-title">Generate Payment QR Code</h6>
+            <h6 class="drawer-title" id="drawer-3-title">Generate Payment QR Code - <span class="vno"></span></h6>
         </div>
         <div class="drawer-body table-responsive">
             <div class="row">
                 <form class="g-3" method="post" action="{{ route('email.docs') }}">
                     @csrf
-                    <input type="hidden" name="order_id" id="order_id" value="" />
+                    <input type="hidden" name="vehicle_id" id="vehicle_id" value="" />
                     <div class="col-md-12">
                         <label class="form-label req">Mobile Number</label>
                         {{ html()->text($name = 'mobile', null)->class('form-control')->maxlength(10)->placeholder('Mobile')->required() }}

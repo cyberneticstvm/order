@@ -256,6 +256,13 @@ $(function () {
         $("#" + drawer).drawer('toggle');
     });
 
+    $(document).on("click", ".payment", function () {
+        var drawer = $(this).data('drawer');
+        $("#vehicle_id").val($(this).data('vid'));        
+        $(".vno").html($(this).data('vno'));        
+        $("#" + drawer).drawer('toggle');
+    });
+
     $(document).on("click", ".dltOfferPdct", function(e){
         e.preventDefault();
         var pid = $(this).data('pid');
