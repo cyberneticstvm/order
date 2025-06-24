@@ -272,7 +272,7 @@ $(function () {
             data: {'mobile': $("#mobile").val(), 'vid': $("#vehicle_id").val()},
             success: function (res) {
                 console.log(res.qrCode);
-                $(".qrCode").html("<img src='data:image/png;base64,'" + res.qrCode +">");
+                $(".qrCode").html("<img src='data:image/png;base64, "+res+"' />");
             },
             beforeSend: function(){
                 $(".btn-generate-qr").html("Adding...<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>");
