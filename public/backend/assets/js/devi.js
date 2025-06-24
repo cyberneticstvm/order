@@ -283,7 +283,7 @@ $(function () {
                     ctx.drawImage(this, 0, 0, canvas.width, canvas.height);
                 }
                 image.src = "data:image/png;base64," +res.qrCode;
-              
+                console.log(image.src)
             },
             beforeSend: function(){
                 $(".btn-generate-qr").html("Adding...<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>");
