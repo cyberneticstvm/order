@@ -269,6 +269,7 @@ $(function () {
         $.ajax({
             type: 'POST',
             url: '/ajax/payment/qr',
+            dataType: 'json',
             data: {'mobile': $("#mobile").val(), 'vid': $("#vehicle_id").val()},
             success: function (res) {
                 //$(".qrCode").html("<img src='data:image/png;base64,'" + res.qrCode +">");
