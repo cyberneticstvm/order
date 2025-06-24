@@ -276,7 +276,7 @@ $(function () {
                 console.log(image.src);
                 $('.qrCode').append(image);*/
                 //$(".qrCode").html("<img src='data:image/png;base64, "+res.qrCode+"' />");
-                var pbx = document.getElementById("qrCode").createElement('img');
+                var pbx = $(".qrCode").append('img');
                 pbx.src = "data:image/png;base64," +res.qrCode;
                 uCanvas.getContext('2d').drawImage(pbx, 0, 0);
             },
