@@ -675,8 +675,8 @@ class AjaxController extends Controller
     public function generatePaymentQr(Request $request)
     {
         $vehicle = Vehicle::findOrFail($request->vid);
-        $pn = $vehicle->reg_number;
-        $tn = $request->mobile;
+        $pn = $vehicle->owner_name;
+        $tn = $request->mobile . ' - ' . $vehicle->reg_number;
         $am = $vehicle->totalCredit();
         $qr = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('upi://pay?pa=' . $request->mobile . '&pn=' . $pn . '&tn=' . $tn . '&am=' . $am . '&cu=INR'));
         return response()->json([

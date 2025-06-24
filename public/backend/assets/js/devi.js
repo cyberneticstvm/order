@@ -273,6 +273,8 @@ $(function () {
             success: function (res) {
                 const container = document.getElementById('qrCode');
                 const img = document.createElement('img');
+                img.width = 250;
+                img.height = 250;
                 img.src = "data:image/svg+xml;base64," +res.qrCode;
                 container.appendChild(img);
             },
