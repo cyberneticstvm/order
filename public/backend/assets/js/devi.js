@@ -271,6 +271,7 @@ $(function () {
             url: '/ajax/payment/qr',
             data: {'mobile': $("#mobile").val(), 'vid': $("#vehicle_id").val()},
             success: function (res) {
+                console.log(res.qrCode);
                 $(".qrCode").html("<img src='data:image/png;base64,'" + res.qrCode +">");
             },
             beforeSend: function(){
