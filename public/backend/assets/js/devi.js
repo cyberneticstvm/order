@@ -275,7 +275,7 @@ $(function () {
                 var image = new Image();
                 image.src = "data:image/png;base64," +res.qrCode;
                 console.log(image.src);
-                $('.qrCode').appendChild(image);
+                $('.qrCode').append(image);
                 //$(".qrCode").html("<img src='data:image/png;base64, "+res.qrCode+"' />");
             },
             beforeSend: function(){
