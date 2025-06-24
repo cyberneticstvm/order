@@ -271,7 +271,8 @@ $(function () {
             url: '/ajax/payment/qr',
             data: {'mobile': $("#mobile").val(), 'vid': $("#vehicle_id").val()},
             success: function (res) {
-                $(".qrCode").html("<img src='data:image/png;base64,'" + res.qrCode +">");
+                //$(".qrCode").html("<img src='data:image/png;base64,'" + res.qrCode +">");
+                $(".qrCode").text(res.qrCode);
             },
             beforeSend: function(){
                 $(".btn-generate-qr").html("Adding...<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>");
