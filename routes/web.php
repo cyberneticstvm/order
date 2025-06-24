@@ -209,7 +209,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/offer/product/remove', 'removeOfferProduct')->name('ajax.offer.product.remove');
         Route::post('/offer/product/save', 'saveProductForOffer')->name('ajax.offer.product.save');
         Route::post('/validate/royalcard', 'validateRoyaltyCard')->name('ajax.validate.royalty.card');
-        Route::get('/payment/qr', 'generatePaymentQr')->name('generate.payment.qr');
+        Route::post('/payment/qr', 'generatePaymentQr')->name('generate.payment.qr');
     });
 
     Route::prefix('/backend')->controller(HelperController::class)->group(function () {

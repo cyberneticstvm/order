@@ -674,13 +674,13 @@ class AjaxController extends Controller
 
     public function generatePaymentQr(Request $request)
     {
-        /*$vehicle = Vehicle::find($request->vid);
+        $vehicle = Vehicle::findOrFail($request->vid);
         $pn = $vehicle->reg_number;
         $tn = $request->mobile;
         $am = $vehicle->totalCredit();
-        $qr = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('upi://pay?pa=' . $request->mobile . '@okbizaxis&pn=' . $pn . '&tn=' . $tn . '&am=' . $am . '&cu=INR'));*/
-        return response()->josn([
-            'qrCode' => $request->vid,
+        $qr = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('upi://pay?pa=' . $request->mobile . '@okbizaxis&pn=' . $pn . '&tn=' . $tn . '&am=' . $am . '&cu=INR'));
+        return response()->json([
+            'qrCode' => $am,
         ]);
     }
 }
