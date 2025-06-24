@@ -268,7 +268,7 @@ $(function () {
         e.preventDefault();
         $.ajax({
             type: 'POST',
-            url: '/payment/qr',
+            url: '/ajax/payment/qr',
             data: { 'vid': $("#vehicle_id").val() },
             success: function (res) {
                 console.log(res);
