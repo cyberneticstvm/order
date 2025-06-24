@@ -266,10 +266,12 @@ $(function () {
 
     $(document).on("click", ".btn-generate-qr", function(e){
         e.preventDefault();
+        var form = document.getElementById('frmPaymentQr');
+        var formData = new FormData(form);
         $.ajax({
             type: 'POST',
             url: '/ajax/payment/qr',
-            data: { 'vid': $("#vehicle_id").val() },
+            data: { formData },
             success: function (res) {
                 console.log(res);
             },

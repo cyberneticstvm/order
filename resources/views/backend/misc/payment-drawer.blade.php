@@ -5,7 +5,7 @@
         </div>
         <div class="drawer-body table-responsive">
             <div class="row">
-                <form class="g-3" method="post" action="{{ route('generate.payment.qr') }}">
+                <form class="g-3" method="post" action="{{ route('generate.payment.qr') }}" id="frmPaymentQr">
                     @csrf
                     <input type="hidden" name="vehicle_id" id="vehicle_id" value="" />
                     <div class="col-md-12">
