@@ -677,7 +677,8 @@ class AjaxController extends Controller
         $vehicle = Vehicle::findOrFail($request->vid);
         $pn = $vehicle->owner_name;
         $tn = $request->mobile . ' - ' . $vehicle->reg_number;
-        $am = $vehicle->totalCredit();
+        $days = $vehicle->daysLeft();
+        $am = ($days < 0) ? $vehicle->fee + ($vehicle->fee / 30) * abs($days) : $vehicle->fee - ($vehicle->fee / 30) * abs($days);
         $qr = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('upi://pay?pa=' . $request->mobile . '@upi&pn=' . $pn . '&tn=' . $tn . '&am=' . $am . '&cu=INR'));
         return response()->json([
             'qrCode' => $qr,
