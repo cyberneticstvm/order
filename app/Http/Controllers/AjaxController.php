@@ -677,7 +677,7 @@ class AjaxController extends Controller
         $vehicle = Vehicle::findOrFail($request->vehicle_id);
         $pn = $vehicle->reg_number;
         $tn = $request->mobile;
-        $am = $vehicle->totalCredit();
+        $am = $vehicle->totalCredit;
         $qr = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('upi://pay?pa=' . $request->mobile . '@okbizaxis&pn=' . $pn . '&tn=' . $tn . '&am=' . $am . '&cu=INR'));
         return response()->josn([
             'qrCode' => $am,
