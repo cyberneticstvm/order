@@ -60,6 +60,7 @@
                                         <th>Last Payment</th>
                                         <th>V.Status</th>
                                         <th>Card Status</th>
+                                        <th></th>
                                         <th>Status</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
@@ -83,6 +84,7 @@
                                         <td>{{ $vehicle->card_issued == 0 ? 'No' : 'Yes' }} - {{ $vehicle->card_issued_date?->format('d.M.Y') }}</td>
                                         <td class="text-center">{!! $vehicle->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('vehicle.edit', encrypt($vehicle->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
+                                        <td><a href="javascript:void(0)" class="payment" data-ono="{{ $vehicle->id }}" data-type="payment" data-oid="{{ $vehicle->id }}" data-branch="" data-drawer="paymentDrawer"><i class="fa fa-envelope text-success"></i></a></td>
                                         <td class="text-center">
                                             @if($vehicle->deleted_at)
                                             <a href="{{ route('vehicle.restore', encrypt($vehicle->id)) }}" class="proceed" title="Restore"><i class="fa fa-undo text-success fa-lg"></i></a>
@@ -104,4 +106,8 @@
     </div>
     <!-- Container-fluid Ends-->
 </div>
+<div class="drawer drawer-left slide" tabindex="-1" role="dialog" aria-labelledby="drawer-3-title" aria-hidden="true" id="paymentDrawer">
+    <div class="drawer-content drawer-content-scrollable" role="document"></div>
+</div>
+@include("backend.misc.payment-drawer")
 @endsection
