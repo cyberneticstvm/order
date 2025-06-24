@@ -673,6 +673,6 @@ class AjaxController extends Controller
 
     public function generatePaymentQr(Request $request)
     {
-        return response()->json($request->mobile);
+        return response()->json($request->vehicle_id);
     }
 }
