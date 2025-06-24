@@ -82,7 +82,7 @@
                                         <td>{{ $vehicle->payment?->first()?->created_at?->format('d.M.Y') }}</td>
                                         <td class="text-center">{!! $vehicle->vstatus() !!}</td>
                                         <td>{{ $vehicle->card_issued == 0 ? 'No' : 'Yes' }} - {{ $vehicle->card_issued_date?->format('d.M.Y') }}</td>
-                                        <td><a href="javascript:void(0)" class="payment" data-ono="{{ $vehicle->id }}" data-type="payment" data-oid="{{ $vehicle->id }}" data-branch="" data-drawer="paymentDrawer"><i class="fa fa-qrcode text-success"></i></a></td>
+                                        <td><a href="javascript:void(0)" class="payment" data-ono="{{ $vehicle->id }}" data-type="payment" data-oid="{{ $vehicle->id }}" data-branch="" data-drawer="paymentDrawer"><i class="fa fa-qrcode fa-xl text-success"></i></a></td>
                                         <td class="text-center">{!! $vehicle->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('vehicle.edit', encrypt($vehicle->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center">
