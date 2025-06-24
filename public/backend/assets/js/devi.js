@@ -277,7 +277,7 @@ $(function () {
                 container.appendChild(img);
             },
             beforeSend: function(){
-                document.getElementById('qrCode').innerHTML("")
+                document.getElementById('qrCode').innerHTML = "";
                 $(".btn-generate-qr").html("Adding...<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>");
             },
             complete: function(){
