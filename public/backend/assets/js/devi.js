@@ -264,6 +264,27 @@ $(function () {
         $("#" + drawer).drawer('toggle');
     });
 
+    $(document).on("click", ".btn-generate-qr", function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/payment/qr',
+            data: { 'vid': $("#vehicle_id").val() },
+            success: function (res) {
+                console.log(res);
+            },
+            beforeSend: function(){
+                $(".btn-generate-qr").html("Adding...<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>");
+            },
+            complete: function(){
+                $(".btn-generate-qr").html("Generate");
+            },
+            error: function (err) {
+                error(err);
+            }
+        });
+    });
+
     $(document).on("click", ".dltOfferPdct", function(e){
         e.preventDefault();
         var pid = $(this).data('pid');

@@ -670,4 +670,9 @@ class AjaxController extends Controller
         $op .= "</tbody></table>";
         echo $op;
     }
+
+    public function generatePaymentQr(Request $request)
+    {
+        return response()->json($request->vid);
+    }
 }

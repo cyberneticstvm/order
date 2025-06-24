@@ -5,7 +5,7 @@
         </div>
         <div class="drawer-body table-responsive">
             <div class="row">
-                <form class="g-3" method="post" action="{{ route('email.docs') }}">
+                <form class="g-3" method="post" action="{{ route('generate.payment.qr') }}">
                     @csrf
                     <input type="hidden" name="vehicle_id" id="vehicle_id" value="" />
                     <div class="col-md-12">
@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-12 text-end mt-3">
                         <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
-                        <button class="btn btn-submit btn-success" type="submit">Generate</button>
+                        <button class="btn btn-generate-qr btn-success">Generate</button>
                     </div>
                 </form>
             </div>
