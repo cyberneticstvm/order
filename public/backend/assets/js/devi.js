@@ -276,9 +276,11 @@ $(function () {
                 console.log(image.src);
                 $('.qrCode').append(image);*/
                 //$(".qrCode").html("<img src='data:image/png;base64, "+res.qrCode+"' />");
-                var pbx = $(".qrCode").append('img');
-                pbx.src = "data:image/png;base64," +res.qrCode;
-                uCanvas.getContext('2d').drawImage(pbx, 0, 0);
+                var canvas = document.getElementById("qrCode");
+                var ctx = canvas.getContext("2d");
+                var image = new Image();
+                ctx.drawImage(image, 0, 0);
+                image.src = "data:image/png;base64," +res.qrCode;
             },
             beforeSend: function(){
                 $(".btn-generate-qr").html("Adding...<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>");
