@@ -271,15 +271,9 @@ $(function () {
             url: '/ajax/payment/qr',
             data: {'mobile': $("#mobile").val(), 'vid': $("#vehicle_id").val()},
             success: function (res) {
-                console.log(res.qrCode);
-                var fRead = new FileReader();
-                fRead.onload = (function(file){ //trigger function on successful read
-                  return function(e) {
-                      var img = $('<img/>').addClass('thumb').attr('src', 'data:image/png;base64, '+res.qrCode+''); //create image element 
-                      $('.qrCode').append(img); //append image to output element
-                  };
-                  })(file);
-                  fRead.readAsDataURL(file); //URL representing the file's data.
+                //console.log(res.qrCode);
+                var img = $('<img/>').addClass('thumb').attr('src', 'data:image/png;base64, '+res.qrCode+''); //create image element 
+                $('.qrCode').append(img);
                 //$(".qrCode").html("<img src='data:image/png;base64, "+res.qrCode+"' />");
             },
             beforeSend: function(){
