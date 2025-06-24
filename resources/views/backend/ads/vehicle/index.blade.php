@@ -60,7 +60,7 @@
                                         <th>Last Payment</th>
                                         <th>V.Status</th>
                                         <th>Card Status</th>
-                                        <th></th>
+                                        <th>QR</th>
                                         <th>Status</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
