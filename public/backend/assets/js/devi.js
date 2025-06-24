@@ -271,12 +271,16 @@ $(function () {
             url: '/ajax/payment/qr',
             data: {'mobile': $("#mobile").val(), 'vid': $("#vehicle_id").val()},
             success: function (res) {
-                //console.log(res.qrCode);
-                var image = new Image();
+                /*var image = new Image();
                 image.src = "data:image/png;base64," +res.qrCode;
                 console.log(image.src);
-                $('.qrCode').append(image);
+                $('.qrCode').append(image);*/
                 //$(".qrCode").html("<img src='data:image/png;base64, "+res.qrCode+"' />");
+                var imageData = "data:image/png;base64," +res.qrCode;
+                const blob = base64ToBlob(imageData, "image/png");
+                const src = URL.createObjectURL(blob);
+                console.log(src);
+                $(".qrCode").html("<img src='"+src+"' />");
             },
             beforeSend: function(){
                 $(".btn-generate-qr").html("Adding...<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>");
@@ -875,4 +879,27 @@ function calculatePurchaseTotal() {
         $(".spriceTot").val(parseFloat(spriceTot).toFixed(2));
         $(".tTot").val(parseFloat(tTot).toFixed(2));
     });
+}
+
+function base64ToBlob(base64, contentType = "",
+    sliceSize = 512) {
+    const byteCharacters = atob(base64.split(",")[1]);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length;
+        offset += sliceSize) {
+        const slice = byteCharacters.slice(
+            offset, offset + sliceSize);
+
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
 }
