@@ -260,7 +260,8 @@ $(function () {
         var drawer = $(this).data('drawer');
         $("#vehicle_id").val($(this).data('vid'));        
         $("#mobile").val($(this).data('mobile'));        
-        $(".vno").html($(this).data('vno'));        
+        $(".vno").html($(this).data('vno'));   
+        document.getElementById('qrCode').innerHTML = "";     
         $("#" + drawer).drawer('toggle');
     });
 
