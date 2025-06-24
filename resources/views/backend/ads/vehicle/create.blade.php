@@ -54,6 +54,13 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
+                                    <label class="form-label">UPI Id</label>
+                                    {{ html()->text($name = 'upi_id', null)->class('form-control')->maxLength(50)->placeholder('UPI Id') }}
+                                    @error('upi_id')
+                                    <small class="text-danger">{{ $errors->first('upi_id') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
                                     <label class="form-label req">Stand / Place</label>
                                     {{ html()->text($name = 'place', $value = old('place'))->class('form-control')->placeholder('Stand / Place') }}
                                     @error('place')
