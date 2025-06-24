@@ -273,8 +273,6 @@ $(function () {
             url: '/ajax/payment/qr',
             data: { formData },
             dataType: 'json',
-            processData: false,
-            contentType: false,
             success: function (res) {
                 console.log(res);
             },
