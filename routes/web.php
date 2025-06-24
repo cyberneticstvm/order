@@ -111,6 +111,7 @@ Route::middleware(['web'])->group(function () {
 
 Route::middleware(['web', 'auth', 'branch', 'location'])->group(function () {
     Route::prefix('/backend')->controller(HelperController::class)->group(function () {
+        Route::get('{qrimg}', '')->name('qr.img');
         Route::get('/google/map', [HelperController::class, 'getUserLocationMap'])->name('user.location.map');
         Route::get('/switch/branch/{branch}', [HelperController::class, 'switchBranch'])->name('switch.branch');
 
