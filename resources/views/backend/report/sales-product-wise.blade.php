@@ -78,7 +78,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php($tot=0)
                                     @forelse($sales as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
@@ -95,15 +94,12 @@
                                         <td class="text-end">{{ number_format($item->invoice_total - ($item->payments->sum('amount') + $item->credit_used), 2) }}</td>
                                         <td class="text-end">{{ number_format($item->invoice_total, 2) }}</td>
                                     </tr>
-                                    @php($tot += $item->details->where('eye', 'frame')->sum('qty'))
                                     @empty
                                     @endforelse
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="7" class="text-end">Total</th>
-                                        <th class="text-center">{{ $tot }}</th>
-                                        <th colspan="4"></th>
+                                        <th colspan="11" class="text-end">Total</th>
                                         <th class="text-end">{{ ($sales) ? number_format($sales->sum('invoice_total'), 2) : '0.00' }}</th>
                                     </tr>
                                 </tfoot>
