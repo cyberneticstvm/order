@@ -86,7 +86,7 @@
                                         <td>{{ $item->branch?->name }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->consultation_id }}</td>
-                                        <td>{{ $item->created_at->format('d/M/Y h:i a') }}</td>
+                                        <td>{{ $item->order_date->format('d/M/Y h:i a') }}</td>
                                         <td>{{ ucfirst($item->order_status) }}</td>
                                         <td class="text-end">{{ number_format($item->order_total, 2) }}</td>
                                         <td class="text-end">{{ number_format($item->discount, 2) }}</td>
