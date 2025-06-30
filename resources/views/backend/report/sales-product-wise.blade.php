@@ -101,9 +101,9 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="3" class="text-end">Total</th>
+                                        <th colspan="7" class="text-end">Total</th>
                                         <th class="text-center">{{ $tot }}</th>
-                                        <th colspan="10"></th>
+                                        <th colspan="4"></th>
                                         <th class="text-end">{{ ($sales) ? number_format($sales->sum('invoice_total'), 2) : '0.00' }}</th>
                                     </tr>
                                 </tfoot>
