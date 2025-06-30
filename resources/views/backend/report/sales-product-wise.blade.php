@@ -101,8 +101,8 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="2" class="text-end">Total</th>
-                                        <th class="text-center"><a href="javascript:void(0)" class="frameCount" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-status="{{ $inputs[2] }}" data-branch="{{ $inputs[3] }}" data-drawer="frameDrawer">{{ $tot }}</a></th>
+                                        <th colspan="3" class="text-end">Total</th>
+                                        <th class="text-center">{{ $tot }}</th>
                                         <th colspan="10"></th>
                                         <th class="text-end">{{ ($sales) ? number_format($sales->sum('invoice_total'), 2) : '0.00' }}</th>
                                     </tr>
