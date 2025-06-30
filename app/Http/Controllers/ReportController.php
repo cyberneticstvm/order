@@ -146,7 +146,7 @@ class ReportController extends Controller
         $inputs = [$request->product, $request->branch];
         $branches = $this->branches;
         $products = Product::pluck('name', 'id');
-        $sales = Order::leftJoin('order_details AS od', 'orders.id', 'od.order_id')->where('od.product_id', $request->product)->where('orders.branch_id', $request->branch)->orderBy('order_date', 'DESC')->get();
+        $sales = Order::leftJoin('order_details AS od', 'orders.id', 'od.order_id')->where('od.product_id', $request->product)->where('orders.branch_id', $request->branch)->groupBy('od.order_id')->orderBy('order_date', 'DESC')->get();
         return view('backend.report.sales-product-wise', compact('sales', 'inputs', 'branches', 'products'));
     }
 
