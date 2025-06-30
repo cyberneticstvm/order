@@ -748,6 +748,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/lab', 'fetchLab')->name('report.lab.fetch');
         Route::get('/sales', 'sales')->name('report.sales');
         Route::post('/sales', 'fetchSales')->name('report.sales.fetch');
+        Route::get('/sales/product/wise', 'salesProductWise')->name('report.sales.product.wise');
+        Route::post('/sales/product/wise', 'fetchSalesProductWise')->name('report.sales.product.wise.fetch');
         Route::get('/stock/status', 'stockStatus')->name('report.stock.status');
         Route::post('/stock/status', 'fetchStockStatus')->name('report.stock.status.fetch');
         Route::get('/login', 'loginLog')->name('report.login.log');

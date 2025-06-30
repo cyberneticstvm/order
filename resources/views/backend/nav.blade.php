@@ -401,6 +401,7 @@
                 ->linkIfCan('report-daybook', route('report.daybook'), 'Daybook')
                 ->linkIfCan('report-payment', route('report.payment'), 'Payments')
                 ->linkIfCan('report-sales', route('report.sales'), 'Sales')
+                ->linkIfCan('report-sales-product-wise', route('report.sales.product.wise'), 'Sales - Product Wise')
                 ->linkIfCan('report-stock-status', route('report.stock.status'), 'Stock Status')
                 ->linkIfCan('report-login-log', route('report.login.log'), 'Login Log')
                 ->linkIfCan('report-income-expense', route('report.income.expense'), 'Income & Expenses')

@@ -38,6 +38,7 @@ class ReportController extends Controller
         $this->middleware('permission:report-daybook', ['only' => ['daybook', 'fetchDayBook']]);
         $this->middleware('permission:report-payment', ['only' => ['payment', 'fetchPayment']]);
         $this->middleware('permission:report-sales', ['only' => ['sales', 'fetchSales']]);
+        $this->middleware('permission:report-sales-product-wise', ['only' => ['salesProductWise', 'fetchSalesProductWise']]);
         $this->middleware('permission:report-stock-status', ['only' => ['stockStatus', 'fetchStockStatus']]);
         $this->middleware('permission:report-login-log', ['only' => ['loginLog', 'fetchLoginLog']]);
         $this->middleware('permission:report-income-expense', ['only' => ['incomeExpense', 'fetchIncomeExpense']]);
@@ -129,6 +130,20 @@ class ReportController extends Controller
             })->orderBy('order_sequence', 'ASC')->get();
         endif;
         return view(($request->redir == 'sales') ? 'backend.report.sales' : 'backend.report.order', compact('sales', 'inputs', 'branches'));
+    }
+
+    public function salesProductWise()
+    {
+        $inputs = [0, branch()->id];
+        $branches = $this->branches;
+        $products = Product::pluck('name', 'id');
+        $sales = [];
+        return view('backend.report.sales-product-wise', compact('sales', 'inputs', 'branches', 'products'));
+    }
+
+    public function fetchSalesProductWise(Request $request)
+    {
+        //
     }
 
     public function stockStatus()
