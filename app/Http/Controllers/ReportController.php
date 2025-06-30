@@ -143,7 +143,11 @@ class ReportController extends Controller
 
     public function fetchSalesProductWise(Request $request)
     {
-        //
+        $inputs = [$request->product, $request->branch];
+        $branches = $this->branches;
+        $products = Product::pluck('name', 'id');
+        $sales = [];
+        return view('backend.report.sales-product-wise', compact('sales', 'inputs', 'branches', 'products'));
     }
 
     public function stockStatus()

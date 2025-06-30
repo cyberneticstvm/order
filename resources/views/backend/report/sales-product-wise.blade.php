@@ -28,7 +28,6 @@
                         <div class="card-wrapper">
                             <form class="row g-3" method="post" action="{{ route('report.sales.product.wise.fetch') }}">
                                 @csrf
-                                <input type="hidden" name="redir" value="sales" />
                                 <div class="col-md-4">
                                     <label class="form-label req">Product</label>
                                     {{ html()->select('product', $products, ($inputs[0]) ?? old('product'))->class('form-control select2')->placeholder('Select')->required() }}
@@ -38,7 +37,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Branch</label>
-                                    {{ html()->select($name = 'branch', $value = $branches, ($inputs[1]) ?? old('branch'))->class('form-control select2')->placeholder('Select') }}
+                                    {{ html()->select($name = 'branch', $value = $branches, ($inputs[1]) ?? old('branch'))->class('form-control select2')->placeholder('Select')->required() }}
                                     @error('branch')
                                     <small class="text-danger">{{ $errors->first('branch') }}</small>
                                     @enderror
