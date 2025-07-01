@@ -25,6 +25,7 @@ use App\Models\TransferDetails;
 use App\Models\Vehicle;
 use App\Models\VehiclePayment;
 use App\Models\Voucher;
+use BaconQrCode\Renderer\Color\Rgb;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -680,8 +681,8 @@ class AjaxController extends Controller
         $upi = ($vehicle->upi_id) ? $vehicle->upi_id : $request->mobile . '@upi';
         $days = $vehicle->daysLeft();
         $am = ($days < 0) ? $vehicle->fee + ($vehicle->fee / 30) * abs($days) : $vehicle->fee - ($vehicle->fee / 30) * abs($days);
-        $color = str_replace(array('rgb(', ')', ' '), '', '0, 128, 0');
-        $qr = base64_encode(QrCode::format('svg')->size(150)->color($color)->errorCorrection('H')->generate('upi://pay?pa=' . $upi . '&pn=' . $pn . '&tn=' . $tn . '&am=' . ceil($am) . '&cu=INR'));
+        $color = ($vehicle->upi_id) ? array(0, 128, 0) : array(0, 128, 0);
+        $qr = base64_encode(QrCode::format('svg')->size(150)->color($color[0], $color[1], $color[2])->errorCorrection('H')->generate('upi://pay?pa=' . $upi . '&pn=' . $pn . '&tn=' . $tn . '&am=' . ceil($am) . '&cu=INR'));
         return response()->json([
             'qrCode' => $qr,
         ]);
