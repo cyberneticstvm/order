@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label">UPI Id</label>
-                                    {{ html()->text($name = 'upi_id', $vehicle->upi_id ?? null)->class('form-control')->maxLength(50)->placeholder('UPI Id')->if($vehicle->upi_id, function($el){
+                                    {{ html()->text($name = 'upi_id', $vehicle->upi_id ?? null)->class('form-control')->maxLength(50)->placeholder('UPI Id')->if($vehicle->upi_id != '', function($el){
                                         return $el->attribute('readonly', true);
                                     }) }}
                                     @error('upi_id')
