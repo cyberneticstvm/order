@@ -680,7 +680,7 @@ class AjaxController extends Controller
         $upi = ($vehicle->upi_id) ? $vehicle->upi_id : $request->mobile . '@upi';
         $days = $vehicle->daysLeft();
         $am = ($days < 0) ? $vehicle->fee + ($vehicle->fee / 30) * abs($days) : $vehicle->fee - ($vehicle->fee / 30) * abs($days);
-        $qr = base64_encode(QrCode::format('svg')->size(150)->backgroundColor('#000000')->errorCorrection('H')->generate('upi://pay?pa=' . $upi . '&pn=' . $pn . '&tn=' . $tn . '&am=' . ceil($am) . '&cu=INR'));
+        $qr = base64_encode(QrCode::format('svg')->size(150)->color(0, 128, 0)->errorCorrection('H')->generate('upi://pay?pa=' . $upi . '&pn=' . $pn . '&tn=' . $tn . '&am=' . ceil($am) . '&cu=INR'));
         return response()->json([
             'qrCode' => $qr,
         ]);
