@@ -129,12 +129,17 @@ class AdvertisementController extends Controller
         if ($payment && $diff < $vehicle->payment_terms && $vehicle->daysLeft() > 0):
             return redirect()->back()->with("error", $vehicle->payment_terms - $diff . " days left to make the next payment");
         endif;*/
-        $input = $request->all();
+        $vehicle = Vehicle::findOrFail($id);
+        $input = $request->except(array('upi_id'));
         $input['vehicle_id'] = $id;
         $input['branch_id'] = Session::get('branch');
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
         VehiclePayment::create($input);
+        if (!$vehicle->upi_id && $request->upi_id)
+            $vehicle->update([
+                'upi_id' => $request->upi_id,
+            ]);
         return redirect()->route('vehicles', 'Active')->with("success", "Payment recorded successfully");
     }
 
