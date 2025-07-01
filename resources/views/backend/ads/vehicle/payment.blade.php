@@ -48,8 +48,8 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label">UPI Id</label>
-                                    {{ html()->text($name = 'upi_id', $vehicle->upi_id ?? null)->class('form-control')->maxLength(50)->placeholder('UPI Id')->if($vehicle->upi_id, function(el){
-                                        return el->attribute('readonly', true);
+                                    {{ html()->text($name = 'upi_id', $vehicle->upi_id ?? null)->class('form-control')->maxLength(50)->placeholder('UPI Id')->if($vehicle->upi_id, function($el){
+                                        return $el->attribute('readonly', true);
                                     }) }}
                                     @error('upi_id')
                                     <small class="text-danger">{{ $errors->first('upi_id') }}</small>
