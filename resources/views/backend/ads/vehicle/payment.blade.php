@@ -46,7 +46,7 @@
                                     <small class="text-danger">{{ $errors->first('payment_mode') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label class="form-label">UPI Id</label>
                                     {{ html()->text($name = 'upi_id', $vehicle->upi_id ?? null)->class('form-control')->maxLength(50)->placeholder('UPI Id')->if($vehicle->upi_id, function($el){
                                         return $el->attribute('readonly', true);
@@ -55,7 +55,7 @@
                                     <small class="text-danger">{{ $errors->first('upi_id') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <label class="form-label">Notes</label>
                                     {{ html()->text($name = 'notes', $value = old('notes'))->class('form-control')->placeholder('Notes') }}
                                 </div>
