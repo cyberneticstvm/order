@@ -677,7 +677,7 @@ class AjaxController extends Controller
     {
         $vehicle = Vehicle::findOrFail($request->vid);
         $pn = $vehicle->owner_name;
-        $tn = $request->mobile . ' - ' . $vehicle->owner_name;
+        $tn = $request->reg_number . ' - ' . $vehicle->owner_name;
         $upi = ($vehicle->upi_id) ? $vehicle->upi_id : $request->mobile . '@upi';
         $days = $vehicle->daysLeft();
         $am = ($days < 0) ? $vehicle->fee + ($vehicle->fee / 30) * abs($days) : $vehicle->fee - ($vehicle->fee / 30) * abs($days);
