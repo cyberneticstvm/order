@@ -81,14 +81,14 @@
                                     <small class="text-danger">{{ $errors->first('contact_number') }}</small>
                                     @enderror
                                 </div>
-                                <!--<div class="col-md-2">
+                                <div class="col-md-2">
                                     <label class="form-label req">Fee</label>
                                     {{ html()->number($name = 'fee', $value = $vehicle->fee, '1', '', '')->class('form-control')->placeholder('0.00') }}
                                     @error('fee')
                                     <small class="text-danger">{{ $errors->first('fee') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-2">
+                                <!--<div class="col-md-2">
                                     <label class="form-label req">Payment Terms (Days)</label>
                                     {{ html()->number($name = 'payment_terms', $value = $vehicle->payment_terms, '1', '', '')->class('form-control')->placeholder('0 days') }}
                                     @error('payment_terms')
