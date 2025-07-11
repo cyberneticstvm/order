@@ -58,6 +58,7 @@
                                         <th>SL No</th>
                                         <th>Return ID</th>
                                         <th>Order Number</th>
+                                        <th>Items</th>
                                         <th>Order Branch</th>
                                         <th>Returned Branch</th>
                                         <th>Customer Name</th>
@@ -72,6 +73,7 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td><a href="{{ route('sales.return.list.detail', encrypt($item->id)) }}">{{ $item->id }}</a></td>
+                                        <td></td>
                                         <td>{{ $item->order->branch->code }}/{{ $item->order->id }}</td>
                                         <td>{{ $item->orderBranch->name }}</td>
                                         <td>{{ $item->returnBranch->name }}</td>
