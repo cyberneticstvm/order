@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class SalesReturn extends Model
 {
@@ -39,6 +40,6 @@ class SalesReturn extends Model
 
     public function products($ids)
     {
-        return Product::whereIn('id', $ids)->pluck('name')->implode(', ');
+        return Product::whereIn('id', $ids)->select(DB::raw("CONCAT(name, '-', code) AS name"))->pluck('name')->implode(', ');
     }
 }
