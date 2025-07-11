@@ -74,7 +74,7 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td><a href="{{ route('sales.return.list.detail', encrypt($item->id)) }}">{{ $item->id }}</a></td>
                                         <td>{{ $item->order->branch->code }}/{{ $item->order->id }}</td>
-                                        <td>{{ $item->details()->product }}</td>
+                                        <td>{{ $item->details->product() }}</td>
                                         <td>{{ $item->orderBranch->name }}</td>
                                         <td>{{ $item->returnBranch->name }}</td>
                                         <td>{{ $item->order->name }}</td>
