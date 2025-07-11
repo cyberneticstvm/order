@@ -36,4 +36,9 @@ class SalesReturn extends Model
     {
         return $this->hasMany(SalesReturnDetail::class, 'return_id', 'id');
     }
+
+    public function products($ids)
+    {
+        return Product::whereIn('id', $ids)->pluck('name')->implode(', ');
+    }
 }
