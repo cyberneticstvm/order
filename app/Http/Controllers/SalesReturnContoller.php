@@ -27,7 +27,7 @@ class SalesReturnContoller extends Controller
     }
     public function index()
     {
-        $data = SalesReturn::whereDate('created_at', Carbon::today())->when(!in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO']), function ($q) {
+        $data = SalesReturn::when(!in_array(Auth::user()->roles->first()->name, ['Administrator', 'CEO']), function ($q) {
             return $q->where('returned_branch', Session::get('branch'));
         })->latest()->get();
         return view('backend.order.return.index', compact('data'));
