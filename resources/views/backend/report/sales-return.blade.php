@@ -69,6 +69,7 @@
                                         <th>SL No</th>
                                         <th>Date</th>
                                         <th>Order ID</th>
+                                        <th>Items</th>
                                         <th>Ordered Branch</th>
                                         <th>Returned Branch</th>
                                         <th>Description</th>
@@ -79,8 +80,9 @@
                                     @forelse($data as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $item->order->ono() }}</td>
                                         <td>{{ $item->created_at->format('d.M.Y') }}</td>
+                                        <td>{{ $item->order->ono() }}</td>
+                                        <td>{{ $item->products($item->details->pluck('product_id')) }} ({{ $item->details->count() }})</td>
                                         <td>{{ $item->orderBranch->name }}</td>
                                         <td>{{ $item->returnBranch->name }}</td>
                                         <td>{{ $item->comment }}</td>
