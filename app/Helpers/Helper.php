@@ -947,6 +947,25 @@ function recordOrderEvent($oid, $action)
     ]);
 }
 
+function generateInvoiceForOrder(string $id)
+{
+    $order = Order::findOrFail(decrypt($id));
+    if (!isFullyPaid($order->id, $status = 'delivered')) :
+        return redirect()->back()->with("error", "Amount due.");
+    else :
+        $order->update([
+            'invoice_number' => invoicenumber(decrypt($id))->ino,
+            'order_sequence' => branchInvoiceNumber(),
+            'invoice_generated_by' => Auth::id(),
+            'invoice_generated_at' => Carbon::now(),
+            'order_status' => 'delivered',
+        ]);
+        updateLabOrderStatus($order->id);
+        recordOrderEvent($order->id, 'Invoice has been generated');
+    endif;
+    return redirect()->back()->with("success", "Invoice generated successfully!");
+}
+
 function getLastId($category)
 {
     return DB::table('products')->selectRaw("IFNULL(MAX(CAST(SUBSTR(code, 2) AS INTEGER)), 1) AS pid")->where('category', $category)->first()->pid;

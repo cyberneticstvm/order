@@ -375,7 +375,11 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="11" class="text-end fw-bold border-0">Balance</td>
+                                                    <td colspan="10" class="fw-bold border-0 form-check_1">
+                                                        <label class="form-check-label">Generate Invoice</label>
+                                                        {{ html()->checkbox('generate_invoice', false, 1)->class('form-check-input')->attribute('id', 'form-check_1') }}
+                                                    </td>
+                                                    <td class="text-end fw-bold border-0">Balance</td>
                                                     <td class="border-0"><input type="text" name="balance" class="text-end border-0 fw-bold w-100 balance readOnly" placeholder="0.00" /></td>
                                                 </tr>
                                             </tfoot>

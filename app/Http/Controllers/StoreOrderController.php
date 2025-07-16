@@ -234,6 +234,9 @@ class StoreOrderController extends Controller
                         'updated_by' => $request->user()->id,
                     ]);
                 endif;
+                if ($request->generate_invoice):
+                    generateInvoiceForOrder(encrypt($order->id));
+                endif;
                 recordOrderEvent($order->id, 'Order has been created');
                 sendWAMessageWithLink($order, 'receipt');
             });
@@ -419,6 +422,9 @@ class StoreOrderController extends Controller
                         'created_by' => $request->user()->id,
                         'updated_by' => $request->user()->id,
                     ]);
+                endif;
+                if ($request->generate_invoice && !$order->invoice_generated_at):
+                    generateInvoiceForOrder(encrypt($order->id));
                 endif;
                 LabOrder::where('order_id', $id)->delete();
                 recordOrderEvent($order->id, $msg);

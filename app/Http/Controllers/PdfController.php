@@ -154,7 +154,8 @@ class PdfController extends Controller
 
     public function generateInvoice(string $id)
     {
-        $order = Order::findOrFail(decrypt($id));
+        generateInvoiceForOrder($id);
+        /*$order = Order::findOrFail(decrypt($id));
         if (!isFullyPaid($order->id, $status = 'delivered')) :
             return redirect()->back()->with("error", "Amount due.");
         else :
@@ -168,7 +169,7 @@ class PdfController extends Controller
             updateLabOrderStatus($order->id);
             recordOrderEvent($order->id, 'Invoice has been generated');
         endif;
-        return redirect()->back()->with("success", "Invoice generated successfully!");
+        return redirect()->back()->with("success", "Invoice generated successfully!");*/
     }
 
     public function exportOrderInvoice($id)
