@@ -376,11 +376,11 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="10" class="fw-bold border-0 form-check_1">
+                                                    <td colspan="5" class="fw-bold border-0 form-check_1">
                                                         <label class="form-check-label">Generate Invoice</label>
                                                         {{ html()->checkbox('generate_invoice',  ($order->invoice_generated_at) ? true : false, 1)->class('form-check-input')->attribute('id', 'form-check_1') }}
                                                     </td>
-                                                    <td class="text-end fw-bold border-0">Balance As On Order Created Date</td>
+                                                    <td colspan="5" class="text-end fw-bold border-0">Balance As On Order Created Date</td>
                                                     <td class="border-0"><input type="text" name="balance" class="text-end border-0 fw-bold w-100 balance readOnly" placeholder="0.00" value="{{ number_format($order->balance + $order->credit_used, 2, '.', '') }}" /></td>
                                                 </tr>
                                                 <tr>
