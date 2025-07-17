@@ -951,7 +951,8 @@ function generateInvoiceForOrder(string $id)
 {
     $order = Order::findOrFail(decrypt($id));
     if (!isFullyPaid($order->id, $status = 'delivered')) :
-        return redirect()->back()->with("error", "Amount due.");
+        //return redirect()->back()->with("error", "Amount due.");
+        return false;
     else :
         $order->update([
             'invoice_number' => invoicenumber(decrypt($id))->ino,
@@ -963,7 +964,8 @@ function generateInvoiceForOrder(string $id)
         updateLabOrderStatus($order->id);
         recordOrderEvent($order->id, 'Invoice has been generated');
     endif;
-    return redirect()->route('invoice.register')->with("success", "Invoice generated successfully!");
+    return true;
+    // return redirect()->route('invoice.register')->with("success", "Invoice generated successfully!");
 }
 
 function getLastId($category)

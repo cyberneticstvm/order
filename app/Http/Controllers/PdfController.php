@@ -154,7 +154,12 @@ class PdfController extends Controller
 
     public function generateInvoice(string $id)
     {
-        generateInvoiceForOrder($id);
+        $res = generateInvoiceForOrder($id);
+        if ($res):
+            return redirect()->route('invoice.register')->with("success", "Invoice generated successfully!");
+        else:
+            return redirect()->back()->with("error", "Invoice amount due");
+        endif;
         /*$order = Order::findOrFail(decrypt($id));
         if (!isFullyPaid($order->id, $status = 'delivered')) :
             return redirect()->back()->with("error", "Amount due.");

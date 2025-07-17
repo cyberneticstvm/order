@@ -237,7 +237,12 @@ class StoreOrderController extends Controller
                 recordOrderEvent($order->id, 'Order has been created');
                 sendWAMessageWithLink($order, 'receipt');
                 if ($request->generate_invoice):
-                    generateInvoiceForOrder(encrypt($order->id));
+                    $res = generateInvoiceForOrder(encrypt($order->id));
+                    if ($res):
+                        return redirect()->route('invoice.register')->with("success", "Invoice generated successfully!");
+                    else:
+                        return redirect()->back()->with("error", "Invoice amount due");
+                    endif;
                 endif;
             });
         } catch (Exception $e) {
@@ -426,7 +431,12 @@ class StoreOrderController extends Controller
                 LabOrder::where('order_id', $id)->delete();
                 recordOrderEvent($order->id, $msg);
                 if ($request->generate_invoice && !$order->invoice_generated_at):
-                    generateInvoiceForOrder(encrypt($order->id));
+                    $res = generateInvoiceForOrder(encrypt($order->id));
+                    if ($res):
+                        return redirect()->route('invoice.register')->with("success", "Invoice generated successfully!");
+                    else:
+                        return redirect()->back()->with("error", "Invoice amount due");
+                    endif;
                 endif;
             });
         } catch (Exception $e) {
