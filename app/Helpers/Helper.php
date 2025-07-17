@@ -963,7 +963,7 @@ function generateInvoiceForOrder(string $id)
         updateLabOrderStatus($order->id);
         recordOrderEvent($order->id, 'Invoice has been generated');
     endif;
-    return redirect()->back()->with("success", "Invoice generated successfully!");
+    return redirect()->route('invoice.register')->with("success", "Invoice generated successfully!");
 }
 
 function getLastId($category)

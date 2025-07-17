@@ -234,11 +234,11 @@ class StoreOrderController extends Controller
                         'updated_by' => $request->user()->id,
                     ]);
                 endif;
+                recordOrderEvent($order->id, 'Order has been created');
+                sendWAMessageWithLink($order, 'receipt');
                 if ($request->generate_invoice):
                     generateInvoiceForOrder(encrypt($order->id));
                 endif;
-                recordOrderEvent($order->id, 'Order has been created');
-                sendWAMessageWithLink($order, 'receipt');
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
@@ -423,11 +423,11 @@ class StoreOrderController extends Controller
                         'updated_by' => $request->user()->id,
                     ]);
                 endif;
+                LabOrder::where('order_id', $id)->delete();
+                recordOrderEvent($order->id, $msg);
                 if ($request->generate_invoice && !$order->invoice_generated_at):
                     generateInvoiceForOrder(encrypt($order->id));
                 endif;
-                LabOrder::where('order_id', $id)->delete();
-                recordOrderEvent($order->id, $msg);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
