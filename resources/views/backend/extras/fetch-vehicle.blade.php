@@ -20,7 +20,7 @@
                 <form method="post" action="{{ route('vehicle.fetch.details') }}">
                     @csrf
                     <div class="input-group mb-3">
-                        {{ html()->text($name = 'mobile', old('mobile'))->class('form-control')->placeholder('Mobile Number') }}
+                        {{ html()->text($name = 'mobile', old('mobile'))->class('form-control')->placeholder('Mobile Number / Vehicle Reg. Number') }}
 
                         <button class="btn btn-info" type="submit">Fetch</button>
                     </div>
