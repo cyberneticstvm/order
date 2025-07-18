@@ -465,9 +465,9 @@ class HelperController extends Controller
     function fetchVehicleDetails(Request $request)
     {
         $this->validate($request, [
-            'mobile' => 'required|numeric|digits:10',
+            'mobile' => 'required',
         ]);
-        $vehicles = Vehicle::where('contact_number', $request->mobile)->latest()->get();
+        $vehicles = Vehicle::where('contact_number', $request->mobile)->orWhere('reg_number', $request->mobile)->latest()->get();
         return view("backend.extras.fetch-vehicle", compact('vehicles'));
     }
 
