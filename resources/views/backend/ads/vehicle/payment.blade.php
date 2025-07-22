@@ -71,6 +71,13 @@
                                     <small class="text-danger">{{ $errors->first('contact_number') }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-md-2">
+                                    <label class="form-label req">Reg. Number</label>
+                                    {{ html()->text($name = 'reg_number', $value = $vehicle->reg_number)->class('form-control')->maxLength(10)->placeholder('Reg. Number') }}
+                                    @error('reg_number')
+                                    <small class="text-danger">{{ $errors->first('reg_number') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                                     <button class="btn btn-submit btn-success" type="submit">Save</button>
