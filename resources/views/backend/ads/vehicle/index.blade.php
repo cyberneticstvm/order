@@ -52,6 +52,7 @@
                                         <th>Owner Name</th>
                                         <th>Contact Number</th>
                                         <th>Reg. number</th>
+                                        <th>Stand</th>
                                         <th>VCode</th>
                                         <th>Reg. Date</th>
                                         <th>Reg. Branch</th>
@@ -77,6 +78,7 @@
                                         <td>{{ $vehicle->vcode }}</td>
                                         <td>{{ $vehicle->created_at->format('d.M.Y') }}</td>
                                         <td>{{ $vehicle->branch?->name }}</td>
+                                        <td>{{ $vehicle->place }}</td>
                                         <td>{{ number_format($vehicle->totalCredit(), 2) }}</td>
                                         <td class="text-success">{{ $vehicle->daysLeft() }} Days</td>
                                         <td>{{ $vehicle->payment?->first()?->created_at?->format('d.M.Y') }}</td>

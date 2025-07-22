@@ -130,7 +130,7 @@ class AdvertisementController extends Controller
             return redirect()->back()->with("error", $vehicle->payment_terms - $diff . " days left to make the next payment");
         endif;*/
         $vehicle = Vehicle::findOrFail($id);
-        $input = $request->except(array('upi_id'));
+        $input = $request->except(array('upi_id', 'owner_name', 'contact_number'));
         $input['vehicle_id'] = $id;
         $input['branch_id'] = Session::get('branch');
         $input['created_by'] = $request->user()->id;
@@ -140,6 +140,15 @@ class AdvertisementController extends Controller
             $vehicle->update([
                 'upi_id' => $request->upi_id,
             ]);
+        if ($vehicle->owner_name != $request->owner_name)
+            $vehicle->update([
+                'owner_name' => $request->owner_name,
+            ]);
+        if ($vehicle->contact_number != $request->contact_number)
+            $vehicle->update([
+                'contact_number' => $request->contact_number,
+            ]);
+
         return redirect()->route('vehicles', 'Active')->with("success", "Payment recorded successfully");
     }
 

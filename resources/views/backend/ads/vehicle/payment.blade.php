@@ -59,6 +59,20 @@
                                     <label class="form-label">Notes</label>
                                     {{ html()->text($name = 'notes', $value = old('notes'))->class('form-control')->placeholder('Notes') }}
                                 </div>
+                                <div class="col-md-4">
+                                    <label class="form-label req">Owner Name</label>
+                                    {{ html()->text($name = 'owner_name', $value = $vehicle->owner_name)->class('form-control')->placeholder('Owner Name') }}
+                                    @error('owner_name')
+                                    <small class="text-danger">{{ $errors->first('owner_name') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label req">Contact Number</label>
+                                    {{ html()->text($name = 'contact_number', $value = $vehicle->contact_number)->class('form-control')->maxLength(10)->placeholder('Contact Number') }}
+                                    @error('contact_number')
+                                    <small class="text-danger">{{ $errors->first('contact_number') }}</small>
+                                    @enderror
+                                </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                                     <button class="btn btn-submit btn-success" type="submit">Save</button>
