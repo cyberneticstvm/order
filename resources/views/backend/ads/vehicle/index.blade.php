@@ -75,10 +75,10 @@
                                         <td>{{ $vehicle->owner_name }}</td>
                                         <td>{{ $vehicle->contact_number }}</td>
                                         <td><a href="{{ route('vehicle.payment', encrypt($vehicle->id)) }}">{{ $vehicle->reg_number }}</a></td>
+                                        <td>{{ $vehicle->place }}</td>
                                         <td>{{ $vehicle->vcode }}</td>
                                         <td>{{ $vehicle->created_at->format('d.M.Y') }}</td>
                                         <td>{{ $vehicle->branch?->name }}</td>
-                                        <td>{{ $vehicle->place }}</td>
                                         <td>{{ number_format($vehicle->totalCredit(), 2) }}</td>
                                         <td class="text-success">{{ $vehicle->daysLeft() }} Days</td>
                                         <td>{{ $vehicle->payment?->first()?->created_at?->format('d.M.Y') }}</td>
