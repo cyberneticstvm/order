@@ -97,7 +97,7 @@
                                 </div>-->
                                 <div class="col-md-2">
                                     <label class="form-label">Royalty Card</label>
-                                    {{ html()->select($name = 'royalty_card_id', $cards, $vehicle->royalty_card_id)->class('form-control') }}
+                                    {{ html()->select($name = 'royalty_card_id', $cards, $vehicle->royalty_card_id)->class('form-control')->placeholder('Select') }}
                                     @error('royalty_card_id')
                                     <small class="text-danger">{{ $errors->first('royalty_card_id') }}</small>
                                     @enderror
