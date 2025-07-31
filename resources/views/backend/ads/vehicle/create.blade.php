@@ -89,6 +89,13 @@
                                     @enderror
                                 </div>-->
                                 <div class="col-md-2">
+                                    <label class="form-label">Royalty Card</label>
+                                    {{ html()->select($name = 'royalty_card_id', $cards, NULL)->class('form-control') }}
+                                    @error('royalty_card_id')
+                                    <small class="text-danger">{{ $errors->first('royalty_card_id') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2">
                                     <label class="form-label req">Card Issued</label>
                                     {{ html()->select($name = 'card_issued', array('' => 'select', '1' => 'Yes', '0' => 'No'), '')->class('form-control') }}
                                     @error('card_issued')

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaymentMode;
+use App\Models\RoyaltyCard;
 use App\Models\Vehicle;
 use App\Models\VehiclePayment;
 use Carbon\Carbon;
@@ -32,7 +33,8 @@ class AdvertisementController extends Controller
 
     function create()
     {
-        return view('backend.ads.vehicle.create');
+        $cards = RoyaltyCard::where('status', 'Active')->pluck('name', 'id');
+        return view('backend.ads.vehicle.create', compact('cards'));
     }
 
     function store(Request $request)
@@ -63,7 +65,8 @@ class AdvertisementController extends Controller
     public function edit(string $id)
     {
         $vehicle = Vehicle::findOrFail(decrypt($id));
-        return view('backend.ads.vehicle.edit', compact('vehicle'));
+        $cards = RoyaltyCard::where('status', 'Active')->pluck('name', 'id');
+        return view('backend.ads.vehicle.edit', compact('vehicle', 'cards'));
     }
 
     function update(Request $request, string $id)

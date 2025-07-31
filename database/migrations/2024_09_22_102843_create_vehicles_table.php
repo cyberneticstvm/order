@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('fee', 5, 2)->default(0);
             $table->integer('payment_terms')->comment('in days')->default(0);
             $table->string('upi_id', 50)->nullable();
+            $table->unsignedBigInteger('royalty_card_id')->nullable();
             $table->boolean('card_issued')->default(0);
             $table->date('card_issued_date')->nullable();
             $table->unsignedBigInteger('branch_id');
