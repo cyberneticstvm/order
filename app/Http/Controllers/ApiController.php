@@ -37,7 +37,7 @@ class ApiController extends Controller
             ], 500);
         endif;
     }
-    function getVehicle($vcode, $secret)
+    function getVehicle($vcode, $rc_type, $secret)
     {
         if ($secret == apiSecret()) :
             $vehicle = Vehicle::where('vcode', $vcode)->first();

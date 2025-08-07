@@ -24,7 +24,7 @@ Route::prefix('/order')->controller(ApiController::class)->group(function () {
     Route::get('/{id}/{secret}', 'getOrder')->name('get.order');
 });
 Route::prefix('/vehicle')->controller(ApiController::class)->group(function () {
-    Route::get('/{vcode}/{secret}', 'getVehicle')->name('get.vehicle');
+    Route::get('/{vcode}/{rc_type}/{secret}', 'getVehicle')->name('get.vehicle');
 });
 Route::prefix('/orders')->controller(ApiController::class)->group(function () {
     Route::get('/{secret}', 'getOrders')->name('get.orders');
