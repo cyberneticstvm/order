@@ -40,7 +40,7 @@ class ApiController extends Controller
     function getVehicle($vcode, $rc_type, $secret)
     {
         if ($secret == apiSecret()) :
-            $vehicle = Vehicle::where('vcode', $vcode)->first();
+            $vehicle = Vehicle::where('royalty_card_id', $rc_type)->where('vcode', $vcode)->first();
             if ($vehicle && Carbon::parse($vehicle->payment->first()?->created_at)->addHour(settings()->royalty_card_cooling_period) <= Carbon::now()) :
                 return response()->json([
                     'status' => true,
