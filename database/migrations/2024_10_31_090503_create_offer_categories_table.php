@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('offer_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->unsignedBigInteger('collection_id')->nullable();
             $table->decimal('discount_percentage')->nullable()->default(0);
             $table->smallInteger('buy_number')->nullable()->default(0);
             $table->smallInteger('get_number')->nullable()->default(0);

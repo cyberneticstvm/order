@@ -6,6 +6,7 @@ use App\Models\Branch;
 use App\Models\OfferCategory;
 use App\Models\OfferProduct;
 use App\Models\Product;
+use App\Models\ProductSubcategory;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -35,7 +36,8 @@ class OfferController extends Controller
     function create()
     {
         $branches = $this->branches;
-        return view('backend.offer.category.create', compact('branches'));
+        $collection = ProductSubcategory::where('attribute', 'collection')->pluck('name', 'id');
+        return view('backend.offer.category.create', compact('branches', 'collection'));
     }
 
     function store(Request $request)
@@ -65,7 +67,8 @@ class OfferController extends Controller
     {
         $branches = $this->branches;
         $category = OfferCategory::findOrFail(decrypt($id));
-        return view('backend.offer.category.edit', compact('category', 'branches'));
+        $collection = ProductSubcategory::where('attribute', 'collection')->pluck('name', 'id');
+        return view('backend.offer.category.edit', compact('category', 'branches', 'collection'));
     }
 
     function update(Request $request, string $id)

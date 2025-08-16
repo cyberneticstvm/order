@@ -82,6 +82,10 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-5">
+                                    <label class="form-label">Collection</label>
+                                    {{ html()->select($name = 'collection_id', $collection, old('collection_id'))->class('form-control select2')->placeholder('Select') }}
+                                </div>
+                                <div class="col-md-6">
                                     <label class="form-label">Description</label>
                                     {{ html()->text($name = 'description', $value = old('description'))->class('form-control')->placeholder('Description') }}
                                 </div>
