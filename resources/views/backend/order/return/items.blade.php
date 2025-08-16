@@ -33,6 +33,7 @@
                                     <thead>
                                         <tr>
                                             <th>SL No</th>
+                                            <th>Type</th>
                                             <th>Product Name</th>
                                             <th>Qty</th>
                                             <th>Unit Price</th>
@@ -46,6 +47,7 @@
                                         @forelse($data as $key => $item)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
+                                            <td>{{ $item->product->type->category }}</td>
                                             <td>{{ $item->product->name }}</td>
                                             <td class="text-center qty">{{ $item->qty }}</td>
                                             <td class="text-end price">{{ $item->unit_price }}</td>
