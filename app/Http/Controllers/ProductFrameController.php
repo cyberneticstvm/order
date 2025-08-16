@@ -107,7 +107,7 @@ class ProductFrameController extends Controller
             'selling_price' => 'required',
             'collection_id' => 'required',
         ]);
-        $input = $request->all();
+        $input = $request->except(array('collection_id'));
         $input['updated_by'] = $request->user()->id;
         $product = Product::findOrFail($id);
         $product->update($input);
