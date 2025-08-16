@@ -90,27 +90,34 @@
                                     <label class="form-label">Reorder Level</label>
                                     {{ html()->number($name = 'reorder_level', $value = old('reorder_level'), $min="1", $max="", $step="any")->class('form-control')->placeholder('0') }}
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label class="form-label">Eye Size</label>
                                     {{ html()->text($name = 'eye_size', old('eye_size'))->class('form-control')->placeholder('Eye Size') }}
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label class="form-label">Bridge Size</label>
                                     {{ html()->text($name = 'bridge_size', old('bridge_size'))->class('form-control')->placeholder('Bridge Size') }}
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label class="form-label">Temple Size</label>
                                     {{ html()->text($name = 'temple_size', old('temple_size'))->class('form-control')->placeholder('Temple Size') }}
                                 </div>
-                                <div class="col-md-4">
+                                <!--<div class="col-md-4">
                                     <label class="form-label">Collection</label>
                                     {{ html()->select($name = 'collection_id', $collection->where('category', 'frame')->where('attribute', 'collection')->pluck('name', 'id'), old('collection_id'))->class('form-control select2')->placeholder('Select') }}
-                                </div>
-                                <div class="col-md-2">
+                                </div>-->
+                                <div class="col-md-3">
                                     <label class="form-label">Color</label>
                                     {{ html()->select($name = 'color', $collection->where('category', 'frame')->where('attribute', 'colour')->pluck('name', 'id'), old('color'))->class('form-control select2')->placeholder('Select') }}
                                     @error('color')
                                     <small class="text-danger">{{ $errors->first('color') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label req">Collection <small>(Multiple selection enabled)</small></label>
+                                    {{ html()->select($name = 'collection_id[]', $collection->where('category', 'frame')->where('attribute', 'collection')->pluck('name', 'id'), NULL)->class('form-control select2')->multiple() }}
+                                    @error('collection_id')
+                                    <small class="text-danger">{{ $errors->first('collection_id') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-4">

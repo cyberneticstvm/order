@@ -47,4 +47,9 @@ class Product extends Model
         //return $total - ($total - (($total * $this->tax_percentage) / 100));
         return ($this->tax_percentage) ? ($total / (100 + $this->tax_percentage)) * $this->tax_percentage : 0;
     }
+
+    public function collection()
+    {
+        return $this->hasMany(ProductCollection::class, 'product_id', 'id');
+    }
 }

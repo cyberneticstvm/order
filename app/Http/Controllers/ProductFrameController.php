@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Manufaturer;
 use App\Models\Product;
+use App\Models\ProductCollection;
 use App\Models\ProductSubcategory;
 use Illuminate\Http\Request;
 
@@ -55,12 +56,21 @@ class ProductFrameController extends Controller
             'shape_id' => 'required',
             'manufacturer_id' => 'required',
             'selling_price' => 'required',
+            'collection_id' => 'required',
         ]);
-        $input = $request->all();
+        $input = $request->except(array('collection_id'));
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
         $input['category'] = 'frame';
-        Product::create($input);
+        $product = Product::create($input);
+        $data = [];
+        foreach ($request->collection_id as $key => $collection) :
+            $data[] = [
+                'product_id' => $product->id,
+                'collection_id' => $collection,
+            ];
+        endforeach;
+        ProductCollection::insert($data);
         return redirect()->route('product.frame')->with("success", "Product created successfully!");
     }
 
@@ -95,10 +105,20 @@ class ProductFrameController extends Controller
             'shape_id' => 'required',
             'manufacturer_id' => 'required',
             'selling_price' => 'required',
+            'collection_id' => 'required',
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
-        Product::findOrFail($id)->update($input);
+        $product = Product::findOrFail($id);
+        $product->update($input);
+        foreach ($request->collection_id as $key => $collection) :
+            $data[] = [
+                'product_id' => $product->id,
+                'collection_id' => $collection,
+            ];
+        endforeach;
+        ProductCollection::where('product_id', $product->id)->delete();
+        ProductCollection::insert($data);
         return redirect()->route('product.frame')->with("success", "Product updated successfully!");
     }
 
