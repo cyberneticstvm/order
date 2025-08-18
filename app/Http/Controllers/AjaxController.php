@@ -167,9 +167,9 @@ class AjaxController extends Controller
         $item = Product::find($pid);
         $productCollection = ProductCollection::where('product_id', $item->id)->first();
         if ($item):
-            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->when(1 == 2, function ($q) use ($productCollection) {
+            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->when($productCollection, function ($q) use ($productCollection) {
                 return $q->where('collection_id', $productCollection?->collection_id);
-            })->when(1, function ($q) {
+            })->when(!$productCollection, function ($q) {
                 return $q->where('collection_id', 88);
             })->where('buy_number', '>', 0)->where('get_number', '>', 0)->first();
             if ($offer):
@@ -195,11 +195,11 @@ class AjaxController extends Controller
         $productCollection = ProductCollection::where('product_id', $item->id)->first();
         if ($item):
             $product = Product::find($pid);
-            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->when(1 == 2, function ($q) use ($productCollection) {
+            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->when($productCollection, function ($q) use ($productCollection) {
                 return $q->where('collection_id', $productCollection?->collection_id);
-            })->when(1, function ($q) {
+            })->when(!$productCollection, function ($q) {
                 return $q->where('collection_id', 88);
-            })->where('buy_number', '>', 0)->where('get_number', '>', 0)->first();
+            })->first();
             if ($offer && $offer->discount_percentage > 0 && $product->selling_price > 0):
                 $discount = ($product->selling_price * $offer->discount_percentage) / 100;
             endif;
