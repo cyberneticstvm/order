@@ -185,7 +185,8 @@ class AjaxController extends Controller
         $products = $this->getOfferedProducts($pid)['products'] ?? NULL;
         $discount = 0;
         $get_number = $this->getOfferedProducts($pid)['getnumber'];
-        $item = OfferProduct::where('product_id', $pid)->where('branch_id', Session::get('branch'))->first();
+        //$item = OfferProduct::where('product_id', $pid)->where('branch_id', Session::get('branch'))->first();
+        $item = Product::find($pid);
         if ($item):
             $product = Product::find($pid);
             $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->where('id', $item->offer_category_id)->where('discount_percentage', '>', 0)->first();
