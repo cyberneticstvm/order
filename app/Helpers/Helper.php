@@ -181,6 +181,13 @@ function sendRequestedDocviaWa($mobile, $name, $oid, $doc_type)
 function sendWaPromotion($schedule, $name, $mobile)
 {
     $token = Config::get('myconfig.whatsapp.token');
+    $img = "https://store.devihospitals.in/public/backend/assets/images/logo/devi-hospital-logo.png";
+    if ($schedule->entity == 'store'):
+        $img = "https://store.devihospitals.in/public/backend/assets/images/logo/devi-hospital-logo.png";
+    endif;
+    if ($schedule->template_id == 'onam_25'):
+        $img = "https://store.devihospitals.in/public/backend/assets/images/promotion/onam-2025.jpeg";
+    endif;
     $config = [
         "messaging_product" => "whatsapp",
         "to" => "+91" . $mobile,
@@ -196,7 +203,7 @@ function sendWaPromotion($schedule, $name, $mobile)
                             "type" => "image",
                             "image" =>
                             [
-                                "link" => ($schedule->entity == 'store') ? "https://store.devihospitals.in/public/backend/assets/images/logo/devi-hospital-logo.png" : "https://store.devihospitals.in/public/backend/assets/images/logo/devi-hospital-logo.png",
+                                "link" => $img,
                             ],
                         ],
                     ]
