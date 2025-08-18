@@ -195,9 +195,9 @@ class AjaxController extends Controller
         $productCollection = ProductCollection::where('product_id', $item->id)->first();
         if ($item):
             $product = Product::find($pid);
-            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->when($productCollection?->collection_id > 0, function ($q) use ($productCollection) {
+            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->when($productCollection->isNotEmpty(), function ($q) use ($productCollection) {
                 return $q->where('collection_id', $productCollection?->collection_id);
-            })->when($productCollection == null, function ($q) {
+            })->when($productCollection->isEmpty(), function ($q) {
                 return $q->where('collection_id', 88);
             })->where('buy_number', '>', 0)->where('get_number', '>', 0)->first();
             if ($offer && $offer->discount_percentage > 0 && $product->selling_price > 0):
