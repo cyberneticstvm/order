@@ -165,8 +165,13 @@ class AjaxController extends Controller
         $products = NULL;
         //$item = OfferProduct::where('product_id', $pid)->where('branch_id', Session::get('branch'))->first();
         $item = Product::find($pid);
+        $productCollection = ProductCollection::where('product_id', $item->id)->first();
         if ($item):
-            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->where('collection_id', 88)->where('buy_number', '>', 0)->where('get_number', '>', 0)->first();
+            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->when($productCollection?->collection_id > 0, function ($q) use ($productCollection) {
+                return $q->where('collection_id', $productCollection?->collection_id);
+            })->when($productCollection == null, function ($q) {
+                return $q->where('collection_id', 88);
+            })->where('buy_number', '>', 0)->where('get_number', '>', 0)->first();
             if ($offer):
                 //$pdcts = OfferProduct::where('offer_category_id', $offer->id)->pluck('product_id');
 
@@ -187,9 +192,14 @@ class AjaxController extends Controller
         $get_number = $this->getOfferedProducts($pid)['getnumber'];
         //$item = OfferProduct::where('product_id', $pid)->where('branch_id', Session::get('branch'))->first();
         $item = Product::find($pid);
+        $productCollection = ProductCollection::where('product_id', $item->id)->first();
         if ($item):
             $product = Product::find($pid);
-            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->where('collection_id', 88)->where('discount_percentage', '>', 0)->first();
+            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->when($productCollection?->collection_id > 0, function ($q) use ($productCollection) {
+                return $q->where('collection_id', $productCollection?->collection_id);
+            })->when($productCollection == null, function ($q) {
+                return $q->where('collection_id', 88);
+            })->where('buy_number', '>', 0)->where('get_number', '>', 0)->first();
             if ($offer && $offer->discount_percentage > 0 && $product->selling_price > 0):
                 $discount = ($product->selling_price * $offer->discount_percentage) / 100;
             endif;
