@@ -163,23 +163,17 @@ class AjaxController extends Controller
     public function getOfferedProducts($pid)
     {
         $products = NULL;
-        //$item = OfferProduct::where('product_id', $pid)->where('branch_id', Session::get('branch'))->first();
-        $item = Product::find($pid);
-        $productCollection = ProductCollection::where('product_id', $item->id)->first();
+        $item = OfferProduct::where('product_id', $pid)->where('branch_id', Session::get('branch'))->first();
+        //$item = Product::find($pid);
+        //$productCollection = ProductCollection::where('product_id', $item->id)->first();
         if ($item):
-            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->when($productCollection, function ($q) use ($productCollection) {
-                return $q->where('collection_id', $productCollection?->collection_id);
-            })->when(!$productCollection, function ($q) {
-                return $q->where('collection_id', 88);
-            })->where('buy_number', '>', 0)->where('get_number', '>', 0)->first();
+            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->where('id', $item->offer_category_id)->where('buy_number', '>', 0)->where('get_number', '>', 0)->first();
             if ($offer):
-                //$pdcts = OfferProduct::where('offer_category_id', $offer->id)->pluck('product_id');
+                $pdcts = OfferProduct::where('offer_category_id', $offer->id)->pluck('product_id');
 
-                $pdcts = ProductCollection::where('collection_id', $offer->collection_id)->pluck('product_id');
+                //$pdcts = ProductCollection::where('collection_id', $offer->collection_id)->pluck('product_id');
 
-                $products = Product::whereIn('category', ['frame'])->when($offer->collection_id != 88, function ($q) use ($pdcts) {
-                    return $q->whereIn('id', $pdcts);
-                })->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
+                $products = Product::whereIn('category', ['frame'])->whereIn('id', $pdcts)->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
             endif;
         endif;
         return array('products' => $products, 'getnumber' => $offer?->get_number ?? 0);
@@ -190,16 +184,12 @@ class AjaxController extends Controller
         $products = $this->getOfferedProducts($pid)['products'] ?? NULL;
         $discount = 0;
         $get_number = $this->getOfferedProducts($pid)['getnumber'];
-        //$item = OfferProduct::where('product_id', $pid)->where('branch_id', Session::get('branch'))->first();
-        $item = Product::find($pid);
-        $productCollection = ProductCollection::where('product_id', $item->id)->first();
+        $item = OfferProduct::where('product_id', $pid)->where('branch_id', Session::get('branch'))->first();
+        //$item = Product::find($pid);
+        //$productCollection = ProductCollection::where('product_id', $item->id)->first();
         if ($item):
             $product = Product::find($pid);
-            $offer = OfferCategory::where('branch_id', Session::get('branch'))->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->when($productCollection, function ($q) use ($productCollection) {
-                return $q->where('collection_id', $productCollection?->collection_id);
-            })->when(!$productCollection, function ($q) {
-                return $q->where('collection_id', 88);
-            })->first();
+            $offer = OfferCategory::where('branch_id', Session::get('branch'))->where('id', $item->offer_category_id)->whereDate('valid_from', '<=', Carbon::today())->whereDate('valid_to', '>=', Carbon::today())->first();
             if ($offer && $offer->discount_percentage > 0 && $product->selling_price > 0):
                 $discount = ($product->selling_price * $offer->discount_percentage) / 100;
             endif;
