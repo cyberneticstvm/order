@@ -78,8 +78,8 @@ class Order extends Model
     public function frameType($oid)
     {
         $frame = OrderDetail::where('order_id', $oid)->where('eye', 'frame')->first();
-        $product = Product::find($frame->product_id);
-        $type = ProductSubcategory::where('id', $product->type_id)->first();
-        return $type->name ?? null;
+        //$product = Product::find($frame->product_id);
+        //$type = ProductSubcategory::where('id', $product->type_id)->first();
+        return $frame;
     }
 }
