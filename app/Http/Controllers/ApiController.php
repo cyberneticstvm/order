@@ -18,10 +18,12 @@ class ApiController extends Controller
             if ($order) :
                 $odetail = OrderDetail::leftJoin('products AS p', 'p.id', 'order_details.product_id')->leftJoin('product_subcategories AS ps', 'ps.id', 'p.type_id')->select('order_details.id', 'p.id AS pid', 'p.name', 'order_details.qty', 'order_details.sph', 'order_details.cyl', 'order_details.axis', 'order_details.add', 'order_details.eye', 'ps.name AS ptype')->where('order_details.order_id', $order->id)->get();
                 $branch = Branch::where('id', $order->branch_id)->first();
+                $ftype = $order->frameType($order->id);
                 return response()->json([
                     'status' => true,
                     'data' => $order,
                     'odetail' => $odetail,
+                    'ftype' => $ftype,
                     'branch' => $branch,
                 ], 200);
             else :
