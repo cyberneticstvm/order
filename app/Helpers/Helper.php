@@ -41,7 +41,22 @@ use Illuminate\Support\Facades\Storage;
 
 function api_url()
 {
-    return "https://emr.devihospitals.in";
+    $branch = Branch::where('id', Session::get('branch'))->first();
+    if ($branch->code == 'SAS1'):
+        return "https://emrsas.devihospitals.in";
+    else:
+        return "https://emr.devihospitals.in";
+    endif;
+}
+
+function domain_url()
+{
+    $branch = Branch::where('id', Session::get('branch'))->first();
+    if ($branch->code == 'SAS1'):
+        return "https://storesas.devihospitals.in";
+    else:
+        return "https://store.devihospitals.in";
+    endif;
 }
 
 function sendRequestedDocviaWa($mobile, $name, $oid, $doc_type)

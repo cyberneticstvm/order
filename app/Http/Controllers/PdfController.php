@@ -182,7 +182,7 @@ class PdfController extends Controller
         $order = Order::findOrFail(decrypt($id));
         if ($order->invoice_number) :
             $oid = $order->id * 100;
-            $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://store.devihospitals.in/bill/details/' . $oid));
+            $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate(domain_url() . '/bill/details/' . $oid));
             $nums = $this->NumberintoWords($order->invoice_total);
             $pdf = PDF::loadView('/backend/pdf/store-order-invoice', compact('order', 'qrcode', 'nums'));
             return $pdf->stream($order->invoice_number . '.pdf');
@@ -214,7 +214,7 @@ class PdfController extends Controller
         $order = Order::findOrFail(decrypt($id));
         if ($order->invoice_number) :
             $oid = $order->id * 100;
-            $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://store.devihospitals.in/bill/details/' . $oid));
+            $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate(domain_url() . '/bill/details/' . $oid));
             $nums = $this->NumberintoWords($order->invoice_total);
             $pdf = PDF::loadView('/backend/pdf/store-order-invoice', compact('order', 'qrcode', 'nums'));
             return $pdf->stream($order->invoice_number . '.pdf');
