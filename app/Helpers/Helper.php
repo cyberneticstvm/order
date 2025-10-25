@@ -43,7 +43,8 @@ function api_url()
 {
     $branch = Branch::where('id', Session::get('branch'))->first();
     if ($branch->code == 'SAS1'):
-        return "https://emrsas.devihospitals.in";
+        //return "https://emrsas.devihospitals.in";
+        return "https://emr.devihospitals.in";
     else:
         return "https://emr.devihospitals.in";
     endif;
@@ -53,7 +54,8 @@ function domain_url()
 {
     $branch = Branch::where('id', Session::get('branch'))->first();
     if ($branch->code == 'SAS1'):
-        return "https://storesas.devihospitals.in";
+        //return "https://storesas.devihospitals.in";
+        return "https://store.devihospitals.in";
     else:
         return "https://store.devihospitals.in";
     endif;
