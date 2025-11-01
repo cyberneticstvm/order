@@ -118,7 +118,7 @@
                                                 <tr>
                                                     <td colspan="6" class="text-end fw-bold border-0">Other Charges</td>
                                                     <td>
-                                                        <input type="text" class="text-end border-0 fw-bold w-100 otherCharges" value="{{ $purchase->other_charges }}" placeholder="0.00" />
+                                                        <input type="text" name="other_charges" class="text-end border-0 fw-bold w-100 otherCharges" value="" placeholder="0.00" />
                                                     </td>
                                                 </tr>
                                                 <tr>
