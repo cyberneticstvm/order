@@ -83,11 +83,12 @@
                                             <thead class="text-center">
                                                 <tr>
                                                     <th>Remove</th>
-                                                    <th width="50%">Product</th>
+                                                    <th width="40%">Product</th>
                                                     <th width="5%">Qty</th>
-                                                    <th width="10%">MRP</th>
                                                     <th width="10%">Purchase Price</th>
                                                     <th width="10%">Selling Price</th>
+                                                    <th width="10%">MRP</th>
+                                                    <th width="10%">Discount</th>
                                                     <th width="10%">Total</th>
                                                 </tr>
                                             </thead>
@@ -101,9 +102,10 @@
                                                         {{ html()->select('product_id[]', $products, $item->product_id)->class('border-0 select2 selPdct')->attribute('id', '')->placeholder('Select')->required() }}
                                                     </td>
                                                     <td><input type="number" name='qty[]' class="w-100 border-0 text-end pQty" placeholder="0" value="{{ $item->qty }}" min='1' step="1" required /></td>
-                                                    <td><input type="number" name='mrp[]' class="w-100 border-0 text-end pMrp" placeholder="0.00" value="{{ $item->unit_price_mrp }}" step="any" required /></td>
                                                     <td><input type="number" name='purchase_price[]' class="w-100 border-0 text-end pPPrice" value="{{ $item->unit_price_purchase }}" placeholder="0.00" step="any" required /></td>
                                                     <td><input type="number" name='selling_price[]' class="w-100 border-0 text-end pSPrice" value="{{ $item->unit_price_sales }}" placeholder="0.00" step="any" required /></td>
+                                                    <td><input type="number" name='mrp[]' class="w-100 border-0 text-end pMrp" placeholder="0.00" value="{{ $item->unit_price_mrp }}" step="any" required /></td>
+                                                    <td><input type="number" name='discount[]' value="{{ $item->discount }}" class="w-100 border-0 text-end discount" placeholder="0.00" step="any" required /></td>
                                                     <td><input type="number" name='total[]' class="w-100 border-0 text-end readOnly pTotal" value="{{ $item->total }}" placeholder="0.00" step="any" /></td>
                                                 </tr>
                                                 @empty
@@ -120,13 +122,13 @@
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 tTot readOnly" value="{{ number_format($purchase->detail?->sum('total'), 2) }}" placeholder="0.00" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="7" class="text-end fw-bold border-0">Other Charges</td>
+                                                    <td colspan="6" class="text-end fw-bold border-0">Other Charges</td>
                                                     <td>
                                                         <input type="text" class="text-end border-0 fw-bold w-100 otherCharges" name="other_charges" value="{{ $purchase->other_charges }}" placeholder="0.00" />
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="6" class="text-end fw-bold border-0">Adjustment</td>
+                                                    <td colspan="5" class="text-end fw-bold border-0">Adjustment</td>
                                                     <td>
                                                         <select class="form-control" name="adjust_type">
                                                             <option value="">Select</option>

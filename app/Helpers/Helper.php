@@ -655,7 +655,7 @@ function orderStatuses()
 function branchInvoiceNumber()
 {
     //return Order::where('branch_id', branch()->id)->selectRaw("IFNULL(MAX(order_sequence)+1, 1) AS sid")->value('sid');
-    return Order::where('branch_id', branch()->id)->max() + 1 ?? 0;
+    return Order::where('branch_id', branch()->id)->max('order_sequence') + 1 ?? 0;
 }
 
 function casetypes()

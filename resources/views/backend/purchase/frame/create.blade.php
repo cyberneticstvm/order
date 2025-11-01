@@ -83,11 +83,12 @@
                                             <thead class="text-center">
                                                 <tr>
                                                     <th>Remove</th>
-                                                    <th width="50%">Product</th>
+                                                    <th width="40%">Product</th>
                                                     <th width="5%">Qty</th>
-                                                    <th width="10%">MRP</th>
                                                     <th width="10%">Purchase Price</th>
                                                     <th width="10%">Selling Price</th>
+                                                    <th width="10%">MRP</th>
+                                                    <th width="10%">Discount</th>
                                                     <th width="10%">Total</th>
                                                 </tr>
                                             </thead>
@@ -100,9 +101,10 @@
                                                         {{ html()->select('product_id[]', $products, old('product_id'))->class('border-0 select2 selPdct')->attribute('id', '')->placeholder('Select')->required() }}
                                                     </td>
                                                     <td><input type="number" name='qty[]' class="w-100 border-0 text-end pQty" placeholder="0" min='1' step="1" required /></td>
-                                                    <td><input type="number" name='mrp[]' class="w-100 border-0 text-end pMrp" placeholder="0.00" step="any" required /></td>
                                                     <td><input type="number" name='purchase_price[]' class="w-100 border-0 text-end pPPrice" placeholder="0.00" step="any" required /></td>
                                                     <td><input type="number" name='selling_price[]' class="w-100 border-0 text-end pSPrice" placeholder="0.00" step="any" required /></td>
+                                                    <td><input type="number" name='mrp[]' class="w-100 border-0 text-end pMrp" placeholder="0.00" step="any" required /></td>
+                                                    <td><input type="number" name='discount[]' class="w-100 border-0 text-end discount" placeholder="0.00" step="any" required /></td>
                                                     <td><input type="number" name='total[]' class="w-100 border-0 text-end readOnly pTotal" placeholder="0.00" step="any" /></td>
                                                 </tr>
                                             </tbody>
