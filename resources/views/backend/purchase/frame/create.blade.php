@@ -116,7 +116,13 @@
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 tTot readOnly" placeholder="0.00" /></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="6" class="text-end fw-bold border-0">Adjustment</td>
+                                                    <td colspan="6" class="text-end fw-bold border-0">Other Charges</td>
+                                                    <td>
+                                                        <input type="text" class="text-end border-0 fw-bold w-100 otherCharges" value="{{ $purchase->other_charges }}" placeholder="0.00" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" class="text-end fw-bold border-0">Adjustment</td>
                                                     <td>
                                                         <select class="form-control" name="adjust_type">
                                                             <option value="">Select</option>
