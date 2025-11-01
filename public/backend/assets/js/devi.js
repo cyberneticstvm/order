@@ -865,9 +865,9 @@ function calculatePurchaseTotal() {
         var total = parseFloat(qty * purchase_price);
         dis.find(".pTotal").val(total.toFixed(2));
         qtyTot += (qty > 0) ? qty : 0;
-        mrpTot += (mrp > 0) ? mrp : 0;
-        ppriceTot += (purchase_price > 0) ? purchase_price : 0;
-        spriceTot += (sales_price > 0) ? sales_price : 0;
+        mrpTot += (mrp > 0) ? mrp * qty : 0;
+        ppriceTot += (purchase_price > 0) ? purchase_price * qty : 0;
+        spriceTot += (sales_price > 0) ? sales_price * qty : 0;
         tTot += (pTotal > 0) ? pTotal : 0;
         $(".qtyTot").val(parseInt(qtyTot));
         $(".mrpTot").val(parseFloat(mrpTot).toFixed(2));
