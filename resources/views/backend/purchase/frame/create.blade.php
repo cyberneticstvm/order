@@ -115,6 +115,19 @@
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 spriceTot readOnly" placeholder="0.00" /></td>
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 tTot readOnly" placeholder="0.00" /></td>
                                                 </tr>
+                                                <tr>
+                                                    <td colspan="6" class="text-end fw-bold border-0">Adjustment</td>
+                                                    <td>
+                                                        <select class="form-control" name="adjust_type">
+                                                            <option value="">Select</option>
+                                                            <option value="plus">+</option>
+                                                            <option value="minus">-</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="text-end border-0 fw-bold w-100 adjustmentAmount" name="adjust_amount" value="" placeholder="0.00" />
+                                                    </td>
+                                                </tr>
                                             </tfoot>
                                         </table>
                                     </div>
