@@ -104,7 +104,6 @@
                                                     <td><input type="number" name='mrp[]' class="w-100 border-0 text-end pMrp" placeholder="0.00" step="any" required /></td>
                                                     <td><input type="number" name='purchase_price[]' class="w-100 border-0 text-end pPPrice" placeholder="0.00" step="any" required /></td>
                                                     <td><input type="number" name='selling_price[]' class="w-100 border-0 text-end pSPrice" placeholder="0.00" step="any" required /></td>
-
                                                     <td><input type="number" name='discount[]' class="w-100 border-0 text-end discount" placeholder="0.00" step="any" required /></td>
                                                     <td><input type="number" name='total[]' class="w-100 border-0 text-end readOnly pTotal" placeholder="0.00" step="any" /></td>
                                                 </tr>
