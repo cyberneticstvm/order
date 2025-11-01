@@ -115,9 +115,10 @@
                                                 <tr>
                                                     <td colspan="2" class="text-end fw-bold border-0">Total</td>
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 qtyTot readOnly" value="{{ $purchase->detail?->sum('qty') }}" placeholder="0" /></td>
-                                                    <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 mrpTot readOnly" value="{{ number_format($purchase->detail?->sum('unit_price_mrp'), 2) }}" placeholder="0.00" /></td>
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 ppriceTot readOnly" value="{{ number_format($purchase->detail?->sum('unit_price_purchase'), 2) }}" placeholder="0.00" /></td>
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 spriceTot readOnly" value="{{ number_format($purchase->detail?->sum('unit_price_sales'), 2) }}" placeholder="0.00" /></td>
+                                                    <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 mrpTot readOnly" value="{{ number_format($purchase->detail?->sum('unit_price_mrp'), 2) }}" placeholder="0.00" /></td>
+                                                    <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 discountTot readOnly" value="{{ number_format($purchase->detail?->sum('discount'), 2) }}" placeholder="0.00" /></td>
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 tTot readOnly" value="{{ number_format($purchase->detail?->sum('total'), 2) }}" placeholder="0.00" /></td>
                                                 </tr>
                                                 <tr>

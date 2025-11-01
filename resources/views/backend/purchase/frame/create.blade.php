@@ -115,6 +115,7 @@
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 mrpTot readOnly" placeholder="0.00" /></td>
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 ppriceTot readOnly" placeholder="0.00" /></td>
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 spriceTot readOnly" placeholder="0.00" /></td>
+                                                    <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 discountTot readOnly" placeholder="0.00" /></td>
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 tTot readOnly" placeholder="0.00" /></td>
                                                 </tr>
                                                 <tr>
