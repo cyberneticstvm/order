@@ -71,12 +71,16 @@ class PurchaseFrameController extends Controller
                     'supplier_id' => $request->supplier_id,
                     'purchase_invoice_number' => $request->purchase_invoice_number,
                     'purchase_note' => $request->purchase_note,
+                    'other_charges' => $request->other_charges,
+                    'adjust_type' => $request->adjust_type,
+                    'adjust_amount' => $request->adjust_amount,
                     'branch_id' => $request->branch_id,
                     'created_by' => $request->user()->id,
                     'updated_by' => $request->user()->id,
                 ]);
                 $data = [];
                 foreach ($request->product_id as $key => $item) :
+                    $product = Product::find($item);
                     $data[] = [
                         'purchase_id' => $purchase->id,
                         'product_id' => $item,
@@ -84,6 +88,9 @@ class PurchaseFrameController extends Controller
                         'unit_price_mrp' => $request->mrp[$key],
                         'unit_price_purchase' => $request->purchase_price[$key],
                         'unit_price_sales' => $request->selling_price[$key],
+                        'discount' => $request->discount[$key],
+                        'tax_percentage' => $product->tax_percentage,
+                        'tax_amount' => ($request->purchase_price[$key] * $product->tax_percentage) / 100,
                         'total' => $request->total[$key],
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
@@ -161,11 +168,15 @@ class PurchaseFrameController extends Controller
                     'supplier_id' => $request->supplier_id,
                     'purchase_invoice_number' => $request->purchase_invoice_number,
                     'purchase_note' => $request->purchase_note,
+                    'other_charges' => $request->other_charges,
+                    'adjust_type' => $request->adjust_type,
+                    'adjust_amount' => $request->adjust_amount,
                     'branch_id' => $request->branch_id,
                     'updated_by' => $request->user()->id,
                 ]);
                 $data = [];
                 foreach ($request->product_id as $key => $item) :
+                    $product = Product::find($item);
                     $data[] = [
                         'purchase_id' => $id,
                         'product_id' => $item,
@@ -173,6 +184,9 @@ class PurchaseFrameController extends Controller
                         'unit_price_mrp' => $request->mrp[$key],
                         'unit_price_purchase' => $request->purchase_price[$key],
                         'unit_price_sales' => $request->selling_price[$key],
+                        'discount' => $request->discount[$key],
+                        'tax_percentage' => $product->tax_percentage,
+                        'tax_amount' => ($request->purchase_price[$key] * $product->tax_percentage) / 100,
                         'total' => $request->total[$key],
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
