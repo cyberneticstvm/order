@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Models\Product;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -39,8 +40,8 @@ class StockStatusReportExport implements FromCollection, WithMapping, WithHeadin
                 'damaged' => $data->damagedQty,
                 'balance' => $data->balanceQty,
                 'shelf' => $data->shelfQty,
-                'mrp' => $data->mrp,
-                'selling_price' => $data->selling_price,
+                'mrp' => Product::find($data->id)->mrp,
+                'selling_price' => Product::find($data->id)->selling_price,
             ];
         });
     }
