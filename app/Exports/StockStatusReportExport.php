@@ -39,13 +39,15 @@ class StockStatusReportExport implements FromCollection, WithMapping, WithHeadin
                 'damaged' => $data->damagedQty,
                 'balance' => $data->balanceQty,
                 'shelf' => $data->shelfQty,
+                'mrp' => $data->mrp,
+                'selling_price' => $data->selling_price,
             ];
         });
     }
 
     public function headings(): array
     {
-        return ['SL No', 'Product Name', 'Code', 'Booked', 'Billed', 'Transfer In', 'Transfer Out', 'Returned', 'Damaged', 'Balance', 'Shelf'];
+        return ['SL No', 'Product Name', 'Code', 'Booked', 'Billed', 'Transfer In', 'Transfer Out', 'Returned', 'Damaged', 'Balance', 'Shelf', 'MRP', 'Selling Price'];
     }
 
     public function map($data): array
@@ -55,6 +57,6 @@ class StockStatusReportExport implements FromCollection, WithMapping, WithHeadin
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->getStyle('A1:K1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:M1')->getFont()->setBold(true);
     }
 }
