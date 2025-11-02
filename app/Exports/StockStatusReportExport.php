@@ -38,13 +38,14 @@ class StockStatusReportExport implements FromCollection, WithMapping, WithHeadin
                 'returned' => $data->returnedQty,
                 'damaged' => $data->damagedQty,
                 'balance' => $data->balanceQty,
+                'shelf' => $data->shelfQty,
             ];
         });
     }
 
     public function headings(): array
     {
-        return ['SL No', 'Product Name', 'Code', 'Booked', 'Billed', 'Transfer In', 'Transfer Out', 'Returned', 'Damaged', 'Balance'];
+        return ['SL No', 'Product Name', 'Code', 'Booked', 'Billed', 'Transfer In', 'Transfer Out', 'Returned', 'Damaged', 'Balance', 'Shelf'];
     }
 
     public function map($data): array
