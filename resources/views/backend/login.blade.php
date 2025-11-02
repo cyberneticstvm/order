@@ -33,6 +33,20 @@
   <link id="color" rel="stylesheet" href="{{ asset('/backend/assets/css/color-1.css') }}" media="screen">
   <!-- Responsive css-->
   <link rel="stylesheet" type="text/css" href="{{ asset('/backend/assets/css/responsive.css') }}">
+  @if(env('SUBDOMAIN') == 'storesas')
+  <style>
+    .login-card {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      background: url("{{ asset('/backend/assets/images/login/login_bg.jpg') }}") no-repeat scroll 0px 100% / cover transparent;
+      background-position: center;
+      padding: 30px 12px;
+    }
+  </style>
+  @endif
 </head>
 
 <body>
