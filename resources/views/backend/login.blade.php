@@ -33,8 +33,7 @@
   <link id="color" rel="stylesheet" href="{{ asset('/backend/assets/css/color-1.css') }}" media="screen">
   <!-- Responsive css-->
   <link rel="stylesheet" type="text/css" href="{{ asset('/backend/assets/css/responsive.css') }}">
-  @if(Config::get('myconfig.domain.subdomain') == 'storesas')
-  as
+  @if(1 = 1)
   <style>
     .login-card {
       min-height: 100vh;
