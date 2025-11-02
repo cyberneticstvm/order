@@ -33,7 +33,7 @@
   <link id="color" rel="stylesheet" href="{{ asset('/backend/assets/css/color-1.css') }}" media="screen">
   <!-- Responsive css-->
   <link rel="stylesheet" type="text/css" href="{{ asset('/backend/assets/css/responsive.css') }}">
-  @php($subdomain = env());
+  @php($subdomain = env('SUBDOMAIN'));
   @if($subdomain == 'storesas')
   <style>
     .login-card {
