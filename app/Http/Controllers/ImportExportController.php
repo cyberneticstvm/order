@@ -114,12 +114,14 @@ class ImportExportController extends Controller
             'category' => 'required',
         ]);
         try {
+            $branch = Session::get('branch');
             $purchase = Purchase::create([
                 'category' => $request->category,
                 'purchase_number' => purchaseId('frame')->pid,
                 'order_date' => Carbon::today(),
                 'delivery_date' => Carbon::today(),
                 'supplier_id' => 1,
+                'branch_id' => ($branch->code = 'SAS1') ? $branch->id : null,
                 'created_by' => $request->user()->id,
                 'updated_by' => $request->user()->id,
             ]);
