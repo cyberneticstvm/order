@@ -41,7 +41,7 @@
       align-items: center;
       justify-content: center;
       margin: 0 auto;
-      background: url("{{ asset('/backend/assets/images/login/login_bg.jpg') }}") no-repeat scroll 0px 100% / cover transparent;
+      background: url("{{ asset('/backend/assets/images/login/bg-sas.png') }}") no-repeat scroll 0px 100% / cover transparent;
       background-position: center;
       padding: 30px 12px;
     }
