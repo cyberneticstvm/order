@@ -350,7 +350,7 @@ class ReportController extends Controller
         $products = $this->products;
         $data = PurchaseDetail::leftJoin('purchases as p', 'p.id', 'purchase_details.purchase_id')->whereBetween('p.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->product > 0, function ($q) use ($request) {
             return $q->where('purchase_details.product_id', $request->product);
-        })->orderByDesc('purchase_details.id')->get();
+        })->groupBy('p.id')->latest()->get();
         return view('backend.report.purchase', compact('data', 'inputs', 'products'));
     }
 
