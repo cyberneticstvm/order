@@ -74,9 +74,9 @@ class ApiController extends Controller
     {
         if ($secret == apiSecret()) :
             $subdomain = env('SUBDOMAIN');
-            $orders = Order::leftJoin('branches AS b', 'b.id', 'orders.branch_id')->leftJoin('lab_orders AS lo', 'lo.order_id', 'orders.id')->selectRaw("orders.id, b.code, orders.name AS customer, orders.place, DATE_FORMAT(orders.order_date, '%d.%M.%Y') AS odate")->when($subdomain != 'storesas', function ($q) {
+            $orders = Order::leftJoin('branches AS b', 'b.id', 'orders.branch_id')->leftJoin('lab_orders AS lo', 'lo.order_id', 'orders.id')->leftJoin('order_details AS od', 'orders.id', 'od.order_id')->selectRaw("orders.id, b.code, orders.name AS customer, orders.place, DATE_FORMAT(orders.order_date, '%d.%M.%Y') AS odate")->when($subdomain != 'storesas', function ($q) {
                 return $q->where('lo.lab_id', 8);
-            })->whereNull('lo.deleted_at')->whereNull('lab_order_number')->groupBy('orders.id', 'b.code', 'customer', 'place', 'odate')->orderBy('lo.created_at')->get();
+            })->whereNull('lo.deleted_at')->whereNull('lab_order_number')->whereIn('od.eye', ['re', 'le'])->groupBy('orders.id', 'b.code', 'customer', 'place', 'odate')->orderBy('lo.created_at')->get();
             return response()->json([
                 'status' => true,
                 'data' => $orders,
