@@ -25,6 +25,7 @@ class ApiController extends Controller
                     'odetail' => $odetail,
                     'ftype' => $ftype,
                     'branch' => $branch,
+                    'lensCount' => $order->lensCount($order->id),
                 ], 200);
             else :
                 return response()->json([

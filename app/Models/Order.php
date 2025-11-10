@@ -82,4 +82,9 @@ class Order extends Model
         $type = ProductSubcategory::where('id', $product->type_id ?? 0)->first();
         return $type->name ?? null;
     }
+
+    public function lensCount($oid)
+    {
+        return OrderDetail::where('order_id', $oid)->whereIn('eye', ['re', 'le'])->count();
+    }
 }
