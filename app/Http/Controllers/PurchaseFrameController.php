@@ -27,7 +27,7 @@ class PurchaseFrameController extends Controller
         $this->middleware('permission:purchase-frame-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:purchase-frame-delete', ['only' => ['destroy']]);
 
-        $this->purchases = Purchase::where('category', 'frame')->whereDate('delivery_date', Carbon::today())->withTrashed()->latest()->get();
+        $this->purchases = Purchase::where('category', 'frame')->withTrashed()->latest()->get();
         $this->suppliers = Supplier::pluck('name', 'id');
         $this->products = Product::whereIn('category', ['frame'])->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->pluck('name', 'id');
     }
