@@ -150,6 +150,10 @@
                                                         <input type="text" class="text-end border-0 fw-bold w-100 adjustmentAmount" value="{{ $purchase->adjust_amount }}" name="adjust_amount" placeholder="0.00" />
                                                     </td>
                                                 </tr>
+                                                <tr>
+                                                    <td colspan="7" class="fw-bold text-end">Total</td>
+                                                    <td class="fw-bold text-end">{{ number_format($purchase->detail->sum('total') + $purchase->other_charges, 2) }}</td>
+                                                </tr>
                                             </tfoot>
                                         </table>
                                     </div>
