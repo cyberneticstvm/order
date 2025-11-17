@@ -46,6 +46,10 @@
                                     <label class="form-label">Product</label>
                                     {{ html()->select($name = 'product', $products, ($inputs[2]) ?? old('product'))->class('form-control select2')->placeholder('Select') }}
                                 </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Supplier</label>
+                                    {{ html()->select($name = 'supplier', $suppliers, ($inputs[3]) ?? old('supplier'))->class('form-control select2')->placeholder('Select') }}
+                                </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                                     <button class="btn btn-submit btn-success" type="submit">Fetch</button>
@@ -68,12 +72,13 @@
                                     <tr>
                                         <th>SL No</th>
                                         <th>Date</th>
+                                        <th>Invoice No</th>
                                         <th>Purchase ID</th>
                                         <th>Order Date</th>
                                         <th>Del. Date</th>
-                                        <th>Product</th>
-                                        <th>Qty</th>
-                                        <th>Unit Price</th>
+                                        <th>Supplier</th>
+                                        <th>Branch</th>
+                                        <th>Bill</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
@@ -82,12 +87,13 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->purchase->created_at->format('d.M.Y') }}</td>
+                                        <td>{{ $item->purchase_invoice_number }}</td>
                                         <td>{{ $item->purchase->purchase_number }}</td>
                                         <td>{{ $item->purchase->order_date->format('d.M.Y') }}</td>
                                         <td>{{ $item->purchase->delivery_date->format('d.M.Y') }}</td>
-                                        <td>{{ $item->product->name }}</td>
-                                        <td>{{ $item->qty }}</td>
-                                        <td>{{ $item->unit_price_purchase }}</td>
+                                        <td>{{ $item->supplier->name }}</td>
+                                        <td>{{ $item->branch->name }}</td>
+                                        <td class="text-center"><a href="{{ route('report.export.purchase.pdf', encrypt($item->id)) }}"><i class="fa fa-file-pdf"></i></a></td>
                                         <td class="text-end">{{ $item->total }}</td>
                                     </tr>
                                     @empty
@@ -95,7 +101,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="8" class="text-end fw-bold">Total</td>
+                                        <td colspan="9" class="text-end fw-bold">Total</td>
                                         <td class="text-end fw-bold">{{ number_format($data->sum('total'), 2) }}</td>
                                     </tr>
                                 </tfoot>

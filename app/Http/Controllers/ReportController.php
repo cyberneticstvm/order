@@ -15,8 +15,10 @@ use App\Models\PaymentMode;
 use App\Models\Product;
 use App\Models\ProductDamage;
 use App\Models\ProductSubcategory;
+use App\Models\Purchase;
 use App\Models\PurchaseDetail;
 use App\Models\SalesReturn;
+use App\Models\Supplier;
 use App\Models\Transfer;
 use App\Models\TransferDetails;
 use App\Models\User;
@@ -333,11 +335,11 @@ class ReportController extends Controller
 
     public function purchase()
     {
-        $inputs = [date('Y-m-d'), date('Y-m-d'), 0];
+        $inputs = [date('Y-m-d'), date('Y-m-d'), 0, 0];
         $data = collect();
         $products = $this->products;
-
-        return view('backend.report.purchase', compact('data', 'inputs', 'products'));
+        $suppliers = Supplier::pluck("name", "id");
+        return view('backend.report.purchase', compact('data', 'inputs', 'products', 'suppliers'));
     }
 
     public function fetchPurchase(Request $request)
@@ -346,12 +348,18 @@ class ReportController extends Controller
             'from_date' => 'required',
             'to_date' => 'required',
         ]);
-        $inputs = [$request->from_date, $request->to_date, $request->product];
+        $inputs = [$request->from_date, $request->to_date, $request->product, $request->supplier];
         $products = $this->products;
-        $data = PurchaseDetail::leftJoin('purchases as p', 'p.id', 'purchase_details.purchase_id')->whereBetween('p.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->product > 0, function ($q) use ($request) {
+        $suppliers = Supplier::pluck("name", "id");
+        /*$data = PurchaseDetail::leftJoin('purchases as p', 'p.id', 'purchase_details.purchase_id')->whereBetween('p.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->product > 0, function ($q) use ($request) {
             return $q->where('purchase_details.product_id', $request->product);
-        })->orderByDesc('purchase_details.id')->get();
-        return view('backend.report.purchase', compact('data', 'inputs', 'products'));
+        })->orderByDesc('purchase_details.id')->get();*/
+        $data = Purchase::whereNull('purchases.stock_updated_at')->whereBetween('purchases.created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->supplier > 0, function ($q) use ($request) {
+            return $q->where('purchases.supplier_id', $request->supplier);
+        })->when($request->product > 0, function ($q) use ($request) {
+            return $q->leftJoin('purchase_details as pd', 'purchases.id', 'pd.purchase_id')->where('pd.product_id', $request->product);
+        })->get();
+        return view('backend.report.purchase', compact('data', 'inputs', 'products', 'suppliers'));
     }
 
     public function exportOrder()

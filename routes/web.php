@@ -305,6 +305,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/order/{category}/{branch}', 'exportStockStatus')->name('export.stock.status.pdf');
         Route::get('/po/{id}', 'exportPurchaseOrder')->name('pdf.po.receipt');
         Route::get('/vehicle', 'exportVehicle')->name('report.export.vehicle.pdf');
+        Route::get('/purchase/{id}', 'exportPurchase')->name('report.export.purchase.pdf');
     });
 
     Route::prefix('/backend/bank/transfer')->controller(BankTransferController::class)->group(function () {
