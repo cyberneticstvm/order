@@ -45,8 +45,8 @@ class PurchaseFrameController extends Controller
         $suppliers = $this->suppliers;
         $products = $this->products;
         $branches = Branch::where('ho_master', 1)->pluck('name', 'id');
-        $sign = '+';
-        return view('backend.purchase.frame.create', compact('suppliers', 'products', 'branches', 'sign'));
+        $tot = 0;
+        return view('backend.purchase.frame.create', compact('suppliers', 'products', 'branches', 'tot'));
     }
 
     /**
@@ -148,8 +148,12 @@ class PurchaseFrameController extends Controller
         $products = $this->products;
         $purchase = Purchase::findOrFail(decrypt($id));
         $branches = Branch::where('ho_master', 1)->pluck('name', 'id');
-        $sign = ($purchase->adjust_type == 'minus') ? '-' : '+';
-        return view('backend.purchase.frame.edit', compact('suppliers', 'products', 'purchase', 'branches', 'sign'));
+        if ($purchase->adjust_type == 'minus'):
+            $tot = $purchase->detail->sum('total') + $purchase->other_charges - $purchase->adjust_amount;
+        else:
+            $tot = $purchase->detail->sum('total') + $purchase->other_charges + $purchase->adjust_amount;
+        endif;
+        return view('backend.purchase.frame.edit', compact('suppliers', 'products', 'purchase', 'branches', 'tot'));
     }
 
     /**
