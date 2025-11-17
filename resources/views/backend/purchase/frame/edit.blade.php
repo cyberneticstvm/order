@@ -152,7 +152,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="7" class="fw-bold text-end">Total</td>
-                                                    <td class="fw-bold text-end">{{ number_format($purchase->detail->sum('total') + $purchase->other_charges, 2) }}</td>
+                                                    <td class="fw-bold text-end">{{ number_format($purchase->detail->sum('total') + $purchase->other_charges, 2) $sign $purchase->adjust_amount }}</td>
                                                 </tr>
                                             </tfoot>
                                         </table>
