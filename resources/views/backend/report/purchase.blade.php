@@ -86,7 +86,7 @@
                                     @forelse($data as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $item->purchase->created_at->format('d.M.Y') }}</td>
+                                        <td>{{ $item->created_at->format('d.M.Y') }}</td>
                                         <td>{{ $item->purchase_invoice_number }}</td>
                                         <td>{{ $item->purchase->purchase_number }}</td>
                                         <td>{{ $item->purchase->order_date->format('d.M.Y') }}</td>
