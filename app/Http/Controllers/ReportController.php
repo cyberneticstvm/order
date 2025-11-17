@@ -359,6 +359,8 @@ class ReportController extends Controller
         })->when($request->product > 0, function ($q) use ($request) {
             return $q->leftJoin('purchase_details as pd', 'purchases.id', 'pd.purchase_id')->where('pd.product_id', $request->product);
         })->get();
+        dd($data);
+        die;
         return view('backend.report.purchase', compact('data', 'inputs', 'products', 'suppliers'));
     }
 
