@@ -88,9 +88,9 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->created_at->format('d.M.Y') }}</td>
                                         <td>{{ $item->purchase_invoice_number }}</td>
-                                        <td>{{ $item->purchase->purchase_number }}</td>
-                                        <td>{{ $item->purchase->order_date->format('d.M.Y') }}</td>
-                                        <td>{{ $item->purchase->delivery_date->format('d.M.Y') }}</td>
+                                        <td>{{ $item->purchase_number }}</td>
+                                        <td>{{ $item->order_date->format('d.M.Y') }}</td>
+                                        <td>{{ $item->delivery_date->format('d.M.Y') }}</td>
                                         <td>{{ $item->supplier->name }}</td>
                                         <td>{{ $item->branch->name }}</td>
                                         <td class="text-center"><a href="{{ route('report.export.purchase.pdf', encrypt($item->id)) }}"><i class="fa fa-file-pdf"></i></a></td>
