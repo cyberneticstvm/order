@@ -864,6 +864,7 @@ function calculatePurchaseTotal() {
         var purchase_price = parseFloat(dis.find(".pPPrice").val()); var sales_price = parseFloat(dis.find(".pSPrice").val()); var pTotal = parseFloat(dis.find(".pTotal").val());
         var total = parseFloat(qty * purchase_price);
         dis.find(".pTotal").val(total.toFixed(2));
+        dis.find(".itemTot").val(total.toFixed(2));
         qtyTot += (qty > 0) ? qty : 0;
         mrpTot += (mrp > 0) ? mrp : 0;
         ppriceTot += (purchase_price > 0) ? purchase_price  : 0;
@@ -873,7 +874,6 @@ function calculatePurchaseTotal() {
         $(".mrpTot").val(parseFloat(mrpTot).toFixed(2));
         $(".ppriceTot").val(parseFloat(ppriceTot).toFixed(2));
         $(".spriceTot").val(parseFloat(spriceTot).toFixed(2));
-        $(".itemTot").val(parseFloat(pTotal).toFixed(2));
         $(".tTot").val(parseFloat(tTot).toFixed(2));
     });
 }
