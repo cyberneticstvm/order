@@ -83,6 +83,7 @@ class PurchaseFrameController extends Controller
                 $data = [];
                 foreach ($request->product_id as $key => $item) :
                     $product = Product::find($item);
+                    $tax = ($request->purchase_price[$key] * $request->qty[$key] * $product->tax_percentage) / 100;
                     $data[] = [
                         'purchase_id' => $purchase->id,
                         'product_id' => $item,
@@ -92,8 +93,8 @@ class PurchaseFrameController extends Controller
                         'unit_price_sales' => 0,
                         'discount' => $request->discount[$key],
                         'tax_percentage' => $product->tax_percentage,
-                        'tax_amount' => ($request->purchase_price[$key] * $product->tax_percentage) / 100,
-                        'total' => $request->total[$key],
+                        'tax_amount' => $tax,
+                        'total' => ($request->purchase_price[$key] * $request->qty[$key]) + $tax,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
@@ -181,6 +182,7 @@ class PurchaseFrameController extends Controller
                 $data = [];
                 foreach ($request->product_id as $key => $item) :
                     $product = Product::find($item);
+                    $tax = ($request->purchase_price[$key] * $request->qty[$key] * $product->tax_percentage) / 100;
                     $data[] = [
                         'purchase_id' => $id,
                         'product_id' => $item,
@@ -190,8 +192,8 @@ class PurchaseFrameController extends Controller
                         'unit_price_sales' => 0,
                         'discount' => $request->discount[$key],
                         'tax_percentage' => $product->tax_percentage,
-                        'tax_amount' => ($request->purchase_price[$key] * $product->tax_percentage) / 100,
-                        'total' => $request->total[$key],
+                        'tax_amount' => $tax,
+                        'total' => ($request->purchase_price[$key] * $request->qty[$key]) + $tax,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
