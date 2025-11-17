@@ -86,9 +86,9 @@
                                                     <th width="40%">Product</th>
                                                     <th width="5%">Qty</th>
                                                     <th width="10%">Purchase Price</th>
-                                                    <th width="10%">Selling Price</th>
-                                                    <th width="10%">MRP</th>
+                                                    <th width="10%">Item Tot</th>
                                                     <th width="10%">Discount</th>
+                                                    <th width="10%">Tax Amount</th>
                                                     <th width="10%">Total</th>
                                                 </tr>
                                             </thead>
@@ -103,16 +103,16 @@
                                                     </td>
                                                     <td><input type="number" name='qty[]' class="w-100 border-0 text-end pQty" placeholder="0" value="{{ $item->qty }}" min='1' step="1" required /></td>
                                                     <td><input type="number" name='purchase_price[]' class="w-100 border-0 text-end pPPrice" value="{{ $item->unit_price_purchase }}" placeholder="0.00" step="any" required /></td>
-                                                    <td><input type="number" name='selling_price[]' class="w-100 border-0 text-end pSPrice" value="{{ $item->unit_price_sales }}" placeholder="0.00" step="any" required /></td>
-                                                    <td><input type="number" name='mrp[]' class="w-100 border-0 text-end pMrp" placeholder="0.00" value="{{ $item->unit_price_mrp }}" step="any" required /></td>
-                                                    <td><input type="number" name='discount[]' value="{{ $item->discount }}" class="w-100 border-0 text-end discount" placeholder="0.00" step="any" required /></td>
+                                                    <td><input type="number" name='item_tot[]' class="w-100 border-0 text-end" value="{{ $item->qty * $item->unit_price_purchase }}" placeholder="0.00" step="any" required /></td>
+                                                    <td><input type="number" name='discount[]' class="w-100 border-0 text-end discount" placeholder="0.00" value="{{ $item->discount }}" step="any" required /></td>
+                                                    <td><input type="number" name='tax_amount[]' value="{{ $item->tax_amount }}" class="w-100 border-0 text-end" placeholder="0.00" step="any" required /></td>
                                                     <td><input type="number" name='total[]' class="w-100 border-0 text-end readOnly pTotal" value="{{ $item->total }}" placeholder="0.00" step="any" /></td>
                                                 </tr>
                                                 @empty
                                                 @endforelse
                                             </tbody>
                                             <tfoot>
-                                                <tr>
+                                                <!--<tr>
                                                     <td colspan="2" class="text-end fw-bold border-0">Total</td>
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 qtyTot readOnly" value="{{ $purchase->detail?->sum('qty') }}" placeholder="0" /></td>
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 ppriceTot readOnly" value="{{ number_format($purchase->detail?->sum('unit_price_purchase'), 2) }}" placeholder="0.00" /></td>
@@ -120,7 +120,7 @@
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 mrpTot readOnly" value="{{ number_format($purchase->detail?->sum('unit_price_mrp'), 2) }}" placeholder="0.00" /></td>
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 discountTot readOnly" value="{{ number_format($purchase->detail?->sum('discount'), 2) }}" placeholder="0.00" /></td>
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 tTot readOnly" value="{{ number_format($purchase->detail?->sum('total'), 2) }}" placeholder="0.00" /></td>
-                                                </tr>
+                                                </tr>-->
                                                 <tr>
                                                     <td colspan="7" class="text-end fw-bold border-0">Other Charges</td>
                                                     <td>

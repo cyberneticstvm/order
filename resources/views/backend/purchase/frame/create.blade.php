@@ -86,9 +86,9 @@
                                                     <th width="40%">Product</th>
                                                     <th width="5%">Qty</th>
                                                     <th width="10%">Purchase Price</th>
-                                                    <th width="10%">Selling Price</th>
-                                                    <th width="10%">MRP</th>
+                                                    <th width="10%">Item Tot</th>
                                                     <th width="10%">Discount</th>
+                                                    <th width="10%">Tax Amount</th>
                                                     <th width="10%">Total</th>
                                                 </tr>
                                             </thead>
@@ -102,14 +102,14 @@
                                                     </td>
                                                     <td><input type="number" name='qty[]' class="w-100 border-0 text-end pQty" placeholder="0" min='1' step="1" required /></td>
                                                     <td><input type="number" name='purchase_price[]' class="w-100 border-0 text-end pPPrice" placeholder="0.00" step="any" required /></td>
-                                                    <td><input type="number" name='selling_price[]' class="w-100 border-0 text-end pSPrice" placeholder="0.00" step="any" required /></td>
-                                                    <td><input type="number" name='mrp[]' class="w-100 border-0 text-end pMrp" placeholder="0.00" step="any" required /></td>
+                                                    <td><input type="number" name='item_tot[]' class="w-100 border-0 text-end" placeholder="0.00" step="any" required /></td>
                                                     <td><input type="number" name='discount[]' class="w-100 border-0 text-end discount" placeholder="0.00" step="any" required /></td>
+                                                    <td><input type="number" name='tax_amount[]' class="w-100 border-0 text-end" placeholder="0.00" step="any" required /></td>
                                                     <td><input type="number" name='total[]' class="w-100 border-0 text-end readOnly pTotal" placeholder="0.00" step="any" /></td>
                                                 </tr>
                                             </tbody>
                                             <tfoot>
-                                                <tr>
+                                                <!--<tr>
                                                     <td colspan="2" class="text-end fw-bold border-0">Total</td>
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 qtyTot readOnly" placeholder="0" /></td>
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 ppriceTot readOnly" placeholder="0.00" /></td>
@@ -117,7 +117,7 @@
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 mrpTot readOnly" placeholder="0.00" /></td>
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 discountTot readOnly" placeholder="0.00" /></td>
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 tTot readOnly" placeholder="0.00" /></td>
-                                                </tr>
+                                                </tr>-->
                                                 <tr>
                                                     <td colspan="7" class="text-end fw-bold border-0">Other Charges</td>
                                                     <td>
