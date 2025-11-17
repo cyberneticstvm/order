@@ -122,13 +122,19 @@
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 tTot readOnly" value="{{ number_format($purchase->detail?->sum('total'), 2) }}" placeholder="0.00" /></td>
                                                 </tr>-->
                                                 <tr>
-                                                    <td colspan="7" class="text-end fw-bold border-0">Other Charges</td>
+                                                    <td colspan="5" class="text-end fw-bold border-0">Other Charges</td>
+                                                    <td colspan="2">
+                                                        <input type="text" class="form-control" name="other_charges_desc" value="{{ $purchase->other_charges_desc }}" placeholder="Description" />
+                                                    </td>
                                                     <td>
                                                         <input type="text" class="text-end border-0 fw-bold w-100 otherCharges" name="other_charges" value="{{ $purchase->other_charges }}" placeholder="0.00" />
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="6" class="text-end fw-bold border-0">Adjustment</td>
+                                                    <td colspan="4" class="text-end fw-bold border-0">Adjustment</td>
+                                                    <td colspan="2">
+                                                        <input type="text" class="form-control" name="adjust_desc" value="{{ $purchase->adjust_desc }}" placeholder="Description" />
+                                                    </td>
                                                     <td>
                                                         <select class="form-control" name="adjust_type">
                                                             <option value="">Select</option>
