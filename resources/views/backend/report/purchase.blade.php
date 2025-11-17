@@ -84,6 +84,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse($data as $key => $item)
+                                    @php($tot = 0);
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->created_at->format('d.M.Y') }}</td>
@@ -96,13 +97,14 @@
                                         <td class="text-center"><a href="{{ route('report.export.purchase.pdf', encrypt($item->id)) }}"><i class="fa fa-file-pdf-o text-danger"></i></a></td>
                                         <td class="text-end">{{ $item->detail->sum('total') }}</td>
                                     </tr>
+                                    @php($tot += $item->detail->sum('total'))
                                     @empty
                                     @endforelse
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td colspan="9" class="text-end fw-bold">Total</td>
-                                        <td class="text-end fw-bold">{{ number_format($data->sum('total'), 2) }}</td>
+                                        <td class="text-end fw-bold">{{ number_format($tot, 2) }}</td>
                                     </tr>
                                 </tfoot>
                             </table>
