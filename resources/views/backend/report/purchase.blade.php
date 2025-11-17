@@ -83,8 +83,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($data as $key => $item)
                                     @php($tot = 0);
+                                    @forelse($data as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->created_at->format('d.M.Y') }}</td>
