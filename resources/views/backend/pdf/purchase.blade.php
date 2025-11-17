@@ -7,7 +7,7 @@
 </div>
 <div class="row">
     <div class="col">
-        <h4 class="text-center">Purchase Details</h4>
+        <h4 class="text-center">Purchase Details - {{ $purchase->id }}</h4>
     </div>
     <div class="col">
         <table width="100%" class="mt-10" cellspacing="0" cellpadding="0">
