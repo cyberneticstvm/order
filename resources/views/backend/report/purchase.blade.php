@@ -93,7 +93,7 @@
                                         <td>{{ $item->delivery_date->format('d.M.Y') }}</td>
                                         <td>{{ $item->supplier->name }}</td>
                                         <td>{{ $item->branch->name }}</td>
-                                        <td class="text-center"><a href="{{ route('report.export.purchase.pdf', encrypt($item->id)) }}"><i class="fa fa-file-pdf"></i></a></td>
+                                        <td class="text-center"><a href="{{ route('report.export.purchase.pdf', encrypt($item->id)) }}"><i class="fa fa-file-pdf-o text-danger"></i></a></td>
                                         <td class="text-end">{{ $item->total }}</td>
                                     </tr>
                                     @empty
