@@ -102,7 +102,7 @@
                                                     </td>
                                                     <td><input type="number" name='qty[]' class="w-100 border-0 text-end pQty" placeholder="0" min='1' step="1" required /></td>
                                                     <td><input type="number" name='purchase_price[]' class="w-100 border-0 text-end pPPrice" placeholder="0.00" step="any" required /></td>
-                                                    <td><input type="number" name='item_tot[]' class="w-100 border-0 text-end" placeholder="0.00" step="any" required /></td>
+                                                    <td><input type="number" name='item_tot[]' class="w-100 border-0 text-end itemTot" placeholder="0.00" step="any" required /></td>
                                                     <td><input type="number" name='discount[]' class="w-100 border-0 text-end discount" placeholder="0.00" step="any" required /></td>
                                                     <td><input type="number" name='tax_amount[]' class="w-100 border-0 text-end" placeholder="0.00" step="any" required /></td>
                                                     <td><input type="number" name='total[]' class="w-100 border-0 text-end readOnly pTotal" placeholder="0.00" step="any" /></td>

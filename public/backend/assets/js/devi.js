@@ -873,6 +873,7 @@ function calculatePurchaseTotal() {
         $(".mrpTot").val(parseFloat(mrpTot).toFixed(2));
         $(".ppriceTot").val(parseFloat(ppriceTot).toFixed(2));
         $(".spriceTot").val(parseFloat(spriceTot).toFixed(2));
+        $(".itemTot").val(parseFloat(tTot).toFixed(2));
         $(".tTot").val(parseFloat(tTot).toFixed(2));
     });
 }
