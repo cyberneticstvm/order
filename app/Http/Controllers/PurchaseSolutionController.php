@@ -72,6 +72,7 @@ class PurchaseSolutionController extends Controller
                     'supplier_id' => $request->supplier_id,
                     'purchase_invoice_number' => $request->purchase_invoice_number,
                     'purchase_note' => $request->purchase_note,
+                    'branch_id' => $request->branch_id,
                     'created_by' => $request->user()->id,
                     'updated_by' => $request->user()->id,
                 ]);
