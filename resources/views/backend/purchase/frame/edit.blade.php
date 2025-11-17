@@ -122,6 +122,10 @@
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 tTot readOnly" value="{{ number_format($purchase->detail?->sum('total'), 2) }}" placeholder="0.00" /></td>
                                                 </tr>-->
                                                 <tr>
+                                                    <td colspan="7" class="fw-bold text-end">Grand Total</td>
+                                                    <td class="fw-bold text-end">{{ $purchase->detail->sum('total') }}</td>
+                                                </tr>
+                                                <tr>
                                                     <td colspan="5" class="text-end fw-bold border-0">Other Charges</td>
                                                     <td colspan="2">
                                                         <input type="text" class="form-control" name="other_charges_desc" value="{{ $purchase->other_charges_desc }}" placeholder="Description" />
