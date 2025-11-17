@@ -92,8 +92,8 @@
                                         <td>{{ $item->purchase_number }}</td>
                                         <td>{{ $item->order_date->format('d.M.Y') }}</td>
                                         <td>{{ $item->delivery_date->format('d.M.Y') }}</td>
-                                        <td>{{ $item->supplier->name }}</td>
-                                        <td>{{ $item->branch->name }}</td>
+                                        <td>{{ $item->supplier?->name }}</td>
+                                        <td>{{ $item->branch?->name }}</td>
                                         <td class="text-center"><a href="{{ route('report.export.purchase.pdf', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-danger"></i></a></td>
                                         <td class="text-end">{{ number_format($item->detail->sum('total'), 2) }}</td>
                                     </tr>
