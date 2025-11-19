@@ -117,7 +117,7 @@
         @php
         $subdomain = env('SUBDOMAIN');
         @endphp
-        @if( == 'storesas')
+        @if($subdomain == 'storesas')
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="./backend/assets/images/logo/devi-sas-logo.png" width='30%' />
         @else
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="./backend/assets/images/logo/devi-logo.png" width='30%' />
