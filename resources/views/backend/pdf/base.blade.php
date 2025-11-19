@@ -114,7 +114,14 @@
   <div class="container">
     <div class="row">
       <div class="col text-center">
+        @php
+        $subdomain = env('SUBDOMAIN');
+        @endphp
+        @if( == 'storesas')
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="./backend/assets/images/logo/devi-sas-logo.png" width='30%' />
+        @else
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="./backend/assets/images/logo/devi-logo.png" width='30%' />
+        @endif
         @if($qrcode)
         <div style="float: right;"><img src="data:image/png;base64, {!! $qrcode !!}"></div>
         @endif
