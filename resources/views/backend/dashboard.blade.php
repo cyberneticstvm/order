@@ -75,7 +75,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <h4 class="mb-0 text-success">₹{{ number_format($dvals[1], 2) }} - ₹{{ number_format($dvals[3] ?? 0, 2) }}</h4><span class="f-light"></span>
+                                <h4 class="mb-0 text-success">₹{{ number_format($dvals[1], 2) }}</h4><span class="f-light"></span>
                             </div>
                         </div>
                     </div>

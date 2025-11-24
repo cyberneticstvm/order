@@ -105,10 +105,9 @@ class UserController extends Controller
             $sreturn = SalesReturnDetail::whereIn('return_id', SalesReturn::where('order_branch', Session::get('branch'))->whereBetween('created_at', [Carbon::today()->startOfMonth(), Carbon::today()->endOfMonth()])->pluck('id'))->sum('returned_amount');
             $unpaid = unpaidTotal($branch->id, $month = 0, $year = 0,  0);
             $target = ($branch->target_percentage > 0) ? $branch->monthly_target + (($branch->monthly_target * $branch->target_percentage) / 100) : $branch->monthly_target;
-            $dvals[0] = $target;
+            $dvals[0] = $target - $sreturn;
             $dvals[1] = Order::where('branch_id', Session::get('branch'))->whereBetween('invoice_generated_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])->where('order_status', 'delivered')->sum('invoice_total');
             $dvals[2] = $unpaid->balance;
-            $dvals[3] = $sreturn;
         endif;
         $uagent = Session::get('uagent');
         return view('backend.dashboard', compact('branches', 'patients', 'dvals', 'uagent'));
