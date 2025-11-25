@@ -5,8 +5,12 @@ namespace App\Exports;
 use App\Models\Order;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class SalesExport implements FromCollection
+class SalesExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
     protected $request;
 
@@ -44,5 +48,15 @@ class SalesExport implements FromCollection
                 'place' => 'Kerala',
             ];
         });
+    }
+
+    public function headings(): array
+    {
+        return ['SL No', 'Bill No', 'Date', 'GSTIN', 'Customer Name', 'Type', 'Status', 'CGST', 'IGST', 'Net Total', 'Invoice Total', 'Remarks', 'State', 'Registration', 'Place'];
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        $sheet->getStyle('A1:O1')->getFont()->setBold(true);
     }
 }
