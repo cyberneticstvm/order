@@ -127,6 +127,7 @@
                                         <td class="text-end">{{ number_format($item->invoice_total, 2) }}</td>
                                     </tr>
                                     @php($tot += $item->details->where('eye', 'frame')->sum('qty'))
+                                    @php($rtot += $item->sreturn?->details()?->sum('returned_amount') ?? 0)
                                     @empty
                                     @endforelse
                                 </tbody>
@@ -134,7 +135,9 @@
                                     <tr>
                                         <th colspan="2" class="text-end">Total</th>
                                         <th class="text-center"><a href="javascript:void(0)" class="frameCount" data-from-date="{{ $inputs[0] }}" data-to-date="{{ $inputs[1] }}" data-status="{{ $inputs[2] }}" data-branch="{{ $inputs[3] }}" data-drawer="frameDrawer">{{ $tot }}</a></th>
-                                        <th colspan="10"></th>
+                                        <th colspan="5"></th>
+                                        <th class="text-end">{{ number_format($rtot, 2) }}</th>
+                                        <th colspan="4"></th>
                                         <th class="text-end">{{ ($sales) ? number_format($sales->sum('invoice_total'), 2) : '0.00' }}</th>
                                     </tr>
                                 </tfoot>
