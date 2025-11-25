@@ -26,7 +26,7 @@ class SalesExport implements FromCollection
             return $q->where('order_status', $request->order_status);
         })->orderBy('order_sequence', 'ASC')->get();
 
-        dd($sales);
+        dd($this->request);
         die;
 
         return $sales->map(function ($data, $key) {
