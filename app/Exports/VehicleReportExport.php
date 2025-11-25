@@ -24,7 +24,7 @@ class VehicleReportExport implements FromCollection, WithHeadings, ShouldAutoSiz
     public function collection()
     {
         $request = $this->request;
-        dd($rrequest);
+        dd($request);
         die;
         $vehicles = Vehicle::whereBetween('created_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('branch_id', $request->branch);
