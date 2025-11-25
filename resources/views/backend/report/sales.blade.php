@@ -107,7 +107,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php($tot=0)
+                                    @php($tot=0; $rtot=0)
                                     @forelse($sales as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
