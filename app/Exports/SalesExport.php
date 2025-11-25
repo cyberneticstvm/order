@@ -52,11 +52,11 @@ class SalesExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
 
     public function headings(): array
     {
-        return ['SL No', 'Bill No', 'Date', 'GSTIN', 'Customer Name', 'Type', 'Status', 'CGST', 'IGST', 'Net Total', 'Invoice Total', 'Remarks', 'State', 'Registration', 'Place'];
+        return ['SL No', 'Bill No', 'Date', 'GSTIN', 'Customer Name', 'Type', 'CGST', 'IGST', 'Net Total', 'Invoice Total', 'Remarks', 'State', 'Registration', 'Place'];
     }
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->getStyle('A1:O1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:N1')->getFont()->setBold(true);
     }
 }
