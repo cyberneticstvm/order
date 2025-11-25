@@ -254,7 +254,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/stock/{category}/{branch}', 'exportStockStatus')->name('export.stock.status.excel');
         Route::get('/vehicle', 'exportVehicle')->name('export.vehicle.excel');
         Route::get('/vehicle/report', 'exportVehicleReport')->name('report.export.vehicle.excel');
-        Route::get('/sales/report/{from_date}/{to_date}/{status}/{branch}', 'exportSalesReport')->name('report.export.sales.excel');
+        Route::get('/sales/report', 'exportSalesReport')->name('report.export.sales.excel');
     });
 
     Route::prefix('/backend/import')->controller(ImportExportController::class)->group(function () {
