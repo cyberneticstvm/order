@@ -24,6 +24,8 @@ class SalesExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
     public function collection()
     {
         $request = $this->request;
+        dd($request);
+        die;
         $sales = Order::whereBetween(($request->order_status != 'delivered') ? 'order_date' : 'invoice_generated_at', [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('branch_id', $request->branch);
         })->when($request->order_status != 'all', function ($q) use ($request) {
