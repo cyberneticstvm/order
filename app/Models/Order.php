@@ -61,7 +61,7 @@ class Order extends Model
 
     public function sreturn()
     {
-        return $this->belongsTo(SalesReturn::class, 'order_id', 'id');
+        return $this->hasOne(SalesReturn::class, 'order_id', 'id');
     }
 
     public function isEdited()
