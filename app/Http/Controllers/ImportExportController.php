@@ -403,8 +403,6 @@ class ImportExportController extends Controller
 
     public function exportVehicleReport(Request $request)
     {
-        dd($request);
-        die;
         return Excel::download(new VehicleReportExport($request), 'vehicles.xlsx');
     }
 
