@@ -59,6 +59,11 @@ class Order extends Model
         return $this->belongsTo(User::class, 'product_adviser', 'id')->withTrashed();
     }
 
+    public function sreturn()
+    {
+        return $this->belongsTo(SalesReturn::class, 'order_id', 'id');
+    }
+
     public function isEdited()
     {
         $txt = "";
