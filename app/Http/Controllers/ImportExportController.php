@@ -408,6 +408,8 @@ class ImportExportController extends Controller
 
     public function exportSalesReport(Request $request)
     {
+        dd($request);
+        die;
         return Excel::download(new SalesExport($request), 'sales.xlsx');
     }
 }
