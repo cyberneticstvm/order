@@ -856,7 +856,7 @@ function calculateTotal() {
 }
 
 function calculatePurchaseTotal() {
-    $(".qtyTot, .mrpTot, .ppriceTot, .spriceTot, .tTot").val('0.00');
+    $(".qtyTot, .mrpTot, .ppriceTot, .spriceTot, .tTot, .discount").val('0.00');
     var qtyTot = 0; var mrpTot = 0; var ppriceTot = 0; var spriceTot = 0; var tTot = 0;
     $(".tblPharmacyPurchaseBody tr").each(function () {
         var dis = $(this);
