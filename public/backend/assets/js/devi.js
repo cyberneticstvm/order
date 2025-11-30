@@ -687,7 +687,7 @@ function addPurchaseRowFrame(category, type) {
         url: '/ajax/product/' + category + '/' + type,
         dataType: 'json',
         success: function (res) {
-            $(".tblPharmacyPurchaseBody").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="form-control select2 selPdct" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end pQty" placeholder="0" min="" max="" step="any" required /></td><td><input type="number" name='purchase_price[]' class="w-100 border-0 text-end pPPrice" placeholder="0.00" min="" max="" step="any" required /></td><td><input type="number" name='item_tot[]' class="w-100 border-0 text-end itemTot" placeholder="0.00" min="" max="" step="any" required /></td><td><input type="number" name='discount[]' class="w-100 border-0 text-end" placeholder="0.00" min="" max="" step="any" required /></td><td><input type="number" name='tax_amount[]' class="w-100 border-0 text-end" placeholder="0.00" min="" max="" step="any" /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end pTotal" placeholder="0.00" min="" max="" step="any" required readonly /></td></tr>`);
+            $(".tblPharmacyPurchaseBody").append(`<tr><td class="text-center"><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="form-control select2 selPdct" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end pQty" placeholder="0" min="" max="" step="any" required /></td><td><input type="number" name='purchase_price[]' class="w-100 border-0 text-end pPPrice" placeholder="0.00" min="" max="" step="any" required /></td><td><input type="number" name='item_tot[]' class="w-100 border-0 text-end itemTot" placeholder="0.00" min="" max="" step="any" required /></td><td><input type="number" name='discount[]' class="w-100 border-0 text-end" placeholder="0.00" min="" max="" step="any" required /></td><td><input type="number" name='tax_amount[]' class="w-100 border-0 text-end taxAmount" placeholder="0.00" min="" max="" step="any" /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end pTotal" placeholder="0.00" min="" max="" step="any" required readonly /></td></tr>`);
             var xdata = $.map(res.products, function (obj) {
                 obj.text = obj.name || obj.id;
                 return obj;
@@ -862,9 +862,11 @@ function calculatePurchaseTotal() {
         var dis = $(this);
         let pdct = dis.find(".selPdct option:selected").text();
         let taxp = parseInt(pdct.split('-').pop());
-        console.log(taxp);
         var qty = parseInt(dis.find(".pQty").val()); var mrp = parseFloat(dis.find(".pMrp").val());
         var purchase_price = parseFloat(dis.find(".pPPrice").val()); var sales_price = parseFloat(dis.find(".pSPrice").val()); var pTotal = parseFloat(dis.find(".pTotal").val());
+        let discount = parseFloat(dis.find(".discount").val());
+        let taxAmount = parseFloat((((purchase_price - discount)*taxp)/100)*qty).toFixed(2);
+        dis.find(".taxAmount").val(taxAmount)
         var total = parseFloat(qty * purchase_price);
         //dis.find(".pTotal").val(total.toFixed(2));
         dis.find(".itemTot").val(total.toFixed(2));
