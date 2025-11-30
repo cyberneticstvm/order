@@ -857,14 +857,16 @@ function calculateTotal() {
 
 function calculatePurchaseTotal() {
     $(".qtyTot, .mrpTot, .ppriceTot, .spriceTot, .tTot").val('0.00');
-    var qtyTot = 0; var mrpTot = 0; var ppriceTot = 0; var spriceTot = 0; var tTot = 0;
+    var qtyTot = 0; var mrpTot = 0; var ppriceTot = 0; var spriceTot = 0; var tTot = 0; let disc = 0;
     $(".tblPharmacyPurchaseBody tr").each(function () {
         var dis = $(this);
         let pdct = dis.find(".selPdct option:selected").text();
         let taxp = parseInt(pdct.split('-').pop());
         var qty = parseInt(dis.find(".pQty").val()); var mrp = parseFloat(dis.find(".pMrp").val());
         var purchase_price = parseFloat(dis.find(".pPPrice").val()); var sales_price = parseFloat(dis.find(".pSPrice").val()); var pTotal = parseFloat(dis.find(".pTotal").val());
-        let disc = !isNaN(parseFloat(dis.find(".discount").val())) ?? 0;
+        if(!isNaN(parseFloat(dis.find(".discount").val()))){
+            disc = parseFloat(dis.find(".discount").val());
+        }
         console.log(disc);
         let taxAmount = parseFloat((((purchase_price - disc)*taxp)/100)*qty).toFixed(2);
         dis.find(".taxAmount").val(taxAmount)
