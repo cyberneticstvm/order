@@ -867,7 +867,6 @@ function calculatePurchaseTotal() {
         if(!isNaN(parseFloat(dis.find(".discount").val()))){
             disc = parseFloat(dis.find(".discount").val());
         }
-        console.log(disc);
         let taxAmount = parseFloat((((purchase_price - disc)*taxp)/100)*qty).toFixed(2);
         dis.find(".taxAmount").val(taxAmount)
         var total = parseFloat(qty * (purchase_price-disc));
