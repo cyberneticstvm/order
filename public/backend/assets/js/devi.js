@@ -856,7 +856,7 @@ function calculateTotal() {
 }
 
 function calculatePurchaseTotal() {
-    $(".qtyTot, .mrpTot, .ppriceTot, .spriceTot, .tTot, .discount").val('0.00');
+    $(".qtyTot, .mrpTot, .ppriceTot, .spriceTot, .tTot, .disc").val('0.00');
     var qtyTot = 0; var mrpTot = 0; var ppriceTot = 0; var spriceTot = 0; var tTot = 0;
     $(".tblPharmacyPurchaseBody tr").each(function () {
         var dis = $(this);
@@ -864,10 +864,10 @@ function calculatePurchaseTotal() {
         let taxp = parseInt(pdct.split('-').pop());
         var qty = parseInt(dis.find(".pQty").val()); var mrp = parseFloat(dis.find(".pMrp").val());
         var purchase_price = parseFloat(dis.find(".pPPrice").val()); var sales_price = parseFloat(dis.find(".pSPrice").val()); var pTotal = parseFloat(dis.find(".pTotal").val());
-        let discount = parseFloat(dis.find(".discount").val() ?? 0);
-        let taxAmount = parseFloat((((purchase_price - discount)*taxp)/100)*qty).toFixed(2);
+        let disc = parseFloat(dis.find(".discount").val() ?? 0);
+        let taxAmount = parseFloat((((purchase_price - disc)*taxp)/100)*qty).toFixed(2);
         dis.find(".taxAmount").val(taxAmount)
-        var total = parseFloat(qty * (purchase_price-discount));
+        var total = parseFloat(qty * (purchase_price-disc));
         dis.find(".pTotal").val((parseFloat(total) + parseFloat(taxAmount)).toFixed(2));
         dis.find(".itemTot").val(total.toFixed(2));
         qtyTot += (qty > 0) ? qty : 0;
