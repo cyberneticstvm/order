@@ -860,6 +860,9 @@ function calculatePurchaseTotal() {
     var qtyTot = 0; var mrpTot = 0; var ppriceTot = 0; var spriceTot = 0; var tTot = 0;
     $(".tblPharmacyPurchaseBody tr").each(function () {
         var dis = $(this);
+        let pdct = dis.find(".selPdct option:selected").text();
+        let taxp = parseInt(pdct.split('-').pop());
+        console.log(taxp);
         var qty = parseInt(dis.find(".pQty").val()); var mrp = parseFloat(dis.find(".pMrp").val());
         var purchase_price = parseFloat(dis.find(".pPPrice").val()); var sales_price = parseFloat(dis.find(".pSPrice").val()); var pTotal = parseFloat(dis.find(".pTotal").val());
         var total = parseFloat(qty * purchase_price);
