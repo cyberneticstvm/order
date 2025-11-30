@@ -29,7 +29,7 @@ class PurchaseFrameController extends Controller
 
         $this->purchases = Purchase::where('category', 'frame')->withTrashed()->latest()->get();
         $this->suppliers = Supplier::pluck('name', 'id');
-        $this->products = Product::whereIn('category', ['frame'])->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->pluck('name', 'id');
+        $this->products = Product::whereIn('category', ['frame'])->selectRaw("id, CONCAT_WS('-', name, code, tax_percentage) AS name")->orderBy('name')->pluck('name', 'id');
     }
     public function index()
     {
