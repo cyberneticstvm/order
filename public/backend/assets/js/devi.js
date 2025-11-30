@@ -117,7 +117,7 @@ $(function () {
         return false;
     });
 
-    $(document).on("keyup", ".pQty, .pMrp, .pPPrice, .pSPrice, .discount", function () {
+    $(document).on("keyup", ".pQty, .pMrp, .pPPrice, .pSPrice", function () {
         calculatePurchaseTotal();
     });
 
