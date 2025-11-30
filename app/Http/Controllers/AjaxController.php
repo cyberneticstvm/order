@@ -204,7 +204,7 @@ class AjaxController extends Controller
 
     public function getProductsByCategory($category, $type, $product = 0)
     {
-        $products = Product::where('category', $category)->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
+        $products = Product::where('category', $category)->selectRaw("id, CONCAT_WS('-', name, code, tax_percentage) AS name")->orderBy('name')->get();
         if (($category == 'frame' || $category == 'solution' || $category == 'accessory') && ($type == 'order' || $type == 'transfer') && $product == 0):
             $products = getInventory(Session::get('branch'), 0, $category)->where('balanceQty', '>', 0);
         endif;
