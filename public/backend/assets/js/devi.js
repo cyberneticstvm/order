@@ -872,7 +872,7 @@ function calculatePurchaseTotal() {
         
         let taxAmount = parseFloat((((purchase_price)*taxp)/100)*qty).toFixed(2);
         dis.find(".taxAmount").val(taxAmount)
-        var total = parseFloat(purchase_price - disc);
+        var total = parseFloat(purchase_price);
         dis.find(".pTotal").val((parseFloat(total) + parseFloat(taxAmount)).toFixed(2));
         dis.find(".itemTot").val(total.toFixed(2));
         qtyTot += (qty > 0) ? qty : 0;
