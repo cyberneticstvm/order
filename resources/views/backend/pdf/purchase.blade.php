@@ -8,10 +8,10 @@
 <div class="row">
     <div class="col">
         <h4 class="text-center">Purchase Details</h4>
-        <table class="table border-0" width="100%" cellpadding="0" cellspacing="0" style="font-size: 10px;">
+        <table class="table" width="100%" cellpadding="0" cellspacing="0" style="font-size: 10px;">
             <tr>
-                <td>Bill No: {{ $purchase->purchase_invoice_number }}</td>
-                <td>Branch: {{ $purchase->branch->name }}</td>
+                <td class="border-0">Bill No: {{ $purchase->purchase_invoice_number }}</td>
+                <td class="border-0">Branch: {{ $purchase->branch->name }}</td>
             </tr>
         </table>
     </div>
