@@ -866,7 +866,7 @@ function calculatePurchaseTotal() {
         if(!isNaN(parseFloat(dis.find(".discount").val()))){
             disc = parseFloat(dis.find(".discount").val());
         }
-        var purchase_price = parseFloat(dis.find(".pPPrice").val()) - disc; 
+        var purchase_price = parseFloat(dis.find(".pPPrice").val()); 
         var sales_price = parseFloat(dis.find(".pSPrice").val()); 
         var pTotal = parseFloat(dis.find(".pTotal").val());
         
