@@ -39,6 +39,14 @@
                         <h3 class="text-danger">No records found!</h3>
                     </td>
                     @endforelse
+            <tfoot>
+                <tr>
+                    <td class="fw-bold text-end" colspan="2">Total</td>
+                    <td class="fw-bold text-end">{{ number_format($purchase->detail()->sum('qty'), 2) }}</td>
+                    <td colspan="3"></td>
+                    <td class="fw-bold text-end">{{ number_format($purchase->detail()->sum('total'), 2) }}</td>
+                </tr>
+            </tfoot>
             </tbody>
         </table>
     </div>
