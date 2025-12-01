@@ -7,7 +7,13 @@
 </div>
 <div class="row">
     <div class="col">
-        <h4 class="text-center">Purchase Details - {{ $purchase->id }}</h4>
+        <h4 class="text-center">Purchase Details</h4>
+        <table>
+            <tr>
+                <td>Bill No: {{ $purchase->id }}</td>
+                <td>Branch: {{ $purchase->branch->name }}</td>
+            </tr>
+        </table>
     </div>
     <div class="col">
         <table width="100%" class="mt-10" cellspacing="0" cellpadding="0">
