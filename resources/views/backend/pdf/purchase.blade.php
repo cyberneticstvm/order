@@ -12,6 +12,10 @@
             <tr>
                 <td class="border-0">Bill No: {{ $purchase->purchase_invoice_number }}</td>
                 <td class="border-0">Branch: {{ $purchase->branch->name }}</td>
+                <td class="border-0">Entry Date: {{ $purchase->created_at->format('d.M.Y') }}</td>
+            </tr>
+            <tr>
+                <td class="border-0" colspan="3">Supplier: {{ $purchase->supplier->name }}</td>
             </tr>
         </table>
     </div>
