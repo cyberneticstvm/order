@@ -10,7 +10,7 @@
         <h4 class="text-center">Purchase Details</h4>
         <table>
             <tr>
-                <td>Bill No: {{ $purchase->id }}</td>
+                <td>Bill No: {{ $purchase->purchase_invoice_number }}</td>
                 <td>Branch: {{ $purchase->branch->name }}</td>
             </tr>
         </table>
