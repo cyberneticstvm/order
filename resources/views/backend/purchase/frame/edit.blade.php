@@ -33,14 +33,14 @@
                             <form class="row g-3" method="post" action="{{ route('frame.purchase.update', $purchase->id) }}">
                                 @csrf
                                 <div class="col-md-2">
-                                    <label class="form-label req">Order Date</label>
+                                    <label class="form-label req">Invoice Date</label>
                                     {{ html()->date($name = 'order_date', $value = $purchase->order_date?->format('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}
                                     @error('order_date')
                                     <small class="text-danger">{{ $errors->first('order_date') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
-                                    <label class="form-label req">Delivery Date</label>
+                                    <label class="form-label req">Entry Date</label>
                                     {{ html()->date($name = 'delivery_date', $value = $purchase->delivery_date?->format('Y-m-d'))->class('form-control')->placeholder('Delivery Date')->required() }}
                                     @error('delivery_date')
                                     <small class="text-danger">{{ $errors->first('delivery_date') }}</small>
