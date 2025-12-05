@@ -169,73 +169,73 @@ class PurchaseFrameController extends Controller
             'purchase_invoice_number' => 'required',
             'product_id' => 'present|array'
         ]);
-        //try {
-        DB::transaction(function () use ($request, $id) {
-            Purchase::findOrFail($id)->update([
-                'order_date' => $request->order_date,
-                'delivery_date' => $request->delivery_date,
-                'supplier_id' => $request->supplier_id,
-                'purchase_invoice_number' => $request->purchase_invoice_number,
-                'purchase_note' => $request->purchase_note,
-                'other_charges' => $request->other_charges,
-                'other_charges_desc' => $request->other_charges_desc,
-                'adjust_type' => $request->adjust_type,
-                'adjust_amount' => $request->adjust_amount,
-                'adjust_desc' => $request->adjust_desc,
-                'branch_id' => $request->branch_id,
-                'updated_by' => $request->user()->id,
-            ]);
-            $data = [];
-            foreach ($request->product_id as $key => $item) :
-                $product = Product::find($item);
-                $tax = ($request->purchase_price[$key] * $request->qty[$key] * $product->tax_percentage) / 100;
-                $data[] = [
+        try {
+            DB::transaction(function () use ($request, $id) {
+                Purchase::findOrFail($id)->update([
+                    'order_date' => $request->order_date,
+                    'delivery_date' => $request->delivery_date,
+                    'supplier_id' => $request->supplier_id,
+                    'purchase_invoice_number' => $request->purchase_invoice_number,
+                    'purchase_note' => $request->purchase_note,
+                    'other_charges' => $request->other_charges,
+                    'other_charges_desc' => $request->other_charges_desc,
+                    'adjust_type' => $request->adjust_type,
+                    'adjust_amount' => $request->adjust_amount,
+                    'adjust_desc' => $request->adjust_desc,
+                    'branch_id' => $request->branch_id,
+                    'updated_by' => $request->user()->id,
+                ]);
+                $data = [];
+                foreach ($request->product_id as $key => $item) :
+                    $product = Product::find($item);
+                    $tax = ($request->purchase_price[$key] * $request->qty[$key] * $product->tax_percentage) / 100;
+                    $data[] = [
+                        'purchase_id' => $id,
+                        'product_id' => $item,
+                        'qty' => $request->qty[$key],
+                        'unit_price_mrp' => 0,
+                        'unit_price_purchase' => $request->purchase_price[$key],
+                        'unit_price_sales' => 0,
+                        'discount' => $request->discount[$key],
+                        'tax_percentage' => $product->tax_percentage,
+                        'tax_amount' => $tax,
+                        'total' => ($request->purchase_price[$key] * $request->qty[$key]) + $tax,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endforeach;
+                PurchaseDetail::where('purchase_id', $id)->delete();
+                PurchaseDetail::insert($data);
+                $t = Transfer::where('purchase_id', $id)->first();
+                TransferDetails::where('transfer_id', $t->id ?? 0)->delete();
+                if ($t) $t->delete();
+                $transfer = Transfer::create([
+                    'transfer_number' => transferId('frame')->tid,
+                    'category' => 'frame',
+                    'transfer_date' => Carbon::today(),
+                    'from_branch_id' => 0,
+                    'to_branch_id' => $request->branch_id,
+                    'transfer_note' => 'Purchase with id ' . $id,
+                    'transfer_status' => 1,
                     'purchase_id' => $id,
-                    'product_id' => $item,
-                    'qty' => $request->qty[$key],
-                    'unit_price_mrp' => 0,
-                    'unit_price_purchase' => $request->purchase_price[$key],
-                    'unit_price_sales' => 0,
-                    'discount' => $request->discount[$key],
-                    'tax_percentage' => $product->tax_percentage,
-                    'tax_amount' => $tax,
-                    'total' => ($request->purchase_price[$key] * $request->qty[$key]) + $tax,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ];
-            endforeach;
-            PurchaseDetail::where('purchase_id', $id)->delete();
-            PurchaseDetail::insert($data);
-            $t = Transfer::where('purchase_id', $id)->first();
-            TransferDetails::where('transfer_id', $t->id ?? 0)->delete();
-            if ($t) $t->delete();
-            $transfer = Transfer::create([
-                'transfer_number' => transferId('frame')->tid,
-                'category' => 'frame',
-                'transfer_date' => Carbon::today(),
-                'from_branch_id' => 0,
-                'to_branch_id' => $request->branch_id,
-                'transfer_note' => 'Purchase with id ' . $id,
-                'transfer_status' => 1,
-                'purchase_id' => $id,
-                'created_by' => $request->user()->id,
-                'updated_by' => $request->user()->id,
-            ]);
-            $data = [];
-            foreach ($request->product_id as $key => $item) :
-                $data[] = [
-                    'transfer_id' => $transfer->id,
-                    'product_id' => $item,
-                    'qty' => $request->qty[$key],
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ];
-            endforeach;
-            TransferDetails::insert($data);
-        });
-        /*} catch (Exception $e) {
+                    'created_by' => $request->user()->id,
+                    'updated_by' => $request->user()->id,
+                ]);
+                $data = [];
+                foreach ($request->product_id as $key => $item) :
+                    $data[] = [
+                        'transfer_id' => $transfer->id,
+                        'product_id' => $item,
+                        'qty' => $request->qty[$key],
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                endforeach;
+                TransferDetails::insert($data);
+            });
+        } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
-        }*/
+        }
         return redirect()->route('frame.purchase')->with("success", "Purchase updated successfully!");
     }
 
