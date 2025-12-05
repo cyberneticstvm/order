@@ -208,7 +208,7 @@ class PurchaseFrameController extends Controller
             PurchaseDetail::insert($data);
             $t = Transfer::where('purchase_id', $id)->first();
             TransferDetails::where('transfer_id', $t->id ?? 0)->delete();
-            $t->delete();
+            if ($t) $t->delete();
             $transfer = Transfer::create([
                 'transfer_number' => transferId('frame')->tid,
                 'category' => 'frame',
