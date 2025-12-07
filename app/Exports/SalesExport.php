@@ -34,7 +34,7 @@ class SalesExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
             return [
                 'item_serial' =>  $key + 1,
                 'bill_no' => $data->ino(),
-                'date' => $data->invoice_generated_at,
+                'date' => $data->invoice_generated_at->format('d-mm-Y'),
                 'gstin' => '',
                 'customer' => $data->name,
                 'type' => 'Sales',
