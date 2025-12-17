@@ -54,18 +54,18 @@ class UserController extends Controller
             'username' => 'required',
             'password' => 'required',
         ]);
-        if (!$request->place_id):
+        /*if (!$request->place_id):
             return redirect()->back()->with("error", "Denied!!! You dont have enabled an active location. Please enable your location and try again.");
         else:
             Cookie::forget('location');
             Cookie::queue('location', $request->place_id, time() + 60 * 60 * 24 * 365);
-        endif;
+        endif;*/
         if (Auth::attempt($cred, $request->remember)) :
             if (Str::contains($request->userAgent(), ['iPhone', 'Android', 'Linux', 'Macintosh']) && !Auth::user()->mobile_access) :
                 Auth::logout();
                 return redirect()->route('login')->with("error", "Mobile access has been restricted for this login");
             endif;
-            if (settings()->enable_ip_info == 1)
+            if (settings()->enable_ip_info == 1 && $request->place_id)
                 $this->loginLog($request);
             Session::put('uagent', $request->userAgent());
             return redirect()->route('dashboard')->withSuccess(Auth::user()->name . " logged in successfully!");
