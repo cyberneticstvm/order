@@ -127,7 +127,7 @@
         maximumAge: 0
       };
 
-      window.addEventListener('load', initialize);
+      //window.addEventListener('load', initialize);
 
       function initialize() {
         navigator.geolocation.getCurrentPosition(
