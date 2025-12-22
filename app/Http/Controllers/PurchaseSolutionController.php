@@ -72,20 +72,30 @@ class PurchaseSolutionController extends Controller
                     'supplier_id' => $request->supplier_id,
                     'purchase_invoice_number' => $request->purchase_invoice_number,
                     'purchase_note' => $request->purchase_note,
+                    'other_charges' => $request->other_charges,
+                    'other_charges_desc' => $request->other_charges_desc,
+                    'adjust_type' => $request->adjust_type,
+                    'adjust_amount' => $request->adjust_amount,
+                    'adjust_desc' => $request->adjust_desc,
                     'branch_id' => $request->branch_id,
                     'created_by' => $request->user()->id,
                     'updated_by' => $request->user()->id,
                 ]);
                 $data = [];
                 foreach ($request->product_id as $key => $item) :
+                    $product = Product::find($item);
+                    $tax = ($request->purchase_price[$key] * $request->qty[$key] * $product->tax_percentage) / 100;
                     $data[] = [
                         'purchase_id' => $purchase->id,
                         'product_id' => $item,
                         'qty' => $request->qty[$key],
-                        'unit_price_mrp' => $request->mrp[$key],
+                        'unit_price_mrp' => 0,
                         'unit_price_purchase' => $request->purchase_price[$key],
-                        'unit_price_sales' => $request->selling_price[$key],
-                        'total' => $request->total[$key],
+                        'unit_price_sales' => 0,
+                        'discount' => $request->discount[$key],
+                        'tax_percentage' => $product->tax_percentage,
+                        'tax_amount' => $tax,
+                        'total' => ($request->purchase_price[$key] * $request->qty[$key]) + $tax,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
@@ -138,7 +148,12 @@ class PurchaseSolutionController extends Controller
         $products = $this->products;
         $purchase = Purchase::findOrFail(decrypt($id));
         $branches = Branch::where('ho_master', 1)->pluck('name', 'id');
-        return view('backend.purchase.solution.edit', compact('suppliers', 'products', 'purchase', 'branches'));
+        if ($purchase->adjust_type == 'minus'):
+            $tot = $purchase->detail->sum('total') + $purchase->other_charges - $purchase->adjust_amount;
+        else:
+            $tot = $purchase->detail->sum('total') + $purchase->other_charges + $purchase->adjust_amount;
+        endif;
+        return view('backend.purchase.solution.edit', compact('suppliers', 'products', 'purchase', 'branches', 'tot'));
     }
 
     /**
@@ -162,18 +177,29 @@ class PurchaseSolutionController extends Controller
                     'supplier_id' => $request->supplier_id,
                     'purchase_invoice_number' => $request->purchase_invoice_number,
                     'purchase_note' => $request->purchase_note,
+                    'other_charges' => $request->other_charges,
+                    'other_charges_desc' => $request->other_charges_desc,
+                    'adjust_type' => $request->adjust_type,
+                    'adjust_amount' => $request->adjust_amount,
+                    'adjust_desc' => $request->adjust_desc,
+                    'branch_id' => $request->branch_id,
                     'updated_by' => $request->user()->id,
                 ]);
                 $data = [];
                 foreach ($request->product_id as $key => $item) :
+                    $product = Product::find($item);
+                    $tax = ($request->purchase_price[$key] * $request->qty[$key] * $product->tax_percentage) / 100;
                     $data[] = [
                         'purchase_id' => $id,
                         'product_id' => $item,
                         'qty' => $request->qty[$key],
-                        'unit_price_mrp' => $request->mrp[$key],
+                        'unit_price_mrp' => 0,
                         'unit_price_purchase' => $request->purchase_price[$key],
-                        'unit_price_sales' => $request->selling_price[$key],
-                        'total' => $request->total[$key],
+                        'unit_price_sales' => 0,
+                        'discount' => $request->discount[$key],
+                        'tax_percentage' => $product->tax_percentage,
+                        'tax_amount' => $tax,
+                        'total' => ($request->purchase_price[$key] * $request->qty[$key]) + $tax,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];

@@ -83,6 +83,72 @@
                                             <thead class="text-center">
                                                 <tr>
                                                     <th>Remove</th>
+                                                    <th width="40%">Product</th>
+                                                    <th width="5%">Qty</th>
+                                                    <th width="10%">Purchase Price</th>
+                                                    <th width="10%">Item Tot</th>
+                                                    <th width="10%">Discount</th>
+                                                    <th width="10%">Tax Amount</th>
+                                                    <th width="10%">Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="tblPharmacyPurchaseBody">
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        {{ html()->select('product_id[]', $products, old('product_id'))->class('border-0 select2 selPdct')->attribute('id', '')->placeholder('Select')->required() }}
+                                                    </td>
+                                                    <td><input type="number" name='qty[]' class="w-100 border-0 text-end pQty" placeholder="0" min='1' step="1" required /></td>
+                                                    <td><input type="number" name='purchase_price[]' class="w-100 border-0 text-end pPPrice" placeholder="0.00" min="" max="" step="any" required /></td>
+                                                    <td><input type="number" name='item_tot[]' class="w-100 border-0 text-end itemTot" placeholder="0.00" min="" max="" step="any" required /></td>
+                                                    <td><input type="number" name='discount[]' class="w-100 border-0 text-end discount" placeholder="0.00" value="0.00" min="" max="" step="any" /></td>
+                                                    <td><input type="number" name='tax_amount[]' class="w-100 border-0 text-end taxAmount" placeholder="0.00" min="" max="" step="any" required /></td>
+                                                    <td><input type="number" name='total[]' class="w-100 border-0 text-end readOnly pTotal" placeholder="0.00" min="" max="" step="any" /></td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <!--<tr>
+                                                    <td colspan="2" class="text-end fw-bold border-0">Total</td>
+                                                    <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 qtyTot readOnly" placeholder="0" /></td>
+                                                    <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 ppriceTot readOnly" placeholder="0.00" /></td>
+                                                    <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 spriceTot readOnly" placeholder="0.00" /></td>
+                                                    <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 mrpTot readOnly" placeholder="0.00" /></td>
+                                                    <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 discountTot readOnly" placeholder="0.00" /></td>
+                                                    <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 tTot readOnly" placeholder="0.00" /></td>
+                                                </tr>-->
+                                                <tr>
+                                                    <td colspan="5" class="text-end fw-bold border-0">Other Charges</td>
+                                                    <td colspan="2">
+                                                        <input type="text" class="form-control" name="other_charges_desc" value="" placeholder="Description" />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="other_charges" class="text-end border-0 fw-bold w-100 otherCharges" value="" placeholder="0.00" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4" class="text-end fw-bold border-0">Adjustment</td>
+                                                    <td colspan="2">
+                                                        <input type="text" class="form-control" name="adjust_desc" value="" placeholder="Description" />
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control" name="adjust_type">
+                                                            <option value="">Select</option>
+                                                            <option value="plus">+</option>
+                                                            <option value="minus">-</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="text-end border-0 fw-bold w-100 adjustmentAmount" name="adjust_amount" value="" placeholder="0.00" />
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                        <!--<table class="table table-bordered table-stripped mt-3">
+                                            <thead class="text-center">
+                                                <tr>
+                                                    <th>Remove</th>
                                                     <th width="50%">Product</th>
                                                     <th width="5%">Qty</th>
                                                     <th width="10%">MRP</th>
@@ -116,7 +182,7 @@
                                                     <td class="border-0"><input type="text" class="text-end border-0 fw-bold w-100 tTot readOnly" placeholder="0.00" /></td>
                                                 </tr>
                                             </tfoot>
-                                        </table>
+                                        </table>-->
                                     </div>
                                     <div class="col-12 text-end">
                                         <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
