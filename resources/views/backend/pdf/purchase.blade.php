@@ -38,9 +38,9 @@
                     <td>{{ $key + 1 }}</td>
                     <td>{{ $item->product->name }}</td>
                     <td class="text-end">{{ $item->qty }}</td>
-                    <td>{{ $item->unit_price_purchase }}</td>
-                    <td>{{ $item->discount }}</td>
-                    <td class="text-end">{{ $item->tax_amount }}</td>
+                    <td class="text-end">{{ $item->unit_price_purchase }}</td>
+                    <td class="text-end">{{ $item->discount }}</td>
+                    <td class="text-end">{{ number_format($item->tax_amount, 2) }}</td>
                     <td class="text-end">{{ $item->total }}</td>
                 </tr>
                 @empty
