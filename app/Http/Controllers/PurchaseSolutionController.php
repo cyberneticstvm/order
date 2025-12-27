@@ -27,7 +27,7 @@ class PurchaseSolutionController extends Controller
         $this->middleware('permission:purchase-solution-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:purchase-solution-delete', ['only' => ['destroy']]);
 
-        $this->purchases = Purchase::where('category', 'solution')->whereDate('delivery_date', Carbon::today())->withTrashed()->latest()->get();
+        $this->purchases = Purchase::where('category', 'solution')->withTrashed()->latest()->get();
         $this->suppliers = Supplier::pluck('name', 'id');
         $this->products = Product::whereIn('category', ['solution'])->selectRaw("id, CONCAT_WS('-', name, code, tax_percentage) AS name")->orderBy('name')->pluck('name', 'id');
     }
