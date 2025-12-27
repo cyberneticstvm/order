@@ -294,7 +294,11 @@ class PdfController extends Controller
     {
         $purchase = Purchase::findOrFail(decrypt($id));
         $qrcode = base64_encode(QrCode::format('svg')->size(75)->errorCorrection('H')->generate('https://devieh.com'));
-        $pdf = PDF::loadView('backend.pdf.purchase', compact('purchase', 'qrcode'));
+        $adjamount = 0;
+        if ($purchase->adjust_type == 'plus'):
+            $adjamount = $purchase->adjust_amount;
+        endif;
+        $pdf = PDF::loadView('backend.pdf.purchase', compact('purchase', 'qrcode', 'adjamount'));
         return $pdf->stream('purchase.pdf');
     }
 
