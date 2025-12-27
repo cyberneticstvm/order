@@ -40,8 +40,8 @@
                     <td>{{ $item->qty }}</td>
                     <td>{{ $item->unit_price_purchase }}</td>
                     <td>{{ $item->discount }}</td>
-                    <td>{{ $item->tax_amount }}</td>
-                    <td>{{ $item->total }}</td>
+                    <td class="text-end">{{ $item->tax_amount }}</td>
+                    <td class="text-end">{{ $item->total }}</td>
                 </tr>
                 @empty
                 <tr>
