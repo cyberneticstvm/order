@@ -298,6 +298,9 @@ class PdfController extends Controller
         if ($purchase->adjust_type == 'plus'):
             $adjamount = $purchase->adjust_amount;
         endif;
+        if ($purchase->adjust_type == 'minus'):
+            $adjamount = -abs($purchase->adjust_amount);
+        endif;
         $pdf = PDF::loadView('backend.pdf.purchase', compact('purchase', 'qrcode', 'adjamount'));
         return $pdf->stream('purchase.pdf');
     }
