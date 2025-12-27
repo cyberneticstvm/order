@@ -37,7 +37,7 @@
                 <tr>
                     <td>{{ $key + 1 }}</td>
                     <td>{{ $item->product->name }}</td>
-                    <td>{{ $item->qty }}</td>
+                    <td class="text-end">{{ $item->qty }}</td>
                     <td>{{ $item->unit_price_purchase }}</td>
                     <td>{{ $item->discount }}</td>
                     <td class="text-end">{{ $item->tax_amount }}</td>
