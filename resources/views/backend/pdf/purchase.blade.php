@@ -60,7 +60,7 @@
                 </tr>
                 <tr>
                     <td class="fw-bold text-end" colspan="2">Total</td>
-                    <td class="fw-bold text-end">{{ number_format($purchase->detail()->sum('qty'), 2) }}</td>
+                    <td class="fw-bold text-end">{{ $purchase->detail()->sum('qty') }}</td>
                     <td colspan="3"></td>
                     <td class="fw-bold text-end">{{ number_format($purchase->detail()->sum('total') + $purchase->other_charges + $adjamount, 2) }}</td>
                 </tr>
