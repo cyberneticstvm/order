@@ -51,6 +51,14 @@
                     @endforelse
             <tfoot>
                 <tr>
+                    <td class="fw-bold text-end" colspan="4">Other Charges</td>
+                    <td class="fw-bold text-end">{{ number_format($purchase->other_charges, 2) }}</td>
+                </tr>
+                <tr>
+                    <td class="fw-bold text-end" colspan="4">Adjustment</td>
+                    <td class="fw-bold text-end">{{ number_format($adjamount, 2) }}</td>
+                </tr>
+                <tr>
                     <td class="fw-bold text-end" colspan="2">Total</td>
                     <td class="fw-bold text-end">{{ number_format($purchase->detail()->sum('qty'), 2) }}</td>
                     <td colspan="3"></td>
