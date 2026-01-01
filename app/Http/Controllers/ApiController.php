@@ -111,7 +111,7 @@ class ApiController extends Controller
         //$pdct = Product::find($request->product->id);
         $data = collect($request);
         return response()->json([
-            'pdct' => $data->product->id,
+            'pdct' => $data,
         ]);
         /*$product = Product::updateOrCreate(
             ['id' => $request->product->id],
