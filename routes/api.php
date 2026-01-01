@@ -33,6 +33,6 @@ Route::prefix('/laborder')->controller(ApiController::class)->group(function () 
     Route::post('/{storeorderid}/{labordernumber}/{secret}', 'updateLabOrder')->name('update.lab.order');
 });
 Route::prefix('/product/addupdate')->controller(ApiController::class)->group(function () {
-    Route::post('{secret}', 'updateProduct')->name('add.update.product');
+    Route::post('', 'updateProduct')->name('add.update.product');
 });
 //});
