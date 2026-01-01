@@ -36,6 +36,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -1073,4 +1074,15 @@ function orderUpdateType($request, $id)
         $msg = "Order has been Updated";
     endif;
     return $msg;
+}
+
+function addProductToSASStore($data)
+{
+    $subdomain = env('SUBDOMAIN');
+    if ($subdomain != 'store') {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . apiSecret(),
+            'Accept' => 'application/json'
+        ])->post('https://storesas.devihospitals.in/api/product/addupdate', $data);
+    }
 }

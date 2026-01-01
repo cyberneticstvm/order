@@ -103,4 +103,10 @@ class ApiController extends Controller
             ], 200);
         endif;
     }
+
+    function updateProduct(Request $request)
+    {
+        dd($request);
+        die;
+    }
 }

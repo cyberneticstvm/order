@@ -32,4 +32,7 @@ Route::prefix('/orders')->controller(ApiController::class)->group(function () {
 Route::prefix('/laborder')->controller(ApiController::class)->group(function () {
     Route::post('/{storeorderid}/{labordernumber}/{secret}', 'updateLabOrder')->name('update.lab.order');
 });
+Route::prefix('/product/addupdate')->controller(ApiController::class)->group(function () {
+    Route::post('{secret}', 'updateProduct')->name('add.update.product');
+});
 //});

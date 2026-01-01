@@ -62,15 +62,16 @@ class ProductFrameController extends Controller
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
         $input['category'] = 'frame';
-        $product = Product::create($input);
-        $data = [];
+        //$product = Product::create($input);
+        addProductToSASStore($input);
+        /*$data = [];
         foreach ($request->collection_id as $key => $collection) :
             $data[] = [
                 'product_id' => $product->id,
                 'collection_id' => $collection,
             ];
         endforeach;
-        ProductCollection::insert($data);
+        ProductCollection::insert($data);*/
         return redirect()->route('product.frame')->with("success", "Product created successfully!");
     }
 
@@ -111,6 +112,7 @@ class ProductFrameController extends Controller
         $input['updated_by'] = $request->user()->id;
         $product = Product::findOrFail($id);
         $product->update($input);
+        addProductToSASStore($input);
         foreach ($request->collection_id as $key => $collection) :
             $data[] = [
                 'product_id' => $product->id,
