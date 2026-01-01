@@ -57,7 +57,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($purchases as $key => $item)
+                                    @foreach($purchases as $key => $item)
                                     @php
                                     $adjamount = 0
                                     @endphp
@@ -80,8 +80,7 @@
                                         <td class="text-center"><a href="{{ route('frame.purchase.edit', encrypt($item->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center"><a href="{{ route('frame.purchase.delete', encrypt($item->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
                                     </tr>
-                                    @empty
-                                    @endforelse
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
