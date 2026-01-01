@@ -1083,21 +1083,12 @@ function orderUpdateType($request, $id)
 
 function addProductToSASStore($product)
 {
-    /*$response = Http::withHeaders([
-        'Authorization' => 'Bearer ' . apiSecret(),
-        'Accept' => 'application/json'
-    ])->acceptJson()->post('https://storesas.devihospitals.in/api/product/addupdate', [
-        'product' => $product,
-    ]);*/
     $response = Http::withHeaders([
         'Authorization' => 'Bearer ' . apiSecret(),
         'Accept' => 'application/json'
     ])->post('https://storesas.devihospitals.in/api/product/addupdate', [
         'product' => $product,
     ]);
-    /*$response = Http::post('https://storesas.devihospitals.in/api/product/addupdate', [
-        'product' => $product,
-    ]);*/
     dd($response->json());
     die;
     return $response;
