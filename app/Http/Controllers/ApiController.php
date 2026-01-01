@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Ramsey\Collection\Collection;
 
 class ApiController extends Controller
 {
@@ -108,8 +109,9 @@ class ApiController extends Controller
     function updateProduct(Request $request)
     {
         //$pdct = Product::find($request->product->id);
+        $data = collect($request);
         return response()->json([
-            'pdct' => $request->product['id'],
+            'pdct' => $request->product->id,
         ]);
         /*$product = Product::updateOrCreate(
             ['id' => $request->product->id],
