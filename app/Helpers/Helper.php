@@ -62,6 +62,11 @@ function domain_url()
     endif;
 }
 
+function getSubDomain()
+{
+    return Config::get('myconfig.domain.subdomain');
+}
+
 function sendRequestedDocviaWa($mobile, $name, $oid, $doc_type)
 {
     $token = Config::get('myconfig.whatsapp.token');

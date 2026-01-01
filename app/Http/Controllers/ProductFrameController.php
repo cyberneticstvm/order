@@ -65,7 +65,8 @@ class ProductFrameController extends Controller
         $input['category'] = 'frame';
         try {
             $product = Product::create($input);
-            $saspdct = addProductToSASStore($product);
+            if (getSubDomain() == 'store')
+                $saspdct = addProductToSASStore($product);
             $data = [];
             foreach ($request->collection_id as $key => $collection) :
                 $data[] = [
@@ -118,7 +119,8 @@ class ProductFrameController extends Controller
         try {
             $product = Product::findOrFail($id);
             $product->update($input);
-            $saspdct = addProductToSASStore($product);
+            if (getSubDomain() == 'store')
+                $saspdct = addProductToSASStore($product);
             foreach ($request->collection_id as $key => $collection) :
                 $data[] = [
                     'product_id' => $product->id,
