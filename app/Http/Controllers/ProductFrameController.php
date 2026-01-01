@@ -121,16 +121,14 @@ class ProductFrameController extends Controller
         $product->update($input);
         if (getSubDomain() == 'store')
             $saspdct = addProductToSASStore($product);
-        dd($saspdct);
-        die;
-        foreach ($request->collection_id as $key => $collection) :
+        /*foreach ($request->collection_id as $key => $collection) :
             $data[] = [
                 'product_id' => $product->id,
                 'collection_id' => $collection,
             ];
         endforeach;
         ProductCollection::where('product_id', $product->id)->delete();
-        ProductCollection::insert($data);
+        ProductCollection::insert($data);*/
         /*} catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
         }*/
