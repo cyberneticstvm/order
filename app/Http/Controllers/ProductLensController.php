@@ -65,7 +65,9 @@ class ProductLensController extends Controller
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
         $input['category'] = 'lens';
-        Product::create($input);
+        $product = Product::create($input);
+        if (getSubDomain() == 'store')
+            $saspdct = addProductToSASStore($product);
         return redirect()->route('product.lens')->with("success", "Product created successfully!");
     }
 
@@ -101,7 +103,10 @@ class ProductLensController extends Controller
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
-        Product::findOrFail($id)->update($input);
+        $product = Product::findOrFail($id);
+        $product->update($input);
+        if (getSubDomain() == 'store')
+            $saspdct = addProductToSASStore($product);
         return redirect()->route('product.lens')->with("success", "Product updated successfully!");
     }
 

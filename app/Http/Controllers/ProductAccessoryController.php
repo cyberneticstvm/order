@@ -54,7 +54,9 @@ class ProductAccessoryController extends Controller
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
         $input['category'] = 'accessory';
-        Product::create($input);
+        $product = Product::create($input);
+        if (getSubDomain() == 'store')
+            $saspdct = addProductToSASStore($product);
         return redirect()->route('product.accessory')->with("success", "Product created successfully!");
     }
 
@@ -88,7 +90,10 @@ class ProductAccessoryController extends Controller
         ]);
         $input = $request->all();
         $input['updated_by'] = $request->user()->id;
-        Product::findOrFail($id)->update($input);
+        $product = Product::findOrFail($id);
+        $product->update($input);
+        if (getSubDomain() == 'store')
+            $saspdct = addProductToSASStore($product);
         return redirect()->route('product.accessory')->with("success", "Product updated successfully!");
     }
 
