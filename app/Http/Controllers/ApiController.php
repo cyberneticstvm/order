@@ -108,8 +108,8 @@ class ApiController extends Controller
     function updateProduct(Request $request)
     {
         $product = Product::updateOrCreate(
-            ['id' => $request->id],
-            $request
+            ['id' => $request->product->id],
+            $request->product
         );
         if ($product):
             return response()->json([

@@ -1086,7 +1086,13 @@ function addProductToSASStore($product)
     $response = Http::withHeaders([
         'Authorization' => 'Bearer ' . apiSecret(),
         'Accept' => 'application/json'
-    ])->post('https://storesas.devihospitals.in/api/product/addupdate', $product);
+    ])->acceptJson()->post('https://storesas.devihospitals.in/api/product/addupdate', [
+        'product' => $product,
+    ]);
+    /*$response = Http::withHeaders([
+        'Authorization' => 'Bearer ' . apiSecret(),
+        'Accept' => 'application/json'
+    ])->post('https://storesas.devihospitals.in/api/product/addupdate', $product);*/
     dd($response);
     die;
     return $response;
