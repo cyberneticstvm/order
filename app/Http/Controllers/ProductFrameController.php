@@ -116,22 +116,24 @@ class ProductFrameController extends Controller
         ]);
         $input = $request->except(array('collection_id'));
         $input['updated_by'] = $request->user()->id;
-        try {
-            $product = Product::findOrFail($id);
-            $product->update($input);
-            if (getSubDomain() == 'store')
-                $saspdct = addProductToSASStore($product);
-            foreach ($request->collection_id as $key => $collection) :
-                $data[] = [
-                    'product_id' => $product->id,
-                    'collection_id' => $collection,
-                ];
-            endforeach;
-            ProductCollection::where('product_id', $product->id)->delete();
-            ProductCollection::insert($data);
-        } catch (Exception $e) {
+        //try {
+        $product = Product::findOrFail($id);
+        $product->update($input);
+        if (getSubDomain() == 'store')
+            $saspdct = addProductToSASStore($product);
+        dd($saspdct);
+        die;
+        foreach ($request->collection_id as $key => $collection) :
+            $data[] = [
+                'product_id' => $product->id,
+                'collection_id' => $collection,
+            ];
+        endforeach;
+        ProductCollection::where('product_id', $product->id)->delete();
+        ProductCollection::insert($data);
+        /*} catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
-        }
+        }*/
         return redirect()->route('product.frame')->with("success", "Product updated successfully!");
     }
 
