@@ -58,6 +58,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse($purchases as $key => $item)
+                                    @php($adjamount=0)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->purchase_number }}</td>
@@ -66,7 +67,7 @@
                                         <td>{{ $item->order_date?->format('d/M/Y') }}</td>
                                         <td>{{ $item->delivery_date?->format('d/m/Y') }}</td>
                                         <td>{{ $item->purchase_note }}</td>
-                                        <td class="text-end">{{ number_format($item->detail->sum('total') + $item->other_charges, 2) }}</td>
+                                        <td class="text-end">{{ number_format($item->detail->sum('total') + $item->other_charges + $adjamount, 2) }}</td>
                                         <td class="text-center"><a href="{{ route('report.export.purchase.pdf', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-danger"></i></a></td>
                                         <td>{!! $item->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('frame.purchase.edit', encrypt($item->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
