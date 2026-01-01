@@ -1087,4 +1087,5 @@ function addProductToSASStore($product)
         'Authorization' => 'Bearer ' . apiSecret(),
         'Accept' => 'application/json'
     ])->post('https://storesas.devihospitals.in/api/product/addupdate', $product);
+    return $response;
 }
