@@ -58,12 +58,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse($purchases as $key => $item)
-                                    @if($item->adjust_type == 'plus')
-                                    $adjamount = $item->adjust_amount;
-                                    @endif
-                                    @if($item->adjust_type == 'minus')
-                                    $adjamount = -abs($item->adjust_amount);
-                                    @endif
+
 
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
