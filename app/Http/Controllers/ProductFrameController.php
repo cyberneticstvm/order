@@ -6,6 +6,7 @@ use App\Models\Manufaturer;
 use App\Models\Product;
 use App\Models\ProductCollection;
 use App\Models\ProductSubcategory;
+use Exception;
 use Illuminate\Http\Request;
 
 class ProductFrameController extends Controller
@@ -62,16 +63,20 @@ class ProductFrameController extends Controller
         $input['created_by'] = $request->user()->id;
         $input['updated_by'] = $request->user()->id;
         $input['category'] = 'frame';
-        //$product = Product::create($input);
-        addProductToSASStore($input);
-        /*$data = [];
-        foreach ($request->collection_id as $key => $collection) :
-            $data[] = [
-                'product_id' => $product->id,
-                'collection_id' => $collection,
-            ];
-        endforeach;
-        ProductCollection::insert($data);*/
+        try {
+            $product = Product::create($input);
+            $saspdct = addProductToSASStore($product);
+            $data = [];
+            foreach ($request->collection_id as $key => $collection) :
+                $data[] = [
+                    'product_id' => $product->id,
+                    'collection_id' => $collection,
+                ];
+            endforeach;
+            ProductCollection::insert($data);
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
         return redirect()->route('product.frame')->with("success", "Product created successfully!");
     }
 
@@ -110,17 +115,21 @@ class ProductFrameController extends Controller
         ]);
         $input = $request->except(array('collection_id'));
         $input['updated_by'] = $request->user()->id;
-        $product = Product::findOrFail($id);
-        $product->update($input);
-        addProductToSASStore($input);
-        foreach ($request->collection_id as $key => $collection) :
-            $data[] = [
-                'product_id' => $product->id,
-                'collection_id' => $collection,
-            ];
-        endforeach;
-        ProductCollection::where('product_id', $product->id)->delete();
-        ProductCollection::insert($data);
+        try {
+            $product = Product::findOrFail($id);
+            $product->update($input);
+            $saspdct = addProductToSASStore($product);
+            foreach ($request->collection_id as $key => $collection) :
+                $data[] = [
+                    'product_id' => $product->id,
+                    'collection_id' => $collection,
+                ];
+            endforeach;
+            ProductCollection::where('product_id', $product->id)->delete();
+            ProductCollection::insert($data);
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
+        }
         return redirect()->route('product.frame')->with("success", "Product updated successfully!");
     }
 

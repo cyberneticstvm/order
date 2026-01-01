@@ -1076,10 +1076,10 @@ function orderUpdateType($request, $id)
     return $msg;
 }
 
-function addProductToSASStore($data)
+function addProductToSASStore($product)
 {
     $response = Http::withHeaders([
         'Authorization' => 'Bearer ' . apiSecret(),
         'Accept' => 'application/json'
-    ])->post('https://storesas.devihospitals.in/api/product/addupdate', $data);
+    ])->post('https://storesas.devihospitals.in/api/product/addupdate', $product);
 }
