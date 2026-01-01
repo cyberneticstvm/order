@@ -57,14 +57,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($purchases as $key => $item)
+                                    @forelse($purchases as $key => $item)
                                     @php
                                     $adjamount = 0
                                     @endphp
                                     @if($item->adjust_type == 'plus')
-                                    $adjamount = $item->adjust_amount;
+                                    $adjamount = $item->adjust_amount
                                     @elseif($item->adjust_type == 'minus')
-                                    $adjamount = -abs($item->adjust_amount);
+                                    $adjamount = -abs($item->adjust_amount)
                                     @endif
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
@@ -80,7 +80,8 @@
                                         <td class="text-center"><a href="{{ route('frame.purchase.edit', encrypt($item->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center"><a href="{{ route('frame.purchase.delete', encrypt($item->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
                                     </tr>
-                                    @endforeach
+                                    @empty
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
