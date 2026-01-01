@@ -58,9 +58,6 @@
                                 </thead>
                                 <tbody>
                                     @forelse($purchases as $key => $item)
-                                    @php
-                                    $adjamount = 0;
-                                    @endphp
                                     @if($item->adjust_type == 'plus')
                                     $adjamount = $item->adjust_amount;
                                     @endif
