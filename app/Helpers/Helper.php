@@ -1086,13 +1086,13 @@ function addProductToSASStore($product)
     /*$response = Http::withHeaders([
         'Authorization' => 'Bearer ' . apiSecret(),
         'Accept' => 'application/json'
-    ])->acceptJson()->post('https://storesas.devihospitals.in/api/product/addupdate/' . apiSecret(), [
+    ])->acceptJson()->post('https://storesas.devihospitals.in/api/product/addupdate/', [
         'product' => $product,
     ]);*/
     $response = Http::withHeaders([
         'Authorization' => 'Bearer ' . apiSecret(),
         'Accept' => 'application/json'
-    ])->post('https://storesas.devihospitals.in/api/product/addupdate/' . apiSecret(), [
+    ])->post('https://storesas.devihospitals.in/api/product/addupdate/', [
         'product' => $product,
     ]);
     dd($response->json());
