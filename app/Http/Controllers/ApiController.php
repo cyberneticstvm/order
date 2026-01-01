@@ -107,10 +107,12 @@ class ApiController extends Controller
 
     function updateProduct(Request $request)
     {
-        $data = $request->json()->all();
-        $product = Product::updateOrCreate(
-            ['id' => $data['product']->id],
-            $data['product']
+        return response()->json([
+            'pid' => $request->product->id,
+        ]);
+        /*$product = Product::updateOrCreate(
+            ['id' => $request->product->id],
+            $request->product
         );
         if ($product):
             return response()->json([
@@ -122,6 +124,6 @@ class ApiController extends Controller
                 'status' => false,
                 'message' => "error",
             ], 503);
-        endif;
+        endif;*/
     }
 }
