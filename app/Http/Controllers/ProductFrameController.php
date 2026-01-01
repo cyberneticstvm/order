@@ -121,7 +121,7 @@ class ProductFrameController extends Controller
         $product->update($input);
         if (getSubDomain() == 'store')
             $saspdct = addProductToSASStore($product);
-        dd($saspdct);
+        dd(getSubDomain());
         die;
         foreach ($request->collection_id as $key => $collection) :
             $data[] = [
