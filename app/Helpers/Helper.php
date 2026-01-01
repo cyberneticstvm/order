@@ -1098,7 +1098,7 @@ function addProductToSASStore($product)
     $response = Http::post('https://storesas.devihospitals.in/api/product/addupdate', [
         'product' => $product,
     ]);
-    dd($response);
+    dd($response->json());
     die;
     return $response;
 }
