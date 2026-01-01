@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Branch;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Product;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -106,7 +107,6 @@ class ApiController extends Controller
 
     function updateProduct(Request $request)
     {
-        dd($request);
-        die;
+        $product = Product::create($request);
     }
 }

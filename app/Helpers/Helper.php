@@ -1078,11 +1078,8 @@ function orderUpdateType($request, $id)
 
 function addProductToSASStore($data)
 {
-    $subdomain = env('SUBDOMAIN');
-    if ($subdomain != 'store') {
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . apiSecret(),
-            'Accept' => 'application/json'
-        ])->post('https://storesas.devihospitals.in/api/product/addupdate', $data);
-    }
+    $response = Http::withHeaders([
+        'Authorization' => 'Bearer ' . apiSecret(),
+        'Accept' => 'application/json'
+    ])->post('https://storesas.devihospitals.in/api/product/addupdate', $data);
 }
