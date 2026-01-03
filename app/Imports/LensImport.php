@@ -26,7 +26,7 @@ class LensImport implements ToModel, WithStartRow
             $material = ProductSubcategory::where('category', 'lens')->where('name', $row[3])->where('attribute', 'material')->first();
             $coating = ProductSubcategory::where('category', 'lens')->where('name', $row[4])->where('attribute', 'coating')->first();
             if ((!$product) && $type && $material && $coating) :
-                return new Product([
+                $pdct = new Product([
                     'name' => $row[0],
                     'code' => $row[1],
                     'category' => 'lens',
@@ -42,6 +42,9 @@ class LensImport implements ToModel, WithStartRow
                     'created_by' => Auth::id(),
                     'updated_by' => Auth::id(),
                 ]);
+                if (getSubDomain() == 'store')
+                    addProductToSASStore($product);
+                return $pdct;
             else :
                 $this->data[] = [
                     'Product_Name' => $row[0],

@@ -28,7 +28,7 @@ class FrameImport implements ToModel, WithStartRow
             $color = ProductSubcategory::where('category', 'frame')->where('name', $row[14])->where('attribute', 'colour')->first();
             $collection = ProductSubcategory::where('category', 'frame')->where('name', $row[13])->where('attribute', 'collection')->first();
             if ((!$product) && $type && $shape && $material && $color && $collection) :
-                return new Product([
+                $pdct = new Product([
                     'name' => $row[0],
                     'code' => $row[1],
                     'category' => 'frame',
@@ -48,6 +48,9 @@ class FrameImport implements ToModel, WithStartRow
                     'created_by' => Auth::id(),
                     'updated_by' => Auth::id(),
                 ]);
+                if (getSubDomain() == 'store')
+                    addProductToSASStore($product);
+                return $pdct;
             else :
                 $this->data[] = [
                     'Product_Name' => $row[0],

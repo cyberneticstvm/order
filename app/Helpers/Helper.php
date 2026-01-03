@@ -1003,7 +1003,7 @@ function generateInvoiceForOrder(string $id)
 
 function getLastId($category)
 {
-    return DB::table('products')->selectRaw("IFNULL(MAX(CAST(SUBSTR(code, 2) AS INTEGER)), 1) AS pid")->where('category', $category)->first()->pid;
+    return DB::table('products')->selectRaw("IFNULL(MAX(CAST(SUBSTR(code, 2) AS SIGNED)), 1) AS pid")->where('category', $category)->first()->pid;
 }
 
 function cancelOrder($oid)
