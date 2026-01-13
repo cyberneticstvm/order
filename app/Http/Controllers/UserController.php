@@ -65,7 +65,7 @@ class UserController extends Controller
                 Auth::logout();
                 return redirect()->route('login')->with("error", "Mobile access has been restricted for this login");
             endif;
-            if (settings()->enable_ip_info == 1 && $request->place_id)
+            if (settings()->enable_ip_info == 1)
                 $this->loginLog($request);
             Session::put('uagent', $request->userAgent());
             return redirect()->route('dashboard')->withSuccess(Auth::user()->name . " logged in successfully!");
