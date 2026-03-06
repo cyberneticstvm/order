@@ -725,14 +725,16 @@ class AjaxController extends Controller
             if ($products):
                 foreach ($products->where("balanceQty", ">", 0) as $key => $item):
                     $purchase = PurchaseDetail::where("product_id", $item->id)->latest()->first();
-                    $data .= "<tr>";
-                    $data .= "<td>" . $key + 1 . "</td>";
-                    $data .= "<td>" . $purchase?->id ?? '' . "</td>";
-                    $data .= "<td>" . $item?->name ?? '' . "</td>";
-                    $data .= "<td>" . $item?->balanceQty . "</td>";
-                    $data .= "<td><input type='number' class='form-control no-border' name='ret_qty[]' placeholder='0'></td>";
-                    $data .= "<td></td>";
-                    $data .= "</tr>";
+                    if ($purchase):
+                        $data .= "<tr>";
+                        $data .= "<td>" . $key + 1 . "</td>";
+                        $data .= "<td>" . $purchase?->id ?? '' . "</td>";
+                        $data .= "<td>" . $item?->name ?? '' . "</td>";
+                        $data .= "<td>" . $item?->balanceQty . "</td>";
+                        $data .= "<td><input type='number' class='form-control no-border' name='ret_qty[]' placeholder='0'></td>";
+                        $data .= "<td></td>";
+                        $data .= "</tr>";
+                    endif;
                 endforeach;
             else:
                 $data .= "<tr>";
