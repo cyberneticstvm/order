@@ -721,7 +721,7 @@ class AjaxController extends Controller
                 $data .= "</tr>";
             endif;
         else:
-            $products = getInventory($branch->id ?? 0, 0, 0);
+            $products = getInventory($branch->id ?? 0, 'frame', 0);
             if ($products):
                 foreach ($products as $key => $item):
                     $data .= "<tr>";
