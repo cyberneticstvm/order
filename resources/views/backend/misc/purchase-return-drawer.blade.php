@@ -33,7 +33,7 @@
                                     <td><input type="number" class="form-control" min='' max='' step="any" placeholder="0.00"></td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" class="form-control" placeholder="Notes"></td>
+                                    <td colspan="7"><input type="text" class="form-control" placeholder="Notes"></td>
                                 </tr>
                             </tfoot>
                         </table>
