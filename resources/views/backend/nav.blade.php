@@ -305,7 +305,8 @@
                         Menu::new()->addClass('nav-sub-childmenu submenu-content')
                         ->linkIfCan('product-frame-list', route('product.frame'), 'Frame Register')
                         ->linkIfCan('purchase-frame-list', route('frame.purchase'), 'Frame Purchase')
-                        ->linkIfCan('frame-transfer-list', route('frame.transfer'), 'Frame Transfer');
+                        ->linkIfCan('frame-transfer-list', route('frame.transfer'), 'Frame Transfer')
+                        ->linkIfCan('purchase-return-list', route('purchase.return'), 'Purchase Return');
                     }}
                 </li>
                 <li><a class="submenu-title" href="javascript:void(0)">Lens<span class="sub-arrow"><i class="fa fa-angle-right"></i></span></a>

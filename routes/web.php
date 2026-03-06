@@ -40,6 +40,7 @@ use App\Http\Controllers\PurchaseFrameController;
 use App\Http\Controllers\PurchaseLensController;
 use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\PurchasePharmacyController;
+use App\Http\Controllers\PurchaseReturnController;
 use App\Http\Controllers\PurchaseSolutionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
@@ -210,6 +211,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/offer/product/save', 'saveProductForOffer')->name('ajax.offer.product.save');
         Route::post('/validate/royalcard', 'validateRoyaltyCard')->name('ajax.validate.royalty.card');
         Route::post('/payment/qr', 'generatePaymentQr')->name('generate.payment.qr');
+
+        Route::get('preturn', 'getPurchaseReturn')->name('get.purchase.return');
     });
 
     Route::prefix('/backend')->controller(HelperController::class)->group(function () {
@@ -660,6 +663,11 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/edit/{id}', 'edit')->name('solution.transfer.edit');
         Route::post('/edit/{id}', 'update')->name('solution.transfer.update');
         Route::get('/delete/{id}', 'destroy')->name('solution.transfer.delete');
+    });
+
+    Route::prefix('/backend/purchase/return')->controller(PurchaseReturnController::class)->group(function () {
+        Route::get('/', 'index')->name('purchase.return');
+        Route::post('/', 'store')->name('purchase.return.save');
     });
 
     Route::prefix('/backend/head')->controller(HeadController::class)->group(function () {

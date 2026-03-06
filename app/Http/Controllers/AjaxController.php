@@ -17,6 +17,7 @@ use App\Models\Payment;
 use App\Models\Power;
 use App\Models\Product;
 use App\Models\ProductCollection;
+use App\Models\ProductDamage;
 use App\Models\ProductSubcategory;
 use App\Models\PurchaseDetail;
 use App\Models\RoyaltyCardSetting;
@@ -693,6 +694,53 @@ class AjaxController extends Controller
         $qr = base64_encode(QrCode::format('svg')->size(150)->color($color[0], $color[1], $color[2])->errorCorrection('H')->generate('upi://pay?pa=' . $upi . '&pn=' . $pn . '&tn=' . $tn . '&am=' . ceil($am) . '&cu=INR'));
         return response()->json([
             'qrCode' => $qr,
+        ]);
+    }
+
+    public function getPurchaseReturn(Request $request)
+    {
+        $type = $request->type;
+        $branch = Branch::where("ho_master", 1)->first();
+        $data = "";
+        if ($type == "damage"):
+            $products = ProductDamage::whereNull("returned")->orWhere("returned", 0)->where("approved_status", 1)->selectRaw("id, product_id, qty, '$type' AS type")->get();
+            if (count($products) > 0):
+                foreach ($products as $key => $item):
+                    $data .= "<tr>";
+                    $data .= "<td>" . $key + 1 . "</td>";
+                    $data .= "<td></td>";
+                    $data .= "<td></td>";
+                    $data .= "<td></td>";
+                    $data .= "<td></td>";
+                    $data .= "<td></td>";
+                    $data .= "</tr>";
+                endforeach;
+            else:
+                $data .= "<tr>";
+                $data .= "<td colspan='6' class='text-center'>No records found!</td>";
+                $data .= "</tr>";
+            endif;
+        else:
+            $products = getInventory($branch->id ?? 0, 0, 0);
+            if (count($products) > 0):
+                foreach ($products as $key => $item):
+                    $data .= "<tr>";
+                    $data .= "<td>" . $key + 1 . "</td>";
+                    $data .= "<td></td>";
+                    $data .= "<td></td>";
+                    $data .= "<td></td>";
+                    $data .= "<td></td>";
+                    $data .= "<td></td>";
+                    $data .= "</tr>";
+                endforeach;
+            else:
+                $data .= "<tr>";
+                $data .= "<td colspan='6' class='text-center'>No records found!</td>";
+                $data .= "</tr>";
+            endif;
+        endif;
+        return response()->json([
+            'data' => $data,
         ]);
     }
 }

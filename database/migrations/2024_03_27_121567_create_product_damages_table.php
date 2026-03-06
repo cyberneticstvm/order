@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('approved_by')->nullable();
             $table->datetime('approved_at')->nullable();
             $table->text('remarks')->nullable();
+            $table->boolean('returned')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

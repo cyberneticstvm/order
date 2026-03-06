@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('batch_number')->nullable();
             $table->date('expiry_date')->nullable();
             $table->integer('qty')->default(0);
+            $table->integer('qty_returned')->default(0);
             $table->decimal('unit_price_mrp', 7, 2)->nullable();
             $table->decimal('unit_price_purchase', 7, 2)->nullable();
             $table->decimal('unit_price_sales', 7, 2)->nullable();

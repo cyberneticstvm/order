@@ -256,6 +256,20 @@ $(function () {
         $("#" + drawer).drawer('toggle');
     });
 
+    $(document).on("click", ".preturn", function () {
+        var drawer = $(this).data('drawer');       
+        let type = $(this).data('type');       
+        $.ajax({
+            type: 'GET',
+            url: '/ajax/preturn',
+            data: {'type': type},
+            success: function (res) {
+                $(".output").html(res.type)
+                $("#" + drawer).drawer('toggle');
+            }
+        });
+    });
+
     $(document).on("click", ".payment", function () {
         var drawer = $(this).data('drawer');
         $("#vehicle_id").val($(this).data('vid'));        
