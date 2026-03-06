@@ -66,9 +66,9 @@
                                         <td>{{ $return->created_at->format("d.m.Y") }}</td>
                                         <td>{{ $return->notes }}</td>
                                         <td>{{ $return->rtype }}</td>
-                                        <td class="text-end">{{ return->courier_charges }}</td>
-                                        <td class="text-end">{{ return->other_charges }}</td>
-                                        <td class="text-end">{{ number_format(return->courier_charges + return->courier_charges + $return->details->sum('amount'), 2) }}</td>
+                                        <td class="text-end">{{ $return->courier_charges }}</td>
+                                        <td class="text-end">{{ $return->other_charges }}</td>
+                                        <td class="text-end">{{ number_format($return->courier_charges + $return->courier_charges + $return->details->sum('amount'), 2) }}</td>
                                     </tr>
                                     @empty
                                     @endforelse
