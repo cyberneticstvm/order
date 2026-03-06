@@ -734,7 +734,7 @@ class AjaxController extends Controller
                 foreach ($products->where("balanceQty", ">", 0) as $key => $item):
                     $purchase = PurchaseDetail::where("product_id", $item->id)->latest()->first();
                     if ($purchase):
-                        $data .= "<input type='hidden' name='rtype_ids[]' value='" . $purchase->id . "' />";
+                        $data .= "<input type='hidden' name='rtype_ids[]' value='" . $purchase?->id . "' />";
                         $data .= "<input type='hidden' name='supplier_ids[]' value='" . $purchase?->purchase?->supplier?->id . "' />";
                         $data .= "<input type='hidden' name='product_ids[]' value='" . $item->product->id . "' />";
                         $data .= "<tr>";
