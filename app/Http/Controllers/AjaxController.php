@@ -703,7 +703,7 @@ class AjaxController extends Controller
         $branch = Branch::where("ho_master", 1)->first();
         $data = "<input type='hidden' name='rtype' value='" . $type . "' />";
         if ($type == "damage"):
-            $products = ProductDamage::whereNull("returned")->orWhere("returned", 0)->where("approved_status", 1)->selectRaw("id, product_id, qty, '$type' AS type")->get();
+            $products = ProductDamage::whereNull("returned")->orWhere("returned", 0)->where("approved_status", 1)->selectRaw("id, product_id, qty, '$type' AS type")->latest()->get();
             if (count($products) > 0):
                 foreach ($products as $key => $item):
                     $purchase = PurchaseDetail::where("product_id", $item->product_id)->latest()->first();
