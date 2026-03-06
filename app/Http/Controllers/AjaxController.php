@@ -706,19 +706,22 @@ class AjaxController extends Controller
             $products = ProductDamage::whereNull("returned")->orWhere("returned", 0)->where("approved_status", 1)->selectRaw("id, product_id, qty, '$type' AS type")->get();
             if (count($products) > 0):
                 foreach ($products as $key => $item):
-                    $data .= "<tr>";
-                    $data .= "<td>" . $key + 1 . "</td>";
-                    $data .= "<td></td>";
-                    $data .= "<td></td>";
-                    $data .= "<td></td>";
-                    $data .= "<td></td>";
-                    $data .= "<td></td>";
-                    $data .= "<td></td>";
-                    $data .= "</tr>";
+                    $purchase = PurchaseDetail::where("product_id", $item->product_id)->latest()->first();
+                    if ($purchase):
+                        $data .= "<tr>";
+                        $data .= "<td>" . $key + 1 . "</td>";
+                        $data .= "<td>" . $purchase?->purchase?->purchase_number ?? '' . "</td>";
+                        $data .= "<td>" . $purchase?->purchase?->supplier?->name ?? '' . "</td>";
+                        $data .= "<td>" . $item->product->name . "</td>";
+                        $data .= "<td>" . $item->qty . "</td>";
+                        $data .= "<td>" . $purchase?->unit_price_purchase . "</td>";
+                        $data .= "<td><input type='number' class='form-control no-border' name='ret_qty[]' placeholder='0' min='' max='" . $item?->qty . "' step='1'></td>";
+                        $data .= "</tr>";
+                    endif;
                 endforeach;
             else:
                 $data .= "<tr>";
-                $data .= "<td colspan='6' class='text-center'>No records found!</td>";
+                $data .= "<td colspan='7' class='text-center'>No records found!</td>";
                 $data .= "</tr>";
             endif;
         else:
@@ -742,7 +745,7 @@ class AjaxController extends Controller
                 endforeach;
             else:
                 $data .= "<tr>";
-                $data .= "<td colspan='6' class='text-center'>No records found!</td>";
+                $data .= "<td colspan='7' class='text-center'>No records found!</td>";
                 $data .= "</tr>";
             endif;
         endif;
