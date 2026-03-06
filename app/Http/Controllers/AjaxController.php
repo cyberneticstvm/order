@@ -717,7 +717,7 @@ class AjaxController extends Controller
                         $data .= "<td>" . $purchase?->purchase?->supplier?->name ?? '' . "</td>";
                         $data .= "<td>" . $item->product->name . "</td>";
                         $data .= "<td>" . $item->qty . "</td>";
-                        $data .= "<td><input type='text' name='prices[]' value='" . $purchase?->unit_price_purchase . "' /></td>";
+                        $data .= "<td><input class='form-control text-end' type='text' name='prices[]' value='" . $purchase?->unit_price_purchase . "' readonly /></td>";
                         $data .= "<td><input type='number' class='form-control no-border' name='ret_qty[]' placeholder='0' min='' max='" . $item?->qty . "' step='1'></td>";
                         $data .= "</tr>";
                     endif;
@@ -743,7 +743,7 @@ class AjaxController extends Controller
                         $data .= "<td>" . $purchase?->purchase?->supplier?->name ?? '' . "</td>";
                         $data .= "<td>" . $item?->name ?? '' . "</td>";
                         $data .= "<td>" . $item?->balanceQty . "</td>";
-                        $data .= "<td><input type='text' name='prices[]' value='" . $purchase?->unit_price_purchase . "' /></td>";
+                        $data .= "<td><input type='text' class='form-control text-end' name='prices[]' value='" . $purchase?->unit_price_purchase . "' readonly /></td>";
                         $data .= "<td><input type='number' class='form-control no-border' name='ret_qty[]' placeholder='0' min='' max='" . $item?->balanceQty . "' step='1'></td>";
                         $data .= "</tr>";
                         $slno++;
