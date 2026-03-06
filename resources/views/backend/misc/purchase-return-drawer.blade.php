@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-12 text-end mt-3">
                         <button class="btn btn-secondary" onClick="$('#prDrawer').drawer('toggle');" type="button">Cancel</button>
-                        <button class="btn btn-submit btn-success btnAddOfferProduct" type="button">Save</button>
+                        <button class="btn btn-submit btn-success" type="button">Save</button>
                     </div>
                 </form>
             </div>
