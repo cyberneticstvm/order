@@ -7,6 +7,8 @@ use App\Models\PurchaseDetail;
 use App\Models\PurchaseReturn;
 use App\Models\PurchaseReturnDetail;
 use App\Models\SupplierAccount;
+use App\Models\Transfer;
+use App\Models\TransferDetails;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -64,8 +66,12 @@ class PurchaseReturnController extends Controller
                                 "returned" => true,
                             ]);
                         else:
-                            PurchaseDetail::where("id", $request->rtype_ids[$key])->update([
+                            $p = PurchaseDetail::where("id", $request->rtype_ids[$key])->first();
+                            $p->update([
                                 "qty_returned" => $request->ret_qty[$key],
+                            ]);
+                            TransferDetails::where("product_id", $item)->where("transfer_id", Transfer::where("purchase_id", $p->purchase_id)->first()->id)->update([
+                                "returned_qty" => $request->ret_qty[$key],
                             ]);
                         endif;
                         $tot += $request->ret_qty[$key] * $request->prices[$key];
