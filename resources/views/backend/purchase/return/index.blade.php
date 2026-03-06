@@ -48,10 +48,10 @@
                                     <tr>
                                         <th>SL No</th>
                                         <th>Return Id</th>
+                                        <th>Supplier</th>
                                         <th>Ret. Date</th>
                                         <th>Ret. Note</th>
                                         <th>Ret. Type</th>
-                                        <th>Returned By</th>
                                         <th>Courier Charges</th>
                                         <th>Other Charges</th>
                                         <th>Total</th>
@@ -61,14 +61,14 @@
                                     @forelse($returns as $key => $return)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $return->id }}</td>
+                                        <td>{{ $return->supplier->name }}</td>
+                                        <td>{{ $return->created_at->format("d.m.Y") }}</td>
+                                        <td>{{ $return->notes }}</td>
+                                        <td>{{ $return->rtype }}</td>
+                                        <td class="text-end">{{ return->courier_charges }}</td>
+                                        <td class="text-end">{{ return->other_charges }}</td>
+                                        <td class="text-end">{{ number_format(return->courier_charges + return->courier_charges + $return->details->sum('amount'), 2) }}</td>
                                     </tr>
                                     @empty
                                     @endforelse

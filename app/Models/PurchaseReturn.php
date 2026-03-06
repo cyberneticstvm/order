@@ -12,6 +12,11 @@ class PurchaseReturn extends Model
 
     protected $guarded = [];
 
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id', 'id');
+    }
+
     public function details()
     {
         return $this->hasMany(PurchaseReturnDetail::class, 'return_id', 'id');
