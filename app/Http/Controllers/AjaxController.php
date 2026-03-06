@@ -718,7 +718,7 @@ class AjaxController extends Controller
                         $data .= "<td>" . $item->product->name . "</td>";
                         $data .= "<td>" . $item->qty . "</td>";
                         $data .= "<td><input class='form-control text-end' type='text' name='prices[]' value='" . $purchase?->unit_price_purchase . "' readonly /></td>";
-                        $data .= "<td><input type='number' class='form-control no-border' name='ret_qty[]' placeholder='0' min='' max='" . $item?->qty . "' step='1'></td>";
+                        $data .= "<td><input type='number' class='form-control no-border' name='ret_qty[]' placeholder='0' min='" . $item?->qty . "' max='" . $item?->qty . "' step='1'></td>";
                         $data .= "</tr>";
                     endif;
                 endforeach;

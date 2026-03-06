@@ -17,6 +17,8 @@ return new class extends Migration
             $table->decimal("courier_charges")->default(0);
             $table->decimal("other_charges")->default(0);
             $table->string("rtype")->comment("purchase or damage");
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
