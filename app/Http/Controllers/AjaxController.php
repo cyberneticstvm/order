@@ -723,7 +723,7 @@ class AjaxController extends Controller
         else:
             $products = getInventory(6, 0, 'frame');
             if ($products):
-                foreach ($products as $key => $item):
+                foreach ($products->where("balanceQty", ">", 0) as $key => $item):
                     $data .= "<tr>";
                     $data .= "<td>" . $key + 1 . "</td>";
                     $data .= "<td></td>";
