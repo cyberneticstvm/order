@@ -727,7 +727,7 @@ class AjaxController extends Controller
                     $purchase = PurchaseDetail::where("product_id", $item->id)->latest()->first();
                     $data .= "<tr>";
                     $data .= "<td>" . $key + 1 . "</td>";
-                    $data .= "<td>" . $item->id . "</td>";
+                    $data .= "<td>" . $purchase?->id ?? '' . "</td>";
                     $data .= "<td>" . $item?->name ?? '' . "</td>";
                     $data .= "<td>" . $item?->balanceQty . "</td>";
                     $data .= "<td><input type='number' class='form-control no-border' name='ret_qty[]' placeholder='0'></td>";
