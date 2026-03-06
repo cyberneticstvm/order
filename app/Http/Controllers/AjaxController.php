@@ -734,8 +734,8 @@ class AjaxController extends Controller
                         $data .= "<td>" . $purchase?->purchase?->supplier?->name ?? '' . "</td>";
                         $data .= "<td>" . $item?->name ?? '' . "</td>";
                         $data .= "<td>" . $item?->balanceQty . "</td>";
-                        $data .= "<td><input type='number' class='form-control no-border' name='ret_qty[]' placeholder='0'></td>";
-                        $data .= "<td></td>";
+                        $data .= "<td><input type='number' class='form-control no-border' name='ret_qty[]' placeholder='0' min='' max='" . $item?->balanceQty . "' step='1'></td>";
+                        $data .= "<td>" . $purchase?->unit_price_purchase . "</td>";
                         $data .= "</tr>";
                         $slno++;
                     endif;
