@@ -78,8 +78,8 @@ class PurchaseReturnController extends Controller
                     "amount" => $tot + $request->courier_charges ?? 0 + $request->other_charges ?? 0,
                     "type" => "dr"
                 ]);
-                return redirect()->back()->with("success", "Purchase return recorded successfully!");
             });
+            return redirect()->back()->with("success", "Purchase return recorded successfully!");
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage());
         }
