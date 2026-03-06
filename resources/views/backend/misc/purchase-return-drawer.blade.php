@@ -23,6 +23,19 @@
                             <tbody class="output">
 
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="6" class="text-end fw-bold">Courier Charges</td>
+                                    <td><input type="number" class="form-control" min='' max='' step="any" placeholder="0.00"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="text-end fw-bold">Other Charges</td>
+                                    <td><input type="number" class="form-control" min='' max='' step="any" placeholder="0.00"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" placeholder="Notes"></td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                     <div class="col-12 text-end mt-3">
