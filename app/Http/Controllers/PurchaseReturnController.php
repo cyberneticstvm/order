@@ -73,7 +73,7 @@ class PurchaseReturnController extends Controller
                 PurchaseReturnDetail::insert($data);
                 SupplierAccount::create([
                     "pr_id" => $return->id,
-                    "amount" => $tot + $request->courier_charges + $request->other_charges,
+                    "amount" => $tot + $request->courier_charges ?? 0 + $request->other_charges ?? 0,
                     "type" => "dr"
                 ]);
                 return redirect()->back()->with("success", "Purchase return recorded successfully!");
