@@ -713,6 +713,7 @@ class AjaxController extends Controller
                     $data .= "<td></td>";
                     $data .= "<td></td>";
                     $data .= "<td></td>";
+                    $data .= "<td></td>";
                     $data .= "</tr>";
                 endforeach;
             else:
@@ -730,6 +731,7 @@ class AjaxController extends Controller
                         $data .= "<tr>";
                         $data .= "<td>" . $slno . "</td>";
                         $data .= "<td>" . $purchase?->purchase?->purchase_number ?? '' . "</td>";
+                        $data .= "<td>" . $purchase?->purchase?->supplier?->name ?? '' . "</td>";
                         $data .= "<td>" . $item?->name ?? '' . "</td>";
                         $data .= "<td>" . $item?->balanceQty . "</td>";
                         $data .= "<td><input type='number' class='form-control no-border' name='ret_qty[]' placeholder='0'></td>";

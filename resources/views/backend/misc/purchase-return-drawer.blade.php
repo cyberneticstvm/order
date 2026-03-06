@@ -12,6 +12,7 @@
                             <thead>
                                 <tr>
                                     <th>SL No.</th>
+                                    <th>P/D No.</th>
                                     <th>Supplier</th>
                                     <th>Product</th>
                                     <th>Qty</th>
