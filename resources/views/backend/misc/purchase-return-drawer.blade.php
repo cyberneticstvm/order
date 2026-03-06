@@ -25,6 +25,12 @@
                             </tbody>
                             <tfoot>
                                 <tr>
+                                    <td colspan="6" class="text-end fw-bold">Supplier</td>
+                                    <td>
+                                        {{ html()->select($name = 'supplier_id', getSuppliers()->pluck("name", "id"), NULL)->class('form-control')->placeholder('Select')->required() }}
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td colspan="6" class="text-end fw-bold">Courier Charges</td>
                                     <td><input type="number" name="courier_charges" class="form-control" min='' max='' step="any" placeholder="0.00"></td>
                                 </tr>

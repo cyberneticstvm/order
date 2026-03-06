@@ -36,6 +36,7 @@ class PurchaseReturnController extends Controller
         try {
             DB::transaction(function () use ($request) {
                 $return = PurchaseReturn::create([
+                    "supplier_id" => $request->supplier_id,
                     'notes' => $request->notes,
                     'courier_charges' => $request->courier_charges ?? 0,
                     'other_charges' => $request->other_charges ?? 0,
@@ -72,6 +73,7 @@ class PurchaseReturnController extends Controller
                 endforeach;
                 PurchaseReturnDetail::insert($data);
                 SupplierAccount::create([
+                    "supplier_id" => $request->supplier_id,
                     "pr_id" => $return->id,
                     "amount" => $tot + $request->courier_charges ?? 0 + $request->other_charges ?? 0,
                     "type" => "dr"

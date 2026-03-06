@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('supplier_accounts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("supplier_id")->constrained()->onDelete("cascade");
             $table->unsignedBigInteger("pr_id")->comment("purchase / return id");
             $table->decimal("amount", 10, 2)->default(0);
             $table->string("type")->comment("cr or dr")->nullable();

@@ -27,6 +27,7 @@ use App\Models\Product;
 use App\Models\ProductSubcategory;
 use App\Models\PromotionSchedule;
 use App\Models\Setting;
+use App\Models\Supplier;
 use App\Models\Transfer;
 use App\Models\UserBranch;
 use App\Models\VehiclePayment;
@@ -1090,4 +1091,9 @@ function addProductToSASStore($product)
         'product' => $product,
     ]);
     return $response;
+}
+
+function getSuppliers()
+{
+    return Supplier::all();
 }
