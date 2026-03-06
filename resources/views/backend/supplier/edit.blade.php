@@ -9,10 +9,10 @@
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">                                       
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
-                            </svg></a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
+                                </svg></a></li>
                         <li class="breadcrumb-item">Supplier</li>
                         <li class="breadcrumb-item active">Update</li>
                     </ol>
@@ -26,7 +26,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                    <h5>Update Supplier</h5><span>Update Supplier</span>
+                        <h5>Update Supplier</h5><span>Update Supplier</span>
                     </div>
                     <div class="card-body">
                         <div class="card-wrapper">
@@ -36,35 +36,35 @@
                                     <label class="form-label req">Supplier Name</label>
                                     {{ html()->text($name = 'name', $value = $supplier->name)->class('form-control')->placeholder('Supplier Name') }}
                                     @error('name')
-                                        <small class="text-danger">{{ $errors->first('name') }}</small>
+                                    <small class="text-danger">{{ $errors->first('name') }}</small>
                                     @enderror
-                                </div>                                
+                                </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Contact Person</label>
                                     {{ html()->text($name = 'contact_person', $value = $supplier->contact_person)->class('form-control')->placeholder('Contact Person') }}
                                     @error('contact_person')
-                                        <small class="text-danger">{{ $errors->first('contact_person') }}</small>
+                                    <small class="text-danger">{{ $errors->first('contact_person') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Mobile Number</label>
                                     {{ html()->text($name = 'mobile', $value = $supplier->mobile)->class('form-control')->maxlength(10)->placeholder('Mobile Number') }}
                                     @error('mobile')
-                                        <small class="text-danger">{{ $errors->first('mobile') }}</small>
+                                    <small class="text-danger">{{ $errors->first('mobile') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Email</label>
                                     {{ html()->email($name = 'email', $value = $supplier->email)->class('form-control')->placeholder('Email') }}
                                     @error('email')
-                                        <small class="text-danger">{{ $errors->first('email') }}</small>
+                                    <small class="text-danger">{{ $errors->first('email') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label req">Address</label>
                                     {{ html()->text($name = 'address', $value = $supplier->address)->class('form-control')->placeholder('Address') }}
                                     @error('address')
-                                        <small class="text-danger">{{ $errors->first('address') }}</small>
+                                    <small class="text-danger">{{ $errors->first('address') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
@@ -75,8 +75,12 @@
                                     <label class="form-label req">Expiry Notification </label> <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title="<strong>Notify product expiry in days.</strong>"><i class="fa fa-info txt-info"></i></a>
                                     {{ html()->number($name = 'expiry_notification', $value = $supplier->expiry_notification)->class('form-control')->placeholder('0 Days') }}
                                     @error('expiry_notification')
-                                        <small class="text-danger">{{ $errors->first('expiry_notification') }}</small>
+                                    <small class="text-danger">{{ $errors->first('expiry_notification') }}</small>
                                     @enderror
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Opening Balance</label>
+                                    {{ html()->number($name = 'opening_balance', $value = $supplier->opening_balance, '', '', '')->class('form-control')->placeholder('0.00') }}
                                 </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>

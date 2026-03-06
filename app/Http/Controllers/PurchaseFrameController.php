@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
 use App\Models\Supplier;
+use App\Models\SupplierAccount;
 use App\Models\Transfer;
 use App\Models\TransferDetails;
 use Carbon\Carbon;
@@ -82,6 +83,7 @@ class PurchaseFrameController extends Controller
                     'updated_by' => $request->user()->id,
                 ]);
                 $data = [];
+                $tot = 0;
                 foreach ($request->product_id as $key => $item) :
                     $product = Product::find($item);
                     $tax = ($request->purchase_price[$key] * $request->qty[$key] * $product->tax_percentage) / 100;
@@ -99,6 +101,7 @@ class PurchaseFrameController extends Controller
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
+                    $tot += ($request->purchase_price[$key] * $request->qty[$key]) + $tax;
                 endforeach;
                 PurchaseDetail::insert($data);
                 $transfer = Transfer::create([
@@ -124,6 +127,12 @@ class PurchaseFrameController extends Controller
                     ];
                 endforeach;
                 TransferDetails::insert($data);
+                SupplierAccount::create([
+                    "supplier_id" => $request->supplier_id,
+                    "pr_id" => $purchase->id,
+                    "amount" => $tot,
+                    "type" => "cr"
+                ]);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
@@ -186,6 +195,7 @@ class PurchaseFrameController extends Controller
                     'updated_by' => $request->user()->id,
                 ]);
                 $data = [];
+                $tot = 0;
                 foreach ($request->product_id as $key => $item) :
                     $product = Product::find($item);
                     $tax = ($request->purchase_price[$key] * $request->qty[$key] * $product->tax_percentage) / 100;
@@ -203,6 +213,7 @@ class PurchaseFrameController extends Controller
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
+                    $tot += ($request->purchase_price[$key] * $request->qty[$key]) + $tax;
                 endforeach;
                 PurchaseDetail::where('purchase_id', $id)->delete();
                 PurchaseDetail::insert($data);
@@ -232,6 +243,13 @@ class PurchaseFrameController extends Controller
                     ];
                 endforeach;
                 TransferDetails::insert($data);
+                SupplierAccount::where("supplier_id", $request->supplier_id)->where("pr_id", $id)->delete();
+                SupplierAccount::create([
+                    "supplier_id" => $request->supplier_id,
+                    "pr_id" => $id,
+                    "amount" => $tot,
+                    "type" => "cr"
+                ]);
             });
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage())->withInput($request->all());
