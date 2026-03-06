@@ -701,20 +701,23 @@ class AjaxController extends Controller
     {
         $type = $request->type;
         $branch = Branch::where("ho_master", 1)->first();
-        $data = "";
+        $data = "<input type='hidden' name='rtype' value='" . $type . "' />";
         if ($type == "damage"):
             $products = ProductDamage::whereNull("returned")->orWhere("returned", 0)->where("approved_status", 1)->selectRaw("id, product_id, qty, '$type' AS type")->get();
             if (count($products) > 0):
                 foreach ($products as $key => $item):
                     $purchase = PurchaseDetail::where("product_id", $item->product_id)->latest()->first();
                     if ($purchase):
+                        $data .= "<input type='hidden' name='rtype_ids[]' value='" . $item->id . "' />";
+                        $data .= "<input type='hidden' name='supplier_ids[]' value='" . $purchase?->purchase?->supplier?->id . "' />";
+                        $data .= "<input type='hidden' name='product_ids[]' value='" . $item->product->id . "' />";
                         $data .= "<tr>";
                         $data .= "<td>" . $key + 1 . "</td>";
                         $data .= "<td>" . $purchase?->purchase?->purchase_number ?? '' . "</td>";
                         $data .= "<td>" . $purchase?->purchase?->supplier?->name ?? '' . "</td>";
                         $data .= "<td>" . $item->product->name . "</td>";
                         $data .= "<td>" . $item->qty . "</td>";
-                        $data .= "<td>" . $purchase?->unit_price_purchase . "</td>";
+                        $data .= "<td><input type='text' name='prices[]' value='" . $purchase?->unit_price_purchase . "' /></td>";
                         $data .= "<td><input type='number' class='form-control no-border' name='ret_qty[]' placeholder='0' min='' max='" . $item?->qty . "' step='1'></td>";
                         $data .= "</tr>";
                     endif;
@@ -731,13 +734,16 @@ class AjaxController extends Controller
                 foreach ($products->where("balanceQty", ">", 0) as $key => $item):
                     $purchase = PurchaseDetail::where("product_id", $item->id)->latest()->first();
                     if ($purchase):
+                        $data .= "<input type='hidden' name='rtype_ids[]' value='" . $purchase->id . "' />";
+                        $data .= "<input type='hidden' name='supplier_ids[]' value='" . $purchase?->purchase?->supplier?->id . "' />";
+                        $data .= "<input type='hidden' name='product_ids[]' value='" . $item->product->id . "' />";
                         $data .= "<tr>";
                         $data .= "<td>" . $slno . "</td>";
                         $data .= "<td>" . $purchase?->purchase?->purchase_number ?? '' . "</td>";
                         $data .= "<td>" . $purchase?->purchase?->supplier?->name ?? '' . "</td>";
                         $data .= "<td>" . $item?->name ?? '' . "</td>";
                         $data .= "<td>" . $item?->balanceQty . "</td>";
-                        $data .= "<td>" . $purchase?->unit_price_purchase . "</td>";
+                        $data .= "<td><input type='text' name='prices[]' value='" . $purchase?->unit_price_purchase . "' /></td>";
                         $data .= "<td><input type='number' class='form-control no-border' name='ret_qty[]' placeholder='0' min='' max='" . $item?->balanceQty . "' step='1'></td>";
                         $data .= "</tr>";
                         $slno++;
