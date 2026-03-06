@@ -24,6 +24,8 @@ class PurchaseReturnController extends Controller
 
     function store(Request $request)
     {
-        //
+        return response()->json([
+            'success' => 'hi',
+        ]);
     }
 }
