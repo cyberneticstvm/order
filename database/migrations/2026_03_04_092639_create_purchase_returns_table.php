@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('purchase_returns', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("supplier_id")->constrained()->onDelete("cascade");
             $table->string("notes")->nullable();
             $table->decimal("courier_charges")->default(0);
             $table->decimal("other_charges")->default(0);

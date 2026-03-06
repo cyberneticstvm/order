@@ -24,7 +24,7 @@ class PurchaseReturnController extends Controller
 
     function index()
     {
-        $returns = PurchaseReturn::all();
+        $returns = PurchaseReturn::latest()->all();
         return view('backend.purchase.return.index', compact('returns'));
     }
 
