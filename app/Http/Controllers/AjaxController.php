@@ -723,17 +723,19 @@ class AjaxController extends Controller
         else:
             $products = getInventory(6, 0, 'frame');
             if ($products):
+                $slno = 0;
                 foreach ($products->where("balanceQty", ">", 0) as $key => $item):
                     $purchase = PurchaseDetail::where("product_id", $item->id)->latest()->first();
                     if ($purchase):
                         $data .= "<tr>";
-                        $data .= "<td>" . $key + 1 . "</td>";
+                        $data .= "<td>" . $slno . "</td>";
                         $data .= "<td>" . $purchase?->id ?? '' . "</td>";
                         $data .= "<td>" . $item?->name ?? '' . "</td>";
                         $data .= "<td>" . $item?->balanceQty . "</td>";
                         $data .= "<td><input type='number' class='form-control no-border' name='ret_qty[]' placeholder='0'></td>";
                         $data .= "<td></td>";
                         $data .= "</tr>";
+                        $slno++;
                     endif;
                 endforeach;
             else:
