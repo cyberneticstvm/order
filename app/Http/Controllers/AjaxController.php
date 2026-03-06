@@ -736,7 +736,7 @@ class AjaxController extends Controller
                     if ($purchase):
                         $data .= "<input type='hidden' name='rtype_ids[]' value='" . $purchase?->id . "' />";
                         $data .= "<input type='hidden' name='supplier_ids[]' value='" . $purchase?->purchase?->supplier?->id . "' />";
-
+                        $data .= "<input type='hidden' name='product_ids[]' value='" . $item->id . "' />";
                         $data .= "<tr>";
                         $data .= "<td>" . $slno . "</td>";
                         $data .= "<td>" . $purchase?->purchase?->purchase_number ?? '' . "</td>";
