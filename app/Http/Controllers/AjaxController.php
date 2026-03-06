@@ -722,7 +722,7 @@ class AjaxController extends Controller
             endif;
         else:
             $products = getInventory($branch->id ?? 0, 0, 0);
-            if (count($products) > 0):
+            if ($products):
                 foreach ($products as $key => $item):
                     $data .= "<tr>";
                     $data .= "<td>" . $key + 1 . "</td>";
