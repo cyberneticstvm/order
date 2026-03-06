@@ -264,7 +264,7 @@ $(function () {
             url: '/ajax/preturn',
             data: {'type': type},
             success: function (res) {
-                $(".output").html(res.type)
+                $(".output").html(res.data)
                 $("#" + drawer).drawer('toggle');
             }
         });
