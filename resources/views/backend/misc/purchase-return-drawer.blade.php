@@ -16,8 +16,8 @@
                                     <th>Supplier</th>
                                     <th>Product</th>
                                     <th>Qty</th>
-                                    <th>Ret. Qty</th>
                                     <th>Price/Qty</th>
+                                    <th>Ret. Qty</th>
                                 </tr>
                             </thead>
                             <tbody class="output">
