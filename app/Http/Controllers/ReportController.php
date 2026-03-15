@@ -156,7 +156,7 @@ class ReportController extends Controller
     {
         $branches = $this->branches;
         $data = collect();
-        $inputs = array('0', 'frame');
+        $inputs = array(Session::get('branch'), 'frame');
         return view('backend.report.stock', compact('branches', 'data', 'inputs'));
     }
 
