@@ -27,6 +27,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductDamage;
 use App\Models\Purchase;
+use App\Models\PurchaseDetail;
 use App\Models\SalesReturn;
 use App\Models\StockCompareTemp;
 use App\Models\Transfer;
@@ -365,6 +366,45 @@ class ImportExportController extends Controller
                         endif;
                     endforeach;
                     TransferDetails::insert($data);
+                    if (getSubDomain() == "storesas"):
+                        $purchase = Purchase::create([
+                            'category' => 'frame',
+                            'purchase_number' => purchaseId('frame')->pid,
+                            'order_date' => Carbon::today(),
+                            'delivery_date' => Carbon::today(),
+                            'supplier_id' => 2,
+                            'purchase_invoice_number' => null,
+                            'purchase_note' => null,
+                            'other_charges' => 0,
+                            'other_charges_desc' => null,
+                            'adjust_type' => null,
+                            'adjust_amount' => 0,
+                            'adjust_desc' => null,
+                            'branch_id' => $request->branch,
+                            'created_by' => $request->user()->id,
+                            'updated_by' => $request->user()->id,
+                        ]);
+                        $data = [];
+                        foreach ($products as $key => $item) :
+                            $product = Product::find($item->product_id);
+                            $tax = ($product->selling_price * $product->tax_percentage) / 100;
+                            $data[] = [
+                                'purchase_id' => $purchase->id,
+                                'product_id' => $product->id,
+                                'qty' => $item->qty,
+                                'unit_price_mrp' => $product->mrp,
+                                'unit_price_purchase' => $product->mrp,
+                                'unit_price_sales' => $product->selling_price,
+                                'discount' => 0,
+                                'tax_percentage' => $product->tax_percentage,
+                                'tax_amount' => $tax,
+                                'total' => $product->selling_price * $item->qty,
+                                'created_at' => Carbon::now(),
+                                'updated_at' => Carbon::now(),
+                            ];
+                        endforeach;
+                        PurchaseDetail::insert($data);
+                    endif;
                 });
             endif;
         } catch (Exception $e) {
