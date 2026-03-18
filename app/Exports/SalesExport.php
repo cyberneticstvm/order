@@ -38,7 +38,7 @@ class SalesExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
                 'gstin' => '',
                 'customer' => $data->name,
                 'type' => 'Sales',
-                'tvalue' => ($data->order_total * 100) / 105,
+                'tvalue' => number_format(($data->order_total * 100) / 105, 2),
                 'cgst' => $data->details()->sum('tax_amount') / 2,
                 'igst' => $data->details()->sum('tax_amount') / 2,
                 'net_amount' => $data->order_total,
