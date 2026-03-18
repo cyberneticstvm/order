@@ -38,7 +38,7 @@ class SalesExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
                 'gstin' => '',
                 'customer' => $data->name,
                 'type' => 'Sales',
-                'tvalue' => $data->invoice_total - $data->details()->sum('tax_amount'),
+                'tvalue' => ($data->order_total * 100) / 105,
                 'cgst' => $data->details()->sum('tax_amount') / 2,
                 'igst' => $data->details()->sum('tax_amount') / 2,
                 'net_amount' => $data->order_total,
@@ -49,11 +49,12 @@ class SalesExport implements FromCollection, WithHeadings, ShouldAutoSize, WithS
                 'place' => 'Kerala',
             ];
         });
+        //$data->invoice_total - $data->details()->sum('tax_amount'),
     }
 
     public function headings(): array
     {
-        return ['SL No', 'Bill No', 'Date', 'GSTIN', 'Customer Name', 'Type', 'Taxable Value', 'CGST', 'IGST', 'Net Total', 'Invoice Total', 'Remarks', 'State', 'Registration', 'Place'];
+        return ['SL No', 'Bill No', 'Date', 'GSTIN', 'Customer Name', 'Type', 'Taxable Value', 'CGST', 'SGST', 'Net Total', 'Invoice Total', 'Remarks', 'State', 'Registration', 'Place'];
     }
 
     public function styles(Worksheet $sheet)
