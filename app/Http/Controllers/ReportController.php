@@ -461,11 +461,17 @@ class ReportController extends Controller
 
     function hsn_product()
     {
-        //
+        $inputs = [date('Y-m-d'), date('Y-m-d'), '', Session::get('branch')];
+        $branches = $this->branches;
+        $records = collect();
+        return view('backend.report.product-hsn', compact('records', 'inputs', 'branches'));
     }
 
-    function hsn_product_fetch()
+    function hsn_product_fetch(Request $request)
     {
-        //
+        $inputs = [$request->from_date, $request->to_date, $request->hsn, $request->branch];
+        $branches = $this->branches;
+        $records = collect();
+        return view('backend.report.product-hsn', compact('records', 'inputs', 'branches'));
     }
 }

@@ -46,6 +46,10 @@
                                     <label class="form-label">HSN</label>
                                     {{ html()->select($name = 'hsn', array_slice(hsn(), 0, 2), ($inputs[2]) ?? old('hsn'))->class('form-control')->placeholder('Select') }}
                                 </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Branch</label>
+                                    {{ html()->select($name = 'branch', $branches, ($inputs[3]) ?? old('branch'))->class('form-control select2')->placeholder('Select') }}
+                                </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>
                                     <button class="btn btn-submit btn-success" type="submit">Fetch</button>
