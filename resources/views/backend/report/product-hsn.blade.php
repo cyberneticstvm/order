@@ -79,7 +79,7 @@
                                     @forelse($records as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ (in_array($item->hsn, ['re', 'le'])) ? 'Lens - '.$item->hsn : $item->hsn }} {{ hsn()[$item->hsn] }}</td>
+                                        <td>{{ (in_array($item->hsn, ['re', 'le'])) ? 'Lens - '.$item->hsn : $item->hsn }} | {{ hsn()[$item->hsn] }}</td>
                                         <td>{{ $item->qty }}</td>
                                     </tr>
                                     @empty
