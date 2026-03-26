@@ -76,7 +76,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($data as $key => $item)
+                                    @forelse($records as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $item->hsn }}</td>
