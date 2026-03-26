@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-wrapper">
-                            <form class="row g-3" method="post" action="{{ route('report.payment.fetch') }}">
+                            <form class="row g-3" method="post" action="{{ route('hsn.product.fetch') }}">
                                 @csrf
                                 <div class="col-md-2">
                                     <label class="form-label req">From Date</label>
