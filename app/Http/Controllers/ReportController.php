@@ -472,7 +472,7 @@ class ReportController extends Controller
         $inputs = [$request->from_date, $request->to_date, $request->hsn, $request->branch];
         $branches = $this->branches;
         $hsn = $request->hsn;
-        $records = DB::table("order_details")->leftJoin('orders AS o', 'o.id', 'order_details.order_id')->selectRaw("CASE WHEN $hsn = 'frame' THEN 'frame' WHEN $hsn = 'lens' THEN 'lens' ELSE 'All' END AS hsn, SUM(CASE WHEN $hsn = 'frame' THEN order_details.eye = 'frame' WHEN $hsn = 'lens' THEN order_details.eye IN('le', 're') ELSE order_details.eye IN('frame', 'le', 're') END) AS qty")->whereBetween("o,created_at", [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
+        $records = DB::table("order_details")->leftJoin('orders AS o', 'o.id', 'order_details.order_id')->selectRaw("CASE WHEN '$hsn' = 'frame' THEN 'frame' WHEN '$hsn' = 'lens' THEN 'lens' ELSE 'All' END AS hsn, SUM(CASE WHEN '$hsn' = 'frame' THEN order_details.eye = 'frame' WHEN '$hsn' = 'lens' THEN order_details.eye IN('le', 're') ELSE order_details.eye IN('frame', 'le', 're') END) AS qty")->whereBetween("o,created_at", [Carbon::parse($request->from_date)->startOfDay(), Carbon::parse($request->to_date)->endOfDay()])->when($request->branch > 0, function ($q) use ($request) {
             return $q->where('o.branch_id', $request->branch);
         })->groupBy("hsn")->get();
         dd($records);
