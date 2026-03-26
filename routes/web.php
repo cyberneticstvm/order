@@ -784,6 +784,8 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::post('/stock-movement', 'stockMovementFetch')->name('report.stock.movement.fetch');
         Route::get('/vehicle', 'exportVehicle')->name('vehicle.export');
         Route::post('/vehicle', 'fetchVehicle')->name('vehicle.export.fetch');
+        Route::get('/hsn', 'hsn_product')->name('hsn.product');
+        Route::post('/hsn', 'hsn_product_fetch')->name('hsn.product.fetch');
     });
 
     Route::prefix('/backend/voucher')->controller(VoucherController::class)->group(function () {

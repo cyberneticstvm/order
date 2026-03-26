@@ -53,6 +53,7 @@ class ReportController extends Controller
         $this->middleware('permission:report-order-by-price', ['only' => ['orderByPrice', 'orderByPriceFetch']]);
         $this->middleware('permission:report-stock-movement', ['only' => ['stockMovement', 'stockMovementFetch']]);
         $this->middleware('permission:report-vehicle-export', ['only' => ['exportVehicle', 'fetchVehicle']]);
+        $this->middleware('permission:report-product-hsn', ['only' => ['hsn_product', 'hsn_product_fetch']]);
 
         $this->middleware(function ($request, $next) {
             $brs = Branch::selectRaw("0 as id, 'All / Main Branch' as name");
@@ -456,5 +457,15 @@ class ReportController extends Controller
             return $q->where(Carbon::now()->diffInDays(Carbon::parse(VehiclePayment::where('vehicle_id', 'vehicles.id')->latest()->first()->created_at ?? Carbon::today()), '>', 'vehicles.payment_terms'));
         })*/
         return view('backend.report.vehicle', compact('records', 'inputs', 'branches'));
+    }
+
+    function hsn_product()
+    {
+        //
+    }
+
+    function hsn_product_fetch()
+    {
+        //
     }
 }
