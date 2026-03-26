@@ -73,6 +73,7 @@
                                         <th>SL No</th>
                                         <th>HSN</th>
                                         <th>Qty</th>
+                                        <th>Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -81,6 +82,7 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ (in_array($item->hsn, ['re', 'le'])) ? 'Lens - '.$item->hsn : $item->hsn }} | {{ hsn()[$item->hsn] }}</td>
                                         <td>{{ $item->qty }}</td>
+                                        <td>{{ number_format($item->total, 2) }}</td>
                                     </tr>
                                     @empty
                                     @endforelse
