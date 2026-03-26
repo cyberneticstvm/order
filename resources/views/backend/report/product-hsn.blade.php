@@ -67,7 +67,25 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive theme-scrollbar">
-
+                            <table class="display" id="dataTable" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>SL No</th>
+                                        <th>HSN</th>
+                                        <th>Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($data as $key => $item)
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $item->hsn }}</td>
+                                        <td>{{ $item->qty }}</td>
+                                    </tr>
+                                    @empty
+                                    @endforelse
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
