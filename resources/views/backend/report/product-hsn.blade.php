@@ -5,7 +5,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-6">
-                    <h3>Payments</h3>
+                    <h3>HSN</h3>
                 </div>
                 <div class="col-6">
                     <ol class="breadcrumb">
@@ -14,7 +14,7 @@
                                     <use href="{{ asset('/backend/assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg></a></li>
                         <li class="breadcrumb-item">Reports</li>
-                        <li class="breadcrumb-item active">Payments</li>
+                        <li class="breadcrumb-item active">HSN</li>
                     </ol>
                 </div>
             </div>
