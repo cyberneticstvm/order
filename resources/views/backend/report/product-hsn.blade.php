@@ -79,7 +79,7 @@
                                     @forelse($records as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $item->hsn }}</td>
+                                        <td>Lens - {{ $item->hsn }} | $inputs[2]</td>
                                         <td>{{ $item->qty }}</td>
                                     </tr>
                                     @empty
