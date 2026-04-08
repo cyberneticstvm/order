@@ -469,7 +469,10 @@ $(function () {
     });
 
     $(document).on("keyup", ".retqty", function () {
-        let dis = $(this); let qty = parseInt(dis.val()); let price = parseFloat(dis.parent().parent().find(".retval").text().replace(/\,/g, ''));
+        let dis = $(this);
+        let old_qty = parseInt(dis.parent().parent().find(".qty").text());
+        let qty = parseInt(dis.val()); 
+        let price = parseFloat(dis.parent().parent().find(".retval").text().replace(/\,/g, '')) / old_qty;
         dis.parent().parent().find(".custacc").val((parseFloat(qty * price) > 0) ? parseFloat(qty * price).toFixed(2) : 0.00);
     });
 
