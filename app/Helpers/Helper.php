@@ -52,9 +52,9 @@ function api_url()
     endif;
 }
 
-function domain_url()
+function domain_url($br)
 {
-    $branch = Branch::where('id', Session::get('branch'))->first();
+    $branch = Branch::where('id', Session::get('branch') ?? $br)->first();
     if ($branch->code == 'SAS1'):
         return "https://storesas.devihospitals.in";
     //return "https://store.devihospitals.in";
