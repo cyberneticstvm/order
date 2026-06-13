@@ -36,6 +36,8 @@
                                 <th>Vehicle Number</th>
                                 <th>Contact Number</th>
                                 <th>Last Payment Date</th>
+                                <th>Last Payment Amount</th>
+                                <th>Days Left</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,6 +47,8 @@
                                 <td>{{ $vehicle->reg_number }}</td>
                                 <td>{{ $vehicle->contact_number }}</td>
                                 <td>{{ $vehicle->payment->first()?->created_at?->format('d.M.Y') ?? 'Na' }}</td>
+                                <td class="text-success">{{ $vehicle->payment?->first()?->amount ?? '0.00' }}</td>
+                                <td class="text-success">{{ $vehicle->daysLeft() }} Days</td>
                             </tr>
                             @empty
                             @endforelse
