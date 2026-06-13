@@ -16,7 +16,7 @@
             <div class="col-12 text-center">
                 <img src="/public/backend/assets/images/logo/devi-logo.png" width='40%' />
             </div>
-            <div class="col-6 mt-3">
+            <div class="col-md-12 col-sm-12 col-lg-12 mt-3">
                 <form method="post" action="{{ route('vehicle.fetch.details') }}">
                     @csrf
                     <div class="input-group mb-3">
