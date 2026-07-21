@@ -84,7 +84,7 @@ function sendRequestedDocviaWa($mobile, $name, $oid, $doc_type)
                         "type" => "body",
                         "parameters" => [
                             ["type" => "text", "text" => $name],
-                            ["type" => "text", "text" => "+91 9388611622"],
+                            ["type" => "text", "text" => "+91 8547336622"],
                         ]
                     ],
                     [
@@ -125,7 +125,7 @@ function sendRequestedDocviaWa($mobile, $name, $oid, $doc_type)
                         "type" => "body",
                         "parameters" => [
                             ["type" => "text", "text" => $name],
-                            ["type" => "text", "text" => "+91 9388611622"],
+                            ["type" => "text", "text" => "+91 8547336622"],
                         ]
                     ],
                     [
@@ -166,7 +166,7 @@ function sendRequestedDocviaWa($mobile, $name, $oid, $doc_type)
                         "type" => "body",
                         "parameters" => [
                             ["type" => "text", "text" => $name],
-                            ["type" => "text", "text" => "+91 9388611622"],
+                            ["type" => "text", "text" => "+91 8547336622"],
                         ]
                     ],
                     [
@@ -292,7 +292,7 @@ function sendWAMessageWithLink($order, $type)
                             ["type" => "text", "text" => number_format($order->advance, 2)],
                             ["type" => "text", "text" => number_format($order->balance, 2)],
                             ["type" => "text", "text" => $order->expected_delivery_date->format('d.M.Y')],
-                            ["type" => "text", "text" => "+91 9388611622"],
+                            ["type" => "text", "text" => "+91 8547336622"],
                         ]
                     ],
                     [
@@ -349,7 +349,7 @@ function sendWAMessage($data, $type)
                             ["type" => "text", "text" => number_format($order->advance, 2)],
                             ["type" => "text", "text" => number_format($order->balance, 2)],
                             ["type" => "text", "text" => $order->expected_delivery_date->format('d.M.Y')],
-                            ["type" => "text", "text" => "+91 9388611622"],
+                            ["type" => "text", "text" => "+91 8547336622"],
                         ]
                     ]
                 ]
@@ -372,7 +372,7 @@ function sendWAMessage($data, $type)
                             ["type" => "text", "text" => $order->name],
                             ["type" => "text", "text" => number_format($data->amount, 2)],
                             ["type" => "text", "text" => $order->ono()],
-                            ["type" => "text", "text" => "+91 9388611622"],
+                            ["type" => "text", "text" => "+91 8547336622"],
                         ]
                     ]
                 ]
@@ -399,7 +399,7 @@ function sendWAMessage($data, $type)
                             ["type" => "text", "text" => number_format($order->invoice_total, 2)],
                             ["type" => "text", "text" => number_format($paid->sum('amount'), 2)],
                             ["type" => "text", "text" => $bal ?? '0.00'],
-                            ["type" => "text", "text" => "+91 9388611622"],
+                            ["type" => "text", "text" => "+91 8547336622"],
                         ]
                     ]
                 ]
@@ -421,7 +421,7 @@ function sendWAMessage($data, $type)
                         "parameters" => [
                             ["type" => "text", "text" => $order->name],
                             ["type" => "text", "text" => $order->ono()],
-                            ["type" => "text", "text" => "+91 9388611622"],
+                            ["type" => "text", "text" => "+91 8547336622"],
                         ]
                     ]
                 ]
