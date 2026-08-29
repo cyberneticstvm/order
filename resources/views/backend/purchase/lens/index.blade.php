@@ -50,6 +50,7 @@
                                         <th>Delivery Date</th>
                                         <th>Purchase Note</th>
                                         <th>Purchase Total</th>
+                                        <th>Bill</th>
                                         <th>Status</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
@@ -65,7 +66,12 @@
                                         <td>{{ $item->order_date?->format('d/M/Y') }}</td>
                                         <td>{{ $item->delivery_date?->format('d/m/Y') }}</td>
                                         <td>{{ $item->purchase_note }}</td>
-                                        <td class="text-end">{{ number_format($item->detail->sum('total'), 2) }}</td>
+                                        @php
+                                            $adjustment = $item->adjust_type === 'minus' ? -abs((float) $item->adjust_amount) : (float) $item->adjust_amount;
+                                            $purchaseTotal = (float) $item->detail->sum('total') + (float) $item->other_charges + $adjustment;
+                                        @endphp
+                                        <td class="text-end">{{ number_format($purchaseTotal, 2) }}</td>
+                                        <td class="text-center"><a href="{{ route('report.export.purchase.pdf', encrypt($item->id)) }}" target="_blank"><i class="fa fa-file-pdf-o text-danger"></i></a></td>
                                         <td>{!! $item->status() !!}</td>
                                         <td class="text-center"><a href="{{ route('lens.purchase.edit', encrypt($item->id)) }}"><i class="fa fa-edit text-muted fa-lg"></i></a></td>
                                         <td class="text-center"><a href="{{ route('lens.purchase.delete', encrypt($item->id)) }}" class="dlt"><i class="fa fa-trash text-danger fa-lg"></i></a></td>
