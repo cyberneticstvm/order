@@ -78,7 +78,7 @@ class AjaxController extends Controller
     {
         $offer = OfferCategory::findOrFail($request->oid);
         $existing = OfferProduct::where('branch_id', $offer->branch_id)->where('offer_category_id', $offer->id)->get();
-        $products = Product::whereIn('category', ['frame'])->whereNotIn('id', $existing->pluck('product_id'))->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
+        $products = Product::whereIn('category', ['frame', 'lens'])->whereNotIn('id', $existing->pluck('product_id'))->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
         $tbl = $this->content($offer->branch_id, $offer->id);
         return response()->json([
             'offer' => $offer,
