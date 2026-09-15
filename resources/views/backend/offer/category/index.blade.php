@@ -41,6 +41,7 @@
                                         <th>SL No</th>
                                         <th>Category Name</th>
                                         <th>Type</th>
+                                        <th>Frame Collection</th>
                                         <th>Discount %</th>
                                         <th>Buy</th>
                                         <th>Get</th>
@@ -59,6 +60,7 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td><a href="javascript:void(0)" class="offer" data-type="{{ $category->offer_type ?? 'legacy' }}" data-oid="{{ $category->id }}" data-oname="{{ $category->name }}" data-branch="{{ $category->branch_id }}" data-drawer="offerDrawer">{{ $category->name }}</a></td>
                                         <td>{{ ($category->offer_type ?? 'legacy') === 'lens_discount' ? 'Lens Discount' : 'Existing / BOGO' }}</td>
+                                        <td>{{ $category->collection?->name ?? '-' }}</td>
                                         <td>{{ $category->discount_percentage }}</td>
                                         <td>{{ $category->buy_number }}</td>
                                         <td>{{ $category->get_number }}</td>

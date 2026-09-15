@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Branch;
 use App\Models\OfferCategory;
 use App\Models\OfferProduct;
-use App\Models\OfferProductFrame;
 use App\Models\Product;
 use App\Models\ProductSubcategory;
 use Carbon\Carbon;
@@ -31,7 +30,7 @@ class OfferController extends Controller
 
     function index()
     {
-        $categories = OfferCategory::withTrashed()->get();
+        $categories = OfferCategory::with('collection')->withTrashed()->get();
         $products = $this->products;
         return view('backend.offer.category.index', compact('categories', 'products'));
     }
@@ -59,6 +58,7 @@ class OfferController extends Controller
             'buy_number' => 'nullable|numeric|max:100',
             'get_number' => 'nullable|numeric|max:100',
             'branch_id' => 'required|exists:branches,id',
+            'collection_id' => ['nullable', 'required_if:offer_type,lens_discount', Rule::exists('product_subcategories', 'id')->where('attribute', 'collection')],
             'valid_from' => 'required|date|after_or_equal:today',
             'valid_to' => 'required|date|after_or_equal:valid_from',
         ]);
@@ -66,9 +66,11 @@ class OfferController extends Controller
             $input = $request->all();
             $input['valid_from'] = Carbon::parse($request->valid_from)->startOfDay();
             $input['valid_to'] = Carbon::parse($request->valid_to)->endOfDay();
+            $input['collection_id'] = $request->filled('collection_id') ? (int) $request->collection_id : null;
             $input['created_by'] = $request->user()->id;
             $input['updated_by'] = $request->user()->id;
             $this->normaliseLensOffer($input);
+            $this->ensureCollectionScheduleAvailable(null, $input);
             OfferCategory::create($input);
         } catch (ValidationException $e) {
             throw $e;
@@ -103,6 +105,7 @@ class OfferController extends Controller
             'buy_number' => 'nullable|numeric|max:100',
             'get_number' => 'nullable|numeric|max:100',
             'branch_id' => 'required|exists:branches,id',
+            'collection_id' => ['nullable', 'required_if:offer_type,lens_discount', Rule::exists('product_subcategories', 'id')->where('attribute', 'collection')],
             'valid_from' => 'required|date|after_or_equal:today',
             'valid_to' => 'required|date|after_or_equal:valid_from',
         ]);
@@ -110,8 +113,10 @@ class OfferController extends Controller
             $input = $request->all();
             $input['valid_from'] = Carbon::parse($request->valid_from)->startOfDay();
             $input['valid_to'] = Carbon::parse($request->valid_to)->endOfDay();
+            $input['collection_id'] = $request->filled('collection_id') ? (int) $request->collection_id : null;
             $input['updated_by'] = $request->user()->id;
             $this->normaliseLensOffer($input);
+            $this->ensureCollectionScheduleAvailable($category->id, $input);
             $this->ensureUpdatedLensOfferDoesNotOverlap($category, $input);
             $category->update($input);
             if ($category->isLensDiscount()) {
@@ -149,7 +154,6 @@ class OfferController extends Controller
         if (($input['offer_type'] ?? 'legacy') === 'lens_discount') {
             $input['buy_number'] = 0;
             $input['get_number'] = 0;
-            $input['collection_id'] = null;
         }
     }
 
@@ -176,21 +180,7 @@ class OfferController extends Controller
                     ->where('valid_to', '>=', $input['valid_from']);
             })->exists();
 
-        $linkedFrameIds = OfferProductFrame::whereIn('offer_product_id', $category->products()->pluck('id'))
-            ->pluck('frame_product_id');
-        $hasFrameConflict = $linkedFrameIds->isNotEmpty() && OfferProductFrame::query()
-            ->whereIn('frame_product_id', $linkedFrameIds)
-            ->whereHas('offerProduct', function ($query) use ($category, $input) {
-                $query->where('offer_category_id', '!=', $category->id)
-                    ->where('branch_id', $input['branch_id'])
-                    ->whereHas('offer', function ($offerQuery) use ($input) {
-                        $offerQuery->where('offer_type', 'lens_discount')
-                            ->where('valid_from', '<=', $input['valid_to'])
-                            ->where('valid_to', '>=', $input['valid_from']);
-                    });
-            })->exists();
-
-        if ($hasConflict || $hasFrameConflict) {
+        if ($hasConflict) {
             throw ValidationException::withMessages([
                 'valid_from' => 'The updated schedule overlaps another lens offer containing one of these lenses.',
             ]);
@@ -200,10 +190,6 @@ class OfferController extends Controller
     private function trashedLensOfferHasConflict(OfferCategory $category): bool
     {
         $products = OfferProduct::withTrashed()->where('offer_category_id', $category->id)->get();
-        if ($products->isEmpty()) {
-            return false;
-        }
-
         $overlappingOfferIds = OfferCategory::query()
             ->where('id', '!=', $category->id)
             ->where('branch_id', $category->branch_id)
@@ -216,14 +202,38 @@ class OfferController extends Controller
             return false;
         }
 
-        if (OfferProduct::whereIn('offer_category_id', $overlappingOfferIds)
-            ->whereIn('product_id', $products->pluck('product_id'))->exists()) {
+        if (OfferCategory::whereIn('id', $overlappingOfferIds)->where('collection_id', $category->collection_id)->exists()) {
             return true;
         }
 
-        $linkedFrameIds = OfferProductFrame::whereIn('offer_product_id', $products->pluck('id'))->pluck('frame_product_id');
-        return $linkedFrameIds->isNotEmpty() && OfferProductFrame::whereIn('frame_product_id', $linkedFrameIds)
-            ->whereHas('offerProduct', fn ($query) => $query->whereIn('offer_category_id', $overlappingOfferIds))
+        if ($products->isEmpty()) {
+            return false;
+        }
+
+        return OfferProduct::whereIn('offer_category_id', $overlappingOfferIds)
+            ->whereIn('product_id', $products->pluck('product_id'))
             ->exists();
+    }
+
+    private function ensureCollectionScheduleAvailable(?int $ignoreId, array $input): void
+    {
+        if (($input['offer_type'] ?? 'legacy') !== 'lens_discount') {
+            return;
+        }
+
+        $exists = OfferCategory::query()
+            ->when($ignoreId, fn ($query) => $query->where('id', '!=', $ignoreId))
+            ->where('offer_type', 'lens_discount')
+            ->where('branch_id', $input['branch_id'])
+            ->where('collection_id', $input['collection_id'])
+            ->where('valid_from', '<=', $input['valid_to'])
+            ->where('valid_to', '>=', $input['valid_from'])
+            ->exists();
+
+        if ($exists) {
+            throw ValidationException::withMessages([
+                'collection_id' => 'This collection already has an overlapping lens offer for the selected branch.',
+            ]);
+        }
     }
 }

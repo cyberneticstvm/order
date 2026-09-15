@@ -29,6 +29,11 @@ class OfferCategory extends Model
         return $this->hasMany(OfferProduct::class, 'offer_category_id');
     }
 
+    public function collection()
+    {
+        return $this->belongsTo(ProductSubcategory::class, 'collection_id');
+    }
+
     public function isLensDiscount(): bool
     {
         return $this->offer_type === 'lens_discount';

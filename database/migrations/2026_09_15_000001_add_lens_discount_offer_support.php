@@ -14,18 +14,6 @@ return new class extends Migration
             });
         }
 
-        if (!Schema::hasTable('offer_product_frames')) {
-            Schema::create('offer_product_frames', function (Blueprint $table) {
-                $table->id();
-                $table->unsignedBigInteger('offer_product_id');
-                $table->unsignedBigInteger('frame_product_id');
-                $table->timestamps();
-                $table->unique(['offer_product_id', 'frame_product_id'], 'offer_product_frame_unique');
-                $table->foreign('offer_product_id')->references('id')->on('offer_products')->onDelete('cascade');
-                $table->foreign('frame_product_id')->references('id')->on('products')->onDelete('cascade');
-            });
-        }
-
         if (!Schema::hasTable('order_offers')) {
             Schema::create('order_offers', function (Blueprint $table) {
                 $table->id();
@@ -47,8 +35,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('order_offers');
-        Schema::dropIfExists('offer_product_frames');
-
         if (Schema::hasColumn('offer_categories', 'offer_type')) {
             Schema::table('offer_categories', function (Blueprint $table) {
                 $table->dropColumn('offer_type');

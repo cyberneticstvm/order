@@ -32,8 +32,4 @@ class OfferProduct extends Model
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
-    public function linkedFrames()
-    {
-        return $this->hasMany(OfferProductFrame::class);
-    }
 }

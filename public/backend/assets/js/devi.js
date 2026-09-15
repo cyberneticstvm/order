@@ -20,7 +20,9 @@ $(function () {
     $('[data-bs-toggle="tooltip"]').tooltip();
 
     function toggleOfferCategoryFields() {
-        $('.legacyOfferField').toggle($('.offerType').val() !== 'lens_discount');
+        var isLensOffer = $('.offerType').val() === 'lens_discount';
+        $('.legacyOfferField').toggle(!isLensOffer);
+        $('.lensCollectionRequired').toggleClass('d-none', !isLensOffer);
     }
     $(document).on('change', '.offerType', toggleOfferCategoryFields);
     toggleOfferCategoryFields();
@@ -347,16 +349,11 @@ $(function () {
         $.ajax({
             type: 'POST',
             url: '/ajax/offer/product/save',
-            data: {
-                'oid': $("#offer_id").val(),
-                'pid': $(".selOfferPdct").val(),
-                'frame_ids': $(".selOfferFrames").val() || []
-            },
+            data: { 'oid': $("#offer_id").val(), 'pid': $(".selOfferPdct").val() },
             success: function (res) {
                 if(res.type == 'success'){
                     $(".tblContent").html(res.content);
                     $(".selOfferPdct").val(null).trigger('change');
-                    $(".selOfferFrames").val(null).trigger('change');
                     success({
                         'success': res.msg
                     })
@@ -399,18 +396,7 @@ $(function () {
                     dropdownParent: $("#" + drawer),
                     data: xdata,
                 });
-                $('.lensFrameField').toggleClass('d-none', offerType !== 'lens_discount');
                 $('.offerProductLabel').text(offerType === 'lens_discount' ? 'Select Lens' : 'Select Product');
-                $('.selOfferFrames').empty();
-                var frameData = $.map(res.frames || [], function (obj) {
-                    obj.text = obj.name || obj.id;
-                    return obj;
-                });
-                $('.selOfferFrames').select2({
-                    dropdownParent: $("#" + drawer),
-                    data: frameData,
-                    placeholder: 'Select linked frames'
-                });
                 $("#" + drawer).drawer('toggle');
                 $(".tblContent").html(res.content);
             },

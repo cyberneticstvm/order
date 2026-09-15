@@ -88,9 +88,12 @@
                                     <small class="text-danger">{{ $errors->first('valid_to') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-5 legacyOfferField">
-                                    <label class="form-label">Collection</label>
+                                <div class="col-md-5">
+                                    <label class="form-label">Frame Collection <span class="text-danger lensCollectionRequired d-none">*</span></label>
                                     {{ html()->select($name = 'collection_id', $collection, old('collection_id'))->class('form-control select2')->placeholder('Select') }}
+                                    @error('collection_id')
+                                    <small class="text-danger">{{ $errors->first('collection_id') }}</small>
+                                    @enderror
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Description</label>

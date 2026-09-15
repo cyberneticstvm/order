@@ -15,11 +15,6 @@
                         <small class="text-danger">{{ $errors->first('product') }}</small>
                         @enderror
                     </div>
-                    <div class="col-md-12 mt-3 lensFrameField d-none">
-                        <label class="form-label">Link Eligible Frames</label>
-                        {{ html()->select('frame_ids[]', [], old('frame_ids'))->class('form-control selOfferFrames')->multiple() }}
-                        <small class="text-muted">Optional. The lens discount also resolves when one of these frames is selected in the same order.</small>
-                    </div>
                     <div class="col-12 text-end mt-3">
                         <button class="btn btn-secondary" onClick="$('#offerDrawer').drawer('toggle');" type="button">Cancel</button>
                         <button class="btn btn-submit btn-success btnAddOfferProduct" type="button">Add</button>

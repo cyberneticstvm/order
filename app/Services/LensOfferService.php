@@ -24,22 +24,25 @@ class LensOfferService
         }
 
         $products = Product::whereIn('id', $lines->pluck('product_id')->unique())
-            ->get(['id', 'category', 'selling_price'])
+            ->get(['id', 'category', 'selling_price', 'collection_id'])
             ->keyBy('id');
         $lensLines = $lines->filter(fn ($line) => $products->get($line['product_id'])?->category === 'lens');
-        $frameIds = $lines->filter(fn ($line) => $products->get($line['product_id'])?->category === 'frame')
-            ->pluck('product_id')->unique();
+        $framesByCollection = $lines
+            ->map(fn ($line) => $products->get($line['product_id']))
+            ->filter(fn ($product) => $product?->category === 'frame' && $product->collection_id)
+            ->keyBy('collection_id');
 
-        if ($lensLines->isEmpty()) {
+        if ($lensLines->isEmpty() || $framesByCollection->isEmpty()) {
             return $this->emptyResult();
         }
 
         $assignments = OfferProduct::query()
-            ->with(['offer', 'linkedFrames'])
+            ->with('offer')
             ->where('branch_id', $branchId)
             ->whereIn('product_id', $lensLines->pluck('product_id')->unique())
             ->whereHas('offer', fn ($query) => $this->activeLensOfferQuery($query, $branchId))
-            ->get();
+            ->get()
+            ->filter(fn ($assignment) => $framesByCollection->has($assignment->offer->collection_id));
 
         if ($assignments->isEmpty()) {
             return $this->emptyResult();
@@ -66,16 +69,12 @@ class LensOfferService
             $discount += ((float) $product->selling_price * $line['qty'] * (float) $offer->discount_percentage) / 100;
             $primaryLensId ??= $product->id;
 
-            if (!$linkedFrameId && $frameIds->isNotEmpty()) {
-                $linkedFrameId = $assignment->linkedFrames->pluck('frame_product_id')->intersect($frameIds)->first();
-            }
+            $linkedFrameId ??= $framesByCollection->get($offer->collection_id)?->id;
         }
 
         return [
             'status' => 'applied',
-            'message' => $linkedFrameId
-                ? 'Lens offer applied through the selected linked frame.'
-                : 'Lens offer applied.',
+            'message' => 'Lens offer applied through the selected frame collection.',
             'offer_category_id' => $offer->id,
             'offer_name' => $offer->name,
             'lens_product_id' => $primaryLensId,
