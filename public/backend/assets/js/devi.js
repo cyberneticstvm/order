@@ -89,6 +89,9 @@ $(function () {
                     dis.parent().parent().find(".price, .total").attr('readonly', 'true');
                 }
                 calculateTotal()
+                if ($('#orderForm[data-lens-offers="1"]').length && (category === 'lens' || category === 'frame')) {
+                    dis.closest('tr').find('.qty').trigger('change');
+                }
             }
         });
     });

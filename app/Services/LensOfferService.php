@@ -18,7 +18,7 @@ class LensOfferService
                 'product_id' => (int) $productId,
                 'qty' => max(0, (int) ($quantities[$key] ?? 0)),
             ];
-        })->filter(fn ($line) => $line['product_id'] > 0 && $line['qty'] > 0);
+        })->filter(fn ($line) => $line['product_id'] > 0);
 
         if ($lines->isEmpty()) {
             return $this->emptyResult();
@@ -27,7 +27,9 @@ class LensOfferService
         $products = Product::whereIn('id', $lines->pluck('product_id')->unique())
             ->get(['id', 'category', 'selling_price'])
             ->keyBy('id');
-        $lensLines = $lines->filter(fn ($line) => $products->get($line['product_id'])?->category === 'lens');
+        $lensLines = $lines->filter(fn ($line) =>
+            $line['qty'] > 0 && $products->get($line['product_id'])?->category === 'lens'
+        );
         $selectedFrameIds = $lines
             ->filter(fn ($line) => $products->get($line['product_id'])?->category === 'frame')
             ->pluck('product_id')
