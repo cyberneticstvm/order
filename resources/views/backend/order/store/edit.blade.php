@@ -277,7 +277,7 @@
                                                             return $q->where('category', 'frame');
                                                         })->when(in_array($item->eye, ['service']), function($q){
                                                             return $q->where('category', 'service');
-                                                        })->pluck('name', 'id'), $item->product_id)->class('border-0 select2 selPdct ' . (in_array($item->eye, ['re', 'le', 'both']) ? 'lensOfferProduct' : (in_array($item->eye, ['frame']) ? 'offerPdct' : '')))->attribute('data-batch', 'NA')->attribute('data-category', $item->product->category)->attribute('id', $item->id)->placeholder('Select')->required() }}
+                                                        })->pluck('name', 'id'), $item->product_id)->class('border-0 select2 selPdct ' . (in_array($item->eye, ['re', 'le', 'both']) ? 'lensOfferProduct' : (in_array($item->eye, ['frame']) ? 'offerPdct lensOfferFrame' : '')))->attribute('data-batch', 'NA')->attribute('data-category', $item->product->category)->attribute('id', $item->id)->placeholder('Select')->required() }}
                                                     </td>
                                                     <td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" value="{{ $item->qty }}" required /></td>
                                                     <td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' value="{{ $item->unit_price }}" step="any" required readonly /></td>
