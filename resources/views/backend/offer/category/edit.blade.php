@@ -34,7 +34,7 @@
                                 @csrf
                                 <div class="col-md-4">
                                     <label class="form-label req">Offer Category Name</label>
-                                    {{ html()->text($name = 'name', $value = $category->name)->class('form-control')->placeholder('Category Name') }}
+                                    {{ html()->text($name = 'name', $value = old('name', $category->name))->class('form-control')->placeholder('Category Name') }}
                                     @error('name')
                                     <small class="text-danger">{{ $errors->first('name') }}</small>
                                     @enderror
@@ -46,44 +46,44 @@
                                     <small class="text-danger">{{ $errors->first('offer_type') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-2 legacyOfferField">
+                                <div class="col-md-2">
                                     <label class="form-label">Discount %</label>
-                                    {{ html()->text($name = 'discount_percentage', $value = $category->discount_percentage)->class('form-control')->maxlength('3')->placeholder('0%') }}
+                                    {{ html()->text($name = 'discount_percentage', $value = old('discount_percentage', $category->discount_percentage))->class('form-control')->maxlength('3')->placeholder('0%') }}
                                     @error('discount_percentage')
                                     <small class="text-danger">{{ $errors->first('discount_percentage') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-2 legacyOfferField">
                                     <label class="form-label">Buy</label>
-                                    {{ html()->text($name = 'buy_number', $value = $category->buy_number)->class('form-control')->maxlength('3')->placeholder('0') }}
+                                    {{ html()->text($name = 'buy_number', $value = old('buy_number', $category->buy_number))->class('form-control')->maxlength('3')->placeholder('0') }}
                                     @error('buy_number')
                                     <small class="text-danger">{{ $errors->first('buy_number') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-2 legacyOfferField">
                                     <label class="form-label">Get</label>
-                                    {{ html()->text($name = 'get_number', $value = $category->get_number)->class('form-control')->maxlength('3')->placeholder('0') }}
+                                    {{ html()->text($name = 'get_number', $value = old('get_number', $category->get_number))->class('form-control')->maxlength('3')->placeholder('0') }}
                                     @error('get_number')
                                     <small class="text-danger">{{ $errors->first('get_number') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label req">Branch</label>
-                                    {{ html()->select($name = 'branch_id', $value = $branches->pluck('name', 'id'), $category->branch_id)->class('form-control select2')->placeholder('Select') }}
+                                    {{ html()->select($name = 'branch_id', $value = $branches->pluck('name', 'id'), old('branch_id', $category->branch_id))->class('form-control select2')->placeholder('Select') }}
                                     @error('branch_id')
                                     <small class="text-danger">{{ $errors->first('branch_id') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Valid From</label>
-                                    {{ html()->date($name = 'valid_from', $value = $category->valid_from)->class('form-control') }}
+                                    {{ html()->date($name = 'valid_from', $value = old('valid_from', $category->valid_from?->format('Y-m-d')))->class('form-control') }}
                                     @error('valid_from')
                                     <small class="text-danger">{{ $errors->first('valid_from') }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label req">Valid To</label>
-                                    {{ html()->date($name = 'valid_to', $value = $category->valid_to)->class('form-control') }}
+                                    {{ html()->date($name = 'valid_to', $value = old('valid_to', $category->valid_to?->format('Y-m-d')))->class('form-control') }}
                                     @error('valid_to')
                                     <small class="text-danger">{{ $errors->first('valid_to') }}</small>
                                     @enderror
@@ -97,7 +97,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Description</label>
-                                    {{ html()->text($name = 'description', $value = $category->description)->class('form-control')->placeholder('Description') }}
+                                    {{ html()->text($name = 'description', $value = old('description', $category->description))->class('form-control')->placeholder('Description') }}
                                 </div>
                                 <div class="col-12 text-end">
                                     <button class="btn btn-secondary" onClick="window.history.back()" type="button">Cancel</button>

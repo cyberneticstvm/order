@@ -46,7 +46,7 @@
                                     <small class="text-danger">{{ $errors->first('offer_type') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-2 legacyOfferField">
+                                <div class="col-md-2">
                                     <label class="form-label">Discount %</label>
                                     {{ html()->text($name = 'discount_percentage', $value = old('discount_percentage'))->class('form-control')->maxlength('3')->placeholder('0%') }}
                                     @error('discount_percentage')
@@ -60,7 +60,7 @@
                                     <small class="text-danger">{{ $errors->first('buy_number') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-2 legacyOfferField">
                                     <label class="form-label">Get</label>
                                     {{ html()->text($name = 'get_number', $value = old('get_number'))->class('form-control')->maxlength('3')->placeholder('0') }}
                                     @error('get_number')

@@ -14,9 +14,31 @@ class OfferCategory extends Model
 
     protected $casts = ['valid_from' => 'datetime', 'valid_to' => 'datetime'];
 
-    public function status()
+    public function statusKey(): string
     {
-        return ($this->deleted_at) ? "<span class='badge badge-danger'>Deleted</span>" : "<span class='badge badge-success'>Active</span>";
+        if ($this->deleted_at) {
+            return 'deleted';
+        }
+
+        if ($this->valid_from && now()->lt($this->valid_from)) {
+            return 'upcoming';
+        }
+
+        if ($this->valid_to && now()->gt($this->valid_to)) {
+            return 'expired';
+        }
+
+        return 'active';
+    }
+
+    public function status(): string
+    {
+        return match ($this->statusKey()) {
+            'deleted' => "<span class='badge badge-danger'>Deleted</span>",
+            'upcoming' => "<span class='badge badge-info'>Upcoming</span>",
+            'expired' => "<span class='badge badge-warning'>Expired</span>",
+            default => "<span class='badge badge-success'>Active</span>",
+        };
     }
 
     public function branch()
