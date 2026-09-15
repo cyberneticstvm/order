@@ -603,8 +603,11 @@ $(function () {
                 }else{
                     dis.removeClass('bogo');
                     dis.removeClass('discOffer');
-                    $(".discount").val(0)
-                    $(".discount").attr('readonly', false);
+                    var lensOfferApplied = parseInt($('#orderForm .lensOfferCategoryId').val()) > 0;
+                    if (!lensOfferApplied) {
+                        $(".discount").val(0)
+                        $(".discount").attr('readonly', false);
+                    }
                 }
                 calculateTotal(); 
             }

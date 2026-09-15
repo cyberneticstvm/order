@@ -170,7 +170,7 @@
   <script src="{{ asset('/backend/assets/js/dashboard/dashboard.js') }}"></script>
   @endif
   <script src="{{ asset('/backend/assets/js/script.js') }}"></script>
-  <script src="{{ asset('/backend/assets/js/devi.js') }}"></script>
+  <script src="{{ asset('/backend/assets/js/devi.js') }}?v={{ filemtime(public_path('backend/assets/js/devi.js')) }}"></script>
   <script src="{{ asset('/backend/assets/js/theme-customizer/customizer.js') }}"></script>
   @include("backend.message")
 </body>
