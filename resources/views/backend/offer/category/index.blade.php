@@ -1,5 +1,20 @@
 @extends("backend.base")
 @section("content")
+<style>
+    #dataTable tbody tr.offer-row-expired > td {
+        background-color: #fff3cd !important;
+        color: #664d03 !important;
+    }
+
+    #dataTable tbody tr.offer-row-deleted > td {
+        background-color: #e9ecef !important;
+        color: #6c757d !important;
+    }
+
+    #dataTable tbody tr.offer-row-deleted > td a:not(.proceed) {
+        color: #6c757d !important;
+    }
+</style>
 <div class="page-body">
     <div class="container-fluid">
         <div class="page-title">
@@ -58,8 +73,8 @@
                                     @forelse($categories as $key => $category)
                                     @php($offerStatus = $category->statusKey())
                                     <tr @class([
-                                        'table-warning' => $offerStatus === 'expired',
-                                        'table-secondary' => $offerStatus === 'deleted',
+                                        'offer-row-expired' => $offerStatus === 'expired',
+                                        'offer-row-deleted' => $offerStatus === 'deleted',
                                     ])>
                                         <td>{{ $key + 1 }}</td>
                                         <td><a href="javascript:void(0)" class="offer" data-type="{{ $category->offer_type ?? 'legacy' }}" data-oid="{{ $category->id }}" data-oname="{{ $category->name }}" data-branch="{{ $category->branch_id }}" data-drawer="offerDrawer">{{ $category->name }}</a></td>
