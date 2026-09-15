@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\OfferCategory;
 use App\Models\OfferProduct;
 use App\Models\Product;
+use App\Models\ProductCollection;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
@@ -24,12 +25,15 @@ class LensOfferService
         }
 
         $products = Product::whereIn('id', $lines->pluck('product_id')->unique())
-            ->get(['id', 'category', 'selling_price', 'collection_id'])
+            ->get(['id', 'category', 'selling_price'])
             ->keyBy('id');
         $lensLines = $lines->filter(fn ($line) => $products->get($line['product_id'])?->category === 'lens');
-        $framesByCollection = $lines
-            ->map(fn ($line) => $products->get($line['product_id']))
-            ->filter(fn ($product) => $product?->category === 'frame' && $product->collection_id)
+        $selectedFrameIds = $lines
+            ->filter(fn ($line) => $products->get($line['product_id'])?->category === 'frame')
+            ->pluck('product_id')
+            ->unique();
+        $framesByCollection = ProductCollection::whereIn('product_id', $selectedFrameIds)
+            ->get(['product_id', 'collection_id'])
             ->keyBy('collection_id');
 
         if ($lensLines->isEmpty() || $framesByCollection->isEmpty()) {
@@ -69,7 +73,7 @@ class LensOfferService
             $discount += ((float) $product->selling_price * $line['qty'] * (float) $offer->discount_percentage) / 100;
             $primaryLensId ??= $product->id;
 
-            $linkedFrameId ??= $framesByCollection->get($offer->collection_id)?->id;
+            $linkedFrameId ??= $framesByCollection->get($offer->collection_id)?->product_id;
         }
 
         return [
