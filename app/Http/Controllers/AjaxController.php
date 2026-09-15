@@ -10,6 +10,7 @@ use App\Models\LabOrderNote;
 use App\Models\Month;
 use App\Models\OfferCategory;
 use App\Models\OfferProduct;
+use App\Models\OfferProductFrame;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\PatientProcedure;
@@ -27,12 +28,14 @@ use App\Models\TransferDetails;
 use App\Models\Vehicle;
 use App\Models\VehiclePayment;
 use App\Models\Voucher;
+use App\Services\LensOfferService;
 use BaconQrCode\Renderer\Color\Rgb;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class AjaxController extends Controller
@@ -51,17 +54,14 @@ class AjaxController extends Controller
 
     public function content($branch, $oid)
     {
-        $existing = OfferProduct::where('branch_id', $branch)->where('offer_category_id', $oid)->orderByDesc('id')->get();
-        $tbl = "<table class='table table-bordered tblPdct'><thead><tr><th>SL No.</th><th>Product</th><th>Remove</th></tr></thead><tbody>";
-        foreach ($existing as $key => $item):
-            $tbl .= "<tr>";
-            $tbl .= "<td>" . $key + 1 . "</td>";
-            $tbl .= "<td>" . $item->product->name . "</td>";
-            $tbl .= "<td class='text-center'><a href='/ajax/offer/product/remove/' class='dltOfferPdct' data-pid='" . $item->id . "'><i class='fa fa-trash text-danger fa-lg'></i></a></td>";
-            $tbl .= "</tr>";
-        endforeach;
-        $tbl .= "</tbody></table>";
-        return $tbl;
+        $offer = OfferCategory::findOrFail($oid);
+        $existing = OfferProduct::with(['product', 'linkedFrames.frame'])
+            ->where('branch_id', $branch)
+            ->where('offer_category_id', $oid)
+            ->orderByDesc('id')
+            ->get();
+
+        return view('backend.offer.category._products-table', compact('offer', 'existing'))->render();
     }
 
     public function removeOfferProduct(Request $request)
@@ -78,11 +78,16 @@ class AjaxController extends Controller
     {
         $offer = OfferCategory::findOrFail($request->oid);
         $existing = OfferProduct::where('branch_id', $offer->branch_id)->where('offer_category_id', $offer->id)->get();
-        $products = Product::whereIn('category', ['frame', 'lens'])->whereNotIn('id', $existing->pluck('product_id'))->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
+        $categories = $offer->isLensDiscount() ? ['lens'] : ['frame', 'lens'];
+        $products = Product::whereIn('category', $categories)->whereNotIn('id', $existing->pluck('product_id'))->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get();
+        $frames = $offer->isLensDiscount()
+            ? Product::where('category', 'frame')->selectRaw("id, CONCAT_WS('-', name, code) AS name")->orderBy('name')->get()
+            : collect();
         $tbl = $this->content($offer->branch_id, $offer->id);
         return response()->json([
             'offer' => $offer,
             'products' => $products,
+            'frames' => $frames,
             'content' => $tbl,
         ]);
     }
@@ -139,32 +144,124 @@ class AjaxController extends Controller
     public function saveProductForOffer(Request $request)
     {
         $offer = OfferCategory::findOrFail($request->oid);
-        if ($request->pid):
-            OfferProduct::insert([
+        $rules = [
+            'pid' => 'required|integer|exists:products,id',
+            'frame_ids' => 'nullable|array',
+            'frame_ids.*' => 'integer|distinct|exists:products,id',
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json(['msg' => $validator->errors()->first(), 'type' => 'error']);
+        }
+
+        $product = Product::findOrFail($request->pid);
+        $frameIds = collect($request->input('frame_ids', []))->map(fn ($id) => (int) $id)->unique()->values();
+
+        if ($offer->isLensDiscount() && $product->category !== 'lens') {
+            return response()->json(['msg' => 'Only lens products can be added to a Lens Discount offer.', 'type' => 'error']);
+        }
+        if ($offer->isLensDiscount() && $frameIds->isNotEmpty()
+            && Product::whereIn('id', $frameIds)->where('category', '!=', 'frame')->exists()) {
+            return response()->json(['msg' => 'Only frame products can be linked to a lens offer.', 'type' => 'error']);
+        }
+        $conflict = DB::transaction(function () use ($offer, $product, $frameIds) {
+            Branch::whereKey($offer->branch_id)->lockForUpdate()->firstOrFail();
+
+            if (OfferProduct::where('offer_category_id', $offer->id)->where('product_id', $product->id)->exists()) {
+                return 'This product is already in the offer.';
+            }
+
+            if ($offer->isLensDiscount()) {
+                $message = $this->findLensOfferConflict($offer, $product->id, $frameIds->all());
+                if ($message) {
+                    return $message;
+                }
+            }
+
+            $offerProduct = OfferProduct::create([
                 'offer_category_id' => $offer->id,
                 'branch_id' => $offer->branch_id,
-                'product_id' => $request->pid,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'product_id' => $product->id,
             ]);
-            $tbl = $this->content($offer->branch_id, $offer->id);
-            return response()->json([
-                'msg' => 'Product added successfully!',
-                'type' => 'success',
-                'content' => $tbl,
-            ]);
-        else:
-            return response()->json([
-                'msg' => 'Please select a product',
-                'type' => 'error',
-            ]);
-        endif;
+
+            if ($offer->isLensDiscount()) {
+                foreach ($frameIds as $frameId) {
+                    OfferProductFrame::create([
+                        'offer_product_id' => $offerProduct->id,
+                        'frame_product_id' => $frameId,
+                    ]);
+                }
+            }
+
+            return null;
+        });
+
+        if ($conflict) {
+            return response()->json(['msg' => $conflict, 'type' => 'error']);
+        }
+
+        return response()->json([
+            'msg' => $offer->isLensDiscount() ? 'Lens and linked frames added successfully!' : 'Product added successfully!',
+            'type' => 'success',
+            'content' => $this->content($offer->branch_id, $offer->id),
+        ]);
+    }
+
+    public function resolveLensOffer(Request $request, LensOfferService $service)
+    {
+        $validator = Validator::make($request->all(), [
+            'product_id' => 'nullable|array',
+            'product_id.*' => 'nullable|integer|exists:products,id',
+            'qty' => 'nullable|array',
+            'qty.*' => 'nullable|integer|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'message' => $validator->errors()->first()], 422);
+        }
+
+        return response()->json($service->resolve(
+            (int) Session::get('branch'),
+            $request->input('product_id', []),
+            $request->input('qty', [])
+        ));
+    }
+
+    private function findLensOfferConflict(OfferCategory $offer, int $lensId, array $frameIds): ?string
+    {
+        $overlappingOffers = OfferCategory::query()
+            ->where('id', '!=', $offer->id)
+            ->where('branch_id', $offer->branch_id)
+            ->where('offer_type', 'lens_discount')
+            ->where('valid_from', '<=', $offer->valid_to)
+            ->where('valid_to', '>=', $offer->valid_from)
+            ->pluck('id');
+
+        if ($overlappingOffers->isEmpty()) {
+            return null;
+        }
+
+        if (OfferProduct::whereIn('offer_category_id', $overlappingOffers)->where('product_id', $lensId)->exists()) {
+            return 'This lens is already assigned to another overlapping lens offer in this branch.';
+        }
+
+        if ($frameIds && OfferProductFrame::whereIn('frame_product_id', $frameIds)
+            ->whereHas('offerProduct', fn ($query) => $query->whereIn('offer_category_id', $overlappingOffers))
+            ->exists()) {
+            return 'One or more linked frames are already used by another overlapping lens offer in this branch.';
+        }
+
+        return null;
     }
 
     public function getOfferedProducts($pid)
     {
         $products = NULL;
-        $item = OfferProduct::where('product_id', $pid)->where('branch_id', Session::get('branch'))->first();
+        $offer = NULL;
+        $item = OfferProduct::where('product_id', $pid)
+            ->where('branch_id', Session::get('branch'))
+            ->whereHas('offer', fn ($query) => $query->where('offer_type', 'legacy'))
+            ->first();
         //$item = Product::find($pid);
         //$productCollection = ProductCollection::where('product_id', $item->id)->first();
         if ($item):
@@ -185,7 +282,10 @@ class AjaxController extends Controller
         $products = $this->getOfferedProducts($pid)['products'] ?? NULL;
         $discount = 0;
         $get_number = $this->getOfferedProducts($pid)['getnumber'];
-        $item = OfferProduct::where('product_id', $pid)->where('branch_id', Session::get('branch'))->first();
+        $item = OfferProduct::where('product_id', $pid)
+            ->where('branch_id', Session::get('branch'))
+            ->whereHas('offer', fn ($query) => $query->where('offer_type', 'legacy'))
+            ->first();
         //$item = Product::find($pid);
         //$productCollection = ProductCollection::where('product_id', $item->id)->first();
         if ($item):

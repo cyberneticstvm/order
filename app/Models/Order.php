@@ -54,6 +54,11 @@ class Order extends Model
         return $this->hasMany(Payment::class, 'order_id', 'id');
     }
 
+    public function offer()
+    {
+        return $this->hasOne(OrderOffer::class);
+    }
+
     public function adviser()
     {
         return $this->belongsTo(User::class, 'product_adviser', 'id')->withTrashed();

@@ -186,6 +186,7 @@ Route::middleware(['web', 'auth', 'branch'])->group(function () {
         Route::get('/product/{category}/{type}', 'getProductsByCategory')->name('ajax.product.get.by.category');
         Route::get('/product/{category}/{type}/{product}', 'getProductsByCategory')->name('ajax.product.get');
         Route::get('/pdct/offer/{product}', 'getOfferProducts')->name('ajax.offer.products.get');
+        Route::post('/lens-offer/resolve', 'resolveLensOffer')->name('ajax.lens.offer.resolve');
         Route::get('/productprice/{product}/{category}/{batch}', 'getProductPrice')->name('ajax.productprice.get');
         Route::get('/product/batch/{branch}/{product}/{category}', 'getProductBatch')->name('ajax.productbatch.get');
         Route::get('/product/type/{category}/{attribute}', 'getProductTypes')->name('ajax.product.type');

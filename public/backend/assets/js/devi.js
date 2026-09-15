@@ -19,6 +19,12 @@ $(function () {
 
     $('[data-bs-toggle="tooltip"]').tooltip();
 
+    function toggleOfferCategoryFields() {
+        $('.legacyOfferField').toggle($('.offerType').val() !== 'lens_discount');
+    }
+    $(document).on('change', '.offerType', toggleOfferCategoryFields);
+    toggleOfferCategoryFields();
+
     $(document).on("change", ".appTime", function (e) {
         e.preventDefault();
         var form = document.getElementById('frmAppointment');
@@ -341,10 +347,16 @@ $(function () {
         $.ajax({
             type: 'POST',
             url: '/ajax/offer/product/save',
-            data: { 'oid': $("#offer_id").val(), 'pid': $(".selOfferPdct").val() },
+            data: {
+                'oid': $("#offer_id").val(),
+                'pid': $(".selOfferPdct").val(),
+                'frame_ids': $(".selOfferFrames").val() || []
+            },
             success: function (res) {
                 if(res.type == 'success'){
                     $(".tblContent").html(res.content);
+                    $(".selOfferPdct").val(null).trigger('change');
+                    $(".selOfferFrames").val(null).trigger('change');
                     success({
                         'success': res.msg
                     })
@@ -370,6 +382,7 @@ $(function () {
         var drawer = $(this).data('drawer');
         var branch = $(this).data('branch');
         var oid = $(this).data('oid');
+        var offerType = $(this).data('type') || 'legacy';
         $("#offer_id").val(oid);        
         $(".offerid").html($(this).data('oname'));        
         $.ajax({
@@ -377,6 +390,7 @@ $(function () {
             url: '/ajax/offer/products',
             data: { 'branch': branch, 'oid': oid },
             success: function (res) {
+                $('.selOfferPdct').empty().append('<option></option>');
                 var xdata = $.map(res.products, function (obj) {
                     obj.text = obj.name || obj.id;
                     return obj;
@@ -384,6 +398,18 @@ $(function () {
                 $('.selOfferPdct').select2({
                     dropdownParent: $("#" + drawer),
                     data: xdata,
+                });
+                $('.lensFrameField').toggleClass('d-none', offerType !== 'lens_discount');
+                $('.offerProductLabel').text(offerType === 'lens_discount' ? 'Select Lens' : 'Select Product');
+                $('.selOfferFrames').empty();
+                var frameData = $.map(res.frames || [], function (obj) {
+                    obj.text = obj.name || obj.id;
+                    return obj;
+                });
+                $('.selOfferFrames').select2({
+                    dropdownParent: $("#" + drawer),
+                    data: frameData,
+                    placeholder: 'Select linked frames'
                 });
                 $("#" + drawer).drawer('toggle');
                 $(".tblContent").html(res.content);
@@ -598,6 +624,83 @@ $(function () {
             }
         });
     });
+
+    var lensOfferTimer = null;
+    var lensOfferRequest = 0;
+
+    function scheduleLensOfferResolution() {
+        if (!$('#orderForm[data-lens-offers="1"]').length) return;
+        lensOfferRequest++;
+        clearTimeout(lensOfferTimer);
+        lensOfferTimer = setTimeout(resolveLensOffer, 250);
+    }
+
+    function resolveLensOffer() {
+        var form = $('#orderForm[data-lens-offers="1"]');
+        if (!form.length) return;
+
+        var productIds = [];
+        var quantities = [];
+        form.find('.powerbox tr').each(function () {
+            productIds.push($(this).find('[name="product_id[]"]').val() || '');
+            quantities.push($(this).find('[name="qty[]"]').val() || 0);
+        });
+
+        var requestNumber = ++lensOfferRequest;
+        $.ajax({
+            type: 'POST',
+            url: '/ajax/lens-offer/resolve',
+            data: { product_id: productIds, qty: quantities },
+            success: function (res) {
+                if (requestNumber !== lensOfferRequest) return;
+
+                var oldOfferDiscount = parseFloat(form.find('.lensOfferDiscount').val()) || 0;
+                var displayedDiscount = parseFloat(form.find('.discount').val()) || 0;
+                var manualDiscount = Math.max(0, displayedDiscount - oldOfferDiscount);
+
+                form.find('.lensOfferCategoryId').val('');
+                form.find('.lensOfferDiscount').val('0');
+
+                if (res.status === 'conflict') {
+                    form.find('.discount').val(manualDiscount.toFixed(2)).prop('readonly', false);
+                    failed({ 'error': res.message });
+                    calculateTotal();
+                    return;
+                }
+
+                if (res.status !== 'applied') {
+                    form.find('.discount').val(manualDiscount.toFixed(2));
+                    if (!form.find('.bogo, .discOffer, .offerredPdct').length) {
+                        form.find('.discount').prop('readonly', false);
+                    }
+                    calculateTotal();
+                    return;
+                }
+
+                var royaltyDiscount = parseFloat(form.find('.royalty_discount').val()) || 0;
+                var hasLegacyOffer = form.find('.bogo, .discOffer, .offerredPdct').length > 0;
+                if (manualDiscount > 0 || royaltyDiscount > 0 || hasLegacyOffer) {
+                    form.find('.discount').val(manualDiscount.toFixed(2)).prop('readonly', manualDiscount === 0 && hasLegacyOffer);
+                    failed({ 'error': 'Only one offer or discount can be used. Remove the manual, royalty, or existing offer before applying this lens offer.' });
+                    calculateTotal();
+                    return;
+                }
+
+                form.find('.lensOfferCategoryId').val(res.offer_category_id);
+                form.find('.lensOfferDiscount').val(parseFloat(res.discount).toFixed(2));
+                form.find('.discount').val(parseFloat(res.discount).toFixed(2)).prop('readonly', true);
+                calculateTotal();
+            },
+            error: function (err) {
+                if (requestNumber === lensOfferRequest) error(err);
+            }
+        });
+    }
+
+    $(document).on('change', '#orderForm[data-lens-offers="1"] .lensOfferProduct, #orderForm[data-lens-offers="1"] .offerPdct', scheduleLensOfferResolution);
+    $(document).on('keyup change', '#orderForm[data-lens-offers="1"] .qty', scheduleLensOfferResolution);
+    $(document).on('click', '#orderForm[data-lens-offers="1"] .dltRow', scheduleLensOfferResolution);
+    scheduleLensOfferResolution();
 });
 
 function addMedicineRowForOrder(category, attribute) {
@@ -733,7 +836,7 @@ function addStoreOrderRow(category, type, product) {
                         for (let i = 0; i <= 1; i++) {
                             let eye = (i == 0) ? 'RE' : 'LE';
                             let oval = (i == 0) ? 're' : 'le';
-                            $(".powerbox").append(`<tr><td class="text-center"><input type='hidden' name='fitting[]' value='0'><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="border-0" name="eye[]"><option value="${oval}">${eye}</option></select></td><td><select name='sph[]' class="border-0 select2 selSph"></select></td><td><select name='cyl[]' class="border-0 select2 selCyl"></select></td><td><select name='axis[]' class="border-0 select2 selAxis"></select></td><td><select name='add[]' class="border-0 select2 selAdd"></select></td><td><input type="text" name='va[]' class="w-100 border-0 text-center va" placeholder="VA" maxlength="6" /></td><td><input type="text" name='ipd[]' class="w-100 border-0 text-center ipd" placeholder="IPD" maxlength="6" /></td><td><select class="form-control select2 selPdct" data-batch="NA" data-category="lens" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
+                            $(".powerbox").append(`<tr><td class="text-center"><input type='hidden' name='fitting[]' value='0'><a href="javascript:void(0)" class="dltRow"><i class="fa fa-trash text-danger"></i></a></td><td><select class="border-0" name="eye[]"><option value="${oval}">${eye}</option></select></td><td><select name='sph[]' class="border-0 select2 selSph"></select></td><td><select name='cyl[]' class="border-0 select2 selCyl"></select></td><td><select name='axis[]' class="border-0 select2 selAxis"></select></td><td><select name='add[]' class="border-0 select2 selAdd"></select></td><td><input type="text" name='va[]' class="w-100 border-0 text-center va" placeholder="VA" maxlength="6" /></td><td><input type="text" name='ipd[]' class="w-100 border-0 text-center ipd" placeholder="IPD" maxlength="6" /></td><td><select class="form-control select2 selPdct lensOfferProduct" data-batch="NA" data-category="lens" name="product_id[]" required><option></option></select></td><td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td><td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td><td><input type="number" name='total[]' class="w-100 border-0 text-end total" placeholder="0.00" min='1' step="any" required readonly /></td></tr>`);
 
                             var xdata = $.map(res, function (obj) {
                                 obj.text = obj.name || obj.id;

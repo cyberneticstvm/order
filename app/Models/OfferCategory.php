@@ -23,4 +23,14 @@ class OfferCategory extends Model
     {
         return $this->belongsTo(Branch::class, 'branch_id', 'id');
     }
+
+    public function products()
+    {
+        return $this->hasMany(OfferProduct::class, 'offer_category_id');
+    }
+
+    public function isLensDiscount(): bool
+    {
+        return $this->offer_type === 'lens_discount';
+    }
 }

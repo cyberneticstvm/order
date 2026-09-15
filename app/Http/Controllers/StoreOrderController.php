@@ -9,6 +9,7 @@ use App\Models\LabOrder;
 use App\Models\MedicalRecord;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\OrderOffer;
 use App\Models\Payment;
 use App\Models\PaymentMode;
 use App\Models\Power;
@@ -18,12 +19,14 @@ use App\Models\Registration;
 use App\Models\Spectacle;
 use App\Models\State;
 use App\Models\User;
+use App\Services\LensOfferService;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
 
 class StoreOrderController extends Controller
 {
@@ -116,11 +119,12 @@ class StoreOrderController extends Controller
             'invoice_total' => 'required|numeric|min:0|not_in:0',
             'product_id' => 'present|array'
         ]);
+        $lensOffer = $this->validateLensOffer($request);
         /*if (!settings()->allow_sales_at_zero_qty) :
             $status = checkOrderedProductsAvailability($request);
         endif;*/
         try {
-            DB::transaction(function () use ($request) {
+            DB::transaction(function () use ($request, $lensOffer) {
                 $order = Order::create([
                     'customer_id' => $request->customer_id,
                     'order_sequence' => NULL,
@@ -195,6 +199,7 @@ class StoreOrderController extends Controller
                     ];
                 endforeach;
                 OrderDetail::insert($data);
+                $this->syncLensOffer($order, $lensOffer);
                 if ($request->advance > 0) :
                     Payment::create([
                         'consultation_id' => $request->consultation_id,
@@ -294,9 +299,10 @@ class StoreOrderController extends Controller
             'invoice_total' => 'required|numeric|min:0|not_in:0',
             'product_id' => 'present|array'
         ]);
+        $lensOffer = $this->validateLensOffer($request);
         try {
             $msg = orderUpdateType($request, $id);
-            DB::transaction(function () use ($request, $id, $msg) {
+            DB::transaction(function () use ($request, $id, $msg, $lensOffer) {
                 $order = Order::findOrFail($id);
                 //if (isProductChanged($order->id, $request->product_id)) :
                 //LabOrder::where('order_id', $order->id)->delete();
@@ -369,6 +375,7 @@ class StoreOrderController extends Controller
                     ];
                 endforeach;
                 OrderDetail::insert($data);
+                $this->syncLensOffer($order, $lensOffer);
                 if ($request->advance > 0) :
 
                     $p = Payment::where('order_id', $id)->where('payment_type', 'advance');
@@ -466,5 +473,82 @@ class StoreOrderController extends Controller
         $json = file_get_contents($url);
         $data = json_decode($json);
         return $data->camps;
+    }
+
+    private function validateLensOffer(Request $request): array
+    {
+        $service = app(LensOfferService::class);
+        $result = $service->resolve(
+            (int) branch()->id,
+            $request->input('product_id', []),
+            $request->input('qty', [])
+        );
+
+        if ($result['status'] === 'conflict') {
+            throw ValidationException::withMessages(['discount' => $result['message']]);
+        }
+
+        if ($result['status'] !== 'applied') {
+            return $result;
+        }
+
+        if ($service->activeLegacyOfferIds((int) branch()->id, $request->input('product_id', []))->isNotEmpty()) {
+            throw ValidationException::withMessages([
+                'discount' => 'A lens offer cannot be combined with an existing offer in the same order.',
+            ]);
+        }
+
+        if ((float) $request->input('royalty_discount', 0) > 0) {
+            throw ValidationException::withMessages([
+                'discount' => 'A lens offer cannot be combined with a royalty-card discount.',
+            ]);
+        }
+
+        $submittedDiscount = round((float) $request->input('discount', 0), 2);
+        if (abs($submittedDiscount - $result['discount']) > 0.01) {
+            throw ValidationException::withMessages([
+                'discount' => 'The lens offer discount is no longer current. Please review the order and submit it again.',
+            ]);
+        }
+
+        $lineTotal = round(collect($request->input('total', []))->sum(fn ($total) => (float) $total), 2);
+        if (abs($lineTotal - round((float) $request->input('order_total', 0), 2)) > 0.01) {
+            throw ValidationException::withMessages([
+                'order_total' => 'The order total does not match the selected product lines.',
+            ]);
+        }
+
+        $invoiceTotal = round(max(0, $lineTotal - $result['discount']), 2);
+        $advance = (float) $request->input('advance', 0);
+        $creditUsed = (float) $request->input('credit_used', 0);
+        $request->merge([
+            'order_total' => $lineTotal,
+            'discount' => $result['discount'],
+            'invoice_total' => $invoiceTotal,
+            'balance' => round($invoiceTotal - $advance - $creditUsed, 2),
+            'lens_offer_category_id' => $result['offer_category_id'],
+            'lens_offer_discount' => $result['discount'],
+        ]);
+
+        return $result;
+    }
+
+    private function syncLensOffer(Order $order, array $lensOffer): void
+    {
+        if ($lensOffer['status'] !== 'applied') {
+            OrderOffer::where('order_id', $order->id)->delete();
+            return;
+        }
+
+        OrderOffer::updateOrCreate(
+            ['order_id' => $order->id],
+            [
+                'offer_category_id' => $lensOffer['offer_category_id'],
+                'lens_product_id' => $lensOffer['lens_product_id'],
+                'frame_product_id' => $lensOffer['frame_product_id'],
+                'discount_percentage' => $lensOffer['discount_percentage'],
+                'discount_amount' => $lensOffer['discount'],
+            ]
+        );
     }
 }

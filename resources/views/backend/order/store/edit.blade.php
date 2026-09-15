@@ -37,10 +37,12 @@
                     </div>
                     <div class="card-body">
                         <div class="card-wrapper">
-                            <form class="row g-3" method="post" action="{{ route('store.order.update', $order->id) }}" name="orderForm" id="orderForm">
+                            <form class="row g-3" method="post" action="{{ route('store.order.update', $order->id) }}" name="orderForm" id="orderForm" data-lens-offers="1">
                                 @csrf
                                 <input type="hidden" name="customer_id" id="customer_id" value="{{ $order?->customer_id ?? 0 }}" />
                                 <input type="hidden" name="disc_per" value="{{ branch()->discount_limit_percentage }}" />
+                                <input type="hidden" name="lens_offer_category_id" class="lensOfferCategoryId" value="{{ $order->offer?->offer_category_id }}" />
+                                <input type="hidden" name="lens_offer_discount" class="lensOfferDiscount" value="{{ $order->offer?->discount_amount ?? 0 }}" />
                                 <div class="col-md-2">
                                     <label class="form-label req">Order Date</label>
                                     {{ html()->date($name = 'order_date', $value = $order->order_date?->format('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}
@@ -275,7 +277,7 @@
                                                             return $q->where('category', 'frame');
                                                         })->when(in_array($item->eye, ['service']), function($q){
                                                             return $q->where('category', 'service');
-                                                        })->pluck('name', 'id'), $item->product_id)->class('border-0 select2 selPdct offerPdct')->attribute('id', $item->id)->placeholder('Select')->required() }}
+                                                        })->pluck('name', 'id'), $item->product_id)->class('border-0 select2 selPdct ' . (in_array($item->eye, ['re', 'le', 'both']) ? 'lensOfferProduct' : (in_array($item->eye, ['frame']) ? 'offerPdct' : '')))->attribute('data-batch', 'NA')->attribute('data-category', $item->product->category)->attribute('id', $item->id)->placeholder('Select')->required() }}
                                                     </td>
                                                     <td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" value="{{ $item->qty }}" required /></td>
                                                     <td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' value="{{ $item->unit_price }}" step="any" required readonly /></td>

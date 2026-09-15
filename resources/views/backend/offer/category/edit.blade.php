@@ -32,7 +32,7 @@
                         <div class="card-wrapper">
                             <form class="row g-3" method="post" action="{{ route('offer.category.update', $category->id) }}">
                                 @csrf
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label class="form-label req">Offer Category Name</label>
                                     {{ html()->text($name = 'name', $value = $category->name)->class('form-control')->placeholder('Category Name') }}
                                     @error('name')
@@ -40,13 +40,20 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-2">
+                                    <label class="form-label req">Offer Type</label>
+                                    {{ html()->select('offer_type', ['legacy' => 'Existing / BOGO', 'lens_discount' => 'Lens Discount'], old('offer_type', $category->offer_type ?? 'legacy'))->class('form-control offerType')->required() }}
+                                    @error('offer_type')
+                                    <small class="text-danger">{{ $errors->first('offer_type') }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-md-2 legacyOfferField">
                                     <label class="form-label">Discount %</label>
                                     {{ html()->text($name = 'discount_percentage', $value = $category->discount_percentage)->class('form-control')->maxlength('3')->placeholder('0%') }}
                                     @error('discount_percentage')
                                     <small class="text-danger">{{ $errors->first('discount_percentage') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-2 legacyOfferField">
                                     <label class="form-label">Buy</label>
                                     {{ html()->text($name = 'buy_number', $value = $category->buy_number)->class('form-control')->maxlength('3')->placeholder('0') }}
                                     @error('buy_number')
@@ -81,7 +88,7 @@
                                     <small class="text-danger">{{ $errors->first('valid_to') }}</small>
                                     @enderror
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-5 legacyOfferField">
                                     <label class="form-label">Collection</label>
                                     {{ html()->select($name = 'collection_id', $collection, $category->collection_id)->class('form-control select2')->placeholder('Select') }}
                                 </div>

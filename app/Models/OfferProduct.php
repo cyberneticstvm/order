@@ -10,6 +10,8 @@ class OfferProduct extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $guarded = [];
+
     public function status()
     {
         return ($this->deleted_at) ? "<span class='badge badge-danger'>Deleted</span>" : "<span class='badge badge-success'>Active</span>";
@@ -28,5 +30,10 @@ class OfferProduct extends Model
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+
+    public function linkedFrames()
+    {
+        return $this->hasMany(OfferProductFrame::class);
     }
 }

@@ -107,6 +107,8 @@
         let discfferproduct = $('#orderForm .discOffer').length ?? 0;
         let bogo = $('#orderForm .bogo').length ?? 0;
         let bogoffer = offerredproduct - discfferproduct;
+        let lens_offer = parseInt(frm['lens_offer_category_id']?.value || 0);
+        let lens_offer_discount = parseFloat(frm['lens_offer_discount']?.value || 0);
 
         if (disc > 0 && royal_disc > 0 || royal_disc > 0 && offerredproduct > 0) {
             failed({
@@ -133,6 +135,12 @@
             })
             return false;
         }
+        if (lens_offer > 0 && Math.abs(disc - lens_offer_discount) > 0.01) {
+            failed({
+                'error': 'The lens offer discount is not current. Re-select the lens or frame and try again.'
+            })
+            return false;
+        }
         if (frm['advance'].value > 0 && frm['payment_mode'].value == '') {
             failed({
                 'error': 'Please select advance payment mode!'
@@ -143,7 +151,7 @@
             let c = confirm("Expected delivery date and order date are same. proceed?")
             if (!c) return false
         }
-        if (parseFloat(disc) > parseFloat(disc_allowed) && "{{ Auth::user()?->roles?->first()?->name }}" != 'Administrator' && discfferproduct == 0) {
+        if (parseFloat(disc) > parseFloat(disc_allowed) && "{{ Auth::user()?->roles?->first()?->name }}" != 'Administrator' && discfferproduct == 0 && lens_offer == 0) {
             failed({
                 'error': 'Discount amount is greater than allowed'
             })

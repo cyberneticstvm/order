@@ -37,12 +37,14 @@
                     </div>
                     <div class="card-body">
                         <div class="card-wrapper">
-                            <form class="row g-3" method="post" action="{{ route('store.order.save') }}" name="orderForm" id="orderForm">
+                            <form class="row g-3" method="post" action="{{ route('store.order.save') }}" name="orderForm" id="orderForm" data-lens-offers="1">
                                 @csrf
                                 <input type="hidden" name="consultation_id" value="{{ $patient?->mrn ?? 0 }}" />
                                 <input type="hidden" name="registration_id" value="{{ $registration?->id ?? 0 }}" />
                                 <input type="hidden" name="customer_id" id="customer_id" value="{{ $patient?->id ?? 0 }}" />
                                 <input type="hidden" name="disc_per" value="{{ branch()->discount_limit_percentage }}" />
+                                <input type="hidden" name="lens_offer_category_id" class="lensOfferCategoryId" value="" />
+                                <input type="hidden" name="lens_offer_discount" class="lensOfferDiscount" value="0" />
                                 <div class="col-md-2">
                                     <label class="form-label req">Order Date</label>
                                     {{ html()->date($name = 'order_date', $value = date('Y-m-d'))->class('form-control')->placeholder('Order Date')->required() }}
@@ -213,7 +215,7 @@
                                                     </td>
                                                     <td><input type="text" name='ipd[]' class="w-100 border-0 text-center fIpd" placeholder="IPD" value="{{ $spectacle?->rpd ?? '' }}" maxlength="6" readonly /></td>
                                                     <td>
-                                                        {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctFirst')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens1')->placeholder('Select')->required() }}
+                                                        {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctFirst lensOfferProduct')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens1')->placeholder('Select')->required() }}
                                                     </td>
                                                     <td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td>
                                                     <td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td>
@@ -246,7 +248,7 @@
                                                     </td>
                                                     <td><input type="text" name='ipd[]' class="w-100 border-0 text-center sIpd" placeholder="IPD" value="{{ $spectacle?->lpd ?? '' }}" maxlength="6" readonly /></td>
                                                     <td>
-                                                        {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctSecond')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens2')->placeholder('Select')->required() }}
+                                                        {{ html()->select('product_id[]', $products->where('category', 'lens')->pluck('name', 'id'), old('product_id'))->class('border-0 select2 selPdct pdctSecond lensOfferProduct')->attribute('data-batch', 'NA')->attribute('data-category', 'lens')->attribute('id', 'cat-lens2')->placeholder('Select')->required() }}
                                                     </td>
                                                     <td><input type="number" name='qty[]' class="w-100 border-0 text-end qty" placeholder="0" min='1' step="1" required /></td>
                                                     <td><input type="number" name='unit_price[]' class="w-100 border-0 text-end price" placeholder="0.00" min='1' step="any" required readonly /></td>
